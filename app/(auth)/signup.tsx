@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { SignUpScreen } from '../../src/components/auth/SignUpScreen';
 import { useAppStore } from '../../src/store/useAppStore';
 import * as authService from '../../src/services/auth';
+import * as profileService from '../../src/services/profile';
 
 export default function SignUpRoute() {
   const router = useRouter();
@@ -17,14 +18,25 @@ export default function SignUpRoute() {
     const result = await authService.signUpWithEmail(data);
 
     if (result.success && result.data) {
+      const formattedPhone = data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone}`;
+
+      // Ensure profile row exists in PostgreSQL
+      const profileResult = await profileService.ensureProfileExists(result.data.userId, {
+        name: data.name,
+        email: data.email,
+        phone: formattedPhone,
+        role: 'RENTER',
+      });
+
       if (result.requiresEmailConfirmation) {
         showToast('Please check your email to verify your account', 'info');
-        // Still log in locally to proceed to onboarding
+      } else {
+        showToast('Account created successfully!', 'success');
+      }
+
+      if (profileResult.success && profileResult.data) {
         login({
-          id: result.data.userId,
-          name: data.name,
-          email: data.email,
-          phone: `+91 ${data.phone}`,
+          ...profileResult.data,
           onboarding_completed: false,
         });
       } else {
@@ -32,10 +44,9 @@ export default function SignUpRoute() {
           id: result.data.userId,
           name: data.name,
           email: data.email,
-          phone: `+91 ${data.phone}`,
+          phone: formattedPhone,
           onboarding_completed: false,
         });
-        showToast('Account created successfully!', 'success');
       }
 
       router.replace({

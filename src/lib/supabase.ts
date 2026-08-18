@@ -9,20 +9,26 @@ const supabaseKey =
   process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY ||
   '';
 
-// Runtime check for missing configuration
-if (!supabaseUrl || !supabaseKey) {
-  if (typeof __DEV__ !== 'undefined' && __DEV__) {
-    console.warn(
-      '[REHVO Supabase] Missing EXPO_PUBLIC_SUPABASE_URL or EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY / EXPO_PUBLIC_SUPABASE_ANON_KEY.\n' +
-      'Ensure your .env file is created with credentials for the REHVO South Asia (Mumbai) Supabase project.\n' +
-      'Auth and database operations will be blocked until configured.'
-    );
-  }
+// Runtime validation for production and preview APK builds
+const isConfigured = Boolean(
+  supabaseUrl &&
+  supabaseKey &&
+  !supabaseUrl.includes('placeholder') &&
+  !supabaseKey.includes('placeholder') &&
+  supabaseKey !== 'your-supabase-publishable-key'
+);
+
+if (!isConfigured) {
+  console.warn(
+    '[REHVO Supabase] Missing or placeholder Supabase credentials.\n' +
+    'Target Project: REHVO South Asia (Mumbai / ap-south-1)\n' +
+    'Please verify EAS Environment variables or .env.local configuration.'
+  );
 }
 
 export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseKey || 'placeholder-anon-key-rehvo',
+  isConfigured ? supabaseUrl : 'https://xoskechmxzgfajkfpssv.supabase.co',
+  isConfigured ? supabaseKey : 'placeholder-anon-key-rehvo',
   {
     auth: {
       storage: AsyncStorage,
@@ -34,18 +40,29 @@ export const supabase = createClient(
   }
 );
 
-/** Check if Supabase is properly configured with a live project URL at runtime */
+/** Check if Supabase is properly configured with a live project URL and key at runtime */
 export const isSupabaseConfigured = (): boolean => {
-  return Boolean(supabaseUrl && supabaseKey && !supabaseUrl.includes('placeholder'));
+  return isConfigured;
 };
 
 /** Get the configured project URL hostname safely without exposing keys */
 export const getSupabaseHost = (): string => {
-  if (!supabaseUrl || supabaseUrl.includes('placeholder')) return 'placeholder';
+  if (!supabaseUrl || supabaseUrl.includes('placeholder')) return 'xoskechmxzgfajkfpssv.supabase.co';
   try {
     const url = new URL(supabaseUrl);
     return url.host;
   } catch {
     return 'invalid-url';
   }
+};
+
+/** Safe diagnostic summary for build and connection status without exposing secret tokens */
+export const getSupabaseConfigState = () => {
+  return {
+    configured: isConfigured,
+    host: getSupabaseHost(),
+    hasUrl: Boolean(supabaseUrl),
+    hasKey: Boolean(supabaseKey && !supabaseKey.includes('placeholder')),
+    keyPrefix: supabaseKey ? supabaseKey.substring(0, 8) + '...' : 'none',
+  };
 };

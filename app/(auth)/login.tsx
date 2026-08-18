@@ -8,11 +8,20 @@ import * as profileService from '../../src/services/profile';
 
 export default function LoginRoute() {
   const router = useRouter();
-  const { currentRole, login, showToast } = useAppStore();
+  const { login, showToast } = useAppStore();
 
-  const handleSuccessLogin = (targetRole?: UserRole) => {
+  const handleSuccessLogin = (targetRole?: UserRole, onboardingDone: boolean = true) => {
     const state = useAppStore.getState();
     const role = targetRole || state.user?.role || state.currentRole || 'RENTER';
+
+    if (!onboardingDone) {
+      router.replace({
+        pathname: '/(auth)/onboarding',
+        params: { startStep: 'ROLE' },
+      });
+      return;
+    }
+
     if (role === 'OWNER') {
       router.replace('/(owner)/dashboard');
     } else {
@@ -38,14 +47,16 @@ export default function LoginRoute() {
     const result = await authService.signInWithEmail(email, pass);
 
     if (result.success && result.data) {
-      // Fetch full profile from Supabase
-      const profileResult = await profileService.getProfile(result.data.userId);
+      // Ensure full profile from Supabase
+      const profileResult = await profileService.ensureProfileExists(result.data.userId, {
+        email,
+      });
 
       if (profileResult.success && profileResult.data) {
+        const isDone = profileResult.data.onboarding_completed ?? true;
         login(profileResult.data);
-        handleSuccessLogin(profileResult.data.role);
+        handleSuccessLogin(profileResult.data.role, isDone);
       } else {
-        // Profile may not be loaded yet but auth succeeded — use basic data
         login({
           id: result.data.userId,
           email,
