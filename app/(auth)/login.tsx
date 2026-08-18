@@ -73,8 +73,33 @@ export default function LoginRoute() {
     }
   };
 
-  const handleSocialLogin = async (_provider: 'google' | 'apple') => {
-    showToast('Social login coming soon', 'info');
+  const handleSocialLogin = async (provider: 'google' | 'apple') => {
+    if (provider === 'apple') {
+      showToast('Apple sign-in coming soon', 'info');
+      return;
+    }
+
+    const result = await authService.signInWithGoogle();
+    if (result.success && result.data) {
+      const profileResult = await profileService.ensureProfileExists(result.data.userId, {
+        email: result.data.email,
+      });
+
+      if (profileResult.success && profileResult.data) {
+        const isDone = profileResult.data.onboarding_completed ?? true;
+        login(profileResult.data);
+        handleSuccessLogin(profileResult.data.role, isDone);
+      } else {
+        login({
+          id: result.data.userId,
+          email: result.data.email,
+          onboarding_completed: true,
+        });
+        handleSuccessLogin();
+      }
+    } else if (result.error) {
+      showToast(result.error, 'error');
+    }
   };
 
   return (

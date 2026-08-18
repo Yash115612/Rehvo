@@ -6,6 +6,12 @@
  */
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { AuthError } from '@supabase/supabase-js';
+import * as WebBrowser from 'expo-web-browser';
+import * as QueryParams from 'expo-auth-session/build/QueryParams';
+import { makeRedirectUri } from 'expo-auth-session';
+
+// Tell WebBrowser to handle redirect triggers cleanly on native & web
+WebBrowser.maybeCompleteAuthSession();
 
 // ---------------------------------------------------------------------------
 // Types
@@ -41,6 +47,17 @@ export function getUserFriendlyError(error: AuthError | Error | unknown): string
   }
   if (message.includes('placeholder') || !isSupabaseConfigured()) {
     return 'The app is not yet connected to the server. Please contact support.';
+  }
+
+  // Google / OAuth specific errors
+  if (message.includes('Unsupported provider') || message.includes('provider is not enabled')) {
+    return 'Google sign-in is not yet configured in Supabase. Please use email and password or contact support.';
+  }
+  if (message.includes('cancelled') || message.includes('dismissed')) {
+    return 'Google sign-in was cancelled.';
+  }
+  if (message.includes('OAuth') || message.includes('oauth') || message.includes('access_denied')) {
+    return 'Unable to complete Google sign-in. Please try again.';
   }
 
   // Auth-specific errors
@@ -151,6 +168,124 @@ export async function signInWithEmail(email: string, password: string): Promise<
       success: true,
       data: { userId: data.user.id, email: data.user.email || email },
     };
+  } catch (err) {
+    return { success: false, error: getUserFriendlyError(err) };
+  }
+}
+
+/** Sign in with Google OAuth via Supabase and Expo WebBrowser */
+export async function signInWithGoogle(): Promise<AuthResult<{ userId: string; email: string }>> {
+  if (!isSupabaseConfigured()) {
+    return { success: false, error: getUserFriendlyError(null) };
+  }
+
+  try {
+    // Standardized redirect URI for REHVO scheme
+    const redirectUrl = makeRedirectUri({
+      scheme: 'rehvo',
+      path: 'auth/callback',
+    });
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: redirectUrl,
+        skipBrowserRedirect: true,
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
+      },
+    });
+
+    if (error) {
+      return { success: false, error: getUserFriendlyError(error) };
+    }
+
+    if (!data?.url) {
+      return { success: false, error: 'Unable to start Google sign-in. Please try again.' };
+    }
+
+    // Launch in-app browser session
+    const browserResult = await WebBrowser.openAuthSessionAsync(data.url, redirectUrl);
+
+    if (browserResult.type === 'cancel' || browserResult.type === 'dismiss') {
+      return { success: false, error: 'Google sign-in was cancelled.' };
+    }
+
+    if (browserResult.type === 'success' && browserResult.url) {
+      // Check for error in callback URL
+      if (browserResult.url.includes('error=')) {
+        const parsed = QueryParams.getQueryParams(browserResult.url);
+        const errorDesc =
+          parsed.params?.error_description ||
+          parsed.params?.error ||
+          'Google sign-in failed.';
+        return { success: false, error: getUserFriendlyError(new Error(errorDesc)) };
+      }
+
+      // Check for Implicit Grant (fragment tokens)
+      if (browserResult.url.includes('#access_token=') || browserResult.url.includes('&access_token=')) {
+        const fragment = browserResult.url.split('#')[1] || '';
+        const params = new URLSearchParams(fragment);
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+
+        if (accessToken && refreshToken) {
+          const { data: sessionData, error: sessionErr } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+
+          if (sessionErr) {
+            return { success: false, error: getUserFriendlyError(sessionErr) };
+          }
+
+          if (sessionData.user) {
+            return {
+              success: true,
+              data: {
+                userId: sessionData.user.id,
+                email: sessionData.user.email || '',
+              },
+            };
+          }
+        }
+      }
+
+      // Check for PKCE Authorization Code
+      const parsed = QueryParams.getQueryParams(browserResult.url);
+      const code = parsed.params?.code;
+      if (code) {
+        const { data: sessionData, error: sessionErr } = await supabase.auth.exchangeCodeForSession(code);
+        if (sessionErr) {
+          return { success: false, error: getUserFriendlyError(sessionErr) };
+        }
+        if (sessionData.user) {
+          return {
+            success: true,
+            data: {
+              userId: sessionData.user.id,
+              email: sessionData.user.email || '',
+            },
+          };
+        }
+      }
+
+      // Check if session was updated in background listener
+      const session = await getSession();
+      if (session?.user) {
+        return {
+          success: true,
+          data: {
+            userId: session.user.id,
+            email: session.user.email || '',
+          },
+        };
+      }
+    }
+
+    return { success: false, error: 'Google sign-in could not be completed. Please try again.' };
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
   }

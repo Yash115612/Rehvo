@@ -61,8 +61,47 @@ export default function SignUpRoute() {
     }
   };
 
-  const handleSocialSignUp = (_provider: 'google' | 'apple') => {
-    showToast('Social signup coming soon', 'info');
+  const handleSocialSignUp = async (provider: 'google' | 'apple') => {
+    if (provider === 'apple') {
+      showToast('Apple sign-up coming soon', 'info');
+      return;
+    }
+
+    const result = await authService.signInWithGoogle();
+    if (result.success && result.data) {
+      const profileResult = await profileService.ensureProfileExists(result.data.userId, {
+        email: result.data.email,
+        role: 'RENTER',
+      });
+
+      if (profileResult.success && profileResult.data) {
+        const isDone = profileResult.data.onboarding_completed ?? false;
+        login({
+          ...profileResult.data,
+          onboarding_completed: isDone,
+        });
+        if (isDone) {
+          router.replace('/(renter)/home');
+        } else {
+          router.replace({
+            pathname: '/(auth)/onboarding',
+            params: { startStep: 'ROLE' },
+          });
+        }
+      } else {
+        login({
+          id: result.data.userId,
+          email: result.data.email,
+          onboarding_completed: false,
+        });
+        router.replace({
+          pathname: '/(auth)/onboarding',
+          params: { startStep: 'ROLE' },
+        });
+      }
+    } else if (result.error) {
+      showToast(result.error, 'error');
+    }
   };
 
   return (
