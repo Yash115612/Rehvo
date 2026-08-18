@@ -100,7 +100,7 @@ export function mapSupabaseVisitToApp(
     property_title: prop?.title || 'Rental Property',
     property_image: coverImage,
     property_locality: prop?.locality ? `${prop.locality}, ${prop.city || 'Mumbai'}` : 'Mumbai',
-    rent: prop?.rent || 0,
+    rent: prop?.price ?? prop?.rent ?? 0,
     renter_id: row.user_id,
     renter_name: renter?.full_name || 'Renter',
     renter_phone: renter?.phone || '+91 98765 43210',
@@ -176,7 +176,7 @@ export async function createVisit(
       })
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         renter_profile:profiles!visits_user_id_fkey (full_name, phone),
         owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
       `)
@@ -237,7 +237,7 @@ export async function getMyVisits(
       .from('visits')
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         renter_profile:profiles!visits_user_id_fkey (full_name, phone),
         owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
       `)
@@ -285,7 +285,7 @@ export async function getOwnerVisits(
       .from('visits')
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         renter_profile:profiles!visits_user_id_fkey (full_name, phone),
         owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
       `)
@@ -324,7 +324,7 @@ export async function getVisitById(
       .from('visits')
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         renter_profile:profiles!visits_user_id_fkey (full_name, phone),
         owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
       `)
@@ -365,7 +365,7 @@ export async function updateVisitStatus(
       .eq('id', visitId)
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         renter_profile:profiles!visits_user_id_fkey (full_name, phone),
         owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
       `)

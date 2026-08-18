@@ -117,10 +117,9 @@ export const SharedConversationScreen: React.FC<
 
   // Find property
   const property = useMemo<Property | null>(() => {
-    if (!conversation || flatmate) return null;
+    if (!conversation || flatmate || !conversation.property_id) return null;
     return (
       properties.find((p) => p.id === conversation.property_id) ||
-      properties[0] ||
       null
     );
   }, [properties, conversation, flatmate]);

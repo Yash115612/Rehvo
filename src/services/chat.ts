@@ -103,7 +103,7 @@ export function mapSupabaseConversationToApp(
       : flatmate
       ? `${flatmate.locality}, ${flatmate.city || 'Mumbai'}`
       : 'Mumbai',
-    rent: prop?.rent,
+    rent: prop?.price ?? prop?.rent,
     enquiry_id: row.enquiry_id || undefined,
     flatmate_profile_id: row.flatmate_profile_id || undefined,
     flatmate_name: flatmate?.name,
@@ -167,7 +167,7 @@ export async function getConversations(
       .from('conversations')
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         flatmate_profiles (id, user_id, name, display_name, locality, city, budget_max, room_preference, flatmate_images (*)),
         conversation_participants (
           id,
@@ -226,7 +226,7 @@ export async function getConversationById(
       .from('conversations')
       .select(`
         *,
-        properties (id, title, locality, city, rent, property_images (*)),
+        properties (id, title, locality, city, price, property_images (*)),
         flatmate_profiles (id, user_id, name, display_name, locality, city, budget_max, room_preference, flatmate_images (*)),
         conversation_participants (
           id,
@@ -317,79 +317,27 @@ export async function getOrCreatePropertyConversation(
       return { success: false, error: 'You must be signed in to send messages.' };
     }
 
-    // 1. Fetch property to get authoritative owner_id
-    const { data: prop, error: propError } = await supabase
-      .from('properties')
-      .select('id, title, owner_id')
-      .eq('id', propertyId)
-      .single();
-
-    if (propError || !prop) {
-      return { success: false, error: 'Property listing not found.' };
-    }
-
-    if (prop.owner_id === currentUserId) {
-      return { success: false, error: 'You cannot start a chat on your own property listing.' };
-    }
-
-    // 2. Check if a conversation already exists between current user & property owner for this property
-    const { data: existingConvs, error: checkError } = await supabase
-      .from('conversations')
-      .select(`
-        id,
-        conversation_participants (user_id)
-      `)
-      .eq('property_id', propertyId);
-
-    if (!checkError && existingConvs && existingConvs.length > 0) {
-      for (const conv of existingConvs) {
-        const participantIds = (conv.conversation_participants || []).map((p: any) => p.user_id);
-        if (participantIds.includes(currentUserId) && participantIds.includes(prop.owner_id)) {
-          // Existing conversation found! Return full details
-          return getConversationById(conv.id, currentUserId);
-        }
+    // Call atomic RPC function in Supabase
+    const { data: convId, error: rpcError } = await supabase.rpc(
+      'create_or_get_conversation',
+      {
+        p_property_id: propertyId,
+        p_enquiry_id: enquiryId || null,
       }
-    }
+    );
 
-    // 3. Create new conversation row
-    const { data: newConv, error: createError } = await supabase
-      .from('conversations')
-      .insert({
-        property_id: propertyId,
-        enquiry_id: enquiryId || null,
-        last_message_text: 'Started conversation',
-        last_message_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
-
-    if (createError || !newConv) {
+    if (rpcError || !convId) {
       return {
         success: false,
-        error: getUserFriendlyChatError(createError, "Couldn't create conversation."),
+        error: getUserFriendlyChatError(rpcError, "Couldn't initiate chat with host."),
       };
     }
 
-    // 4. Add both participants
-    const { error: partInsertError } = await supabase
-      .from('conversation_participants')
-      .insert([
-        { conversation_id: newConv.id, user_id: currentUserId, unread_count: 0 },
-        { conversation_id: newConv.id, user_id: prop.owner_id, unread_count: 0 },
-      ]);
-
-    if (partInsertError) {
-      return {
-        success: false,
-        error: getUserFriendlyChatError(partInsertError, "Couldn't set up conversation participants."),
-      };
-    }
-
-    return getConversationById(newConv.id, currentUserId);
+    return getConversationById(convId, currentUserId);
   } catch (err) {
     return {
       success: false,
-      error: getUserFriendlyChatError(err, "Couldn't initiate conversation."),
+      error: getUserFriendlyChatError(err, "Couldn't initiate chat with host."),
     };
   }
 }
@@ -409,83 +357,26 @@ export async function getOrCreateFlatmateConversation(
       return { success: false, error: 'You must be signed in to send messages.' };
     }
 
-    // 1. Fetch flatmate profile to get target user_id
-    const { data: flatmate, error: fmError } = await supabase
-      .from('flatmate_profiles')
-      .select('id, user_id, name')
-      .eq('id', flatmateProfileId)
-      .single();
-
-    if (fmError || !flatmate) {
-      return { success: false, error: 'Flatmate profile not found.' };
-    }
-
-    const targetUserId = flatmate.user_id;
-    if (!targetUserId) {
-      return { success: false, error: 'Target flatmate user account not found.' };
-    }
-
-    if (targetUserId === currentUserId) {
-      return { success: false, error: 'You cannot start a chat with your own flatmate profile.' };
-    }
-
-    // 2. Check if a conversation already exists
-    const { data: existingConvs, error: checkError } = await supabase
-      .from('conversations')
-      .select(`
-        id,
-        conversation_participants (user_id)
-      `)
-      .eq('flatmate_profile_id', flatmateProfileId);
-
-    if (!checkError && existingConvs && existingConvs.length > 0) {
-      for (const conv of existingConvs) {
-        const participantIds = (conv.conversation_participants || []).map((p: any) => p.user_id);
-        if (participantIds.includes(currentUserId) && participantIds.includes(targetUserId)) {
-          // Existing conversation found!
-          return getConversationById(conv.id, currentUserId);
-        }
+    // Call atomic RPC function in Supabase
+    const { data: convId, error: rpcError } = await supabase.rpc(
+      'create_or_get_conversation',
+      {
+        p_flatmate_profile_id: flatmateProfileId,
       }
-    }
+    );
 
-    // 3. Create new conversation row
-    const { data: newConv, error: createError } = await supabase
-      .from('conversations')
-      .insert({
-        flatmate_profile_id: flatmateProfileId,
-        last_message_text: 'Started conversation',
-        last_message_at: new Date().toISOString(),
-      })
-      .select()
-      .single();
-
-    if (createError || !newConv) {
+    if (rpcError || !convId) {
       return {
         success: false,
-        error: getUserFriendlyChatError(createError, "Couldn't create conversation."),
+        error: getUserFriendlyChatError(rpcError, "Couldn't initiate chat with flatmate."),
       };
     }
 
-    // 4. Add both participants
-    const { error: partInsertError } = await supabase
-      .from('conversation_participants')
-      .insert([
-        { conversation_id: newConv.id, user_id: currentUserId, unread_count: 0 },
-        { conversation_id: newConv.id, user_id: targetUserId, unread_count: 0 },
-      ]);
-
-    if (partInsertError) {
-      return {
-        success: false,
-        error: getUserFriendlyChatError(partInsertError, "Couldn't set up conversation participants."),
-      };
-    }
-
-    return getConversationById(newConv.id, currentUserId);
+    return getConversationById(convId, currentUserId);
   } catch (err) {
     return {
       success: false,
-      error: getUserFriendlyChatError(err, "Couldn't initiate conversation."),
+      error: getUserFriendlyChatError(err, "Couldn't initiate chat with flatmate."),
     };
   }
 }
