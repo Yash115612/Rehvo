@@ -14,7 +14,7 @@ export default function SignUpRoute() {
     email: string;
     phone: string;
     password: string;
-  }) => {
+  }): Promise<{ success: boolean; error?: string; requiresVerification?: boolean }> => {
     const result = await authService.signUpWithEmail(data);
 
     if (result.success && result.data) {
@@ -55,8 +55,9 @@ export default function SignUpRoute() {
       });
       return { success: true, requiresVerification: result.requiresEmailConfirmation || false };
     } else {
-      showToast(result.error || 'Signup failed', 'error');
-      return { success: false, requiresVerification: false };
+      const errorMsg = result.error || 'Signup failed';
+      showToast(errorMsg, 'error');
+      return { success: false, error: errorMsg, requiresVerification: false };
     }
   };
 

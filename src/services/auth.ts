@@ -18,7 +18,7 @@ export interface AuthResult<T = void> {
   requiresEmailConfirmation?: boolean;
 }
 
-interface SignUpData {
+export interface SignUpData {
   name: string;
   email: string;
   phone: string;
@@ -29,7 +29,7 @@ interface SignUpData {
 // Error Mapping
 // ---------------------------------------------------------------------------
 
-function getUserFriendlyError(error: AuthError | Error | unknown): string {
+export function getUserFriendlyError(error: AuthError | Error | unknown): string {
   if (!error) return 'An unexpected error occurred. Please try again.';
 
   const message = (error as AuthError)?.message || (error as Error)?.message || '';
@@ -53,8 +53,8 @@ function getUserFriendlyError(error: AuthError | Error | unknown): string {
   if (message.includes('User already registered') || message.includes('already been registered')) {
     return 'An account with this email already exists. Please sign in instead.';
   }
-  if (message.includes('Password') && message.includes('characters')) {
-    return 'Password must be at least 6 characters long.';
+  if (message.includes('Password') && (message.includes('characters') || message.includes('least 6') || message.includes('least 8'))) {
+    return 'Password must be at least 8 characters long.';
   }
   if (message.includes('rate limit') || status === 429) {
     return 'Too many attempts. Please wait a moment and try again.';
@@ -75,8 +75,8 @@ function getUserFriendlyError(error: AuthError | Error | unknown): string {
     return 'Your session has expired. Please sign in again.';
   }
 
-  // Generic fallback — never expose raw error
-  return 'Something went wrong. Please try again.';
+  // Generic fallback — never expose raw Postgres/JWT error
+  return message || 'Something went wrong. Please try again.';
 }
 
 // ---------------------------------------------------------------------------
@@ -84,19 +84,21 @@ function getUserFriendlyError(error: AuthError | Error | unknown): string {
 // ---------------------------------------------------------------------------
 
 /** Sign up a new user with email and password */
-export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ userId: string }>> {
+export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ userId: string; email: string }>> {
   if (!isSupabaseConfigured()) {
     return { success: false, error: getUserFriendlyError(null) };
   }
 
   try {
+    const formattedPhone = data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone.replace(/\D/g, '')}`;
+
     const { data: resData, error } = await supabase.auth.signUp({
-      email: data.email,
+      email: data.email.trim(),
       password: data.password,
       options: {
         data: {
-          full_name: data.name,
-          phone: data.phone,
+          full_name: data.name.trim(),
+          phone: formattedPhone,
           role: 'renter',
           onboarding_completed: false,
         },
@@ -117,7 +119,7 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
 
     return {
       success: true,
-      data: { userId: resData.user.id },
+      data: { userId: resData.user.id, email: resData.user.email || data.email },
       requiresEmailConfirmation: needsConfirmation,
     };
   } catch (err) {
@@ -126,14 +128,14 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
 }
 
 /** Sign in with email and password */
-export async function signInWithEmail(email: string, password: string): Promise<AuthResult<{ userId: string }>> {
+export async function signInWithEmail(email: string, password: string): Promise<AuthResult<{ userId: string; email: string }>> {
   if (!isSupabaseConfigured()) {
     return { success: false, error: getUserFriendlyError(null) };
   }
 
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email,
+      email: email.trim(),
       password,
     });
 
@@ -145,7 +147,10 @@ export async function signInWithEmail(email: string, password: string): Promise<
       return { success: false, error: 'Login failed. Please try again.' };
     }
 
-    return { success: true, data: { userId: data.user.id } };
+    return {
+      success: true,
+      data: { userId: data.user.id, email: data.user.email || email },
+    };
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
   }
@@ -158,7 +163,7 @@ export async function signInWithPhone(phone: string): Promise<AuthResult> {
   }
 
   try {
-    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone.replace(/\s/g, '')}`;
+    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone.replace(/\D/g, '')}`;
 
     const { error } = await supabase.auth.signInWithOtp({ phone: formattedPhone });
 
@@ -179,7 +184,7 @@ export async function verifyPhoneOtp(phone: string, code: string): Promise<AuthR
   }
 
   try {
-    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone.replace(/\s/g, '')}`;
+    const formattedPhone = phone.startsWith('+91') ? phone : `+91${phone.replace(/\D/g, '')}`;
 
     const { data, error } = await supabase.auth.verifyOtp({
       phone: formattedPhone,
@@ -201,7 +206,7 @@ export async function verifyPhoneOtp(phone: string, code: string): Promise<AuthR
   }
 }
 
-/** Sign out current user */
+/** Sign out current user from Supabase */
 export async function signOut(): Promise<AuthResult> {
   try {
     const { error } = await supabase.auth.signOut();
@@ -221,7 +226,7 @@ export async function resetPassword(email: string): Promise<AuthResult> {
   }
 
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
     if (error) {
       return { success: false, error: getUserFriendlyError(error) };
     }
@@ -231,7 +236,7 @@ export async function resetPassword(email: string): Promise<AuthResult> {
   }
 }
 
-/** Get current session (for session restore) */
+/** Get current session from Supabase client (for session restore) */
 export async function getSession() {
   try {
     const { data, error } = await supabase.auth.getSession();
@@ -241,5 +246,43 @@ export async function getSession() {
     return data.session;
   } catch {
     return null;
+  }
+}
+
+/**
+ * Request account deletion.
+ * Cleans up user profile row in public.profiles and signs out.
+ * (Full Supabase Auth user deletion from auth.users requires server-side Admin API / service role).
+ */
+export async function deleteAccount(userId: string): Promise<AuthResult> {
+  if (!isSupabaseConfigured()) {
+    return { success: false, error: getUserFriendlyError(null) };
+  }
+
+  try {
+    // 1. Mark profile as deleted/blocked
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({
+        full_name: 'Deleted User',
+        phone: null,
+        profile_photo: null,
+        bio: null,
+        city: null,
+        locality: null,
+        is_blocked: true,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', userId);
+
+    if (profileError) {
+      return { success: false, error: 'Failed to delete account. Please contact support.' };
+    }
+
+    // 2. Sign out from Supabase
+    await supabase.auth.signOut();
+    return { success: true };
+  } catch (err) {
+    return { success: false, error: getUserFriendlyError(err) };
   }
 }

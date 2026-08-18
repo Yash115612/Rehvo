@@ -29,21 +29,22 @@ export default function LoginRoute() {
     }
   };
 
-  const handlePhoneSendOtp = async (phoneNum: string): Promise<boolean> => {
+  const handlePhoneSendOtp = async (phoneNum: string): Promise<{ success: boolean; error?: string }> => {
     const result = await authService.signInWithPhone(phoneNum);
     if (result.success) {
       router.push({
         pathname: '/(auth)/otp',
         params: { phone: phoneNum },
       });
-      return true;
+      return { success: true };
     } else {
-      showToast(result.error || 'Failed to send OTP', 'error');
-      return false;
+      const errorMsg = result.error || 'Failed to send OTP';
+      showToast(errorMsg, 'error');
+      return { success: false, error: errorMsg };
     }
   };
 
-  const handleEmailLogin = async (email: string, pass: string): Promise<boolean> => {
+  const handleEmailLogin = async (email: string, pass: string): Promise<{ success: boolean; error?: string }> => {
     const result = await authService.signInWithEmail(email, pass);
 
     if (result.success && result.data) {
@@ -64,10 +65,11 @@ export default function LoginRoute() {
         });
         handleSuccessLogin();
       }
-      return true;
+      return { success: true };
     } else {
-      showToast(result.error || 'Login failed', 'error');
-      return false;
+      const errorMsg = result.error || 'Login failed';
+      showToast(errorMsg, 'error');
+      return { success: false, error: errorMsg };
     }
   };
 

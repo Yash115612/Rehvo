@@ -19,17 +19,6 @@ import {
   FurnishingType,
   PropertyImage,
 } from '../types';
-import {
-  INITIAL_USER,
-  SEED_PROPERTIES,
-  SEED_PGS,
-  SEED_FLATMATES,
-  SEED_VISITS,
-  SEED_APPLICATIONS,
-  SEED_CONVERSATIONS,
-  SEED_REPORTS,
-} from '../data/seedData';
-
 import { getItem, setItem, removeItem, clearAll } from '../lib/storage';
 import { supabase } from '../lib/supabase';
 import * as profileService from '../services/profile';
@@ -203,21 +192,6 @@ const DEFAULT_FILTER: PropertyFilter = {
   sort_by: 'recommended',
 };
 
-const SEED_ENQUIRIES: Enquiry[] = [
-  {
-    id: 'enq_01',
-    property_id: 'prop_01',
-    property_title: 'The Azure Penthouse & Sea View Haven',
-    renter_id: 'renter_ext_01',
-    renter_name: 'Rahul Jain',
-    renter_phone: '+91 98777 66554',
-    owner_id: 'user_owner_01',
-    message: 'Is this property still available? I can visit this weekend.',
-    status: 'NEW',
-    created_at: new Date().toISOString(),
-  },
-];
-
 export const useAppStore = create<AppState>((set, get) => ({
   user: null,
   isAuthenticated: false,
@@ -239,7 +213,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   activeFilter: DEFAULT_FILTER,
   selectedProperty: null,
 
-  pgs: SEED_PGS,
+  pgs: [],
   flatmates: [],
   myFlatmateProfile: null,
   flatmateDraft: null,
@@ -262,7 +236,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     applications: true,
     marketing: false,
   },
-  reports: SEED_REPORTS,
+  reports: [],
 
   listingDraft: {
     property_type: null,
@@ -327,7 +301,7 @@ export const useAppStore = create<AppState>((set, get) => ({
               savedPropertyIds: parsedIds,
               savedFlatmateIds: parsedFmIds,
               visits: [],
-              applications: parsed.onboarding_completed ? SEED_APPLICATIONS : [],
+              applications: [],
               enquiries: [],
               conversations: [],
               notifications: [],
@@ -502,8 +476,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   deleteAccount: () => {
-    // Sign out from Supabase (actual user deletion requires admin API)
-    supabase.auth.signOut().catch(() => {});
+    const currentUserId = get().user?.id;
+    if (currentUserId) {
+      authService.deleteAccount(currentUserId).catch(() => {});
+    } else {
+      supabase.auth.signOut().catch(() => {});
+    }
     get().unregisterDevicePushToken();
     removeItem('rehvo_auth_session');
     removeItem('rehvo_onboarding_completed');

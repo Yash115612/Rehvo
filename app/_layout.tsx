@@ -58,27 +58,53 @@ export default function RootLayout() {
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (!isMounted) return;
 
-      if (event === 'SIGNED_IN' && session?.user) {
-        const sUser = session.user;
-        const userRole = (sUser.user_metadata?.role as UserRole) || 'RENTER';
-        const onboardingDone = sUser.user_metadata?.onboarding_completed ?? true;
+      switch (event) {
+        case 'SIGNED_IN': {
+          if (session?.user) {
+            const sUser = session.user;
+            const userRole = (sUser.user_metadata?.role as UserRole) || 'RENTER';
+            const onboardingDone = sUser.user_metadata?.onboarding_completed ?? true;
 
-        // Fetch or ensure profile from Supabase profiles table
-        const profileResult = await profileService.ensureProfileExists(sUser.id, {
-          name: sUser.user_metadata?.full_name || sUser.email?.split('@')[0] || 'User',
-          email: sUser.email || '',
-          phone: sUser.phone || sUser.user_metadata?.phone || '',
-          role: userRole,
-        });
+            const profileResult = await profileService.ensureProfileExists(sUser.id, {
+              name: sUser.user_metadata?.full_name || sUser.email?.split('@')[0] || 'User',
+              email: sUser.email || '',
+              phone: sUser.phone || sUser.user_metadata?.phone || '',
+              role: userRole,
+            });
 
-        if (profileResult.success && profileResult.data && isMounted) {
-          login({
-            ...profileResult.data,
-            onboarding_completed: onboardingDone,
-          });
+            if (profileResult.success && profileResult.data && isMounted) {
+              login({
+                ...profileResult.data,
+                onboarding_completed: onboardingDone,
+              });
+            }
+          }
+          break;
         }
-      } else if (event === 'SIGNED_OUT') {
-        logout();
+
+        case 'SIGNED_OUT': {
+          logout();
+          break;
+        }
+
+        case 'USER_UPDATED': {
+          if (session?.user && isMounted) {
+            const sUser = session.user;
+            const profileResult = await profileService.getProfile(sUser.id);
+            if (profileResult.success && profileResult.data && isMounted) {
+              login(profileResult.data);
+            }
+          }
+          break;
+        }
+
+        case 'TOKEN_REFRESHED': {
+          // Token refreshed silently by Supabase SDK; session remains intact without re-fetching profile
+          break;
+        }
+
+        default:
+          break;
       }
     });
 

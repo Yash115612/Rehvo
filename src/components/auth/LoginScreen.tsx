@@ -27,8 +27,8 @@ interface LoginScreenProps {
   onNavigateSignUp: () => void;
   onNavigateForgotPassword: () => void;
   onSocialLogin: (provider: 'google' | 'apple') => void;
-  onPhoneSendOtp: (phone: string) => Promise<boolean>;
-  onEmailLogin: (email: string, pass: string) => Promise<boolean>;
+  onPhoneSendOtp: (phone: string) => Promise<{ success: boolean; error?: string } | boolean>;
+  onEmailLogin: (email: string, pass: string) => Promise<{ success: boolean; error?: string } | boolean>;
 }
 
 export const LoginScreen: React.FC<LoginScreenProps> = ({
@@ -41,7 +41,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
 
-  const [authMethod, setAuthMethod] = useState<'phone' | 'email'>('phone');
+  const [authMethod, setAuthMethod] = useState<'phone' | 'email'>('email');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -62,8 +62,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
     setIsLoading(true);
     try {
-      const ok = await onPhoneSendOtp(cleaned);
-      if (!ok) {
+      const res = await onPhoneSendOtp(cleaned);
+      if (typeof res === 'object') {
+        if (!res.success) {
+          setError(res.error || 'Unable to send OTP at the moment. Please try again.');
+        }
+      } else if (!res) {
         setError('Unable to send OTP at the moment. Please try again.');
       }
     } catch {
@@ -88,8 +92,12 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
 
     setIsLoading(true);
     try {
-      const ok = await onEmailLogin(cleanEmail, password);
-      if (!ok) {
+      const res = await onEmailLogin(cleanEmail, password);
+      if (typeof res === 'object') {
+        if (!res.success) {
+          setError(res.error || 'Invalid email or password. Please check your credentials.');
+        }
+      } else if (!res) {
         setError('Invalid email or password. Please check your credentials.');
       }
     } catch {
@@ -140,33 +148,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           <View style={styles.tabContainer}>
             <Pressable
               onPress={() => {
-                setAuthMethod('phone');
-                setError(null);
-              }}
-              style={[
-                styles.tabBtn,
-                authMethod === 'phone' && styles.tabBtnActive,
-              ]}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: authMethod === 'phone' }}
-            >
-              <Phone
-                size={16}
-                color={authMethod === 'phone' ? '#6C4DFF' : '#777482'}
-                strokeWidth={2}
-              />
-              <Text
-                style={[
-                  styles.tabBtnText,
-                  authMethod === 'phone' && styles.tabBtnTextActive,
-                ]}
-              >
-                Phone Number
-              </Text>
-            </Pressable>
-
-            <Pressable
-              onPress={() => {
                 setAuthMethod('email');
                 setError(null);
               }}
@@ -189,6 +170,33 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                 ]}
               >
                 Email Address
+              </Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => {
+                setAuthMethod('phone');
+                setError(null);
+              }}
+              style={[
+                styles.tabBtn,
+                authMethod === 'phone' && styles.tabBtnActive,
+              ]}
+              accessibilityRole="tab"
+              accessibilityState={{ selected: authMethod === 'phone' }}
+            >
+              <Phone
+                size={16}
+                color={authMethod === 'phone' ? '#6C4DFF' : '#777482'}
+                strokeWidth={2}
+              />
+              <Text
+                style={[
+                  styles.tabBtnText,
+                  authMethod === 'phone' && styles.tabBtnTextActive,
+                ]}
+              >
+                Phone Number
               </Text>
             </Pressable>
           </View>

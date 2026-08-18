@@ -33,7 +33,7 @@ interface SignUpScreenProps {
     email: string;
     phone: string;
     password: string;
-  }) => Promise<{ success: boolean; requiresVerification?: boolean }>;
+  }) => Promise<{ success: boolean; error?: string; requiresVerification?: boolean }>;
 }
 
 export const SignUpScreen: React.FC<SignUpScreenProps> = ({
@@ -104,7 +104,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
   };
 
   const handleFormSubmit = async () => {
-    if (!validateForm()) return;
+    if (!validateForm() || isLoading) return;
 
     setIsLoading(true);
     setErrors({});
@@ -117,6 +117,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
       });
       if (res.success) {
         onSuccessSignUp();
+      } else {
+        setErrors({ form: res.error || 'Unable to create account. Please try again.' });
       }
     } catch (err: any) {
       setErrors({ form: err?.message || 'Unable to create account. Please try again.' });
