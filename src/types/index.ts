@@ -243,6 +243,7 @@ export interface Property {
   views_count: number;
   saves_count: number;
   enquiries_count: number;
+  visits_count?: number;
   price_changed?: boolean;
   previous_rent?: number;
   // Type-Specific Attributes
@@ -493,4 +494,26 @@ export interface PropertyFilter {
   verified_only: boolean;
   amenities: string[];
   sort_by: 'recommended' | 'newest' | 'price_low' | 'price_high' | 'most_saved';
+}
+
+export interface OwnerDashboardMetrics {
+  total_properties: number;
+  active_properties: number;
+  paused_properties: number;
+  draft_properties: number;
+  rented_properties: number;
+  total_views: number;
+  views_this_week: number;
+  views_last_week: number;
+  total_enquiries: number;
+  pending_enquiries: number;
+  contacted_enquiries: number;
+  scheduled_enquiries: number;
+  closed_enquiries: number;
+  total_visits: number;
+  pending_visits: number;
+  confirmed_visits: number;
+  completed_visits: number;
+  cancelled_visits: number;
+  total_saves: number;
 }

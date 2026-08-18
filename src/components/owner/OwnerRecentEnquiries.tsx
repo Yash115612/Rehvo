@@ -9,6 +9,26 @@ interface OwnerRecentEnquiriesProps {
   onSelectEnquiry: (enquiry: Conversation) => void;
 }
 
+function formatRelativeTime(dateStr?: string): string {
+  if (!dateStr) return 'Recently';
+  try {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const diffSec = Math.floor((now.getTime() - d.getTime()) / 1000);
+    if (diffSec < 60) return 'Just now';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin}m ago`;
+    const diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return `${diffHr}h ago`;
+    const diffDays = Math.floor(diffHr / 24);
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+  } catch {
+    return 'Recently';
+  }
+}
+
 export const OwnerRecentEnquiries: React.FC<OwnerRecentEnquiriesProps> = ({
   enquiries,
   onViewAll,
@@ -39,6 +59,7 @@ export const OwnerRecentEnquiries: React.FC<OwnerRecentEnquiriesProps> = ({
             'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
 
           const hasUnread = item.unread_count > 0;
+          const timeDisplay = formatRelativeTime(item.updated_at);
 
           return (
             <Pressable
@@ -55,7 +76,7 @@ export const OwnerRecentEnquiries: React.FC<OwnerRecentEnquiriesProps> = ({
                   <Text style={styles.renterName} numberOfLines={1}>
                     {item.renter_name}
                   </Text>
-                  <Text style={styles.timeText}>10 min ago</Text>
+                  <Text style={styles.timeText}>{timeDisplay}</Text>
                 </View>
 
                 <Text style={styles.propTitle} numberOfLines={1}>
@@ -63,7 +84,7 @@ export const OwnerRecentEnquiries: React.FC<OwnerRecentEnquiriesProps> = ({
                 </Text>
 
                 <Text style={styles.lastMsg} numberOfLines={1}>
-                  {item.last_message || 'Is this property still available?'}
+                  {item.last_message || 'Interested in this property'}
                 </Text>
               </View>
 

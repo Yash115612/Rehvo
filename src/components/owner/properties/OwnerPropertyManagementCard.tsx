@@ -41,9 +41,9 @@ export const OwnerPropertyManagementCard: React.FC<
   };
 
   const statusInfo = getStatusInfo(property.status);
-  const viewsCount = property.views_count || 128;
-  const enquiriesCount = property.enquiries_count || 6;
-  const visitsCount = 2;
+  const viewsCount = property.views_count || 0;
+  const enquiriesCount = property.enquiries_count || 0;
+  const visitsCount = property.visits_count || 0;
   const isDraft = property.status === 'DRAFT';
 
   return (

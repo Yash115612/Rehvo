@@ -52,11 +52,13 @@ export const OwnerProfileScreen: React.FC = () => {
     properties,
     enquiries,
     visits,
+    ownerMetrics,
     updateProfile,
     switchRole,
     logout,
     deleteAccount,
     initializeFromStorage,
+    fetchOwnerMetrics,
     showToast,
   } = useAppStore();
 
@@ -67,11 +69,11 @@ export const OwnerProfileScreen: React.FC = () => {
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      await initializeFromStorage();
+      await Promise.all([initializeFromStorage(), fetchOwnerMetrics()]);
     } finally {
       setIsRefreshing(false);
     }
-  }, [initializeFromStorage]);
+  }, [initializeFromStorage, fetchOwnerMetrics]);
 
   const userProperties = useMemo(() => {
     if (!user) return [];
@@ -82,14 +84,20 @@ export const OwnerProfileScreen: React.FC = () => {
 
   const hasPropertyListing = userProperties.length > 0;
 
-  // Metrics
+  // Real Metrics
   const activePropertiesCount = useMemo(() => {
+    if (ownerMetrics?.active_properties !== undefined) {
+      return ownerMetrics.active_properties;
+    }
     return userProperties.filter((p) => p.status === 'ACTIVE' || !p.status).length;
-  }, [userProperties]);
+  }, [ownerMetrics, userProperties]);
 
   const totalViewsCount = useMemo(() => {
+    if (ownerMetrics?.total_views !== undefined) {
+      return ownerMetrics.total_views;
+    }
     return userProperties.reduce((acc, p) => acc + (p.views_count || 0), 0);
-  }, [userProperties]);
+  }, [ownerMetrics, userProperties]);
 
   const initials =
     user?.name

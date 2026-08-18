@@ -10,11 +10,12 @@ import { Property } from '../../../src/types';
 export default function PropertyDetailsRoute() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const { properties, savedPropertyIds, toggleSaveProperty } = useAppStore();
+  const { properties, savedPropertyIds, toggleSaveProperty, recordPropertyView, user } = useAppStore();
 
   const [remoteProperty, setRemoteProperty] = useState<Property | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchAttempted, setFetchAttempted] = useState(false);
+  const hasTrackedViewRef = React.useRef<string | null>(null);
 
   // Check store first
   const localProperty = properties.find((p) => p.id === id);
@@ -33,6 +34,17 @@ export default function PropertyDetailsRoute() {
   }, [id, localProperty]);
 
   const property = localProperty || remoteProperty;
+
+  // Real view event logging (once per mount, excluded for owner)
+  useEffect(() => {
+    if (property?.id && hasTrackedViewRef.current !== property.id) {
+      hasTrackedViewRef.current = property.id;
+      if (property.owner_id && user?.id && property.owner_id === user.id) {
+        return;
+      }
+      recordPropertyView(property.id);
+    }
+  }, [property?.id, property?.owner_id, user?.id, recordPropertyView]);
 
   if (isLoading) {
     return (

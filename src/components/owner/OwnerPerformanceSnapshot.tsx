@@ -2,41 +2,78 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TrendingUp, Clock, Zap } from 'lucide-react-native';
 
-export const OwnerPerformanceSnapshot: React.FC = () => {
+interface OwnerPerformanceSnapshotProps {
+  viewsThisWeek?: number;
+  viewsLastWeek?: number;
+  totalEnquiries?: number;
+  contactedEnquiries?: number;
+  activeVisitsCount?: number;
+}
+
+export const OwnerPerformanceSnapshot: React.FC<OwnerPerformanceSnapshotProps> = ({
+  viewsThisWeek = 0,
+  viewsLastWeek = 0,
+  totalEnquiries = 0,
+  contactedEnquiries = 0,
+  activeVisitsCount = 0,
+}) => {
+  // Real week-over-week trend calculation
+  let trendLabel = 'Active';
+  if (viewsLastWeek > 0) {
+    const diff = viewsThisWeek - viewsLastWeek;
+    const pct = Math.round((diff / viewsLastWeek) * 100);
+    trendLabel = pct >= 0 ? `+${pct}% vs last week` : `${pct}% vs last week`;
+  } else if (viewsThisWeek > 0) {
+    trendLabel = `+${viewsThisWeek} this week`;
+  } else {
+    trendLabel = '0 this week';
+  }
+
+  // Real response rate calculation
+  const responseRate =
+    totalEnquiries > 0
+      ? `${Math.round((contactedEnquiries / totalEnquiries) * 100)}% responded`
+      : 'No enquiries yet';
+
   return (
     <View style={styles.container}>
       <Text style={styles.sectionTitle}>Listing performance</Text>
 
       <View style={styles.card}>
+        {/* Col 1: Views this week */}
         <View style={styles.col}>
           <View style={styles.headerRow}>
             <TrendingUp size={15} color="#32B768" strokeWidth={2.2} />
             <Text style={styles.colTitle}>Views this week</Text>
           </View>
-          <Text style={styles.mainNum}>1,248</Text>
-          <Text style={styles.trendText}>+18% vs last week</Text>
+          <Text style={styles.mainNum}>{viewsThisWeek.toLocaleString('en-IN')}</Text>
+          <Text style={styles.trendText}>{trendLabel}</Text>
         </View>
 
         <View style={styles.divider} />
 
+        {/* Col 2: Real Enquiries & Response Rate */}
         <View style={styles.col}>
           <View style={styles.headerRow}>
             <Zap size={15} color="#6C4DFF" strokeWidth={2.2} />
-            <Text style={styles.colTitle}>Enquiries</Text>
+            <Text style={styles.colTitle}>Total Enquiries</Text>
           </View>
-          <Text style={styles.mainNum}>36</Text>
-          <Text style={styles.trendText}>+6% response rate</Text>
+          <Text style={styles.mainNum}>{totalEnquiries.toString()}</Text>
+          <Text style={styles.trendText}>{responseRate}</Text>
         </View>
 
         <View style={styles.divider} />
 
+        {/* Col 3: Real Visits / Activity */}
         <View style={styles.col}>
           <View style={styles.headerRow}>
             <Clock size={15} color="#FF735C" strokeWidth={2.2} />
-            <Text style={styles.colTitle}>Avg Response</Text>
+            <Text style={styles.colTitle}>Visits</Text>
           </View>
-          <Text style={styles.mainNum}>8 min</Text>
-          <Text style={styles.greenSub}>Top 5% in Mumbai</Text>
+          <Text style={styles.mainNum}>{activeVisitsCount.toString()}</Text>
+          <Text style={styles.greenSub}>
+            {activeVisitsCount > 0 ? `${activeVisitsCount} scheduled` : '0 scheduled'}
+          </Text>
         </View>
       </View>
     </View>

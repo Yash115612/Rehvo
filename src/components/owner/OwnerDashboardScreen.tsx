@@ -43,12 +43,14 @@ export const OwnerDashboardScreen: React.FC<OwnerDashboardScreenProps> = ({
     conversations,
     visits,
     enquiries,
+    ownerMetrics,
     unreadNotificationCount,
     updateProperty,
     deleteProperty,
     fetchMyProperties,
     fetchEnquiries,
     fetchVisits,
+    fetchOwnerMetrics,
     fetchNotifications,
     showToast,
   } = useAppStore();
@@ -61,16 +63,22 @@ export const OwnerDashboardScreen: React.FC<OwnerDashboardScreenProps> = ({
     fetchMyProperties();
     fetchEnquiries();
     fetchVisits();
-  }, [fetchMyProperties, fetchEnquiries, fetchVisits]);
+    fetchOwnerMetrics();
+  }, [fetchMyProperties, fetchEnquiries, fetchVisits, fetchOwnerMetrics]);
 
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     try {
-      await Promise.all([fetchMyProperties(), fetchEnquiries(), fetchVisits()]);
+      await Promise.all([
+        fetchMyProperties(),
+        fetchEnquiries(),
+        fetchVisits(),
+        fetchOwnerMetrics(),
+      ]);
     } finally {
       setIsRefreshing(false);
     }
-  }, [fetchMyProperties, fetchEnquiries, fetchVisits]);
+  }, [fetchMyProperties, fetchEnquiries, fetchVisits, fetchOwnerMetrics]);
 
   // Properties owned by current user
   const ownerProperties = useMemo(() => {
@@ -82,17 +90,38 @@ export const OwnerDashboardScreen: React.FC<OwnerDashboardScreenProps> = ({
 
   const hasPropertyListing = ownerProperties.length > 0;
 
+  // Real Metric Calculations
   const activePropertiesCount = useMemo(() => {
+    if (ownerMetrics?.active_properties !== undefined) {
+      return ownerMetrics.active_properties;
+    }
     return ownerProperties.filter((p) => p.status !== 'PAUSED' && p.status !== 'DRAFT').length;
-  }, [ownerProperties]);
+  }, [ownerMetrics, ownerProperties]);
 
   const totalViewsCount = useMemo(() => {
+    if (ownerMetrics?.total_views !== undefined) {
+      return ownerMetrics.total_views;
+    }
     return ownerProperties.reduce((acc, p) => acc + (p.views_count || 0), 0);
-  }, [ownerProperties]);
+  }, [ownerMetrics, ownerProperties]);
+
+  const totalEnquiriesCount = useMemo(() => {
+    if (ownerMetrics?.total_enquiries !== undefined) {
+      return ownerMetrics.total_enquiries;
+    }
+    return enquiries.length;
+  }, [ownerMetrics, enquiries]);
 
   const pendingEnquiries = useMemo(() => {
     return enquiries.filter((e) => e.status === 'NEW');
   }, [enquiries]);
+
+  const contactedEnquiriesCount = useMemo(() => {
+    if (ownerMetrics?.contacted_enquiries !== undefined) {
+      return ownerMetrics.contacted_enquiries;
+    }
+    return enquiries.filter((e) => e.status === 'CONTACTED').length;
+  }, [ownerMetrics, enquiries]);
 
   const pendingVisits = useMemo(() => {
     return visits.filter((v) => v.status === 'REQUESTED');
@@ -173,7 +202,7 @@ export const OwnerDashboardScreen: React.FC<OwnerDashboardScreenProps> = ({
         <OwnerOverviewStats
           activeListingsCount={activePropertiesCount}
           totalViewsCount={totalViewsCount}
-          enquiriesCount={pendingEnquiries.length}
+          enquiriesCount={totalEnquiriesCount}
           upcomingVisitsCount={pendingVisits.length}
         />
 
@@ -196,7 +225,13 @@ export const OwnerDashboardScreen: React.FC<OwnerDashboardScreenProps> = ({
         )}
 
         {/* 8. Performance Snapshot */}
-        <OwnerPerformanceSnapshot />
+        <OwnerPerformanceSnapshot
+          viewsThisWeek={ownerMetrics?.views_this_week ?? 0}
+          viewsLastWeek={ownerMetrics?.views_last_week ?? 0}
+          totalEnquiries={totalEnquiriesCount}
+          contactedEnquiries={contactedEnquiriesCount}
+          activeVisitsCount={visits.length}
+        />
 
         {/* 9. Recent Enquiries */}
         <OwnerRecentEnquiries
@@ -257,8 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F7F4',
   },
   scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    gap: 16,
+    paddingTop: 8,
+    gap: 20,
   },
 });

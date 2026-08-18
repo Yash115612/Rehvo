@@ -64,8 +64,8 @@ export const OwnerPropertiesSection: React.FC<OwnerPropertiesSectionProps> = ({
             'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80';
 
           const statusInfo = getStatusBadge(item.status);
-          const viewsCount = item.views_count || 128;
-          const enquiriesCount = item.enquiries_count || 6;
+          const viewsCount = item.views_count || 0;
+          const enquiriesCount = item.enquiries_count || 0;
 
           return (
             <Pressable

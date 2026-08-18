@@ -15,6 +15,7 @@ import type {
   SupabaseProperty,
   SupabasePropertyImage,
   SupabaseProfile,
+  OwnerDashboardMetrics,
 } from '../types';
 
 // ---------------------------------------------------------------------------
@@ -765,3 +766,122 @@ export async function deletePropertyImage(
     };
   }
 }
+
+/**
+ * Record a real property view event in Supabase public.property_views.
+ * Enforces deduplication rule (max 1 view per viewer/session per 30 minutes)
+ * and ignores view events from the property's owner.
+ */
+export async function recordPropertyView(
+  propertyId: string,
+  viewerId?: string,
+  sessionId?: string
+): Promise<{ success: boolean; counted: boolean }> {
+  if (!isSupabaseConfigured() || !propertyId) {
+    return { success: false, counted: false };
+  }
+
+  try {
+    const { data, error } = await supabase.rpc('record_property_view', {
+      p_property_id: propertyId,
+      p_viewer_id: viewerId || null,
+      p_session_id: sessionId || null,
+    });
+
+    if (error) {
+      if (__DEV__) {
+        console.log('[REHVO View Tracking Error]', error.message);
+      }
+      return { success: false, counted: false };
+    }
+
+    return { success: true, counted: Boolean(data) };
+  } catch (err) {
+    if (__DEV__) {
+      console.log('[REHVO View Tracking Exception]', err);
+    }
+    return { success: false, counted: false };
+  }
+}
+
+/**
+ * Fetch authoritative real-time owner metrics from Supabase.
+ * Returns exact property counts, views, enquiries, visits, and saves.
+ */
+export async function getOwnerDashboardMetrics(
+  ownerId?: string
+): Promise<PropertyServiceResult<OwnerDashboardMetrics>> {
+  if (!isSupabaseConfigured()) {
+    return { success: false, error: 'Database not connected' };
+  }
+
+  try {
+    let targetOwnerId = ownerId;
+    if (!targetOwnerId) {
+      const { data: authData } = await supabase.auth.getUser();
+      targetOwnerId = authData?.user?.id;
+    }
+    if (!targetOwnerId) {
+      return { success: false, error: 'User not signed in' };
+    }
+
+    // Call high-performance RPC function
+    const { data, error } = await supabase.rpc('get_owner_dashboard_metrics', {
+      p_owner_id: targetOwnerId,
+    });
+
+    if (error) {
+      // Fallback to direct client aggregation if RPC has permissions issue
+      const [propsRes, enqRes, visRes] = await Promise.all([
+        supabase
+          .from('properties')
+          .select('id, status, views_count, saves_count')
+          .eq('owner_id', targetOwnerId),
+        supabase
+          .from('enquiries')
+          .select('id, status')
+          .eq('owner_id', targetOwnerId),
+        supabase
+          .from('visits')
+          .select('id, status')
+          .eq('owner_id', targetOwnerId),
+      ]);
+
+      const propRows = propsRes.data || [];
+      const enqRows = enqRes.data || [];
+      const visRows = visRes.data || [];
+
+      const fallbackMetrics: OwnerDashboardMetrics = {
+        total_properties: propRows.length,
+        active_properties: propRows.filter((p) => p.status === 'published' || p.status === 'active').length,
+        paused_properties: propRows.filter((p) => p.status === 'paused').length,
+        draft_properties: propRows.filter((p) => p.status === 'draft').length,
+        rented_properties: propRows.filter((p) => p.status === 'removed' || p.status === 'rented').length,
+        total_views: propRows.reduce((acc, p) => acc + (p.views_count || 0), 0),
+        views_this_week: 0,
+        views_last_week: 0,
+        total_enquiries: enqRows.length,
+        pending_enquiries: enqRows.filter((e) => e.status === 'pending' || e.status === 'NEW').length,
+        contacted_enquiries: enqRows.filter((e) => e.status === 'replied' || e.status === 'CONTACTED').length,
+        scheduled_enquiries: enqRows.filter((e) => e.status === 'scheduled' || e.status === 'VISIT_SCHEDULED').length,
+        closed_enquiries: enqRows.filter((e) => e.status === 'closed' || e.status === 'CLOSED').length,
+        total_visits: visRows.length,
+        pending_visits: visRows.filter((v) => v.status === 'pending' || v.status === 'REQUESTED').length,
+        confirmed_visits: visRows.filter((v) => v.status === 'confirmed' || v.status === 'CONFIRMED').length,
+        completed_visits: visRows.filter((v) => v.status === 'completed' || v.status === 'COMPLETED').length,
+        cancelled_visits: visRows.filter((v) => v.status === 'cancelled' || v.status === 'CANCELLED').length,
+        total_saves: propRows.reduce((acc, p) => acc + (p.saves_count || 0), 0),
+      };
+
+      return { success: true, data: fallbackMetrics };
+    }
+
+    return { success: true, data: data as OwnerDashboardMetrics };
+  } catch (err) {
+    return {
+      success: false,
+      error: getUserFriendlyPropertyError(err, "Couldn't load owner dashboard metrics."),
+    };
+  }
+}
+

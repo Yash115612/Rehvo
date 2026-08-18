@@ -18,6 +18,7 @@ import {
   PropertyType,
   FurnishingType,
   PropertyImage,
+  OwnerDashboardMetrics,
 } from '../types';
 import { getItem, setItem, removeItem, clearAll } from '../lib/storage';
 import { supabase } from '../lib/supabase';
@@ -85,6 +86,10 @@ interface AppState {
   setFilter: (filter: Partial<PropertyFilter>) => void;
   resetFilter: () => void;
   setSelectedProperty: (property: Property | null) => void;
+  recordPropertyView: (propertyId: string) => Promise<void>;
+
+  ownerMetrics: OwnerDashboardMetrics | null;
+  fetchOwnerMetrics: () => Promise<OwnerDashboardMetrics | null>;
 
   fetchVisits: () => Promise<Visit[]>;
   scheduleVisit: (visitData: {
@@ -200,6 +205,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   role: 'RENTER',
   switchRole: (newRole: UserRole) => {
     set({ currentRole: newRole, role: newRole });
+    if (newRole === 'OWNER') {
+      get().fetchMyProperties();
+      get().fetchOwnerMetrics();
+    }
     get().fetchEnquiries();
     get().fetchVisits();
     get().fetchConversations();
@@ -208,6 +217,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   blockedUserIds: [],
   initialized: false,
 
+  ownerMetrics: null,
   properties: [],
   savedPropertyIds: [],
   activeFilter: DEFAULT_FILTER,
@@ -382,6 +392,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
     get().fetchSavedIds();
     get().fetchMyProperties();
+    get().fetchOwnerMetrics();
     get().fetchMyFlatmateProfile();
     get().fetchEnquiries();
     get().fetchVisits();
@@ -410,6 +421,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       isOnboarded: true,
       myFlatmateProfile: null,
       flatmateDraft: null,
+      ownerMetrics: null,
       savedPropertyIds: [],
       savedFlatmateIds: [],
       visits: [],
@@ -497,6 +509,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       isOnboarded: false,
       myFlatmateProfile: null,
       flatmateDraft: null,
+      ownerMetrics: null,
       properties: [],
       savedPropertyIds: [],
       savedFlatmateIds: [],
@@ -552,6 +565,33 @@ export const useAppStore = create<AppState>((set, get) => ({
       return myProps;
     }
     return [];
+  },
+
+  fetchOwnerMetrics: async () => {
+    const { user } = get();
+    if (!user?.id) {
+      set({ ownerMetrics: null });
+      return null;
+    }
+
+    const res = await propertyService.getOwnerDashboardMetrics(user.id);
+    if (res.success && res.data) {
+      set({ ownerMetrics: res.data });
+      return res.data;
+    }
+    return get().ownerMetrics;
+  },
+
+  recordPropertyView: async (propertyId: string) => {
+    const { user } = get();
+    const res = await propertyService.recordPropertyView(propertyId, user?.id);
+    if (res.success && res.counted) {
+      set((state) => ({
+        properties: state.properties.map((p) =>
+          p.id === propertyId ? { ...p, views_count: (p.views_count || 0) + 1 } : p
+        ),
+      }));
+    }
   },
 
   addProperty: async (propertyData, imagesToUpload) => {
