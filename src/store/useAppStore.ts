@@ -43,6 +43,7 @@ interface AppState {
   initialized: boolean;
 
   properties: Property[];
+  myProperties: Property[];
   savedPropertyIds: string[];
   activeFilter: PropertyFilter;
   selectedProperty: Property | null;
@@ -219,6 +220,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   ownerMetrics: null,
   properties: [],
+  myProperties: [],
   savedPropertyIds: [],
   activeFilter: DEFAULT_FILTER,
   selectedProperty: null,
@@ -288,6 +290,9 @@ export const useAppStore = create<AppState>((set, get) => ({
       const savedProps = await getItem('rehvo_properties');
       const parsedProps: Property[] = savedProps ? JSON.parse(savedProps) : [];
 
+      const savedMyProps = await getItem('rehvo_my_properties');
+      const parsedMyProps: Property[] = savedMyProps ? JSON.parse(savedMyProps) : [];
+
       const savedIds = await getItem('rehvo_saved_ids');
       const parsedIds = savedIds ? JSON.parse(savedIds) : [];
 
@@ -306,6 +311,7 @@ export const useAppStore = create<AppState>((set, get) => ({
               currentRole: parsed.role || 'RENTER',
               role: parsed.role || 'RENTER',
               properties: parsedProps,
+              myProperties: parsedMyProps,
               myFlatmateProfile: parsedFmProfile,
               flatmateDraft: parsedFmDraft,
               savedPropertyIds: parsedIds,
@@ -413,6 +419,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     removeItem('rehvo_saved_flatmate_ids');
     removeItem('rehvo_my_flatmate_profile');
     removeItem('rehvo_flatmate_draft');
+    removeItem('rehvo_properties');
+    removeItem('rehvo_my_properties');
     removeItem('rehvo_supabase_auth_token');
     get().unregisterDevicePushToken();
     set({
@@ -422,6 +430,8 @@ export const useAppStore = create<AppState>((set, get) => ({
       myFlatmateProfile: null,
       flatmateDraft: null,
       ownerMetrics: null,
+      properties: [],
+      myProperties: [],
       savedPropertyIds: [],
       savedFlatmateIds: [],
       visits: [],
@@ -502,6 +512,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     removeItem('rehvo_saved_ids');
     removeItem('rehvo_saved_flatmate_ids');
     removeItem('rehvo_properties');
+    removeItem('rehvo_my_properties');
     removeItem('rehvo_supabase_auth_token');
     set({
       user: null,
@@ -511,6 +522,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       flatmateDraft: null,
       ownerMetrics: null,
       properties: [],
+      myProperties: [],
       savedPropertyIds: [],
       savedFlatmateIds: [],
       visits: [],
@@ -535,36 +547,27 @@ export const useAppStore = create<AppState>((set, get) => ({
   fetchProperties: async (filter) => {
     const res = await propertyService.getPublishedProperties(filter);
     if (res.success && res.data) {
-      // Merge with user's own draft/paused properties if loaded
-      const { user, properties: currentProps } = get();
-      const userProps = user ? currentProps.filter((p) => p.owner_id === user.id) : [];
-      const userPropIds = new Set(userProps.map((p) => p.id));
-      const filteredPublished = res.data.filter((p) => !userPropIds.has(p.id));
-      const combined = [...userProps, ...filteredPublished];
-
-      set({ properties: combined });
-      setItem('rehvo_properties', JSON.stringify(combined));
-      return combined;
+      set({ properties: res.data });
+      setItem('rehvo_properties', JSON.stringify(res.data));
+      return res.data;
     }
     return get().properties;
   },
 
   fetchMyProperties: async () => {
     const { user } = get();
-    if (!user?.id) return [];
+    if (!user?.id) {
+      set({ myProperties: [] });
+      return [];
+    }
 
     const res = await propertyService.getMyProperties(user.id);
     if (res.success && res.data) {
-      const myProps = res.data;
-      const myPropIds = new Set(myProps.map((p) => p.id));
-      const otherProps = get().properties.filter((p) => !myPropIds.has(p.id));
-      const combined = [...myProps, ...otherProps];
-
-      set({ properties: combined });
-      setItem('rehvo_properties', JSON.stringify(combined));
-      return myProps;
+      set({ myProperties: res.data });
+      setItem('rehvo_my_properties', JSON.stringify(res.data));
+      return res.data;
     }
-    return [];
+    return get().myProperties;
   },
 
   fetchOwnerMetrics: async () => {
@@ -590,6 +593,9 @@ export const useAppStore = create<AppState>((set, get) => ({
         properties: state.properties.map((p) =>
           p.id === propertyId ? { ...p, views_count: (p.views_count || 0) + 1 } : p
         ),
+        myProperties: state.myProperties.map((p) =>
+          p.id === propertyId ? { ...p, views_count: (p.views_count || 0) + 1 } : p
+        ),
       }));
     }
   },
@@ -600,20 +606,18 @@ export const useAppStore = create<AppState>((set, get) => ({
 
     if (res.success && res.data) {
       const created = res.data;
-      const updated = [created, ...get().properties.filter((p) => p.id !== created.id)];
-      
       const updatedUser = user ? { ...user, role: 'OWNER' as const } : user;
       if (updatedUser) {
         setItem('rehvo_auth_session', JSON.stringify(updatedUser));
       }
 
-      set({
-        properties: updated,
+      set((state) => ({
+        myProperties: [created, ...state.myProperties.filter((p) => p.id !== created.id)],
+        properties: [created, ...state.properties.filter((p) => p.id !== created.id)],
         user: updatedUser,
         currentRole: 'OWNER',
         role: 'OWNER',
-      });
-      setItem('rehvo_properties', JSON.stringify(updated));
+      }));
 
       // Reconcile live properties and metrics with Supabase
       get().fetchMyProperties();
@@ -631,22 +635,27 @@ export const useAppStore = create<AppState>((set, get) => ({
 
   updateProperty: async (id, data) => {
     // Optimistic local update
+    const prevMyProps = get().myProperties;
     const prevProps = get().properties;
-    const optimistic = prevProps.map((p) =>
+    const optimisticMy = prevMyProps.map((p) =>
       p.id === id ? { ...p, ...data, updated_at: new Date().toISOString() } : p
     );
-    set({ properties: optimistic });
+    const optimisticProps = prevProps.map((p) =>
+      p.id === id ? { ...p, ...data, updated_at: new Date().toISOString() } : p
+    );
+    set({ myProperties: optimisticMy, properties: optimisticProps });
 
     const res = await propertyService.updateProperty(id, data);
     if (res.success && res.data) {
-      const synced = get().properties.map((p) => (p.id === id ? res.data! : p));
-      set({ properties: synced });
-      setItem('rehvo_properties', JSON.stringify(synced));
+      const syncedMy = get().myProperties.map((p) => (p.id === id ? res.data! : p));
+      const syncedProps = get().properties.map((p) => (p.id === id ? res.data! : p));
+      set({ myProperties: syncedMy, properties: syncedProps });
+      get().fetchOwnerMetrics();
       get().showToast('Property updated successfully', 'success');
       return { success: true, data: res.data };
     } else {
       // Revert optimistic update on failure
-      set({ properties: prevProps });
+      set({ myProperties: prevMyProps, properties: prevProps });
       const errorMsg = res.error || "Couldn't update this property.";
       get().showToast(errorMsg, 'error');
       return { success: false, error: errorMsg };
@@ -654,21 +663,15 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   deleteProperty: async (id: string) => {
-    const { user, properties, savedPropertyIds, visits, applications, enquiries } = get();
+    const { user, properties, myProperties, savedPropertyIds, visits, applications, enquiries } = get();
 
-    const target = properties.find((p) => p.id === id);
+    const target = myProperties.find((p) => p.id === id) || properties.find((p) => p.id === id);
     if (!target) {
       get().showToast('Property not found', 'error');
       return { success: false, error: 'Property not found' };
     }
 
-    // 1. Ownership authorization check
-    const isOwner =
-      user &&
-      (target.owner_id === user.id ||
-        (user.phone && target.owner_phone === user.phone));
-
-    if (!isOwner) {
+    if (user && target.owner_id && target.owner_id !== user.id) {
       get().showToast("You don't have permission to delete this property.", 'error');
       return {
         success: false,
@@ -677,7 +680,6 @@ export const useAppStore = create<AppState>((set, get) => ({
     }
 
     try {
-      // 2. Supabase backend deletion
       const res = await propertyService.deleteProperty(id);
       if (!res.success) {
         const errorMsg = res.error || "Couldn't delete this property.";
@@ -685,29 +687,21 @@ export const useAppStore = create<AppState>((set, get) => ({
         return { success: false, error: errorMsg };
       }
 
-      // 3. Clean dependent data
+      const updatedMyProperties = myProperties.filter((p) => p.id !== id);
       const updatedProperties = properties.filter((p) => p.id !== id);
       const updatedSavedIds = savedPropertyIds.filter((pid) => pid !== id);
       const updatedVisits = visits.filter((v) => v.property_id !== id);
       const updatedApps = applications.filter((a) => a.property_id !== id);
       const updatedEnquiries = enquiries.filter((e) => e.property_id !== id);
 
-      // 4. Update AsyncStorage
+      await setItem('rehvo_my_properties', JSON.stringify(updatedMyProperties));
       await setItem('rehvo_properties', JSON.stringify(updatedProperties));
       await setItem('rehvo_saved_ids', JSON.stringify(updatedSavedIds));
 
-      // 5. Check if user has any remaining properties
-      const remainingUserProps = user
-        ? updatedProperties.filter(
-            (p) =>
-              p.owner_id === user.id ||
-              (user.phone && p.owner_phone === user.phone)
-          )
-        : [];
-
-      const willHaveNoProperties = remainingUserProps.length === 0;
+      const willHaveNoProperties = updatedMyProperties.length === 0;
 
       set((state) => ({
+        myProperties: updatedMyProperties,
         properties: updatedProperties,
         savedPropertyIds: updatedSavedIds,
         visits: updatedVisits,
@@ -719,6 +713,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         role: willHaveNoProperties ? 'RENTER' : state.role,
       }));
 
+      get().fetchOwnerMetrics();
       get().showToast('Property deleted.', 'info');
       return { success: true };
     } catch (e) {
@@ -1569,16 +1564,15 @@ export interface UserCapabilities {
 
 export const selectUserCapabilities = (state: {
   user: UserProfile | null;
-  properties: Property[];
+  properties?: Property[];
+  myProperties?: Property[];
   myFlatmateProfile: FlatmateProfile | null;
   flatmateDraft: Partial<FlatmateProfile> | null;
 }): UserCapabilities => {
   const user = state.user;
+  const sourceProps = state.myProperties || state.properties || [];
   const userProperties = user
-    ? state.properties.filter(
-        (p) =>
-          p.owner_id === user.id || (user.phone && p.owner_phone === user.phone)
-      )
+    ? sourceProps.filter((p) => p.owner_id === user.id)
     : [];
 
   const hasPropertyListing = userProperties.length > 0;

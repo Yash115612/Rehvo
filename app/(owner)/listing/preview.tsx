@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAppStore } from '../../../src/store/useAppStore';
@@ -9,8 +9,11 @@ export default function ListingPreviewRoute() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { showToast, addProperty, listingDraft, resetListingDraft, user } = useAppStore();
+  const [isPublishing, setIsPublishing] = useState(false);
 
   const handlePublish = async () => {
+    if (isPublishing) return;
+
     if (!user?.id) {
       showToast('You must be signed in to publish a property.', 'error');
       return;
@@ -31,49 +34,57 @@ export default function ListingPreviewRoute() {
       return;
     }
 
-    const res = await addProperty({
-      owner_id: user.id,
-      owner_name: user.name || 'Owner',
-      owner_avatar: user.avatar || '',
-      owner_phone: user.phone || '',
-      title: listingDraft.title.trim(),
-      description:
-        listingDraft.description?.trim() ||
-        'Spacious, well-ventilated property in prime Mumbai neighbourhood with modern amenities.',
-      property_type: (listingDraft.property_type || 'FLAT') as PropertyType,
-      listing_type: 'RENT',
-      city: listingDraft.city?.trim() || 'Mumbai',
-      locality: listingDraft.locality.trim(),
-      address:
-        listingDraft.address?.trim() ||
-        `${listingDraft.locality.trim()}, ${listingDraft.city?.trim() || 'Mumbai'}`,
-      latitude: 19.076,
-      longitude: 72.8777,
-      rent: listingDraft.rent,
-      deposit: listingDraft.deposit || 0,
-      maintenance: listingDraft.maintenance || 0,
-      brokerage: listingDraft.brokerage || 0,
-      bhk: listingDraft.bhk || '1 BHK',
-      bathrooms: listingDraft.bathrooms || 1,
-      area_sqft: listingDraft.area_sqft || 500,
-      floor: 1,
-      total_floors: 5,
-      furnishing:
-        (listingDraft.furnishing as FurnishingType) || 'FULLY_FURNISHED',
-      parking: 'Car & Bike',
-      available_from: listingDraft.available_from || 'Immediate',
-      status: 'ACTIVE',
-      verification_status: 'UNVERIFIED',
-      images: listingDraft.images || [],
-      amenities: listingDraft.amenities || ['Wi-Fi', 'Lift', 'Security 24/7'],
-      tenant_preferences: listingDraft.tenant_preferences || ['All Welcome'],
-    });
+    setIsPublishing(true);
 
-    if (res.success) {
-      resetListingDraft();
-      router.push('/(owner)/listing/publish');
-    } else {
-      showToast(res.error || "Couldn't publish this property. Please try again.", 'error');
+    try {
+      const res = await addProperty({
+        owner_id: user.id,
+        owner_name: user.name || 'Owner',
+        owner_avatar: user.avatar || '',
+        owner_phone: user.phone || '',
+        title: listingDraft.title.trim(),
+        description:
+          listingDraft.description?.trim() ||
+          'Spacious, well-ventilated property in prime Mumbai neighbourhood with modern amenities.',
+        property_type: (listingDraft.property_type || 'FLAT') as PropertyType,
+        listing_type: 'RENT',
+        city: listingDraft.city?.trim() || 'Mumbai',
+        locality: listingDraft.locality.trim(),
+        address:
+          listingDraft.address?.trim() ||
+          `${listingDraft.locality.trim()}, ${listingDraft.city?.trim() || 'Mumbai'}`,
+        latitude: 19.076,
+        longitude: 72.8777,
+        rent: listingDraft.rent,
+        deposit: listingDraft.deposit || 0,
+        maintenance: listingDraft.maintenance || 0,
+        brokerage: listingDraft.brokerage || 0,
+        bhk: listingDraft.bhk || '1 BHK',
+        bathrooms: listingDraft.bathrooms || 1,
+        area_sqft: listingDraft.area_sqft || 500,
+        floor: 1,
+        total_floors: 5,
+        furnishing:
+          (listingDraft.furnishing as FurnishingType) || 'FULLY_FURNISHED',
+        parking: 'Car & Bike',
+        available_from: listingDraft.available_from || 'Immediate',
+        status: 'ACTIVE',
+        verification_status: 'UNVERIFIED',
+        images: listingDraft.images || [],
+        amenities: listingDraft.amenities || ['Wi-Fi', 'Lift', 'Security 24/7'],
+        tenant_preferences: listingDraft.tenant_preferences || ['All Welcome'],
+      });
+
+      if (res.success) {
+        resetListingDraft();
+        router.push('/(owner)/listing/publish');
+      } else {
+        showToast(res.error || "Couldn't publish this property. Please try again.", 'error');
+      }
+    } catch (e: any) {
+      showToast(e?.message || "Couldn't publish this property. Please try again.", 'error');
+    } finally {
+      setIsPublishing(false);
     }
   };
 
@@ -113,10 +124,15 @@ export default function ListingPreviewRoute() {
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 16) }]}>
         <Pressable
-          style={styles.nextBtn}
+          style={[styles.nextBtn, isPublishing && { opacity: 0.8 }]}
           onPress={handlePublish}
+          disabled={isPublishing}
         >
-          <Text style={styles.nextText}>Publish Listing Now 🚀</Text>
+          {isPublishing ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <Text style={styles.nextText}>Publish Listing Now 🚀</Text>
+          )}
         </Pressable>
       </View>
     </SafeAreaView>

@@ -49,7 +49,7 @@ export const OwnerProfileScreen: React.FC = () => {
 
   const {
     user,
-    properties,
+    myProperties,
     enquiries,
     visits,
     ownerMetrics,
@@ -76,11 +76,9 @@ export const OwnerProfileScreen: React.FC = () => {
   }, [initializeFromStorage, fetchOwnerMetrics]);
 
   const userProperties = useMemo(() => {
-    if (!user) return [];
-    return properties.filter(
-      (p) => p.owner_id === user.id || (user.phone && p.owner_phone === user.phone)
-    );
-  }, [properties, user]);
+    if (!user?.id) return [];
+    return myProperties.filter((p) => p.owner_id === user.id);
+  }, [myProperties, user]);
 
   const hasPropertyListing = userProperties.length > 0;
 

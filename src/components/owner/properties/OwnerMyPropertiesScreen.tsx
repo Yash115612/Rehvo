@@ -39,7 +39,7 @@ export const OwnerMyPropertiesScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
 
   const {
-    properties,
+    myProperties,
     user,
     updateProperty,
     deleteProperty,
@@ -75,11 +75,9 @@ export const OwnerMyPropertiesScreen: React.FC = () => {
 
   // Filter properties owned by this user
   const ownerProperties = useMemo(() => {
-    if (!user) return [];
-    return properties.filter(
-      (p) => p.owner_id === user.id || (user.phone && p.owner_phone === user.phone)
-    );
-  }, [properties, user]);
+    if (!user?.id) return [];
+    return myProperties.filter((p) => p.owner_id === user.id);
+  }, [myProperties, user]);
 
   const hasPropertyListing = ownerProperties.length > 0;
 
