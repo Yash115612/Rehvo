@@ -1,5 +1,4 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, Linking } from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet, Pressable, Linking } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MessageCircle, CalendarDays } from 'lucide-react-native';
 import { Property } from '../../types';
@@ -8,12 +7,14 @@ interface PropertyBottomBarProps {
   property: Property;
   onChatWithOwner: () => void;
   onScheduleVisit: () => void;
+  isStartingChat?: boolean;
 }
 
 export const PropertyBottomBar: React.FC<PropertyBottomBarProps> = ({
   property,
   onChatWithOwner,
   onScheduleVisit,
+  isStartingChat = false,
 }) => {
   const insets = useSafeAreaInsets();
 
@@ -59,13 +60,20 @@ export const PropertyBottomBar: React.FC<PropertyBottomBarProps> = ({
 
         {/* Chat with Owner Primary In-App CTA */}
         <Pressable
-          style={styles.chatPrimaryBtn}
+          style={[styles.chatPrimaryBtn, isStartingChat && styles.chatPrimaryBtnDisabled]}
           onPress={onChatWithOwner}
+          disabled={isStartingChat}
           accessibilityRole="button"
           accessibilityLabel="Chat with Property Owner on REHVO"
         >
-          <MessageCircle size={18} color="#FFFFFF" strokeWidth={2.2} />
-          <Text style={styles.chatPrimaryText}>Chat with Owner</Text>
+          {isStartingChat ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <>
+              <MessageCircle size={18} color="#FFFFFF" strokeWidth={2.2} />
+              <Text style={styles.chatPrimaryText}>Chat with Owner</Text>
+            </>
+          )}
         </Pressable>
       </View>
     </View>
@@ -136,6 +144,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.28,
     shadowRadius: 8,
     elevation: 4,
+  },
+  chatPrimaryBtnDisabled: {
+    backgroundColor: '#9B87F5',
+    shadowOpacity: 0.1,
   },
   chatPrimaryText: {
     fontSize: 14.5,

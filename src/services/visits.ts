@@ -182,14 +182,40 @@ export async function createVisit(
       `)
       .single();
 
-    if (insertError) {
+    if (insertError || !visitData) {
       return {
         success: false,
         error: getUserFriendlyVisitError(insertError, "Couldn't schedule this visit."),
       };
     }
 
-    const appVisit = mapSupabaseVisitToApp(visitData);
+    // 3. Follow-up confirmation read by visit ID
+    const { data: verifyVisit, error: verifyErr } = await supabase
+      .from('visits')
+      .select(`
+        *,
+        properties (id, title, locality, city, price, property_images (*)),
+        renter_profile:profiles!visits_user_id_fkey (full_name, phone),
+        owner_profile:profiles!visits_owner_id_fkey (full_name, phone)
+      `)
+      .eq('id', visitData.id)
+      .single();
+
+    if (verifyErr || !verifyVisit) {
+      return {
+        success: false,
+        error: 'Visit was requested but failed confirmation verification. Please check your connection.',
+      };
+    }
+
+    if (verifyVisit.user_id !== userId || verifyVisit.owner_id !== propData.owner_id) {
+      return {
+        success: false,
+        error: 'Security verification failed: User ID mismatch.',
+      };
+    }
+
+    const appVisit = mapSupabaseVisitToApp(verifyVisit);
 
     // Asynchronously notify property owner
     (async () => {
@@ -199,7 +225,7 @@ export async function createVisit(
           type: 'visit',
           title: 'New visit scheduled',
           body: `A visit for "${propData.title || 'your property'}" was requested for ${scheduledDate} at ${scheduledTime}.`,
-          data: { visit_id: visitData.id, property_id: propertyId },
+          data: { visit_id: verifyVisit.id, property_id: propertyId },
         });
       } catch (_) {
         // Non-blocking notification dispatch

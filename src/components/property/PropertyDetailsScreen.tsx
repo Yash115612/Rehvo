@@ -71,6 +71,7 @@ export const PropertyDetailsScreen: React.FC<PropertyDetailsScreenProps> = ({
   const [ownerActionSheetOpen, setOwnerActionSheetOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isStartingChat, setIsStartingChat] = useState(false);
 
   const isOwnerOfProperty = useMemo(() => {
     if (!user || !property) return false;
@@ -268,10 +269,23 @@ export const PropertyDetailsScreen: React.FC<PropertyDetailsScreenProps> = ({
       {/* 12. Fixed Bottom Action Bar */}
       <PropertyBottomBar
         property={property}
+        isStartingChat={isStartingChat}
         onChatWithOwner={async () => {
-          const convId = await startOrGetConversation(property);
-          if (convId) {
-            router.push(`/(renter)/chat/${convId}`);
+          if (isStartingChat) return;
+          if (__DEV__) {
+            console.log('[REHVO CHAT BUTTON] pressed on property:', property?.id);
+          }
+          setIsStartingChat(true);
+          try {
+            const convId = await startOrGetConversation(property);
+            if (convId) {
+              router.push(`/(renter)/chat/${convId}`);
+            }
+          } catch (err) {
+            console.warn('[REHVO CHAT BUTTON] error starting chat:', err);
+            showToast("Unable to start chat. Please try again.", 'error');
+          } finally {
+            setIsStartingChat(false);
           }
         }}
         onScheduleVisit={() => setScheduleModalOpen(true)}

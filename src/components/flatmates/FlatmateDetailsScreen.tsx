@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -60,6 +61,7 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
   const [reportReason, setReportReason] = useState('Fake profile');
   const [reportComment, setReportComment] = useState('');
   const [isSubmittingReport, setIsSubmittingReport] = useState(false);
+  const [isStartingChat, setIsStartingChat] = useState(false);
 
   const avatarUri =
     profile.avatar ||
@@ -81,9 +83,21 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
   };
 
   const handleStartChat = async () => {
-    const convId = await startOrGetFlatmateConversation(profile);
-    if (convId) {
-      router.push(`/(renter)/chat/${convId}`);
+    if (isStartingChat) return;
+    if (__DEV__) {
+      console.log('[REHVO CHAT BUTTON] pressed on flatmate profile:', profile.id);
+    }
+    setIsStartingChat(true);
+    try {
+      const convId = await startOrGetFlatmateConversation(profile);
+      if (convId) {
+        router.push(`/(renter)/chat/${convId}`);
+      }
+    } catch (err) {
+      console.warn('[REHVO CHAT BUTTON] error starting chat with flatmate:', err);
+      showToast("Unable to start chat. Please try again.", 'error');
+    } finally {
+      setIsStartingChat(false);
     }
   };
 
@@ -338,15 +352,22 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
         </Pressable>
 
         <Pressable
-          style={styles.chatActionBtn}
+          style={[styles.chatActionBtn, isStartingChat && styles.chatActionBtnDisabled]}
           onPress={handleStartChat}
+          disabled={isStartingChat}
           accessibilityRole="button"
           accessibilityLabel={`Chat with ${profile.name}`}
         >
-          <MessageCircle size={19} color="#FFFFFF" strokeWidth={2.2} />
-          <Text style={styles.chatActionBtnText}>
-            Chat with {profile.display_name || profile.name.split(' ')[0]}
-          </Text>
+          {isStartingChat ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <>
+              <MessageCircle size={19} color="#FFFFFF" strokeWidth={2.2} />
+              <Text style={styles.chatActionBtnText}>
+                Chat with {profile.display_name || profile.name.split(' ')[0]}
+              </Text>
+            </>
+          )}
         </Pressable>
       </View>
 
@@ -749,6 +770,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 8,
     elevation: 3,
+  },
+  chatActionBtnDisabled: {
+    backgroundColor: '#9B87F5',
+    shadowOpacity: 0.1,
   },
   chatActionBtnText: {
     fontSize: 15,
