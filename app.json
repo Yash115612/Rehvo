@@ -31,11 +31,14 @@
       },
       "package": "com.rehvo.app",
       "permissions": [
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "web": {
@@ -69,7 +72,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "89b15f5c-8099-4837-a721-f438cdd731cf"
+        "projectId": "3a035748-ef87-409c-aa5e-4cefcc914e7c"
       }
     },
     "owner": "yashchoudhary.work"
