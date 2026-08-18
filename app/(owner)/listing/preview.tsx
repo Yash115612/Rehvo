@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, Image, ScrollView } from 'react-nati
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useAppStore } from '../../../src/store/useAppStore';
+import { PropertyType, FurnishingType } from '../../../src/types';
 
 export default function ListingPreviewRoute() {
   const router = useRouter();
@@ -10,58 +11,69 @@ export default function ListingPreviewRoute() {
   const { showToast, addProperty, listingDraft, resetListingDraft, user } = useAppStore();
 
   const handlePublish = async () => {
+    if (!user?.id) {
+      showToast('You must be signed in to publish a property.', 'error');
+      return;
+    }
+
+    if (!listingDraft.title || listingDraft.title.trim().length === 0) {
+      showToast('Please enter a property title before publishing.', 'error');
+      return;
+    }
+
+    if (!listingDraft.rent || listingDraft.rent <= 0) {
+      showToast('Please specify a valid monthly rent amount.', 'error');
+      return;
+    }
+
+    if (!listingDraft.locality || listingDraft.locality.trim().length === 0) {
+      showToast('Please enter the property locality.', 'error');
+      return;
+    }
+
     const res = await addProperty({
-      owner_id: user?.id || '',
-      owner_name: user?.name || 'Owner',
-      owner_avatar: user?.avatar || '',
-      owner_phone: user?.phone || '',
-      title: listingDraft.title || 'Modern 2 BHK Apartment in Bandra West',
+      owner_id: user.id,
+      owner_name: user.name || 'Owner',
+      owner_avatar: user.avatar || '',
+      owner_phone: user.phone || '',
+      title: listingDraft.title.trim(),
       description:
-        listingDraft.description ||
-        'Spacious, well-ventilated apartment in a prime residential society.',
-      property_type: listingDraft.property_type || 'FLAT',
+        listingDraft.description?.trim() ||
+        'Spacious, well-ventilated property in prime Mumbai neighbourhood with modern amenities.',
+      property_type: (listingDraft.property_type || 'FLAT') as PropertyType,
       listing_type: 'RENT',
-      city: listingDraft.city || 'Mumbai',
-      locality: listingDraft.locality || 'Bandra West',
+      city: listingDraft.city?.trim() || 'Mumbai',
+      locality: listingDraft.locality.trim(),
       address:
-        listingDraft.address || 'Hill Road, Bandra West, Mumbai 400050',
-      latitude: 19.0596,
-      longitude: 72.8295,
-      rent: listingDraft.rent || 45000,
-      deposit: listingDraft.deposit || 150000,
-      maintenance: listingDraft.maintenance || 3000,
+        listingDraft.address?.trim() ||
+        `${listingDraft.locality.trim()}, ${listingDraft.city?.trim() || 'Mumbai'}`,
+      latitude: 19.076,
+      longitude: 72.8777,
+      rent: listingDraft.rent,
+      deposit: listingDraft.deposit || 0,
+      maintenance: listingDraft.maintenance || 0,
       brokerage: listingDraft.brokerage || 0,
-      bhk: listingDraft.bhk || '2 BHK',
-      bathrooms: listingDraft.bathrooms || 2,
-      area_sqft: listingDraft.area_sqft || 1200,
-      floor: 4,
-      total_floors: 12,
-      furnishing: listingDraft.furnishing || 'FULLY_FURNISHED',
+      bhk: listingDraft.bhk || '1 BHK',
+      bathrooms: listingDraft.bathrooms || 1,
+      area_sqft: listingDraft.area_sqft || 500,
+      floor: 1,
+      total_floors: 5,
+      furnishing:
+        (listingDraft.furnishing as FurnishingType) || 'FULLY_FURNISHED',
       parking: 'Car & Bike',
       available_from: listingDraft.available_from || 'Immediate',
       status: 'ACTIVE',
-      verification_status: 'VERIFIED',
-      images:
-        listingDraft.images && listingDraft.images.length > 0
-          ? listingDraft.images
-          : [
-              {
-                id: 'img_preview_1',
-                url: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-                is_cover: true,
-                sort_order: 0,
-              },
-            ],
-      amenities:
-        listingDraft.amenities && listingDraft.amenities.length > 0
-          ? listingDraft.amenities
-          : ['Wi-Fi', 'AC', 'Lift', 'Security 24/7', 'Power Backup'],
+      verification_status: 'UNVERIFIED',
+      images: listingDraft.images || [],
+      amenities: listingDraft.amenities || ['Wi-Fi', 'Lift', 'Security 24/7'],
       tenant_preferences: listingDraft.tenant_preferences || ['All Welcome'],
     });
 
     if (res.success) {
       resetListingDraft();
       router.push('/(owner)/listing/publish');
+    } else {
+      showToast(res.error || "Couldn't publish this property. Please try again.", 'error');
     }
   };
 

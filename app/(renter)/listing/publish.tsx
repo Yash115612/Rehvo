@@ -37,12 +37,30 @@ export default function ListingPublishRoute() {
 
   const handlePublish = async () => {
     if (isPublishing) return;
+
+    if (!user?.id) {
+      showToast('You must be signed in to publish a property.', 'error');
+      return;
+    }
+
+    if (!listingDraft.title || listingDraft.title.trim().length === 0) {
+      showToast('Please enter a property title before publishing.', 'error');
+      return;
+    }
+
+    if (!listingDraft.rent || listingDraft.rent <= 0) {
+      showToast('Please specify a valid monthly rent amount.', 'error');
+      return;
+    }
+
+    if (!listingDraft.locality || listingDraft.locality.trim().length === 0) {
+      showToast('Please enter the property locality.', 'error');
+      return;
+    }
+
     setIsPublishing(true);
 
     try {
-      // Simulate network request latency
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
       const newProperty: Omit<
         Property,
         | 'id'
@@ -52,54 +70,40 @@ export default function ListingPublishRoute() {
         | 'saves_count'
         | 'enquiries_count'
       > = {
-        owner_id: user?.id || 'usr_current',
-        owner_name: user?.name || 'Rohan Mehta',
-        owner_avatar:
-          user?.avatar ||
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
-        owner_phone: user?.phone || '+91 98201 45678',
-        title: listingDraft.title || 'Modern 2 BHK in Andheri West',
+        owner_id: user.id,
+        owner_name: user.name || 'Owner',
+        owner_avatar: user.avatar || '',
+        owner_phone: user.phone || '',
+        title: listingDraft.title.trim(),
         description:
-          listingDraft.description ||
-          'Spacious, well-ventilated apartment in a prime residential society.',
+          listingDraft.description?.trim() ||
+          'Spacious, well-ventilated property in prime Mumbai neighbourhood with modern amenities.',
         property_type: (listingDraft.property_type || 'FLAT') as PropertyType,
         listing_type: 'RENT',
-        city: listingDraft.city || 'Mumbai',
-        locality: listingDraft.locality || 'Andheri West',
+        city: listingDraft.city?.trim() || 'Mumbai',
+        locality: listingDraft.locality.trim(),
         address:
-          listingDraft.address || 'Lokhandwala Complex, Andheri West, Mumbai',
-        latitude: 19.1363,
-        longitude: 72.8277,
-        rent: listingDraft.rent || 35000,
-        deposit: listingDraft.deposit || 100000,
-        maintenance: listingDraft.maintenance || 2500,
+          listingDraft.address?.trim() ||
+          `${listingDraft.locality.trim()}, ${listingDraft.city?.trim() || 'Mumbai'}`,
+        latitude: 19.076,
+        longitude: 72.8777,
+        rent: listingDraft.rent,
+        deposit: listingDraft.deposit || 0,
+        maintenance: listingDraft.maintenance || 0,
         brokerage: listingDraft.brokerage ?? 0,
-        bhk: listingDraft.bhk || '2 BHK',
-        bathrooms: listingDraft.bathrooms || 2,
-        area_sqft: listingDraft.area_sqft || 950,
-        floor: 4,
-        total_floors: 12,
+        bhk: listingDraft.bhk || '1 BHK',
+        bathrooms: listingDraft.bathrooms || 1,
+        area_sqft: listingDraft.area_sqft || 500,
+        floor: 1,
+        total_floors: 5,
         furnishing:
           (listingDraft.furnishing as FurnishingType) || 'SEMI_FURNISHED',
         parking: 'Car & Bike',
         available_from: listingDraft.available_from || 'Available Immediately',
         status: 'ACTIVE',
-        verification_status: 'VERIFIED',
-        images:
-          listingDraft.images && listingDraft.images.length > 0
-            ? listingDraft.images
-            : [
-                {
-                  id: 'img_0',
-                  url: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80',
-                  is_cover: true,
-                  sort_order: 0,
-                },
-              ],
-        amenities:
-          listingDraft.amenities && listingDraft.amenities.length > 0
-            ? listingDraft.amenities
-            : ['High-Speed Wi-Fi', '24/7 Security', 'Elevator / Lift'],
+        verification_status: 'UNVERIFIED',
+        images: listingDraft.images || [],
+        amenities: listingDraft.amenities || ['High-Speed Wi-Fi', '24/7 Security'],
         tenant_preferences: listingDraft.tenant_preferences || ['All Welcome'],
       };
 
@@ -107,9 +111,11 @@ export default function ListingPublishRoute() {
       if (res.success) {
         resetListingDraft();
         router.replace('/(renter)/listing/success');
+      } else {
+        showToast(res.error || "Couldn't publish this property. Please try again.", 'error');
       }
-    } catch (e) {
-      showToast("Couldn't create this property. Please try again.", 'error');
+    } catch (e: any) {
+      showToast(e?.message || "Couldn't create this property. Please try again.", 'error');
     } finally {
       setIsPublishing(false);
     }

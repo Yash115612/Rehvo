@@ -601,9 +601,26 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (res.success && res.data) {
       const created = res.data;
       const updated = [created, ...get().properties.filter((p) => p.id !== created.id)];
-      set({ properties: updated });
+      
+      const updatedUser = user ? { ...user, role: 'OWNER' as const } : user;
+      if (updatedUser) {
+        setItem('rehvo_auth_session', JSON.stringify(updatedUser));
+      }
+
+      set({
+        properties: updated,
+        user: updatedUser,
+        currentRole: 'OWNER',
+        role: 'OWNER',
+      });
       setItem('rehvo_properties', JSON.stringify(updated));
-      get().showToast('Property listed successfully!', 'success');
+
+      // Reconcile live properties and metrics with Supabase
+      get().fetchMyProperties();
+      get().fetchProperties();
+      get().fetchOwnerMetrics();
+
+      get().showToast('Property published successfully!', 'success');
       return { success: true, data: created };
     } else {
       const errorMsg = res.error || "Couldn't create this property.";

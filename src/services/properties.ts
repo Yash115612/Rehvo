@@ -425,7 +425,7 @@ export async function getMyProperties(
 // Mutation Operations (Create, Update, Status, Delete)
 // ---------------------------------------------------------------------------
 
-/** Create a new property listing with optional images */
+/** Create a new property listing with optional images and atomic rollback */
 export async function createProperty(
   input: PropertyInput,
   imagesToUpload?: { uri: string; isCover?: boolean }[]
@@ -436,16 +436,33 @@ export async function createProperty(
 
   try {
     // 1. Get current authenticated user
-    const { data: authData } = await supabase.auth.getUser();
+    const { data: authData, error: authError } = await supabase.auth.getUser();
     const currentUserId = authData?.user?.id;
 
-    if (!currentUserId) {
-      return { success: false, error: 'You must be signed in to list a property.' };
+    if (!currentUserId || authError) {
+      return { success: false, error: 'You must be signed in to publish a property.' };
     }
 
-    // 2. Prepare database payload
+    // 2. Validate required property fields
+    if (!input.title || input.title.trim().length === 0) {
+      return { success: false, error: 'Please provide a descriptive title for your property.' };
+    }
+    if (!input.rent || input.rent <= 0) {
+      return { success: false, error: 'Please provide a valid monthly rent amount.' };
+    }
+    if (!input.city || input.city.trim().length === 0) {
+      return { success: false, error: 'Please specify the city.' };
+    }
+    if (!input.locality || input.locality.trim().length === 0) {
+      return { success: false, error: 'Please specify the locality.' };
+    }
+
+    // 3. Prepare database payload
     const dbPayload = mapAppPropertyToDb(input);
     dbPayload.owner_id = currentUserId; // Strictly enforce authenticated user id
+    if (!dbPayload.status) {
+      dbPayload.status = 'published';
+    }
 
     const { data: propRow, error: propError } = await supabase
       .from('properties')
@@ -465,35 +482,71 @@ export async function createProperty(
 
     const propertyId = propRow.id;
     const uploadedImages: PropertyImage[] = [];
+    const uploadedStoragePaths: string[] = [];
 
-    // 3. Upload images to Supabase Storage if provided
+    // Collect all candidate images (from imagesToUpload parameter OR input.images)
+    const candidateImages: { uri: string; isCover: boolean; sortOrder: number }[] = [];
+
     if (imagesToUpload && imagesToUpload.length > 0) {
-      for (let i = 0; i < imagesToUpload.length; i++) {
-        const item = imagesToUpload[i];
-        const isCover = item.isCover ?? i === 0;
+      imagesToUpload.forEach((item, idx) => {
+        candidateImages.push({
+          uri: item.uri,
+          isCover: item.isCover ?? idx === 0,
+          sortOrder: idx,
+        });
+      });
+    } else if (input.images && input.images.length > 0) {
+      input.images.forEach((item, idx) => {
+        candidateImages.push({
+          uri: item.url,
+          isCover: item.is_cover ?? idx === 0,
+          sortOrder: item.sort_order ?? idx,
+        });
+      });
+    }
 
+    // 4. Process and upload each image with rollback on critical failure
+    let imageUploadFailed = false;
+    let imageUploadErrorMsg = '';
+
+    for (let i = 0; i < candidateImages.length; i++) {
+      const item = candidateImages[i];
+      const isLocal =
+        item.uri.startsWith('file:') ||
+        item.uri.startsWith('blob:') ||
+        item.uri.startsWith('ph:') ||
+        item.uri.startsWith('content:') ||
+        item.uri.startsWith('data:');
+
+      if (isLocal) {
+        // Upload local file to Supabase Storage
         const uploadResult = await uploadPropertyImage(
           propertyId,
           item.uri,
-          isCover,
-          i
+          item.isCover,
+          item.sortOrder,
+          currentUserId
         );
 
         if (uploadResult.success && uploadResult.data) {
           uploadedImages.push(uploadResult.data);
+          if (uploadResult.data.id) {
+            uploadedStoragePaths.push(`${currentUserId}/${propertyId}`);
+          }
+        } else {
+          imageUploadFailed = true;
+          imageUploadErrorMsg = uploadResult.error || "Failed to upload property image.";
+          break;
         }
-      }
-    } else if (input.images && input.images.length > 0) {
-      // If already pre-formatted image objects exist (e.g. from existing URLs)
-      for (let i = 0; i < input.images.length; i++) {
-        const img = input.images[i];
-        const { data: imgRow } = await supabase
+      } else {
+        // Remote HTTP/HTTPS URL: insert row into property_images directly
+        const { data: imgRow, error: imgError } = await supabase
           .from('property_images')
           .insert({
             property_id: propertyId,
-            image_url: img.url,
-            is_cover: img.is_cover ?? i === 0,
-            sort_order: i,
+            image_url: item.uri,
+            is_cover: item.isCover,
+            sort_order: item.sortOrder,
           })
           .select()
           .single();
@@ -509,6 +562,23 @@ export async function createProperty(
         }
       }
     }
+
+    // 5. If image upload failed, ROLL BACK property creation to avoid orphan records
+    if (imageUploadFailed) {
+      await supabase.from('properties').delete().eq('id', propertyId);
+      return {
+        success: false,
+        error: imageUploadErrorMsg || "Your property could not be published because photo upload failed. Please try again.",
+      };
+    }
+
+    // 6. Ensure profile role reflects lister/owner status
+    supabase
+      .from('profiles')
+      .update({ role: 'owner' })
+      .eq('id', currentUserId)
+      .eq('role', 'renter')
+      .then(() => {}, () => {});
 
     const createdProperty = mapSupabasePropertyToApp(
       propRow,
@@ -657,20 +727,36 @@ export async function uploadPropertyImage(
   propertyId: string,
   uri: string,
   isCover: boolean = false,
-  sortOrder: number = 0
+  sortOrder: number = 0,
+  ownerId?: string
 ): Promise<PropertyServiceResult<PropertyImage>> {
   if (!isSupabaseConfigured()) {
     return { success: false, error: 'Database not connected' };
   }
 
   try {
+    let resolvedOwnerId = ownerId;
+    if (!resolvedOwnerId) {
+      const { data: authData } = await supabase.auth.getUser();
+      resolvedOwnerId = authData?.user?.id;
+    }
+    if (!resolvedOwnerId) {
+      return { success: false, error: 'You must be signed in to upload property images.' };
+    }
+
     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`;
-    const storagePath = `${propertyId}/${fileName}`;
+    const storagePath = `${resolvedOwnerId}/${propertyId}/${fileName}`;
 
     let publicUrl = uri;
 
-    // Only upload to Supabase Storage if it's a local file URI (e.g. file://, blob:, ph://)
-    if (uri.startsWith('file:') || uri.startsWith('blob:') || uri.startsWith('ph:') || uri.startsWith('content:')) {
+    // Only upload to Supabase Storage if it's a local file URI (e.g. file://, blob:, ph://, content:, data:)
+    if (
+      uri.startsWith('file:') ||
+      uri.startsWith('blob:') ||
+      uri.startsWith('ph:') ||
+      uri.startsWith('content:') ||
+      uri.startsWith('data:')
+    ) {
       const response = await fetch(uri);
       const blob = await response.blob();
 
