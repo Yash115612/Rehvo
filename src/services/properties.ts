@@ -550,6 +550,17 @@ export async function createProperty(
       dbPayload.status = 'published';
     }
 
+    if (__DEV__) {
+      console.log('[REHVO PROPERTY INSERT]', {
+        action: 'createProperty',
+        userId: currentUserId,
+        title: dbPayload.title,
+        propertyType: dbPayload.type,
+        locality: dbPayload.locality,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     const { data: propRow, error: propError } = await supabase
       .from('properties')
       .insert(dbPayload)
