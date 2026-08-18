@@ -70,6 +70,9 @@ export const SharedConversationScreen: React.FC<
   // Fetch conversation if not in store
   useEffect(() => {
     let isMounted = true;
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 9 chat_screen_loaded for conv:', conversationId);
+    }
     const exists = conversations.find((c) => c.id === conversationId);
     if (!exists && conversationId) {
       setIsLoading(true);

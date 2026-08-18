@@ -273,16 +273,21 @@ export const PropertyDetailsScreen: React.FC<PropertyDetailsScreenProps> = ({
         onChatWithOwner={async () => {
           if (isStartingChat) return;
           if (__DEV__) {
-            console.log('[REHVO CHAT BUTTON] pressed on property:', property?.id);
+            console.log('[REHVO CHAT DEBUG] STEP 1 button_pressed on property:', property?.id);
           }
           setIsStartingChat(true);
           try {
             const convId = await startOrGetConversation(property);
             if (convId) {
+              if (__DEV__) {
+                console.log('[REHVO CHAT DEBUG] STEP 8 navigation_started to route: /(renter)/chat/' + convId);
+              }
               router.push(`/(renter)/chat/${convId}`);
             }
-          } catch (err) {
-            console.warn('[REHVO CHAT BUTTON] error starting chat:', err);
+          } catch (err: any) {
+            if (__DEV__) {
+              console.warn('[REHVO CHAT DEBUG] Error in button handler:', err?.message);
+            }
             showToast("Unable to start chat. Please try again.", 'error');
           } finally {
             setIsStartingChat(false);

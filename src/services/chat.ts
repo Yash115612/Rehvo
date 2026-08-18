@@ -73,6 +73,7 @@ export function mapSupabaseConversationToApp(
 
   const prop = row.properties;
   const flatmate = row.flatmate_profiles;
+  const flatmateName = flatmate?.profiles?.full_name || otherProfile?.full_name || 'Flatmate';
 
   const propImage =
     prop?.property_images?.find((img: any) => img.is_cover)?.image_url ||
@@ -80,8 +81,7 @@ export function mapSupabaseConversationToApp(
     'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80';
 
   const flatmateAvatar =
-    flatmate?.flatmate_images?.find((img: any) => img.is_primary)?.image_url ||
-    flatmate?.flatmate_images?.[0]?.image_url ||
+    flatmate?.photo ||
     otherProfile?.profile_photo ||
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
 
@@ -95,7 +95,7 @@ export function mapSupabaseConversationToApp(
     property_title: prop
       ? prop.title
       : flatmate
-      ? `Flatmate Connect · ${flatmate.name}`
+      ? `Flatmate Connect · ${flatmateName}`
       : 'Direct Conversation',
     property_image: prop ? propImage : flatmateAvatar,
     property_locality: prop
@@ -106,13 +106,13 @@ export function mapSupabaseConversationToApp(
     rent: prop?.price ?? prop?.rent,
     enquiry_id: row.enquiry_id || undefined,
     flatmate_profile_id: row.flatmate_profile_id || undefined,
-    flatmate_name: flatmate?.name,
+    flatmate_name: flatmateName,
     flatmate_avatar: flatmateAvatar,
     renter_id: currentUserId,
     renter_name: myProfile?.full_name || 'You',
     renter_avatar: myProfile?.profile_photo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
     owner_id: otherParticipant?.user_id || '',
-    owner_name: otherProfile?.full_name || (flatmate ? flatmate.name : 'Property Owner'),
+    owner_name: otherProfile?.full_name || (flatmate ? flatmateName : 'Property Owner'),
     owner_avatar: otherProfile?.profile_photo || (flatmate ? flatmateAvatar : 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80'),
     last_message: row.last_message_text || (mappedMessages.length > 0 ? mappedMessages[mappedMessages.length - 1].text : 'No messages yet'),
     updated_at: row.last_message_at || row.updated_at || row.created_at,
@@ -168,7 +168,7 @@ export async function getConversations(
       .select(`
         *,
         properties (id, title, locality, city, price, property_images (*)),
-        flatmate_profiles (id, user_id, name, display_name, locality, city, budget_max, room_preference, flatmate_images (*)),
+        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name)),
         conversation_participants (
           id,
           user_id,
@@ -227,7 +227,7 @@ export async function getConversationById(
       .select(`
         *,
         properties (id, title, locality, city, price, property_images (*)),
-        flatmate_profiles (id, user_id, name, display_name, locality, city, budget_max, room_preference, flatmate_images (*)),
+        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name)),
         conversation_participants (
           id,
           user_id,
@@ -307,14 +307,24 @@ export async function getOrCreatePropertyConversation(
   enquiryId?: string
 ): Promise<ChatServiceResult<Conversation>> {
   if (!isSupabaseConfigured()) {
+    if (__DEV__) console.warn('[REHVO CHAT DEBUG] Database not configured');
     return { success: false, error: 'Database not connected' };
   }
 
   try {
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 2 resolving authenticated user');
+    }
     const { data: authData } = await supabase.auth.getUser();
     const currentUserId = authData?.user?.id;
     if (!currentUserId) {
-      return { success: false, error: 'You must be signed in to send messages.' };
+      if (__DEV__) console.warn('[REHVO CHAT DEBUG] STEP 2 FAILED: User session missing');
+      return { success: false, error: 'Your session expired. Please log in again.' };
+    }
+
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 2 authenticated_user_resolved:', currentUserId);
+      console.log('[REHVO CHAT DEBUG] STEP 5 & 6 calling create_or_get_conversation RPC for property:', propertyId);
     }
 
     // Call atomic RPC function in Supabase
@@ -327,14 +337,36 @@ export async function getOrCreatePropertyConversation(
     );
 
     if (rpcError || !convId) {
+      if (__DEV__) {
+        console.warn('[REHVO CHAT DEBUG] STEP 5/6 FAILED:', {
+          code: rpcError?.code,
+          message: rpcError?.message,
+        });
+      }
       return {
         success: false,
         error: getUserFriendlyChatError(rpcError, "Couldn't initiate chat with host."),
       };
     }
 
-    return getConversationById(convId, currentUserId);
-  } catch (err) {
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 6 conversation_created_or_reused:', convId);
+      console.log('[REHVO CHAT DEBUG] STEP 7 loading conversation details & verifying participants');
+    }
+
+    const convResult = await getConversationById(convId, currentUserId);
+    if (__DEV__) {
+      if (convResult.success) {
+        console.log('[REHVO CHAT DEBUG] STEP 7 participants_verified for conv:', convId);
+      } else {
+        console.warn('[REHVO CHAT DEBUG] STEP 7 FAILED:', convResult.error);
+      }
+    }
+    return convResult;
+  } catch (err: any) {
+    if (__DEV__) {
+      console.warn('[REHVO CHAT DEBUG] Unexpected error:', err?.message);
+    }
     return {
       success: false,
       error: getUserFriendlyChatError(err, "Couldn't initiate chat with host."),
@@ -347,14 +379,24 @@ export async function getOrCreateFlatmateConversation(
   flatmateProfileId: string
 ): Promise<ChatServiceResult<Conversation>> {
   if (!isSupabaseConfigured()) {
+    if (__DEV__) console.warn('[REHVO CHAT DEBUG] Database not configured');
     return { success: false, error: 'Database not connected' };
   }
 
   try {
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 2 resolving authenticated user');
+    }
     const { data: authData } = await supabase.auth.getUser();
     const currentUserId = authData?.user?.id;
     if (!currentUserId) {
-      return { success: false, error: 'You must be signed in to send messages.' };
+      if (__DEV__) console.warn('[REHVO CHAT DEBUG] STEP 2 FAILED: User session missing');
+      return { success: false, error: 'Your session expired. Please log in again.' };
+    }
+
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 2 authenticated_user_resolved:', currentUserId);
+      console.log('[REHVO CHAT DEBUG] STEP 5 & 6 calling create_or_get_conversation RPC for flatmate profile:', flatmateProfileId);
     }
 
     // Call atomic RPC function in Supabase
@@ -366,14 +408,36 @@ export async function getOrCreateFlatmateConversation(
     );
 
     if (rpcError || !convId) {
+      if (__DEV__) {
+        console.warn('[REHVO CHAT DEBUG] STEP 5/6 FAILED:', {
+          code: rpcError?.code,
+          message: rpcError?.message,
+        });
+      }
       return {
         success: false,
         error: getUserFriendlyChatError(rpcError, "Couldn't initiate chat with flatmate."),
       };
     }
 
-    return getConversationById(convId, currentUserId);
-  } catch (err) {
+    if (__DEV__) {
+      console.log('[REHVO CHAT DEBUG] STEP 6 conversation_created_or_reused:', convId);
+      console.log('[REHVO CHAT DEBUG] STEP 7 loading conversation details & verifying participants');
+    }
+
+    const convResult = await getConversationById(convId, currentUserId);
+    if (__DEV__) {
+      if (convResult.success) {
+        console.log('[REHVO CHAT DEBUG] STEP 7 participants_verified for conv:', convId);
+      } else {
+        console.warn('[REHVO CHAT DEBUG] STEP 7 FAILED:', convResult.error);
+      }
+    }
+    return convResult;
+  } catch (err: any) {
+    if (__DEV__) {
+      console.warn('[REHVO CHAT DEBUG] Unexpected error:', err?.message);
+    }
     return {
       success: false,
       error: getUserFriendlyChatError(err, "Couldn't initiate chat with flatmate."),
