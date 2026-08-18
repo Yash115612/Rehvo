@@ -1,0 +1,6 @@
+{
+  "name": "REHVO",
+  "description": "Find your next place. Premium Indian Rental Marketplace for Flats, PGs, Private Rooms, Flatmates & Co-Living in Mumbai.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

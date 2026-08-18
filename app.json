@@ -1,0 +1,68 @@
+{
+  "expo": {
+    "name": "REHVO",
+    "slug": "rehvo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F8F7F4"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.rehvo.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow REHVO to access your camera to capture property and verification photos.",
+        "NSPhotoLibraryUsageDescription": "Allow REHVO to access your photos to upload property and profile images.",
+        "NSLocationWhenInUseUsageDescription": "Allow REHVO to access your location to discover rental properties and flatmates near you."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.rehvo.app",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-notifications",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow REHVO to access your location to find properties nearby."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow REHVO to access your photos to upload property images."
+        }
+      ],
+      "expo-asset",
+      "expo-font"
+    ],
+    "scheme": "rehvo",
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
