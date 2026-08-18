@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 7.0.0"
+    "version": ">= 7.0.0",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -14,6 +15,10 @@
       },
       "ios": {
         "simulator": false
+      },
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://xoskechmxzgfajkfpssv.supabase.co",
+        "APP_URL": "rehvo://"
       }
     },
     "production": {
@@ -22,6 +27,10 @@
       },
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_SUPABASE_URL": "https://xoskechmxzgfajkfpssv.supabase.co",
+        "APP_URL": "rehvo://"
       }
     }
   },
