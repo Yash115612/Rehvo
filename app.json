@@ -36,8 +36,6 @@
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.RECORD_AUDIO"
       ]
     },
@@ -72,9 +70,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "3a035748-ef87-409c-aa5e-4cefcc914e7c"
+        "projectId": "0a82c7ce-1ade-457b-8d67-8a9640ebed53"
       }
     },
-    "owner": "yashchoudhary.work"
+    "owner": "yashchoudhary1155"
   }
 }
