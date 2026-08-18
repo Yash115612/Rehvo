@@ -20,6 +20,16 @@ export default function SignUpRoute() {
     if (result.success && result.data) {
       const formattedPhone = data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone}`;
 
+      // Case A: Email confirmation required (Supabase has Confirm Email enabled)
+      if (result.requiresEmailConfirmation) {
+        showToast('Account created! Please check your email to verify your account before logging in.', 'info');
+        router.replace('/(auth)/login');
+        return { success: true, requiresVerification: true };
+      }
+
+      // Case B: Confirmation disabled (Instant session granted)
+      showToast('Account created successfully!', 'success');
+
       // Ensure profile row exists in PostgreSQL
       const profileResult = await profileService.ensureProfileExists(result.data.userId, {
         name: data.name,
@@ -27,12 +37,6 @@ export default function SignUpRoute() {
         phone: formattedPhone,
         role: 'RENTER',
       });
-
-      if (result.requiresEmailConfirmation) {
-        showToast('Please check your email to verify your account', 'info');
-      } else {
-        showToast('Account created successfully!', 'success');
-      }
 
       if (profileResult.success && profileResult.data) {
         login({
@@ -53,7 +57,7 @@ export default function SignUpRoute() {
         pathname: '/(auth)/onboarding',
         params: { startStep: 'ROLE' },
       });
-      return { success: true, requiresVerification: result.requiresEmailConfirmation || false };
+      return { success: true, requiresVerification: false };
     } else {
       const errorMsg = result.error || 'Signup failed';
       showToast(errorMsg, 'error');

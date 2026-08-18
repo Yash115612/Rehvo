@@ -40,10 +40,25 @@ export function getUserFriendlyError(error: AuthError | Error | unknown): string
 
   const message = (error as AuthError)?.message || (error as Error)?.message || '';
   const status = (error as AuthError)?.status;
+  const code = (error as any)?.code || (error as any)?.error_code || '';
+
+  // Safe development logging — never logs secrets, passwords or tokens
+  if (__DEV__) {
+    console.log('[REHVO Auth Diagnostic]', {
+      status,
+      code,
+      message,
+    });
+  }
 
   // Network / configuration errors
-  if (message.includes('fetch') || message.includes('network') || message.includes('ENOTFOUND')) {
-    return 'Unable to connect. Please check your internet connection and try again.';
+  if (
+    message.includes('fetch') ||
+    message.includes('network') ||
+    message.includes('ENOTFOUND') ||
+    message.includes('Failed to fetch')
+  ) {
+    return 'Unable to connect. Check your internet connection and try again.';
   }
   if (message.includes('placeholder') || !isSupabaseConfigured()) {
     return 'The app is not yet connected to the server. Please contact support.';
@@ -60,40 +75,82 @@ export function getUserFriendlyError(error: AuthError | Error | unknown): string
     return 'Unable to complete Google sign-in. Please try again.';
   }
 
-  // Auth-specific errors
-  if (status === 400 || message.includes('Invalid login credentials')) {
-    return 'Incorrect email or password. Please check your credentials and try again.';
+  // Email Confirmation (Check BEFORE generic status 400)
+  if (
+    code === 'email_not_confirmed' ||
+    message.includes('Email not confirmed') ||
+    message.includes('email_not_confirmed')
+  ) {
+    return 'Please confirm your email before logging in. Check your inbox for a confirmation link.';
   }
-  if (message.includes('Email not confirmed')) {
-    return 'Please verify your email address before signing in. Check your inbox for a confirmation link.';
-  }
-  if (message.includes('User already registered') || message.includes('already been registered')) {
+
+  // User Already Registered
+  if (
+    code === 'user_already_exists' ||
+    message.includes('User already registered') ||
+    message.includes('already been registered') ||
+    message.includes('user_already_exists')
+  ) {
     return 'An account with this email already exists. Please sign in instead.';
   }
-  if (message.includes('Password') && (message.includes('characters') || message.includes('least 6') || message.includes('least 8'))) {
-    return 'Password must be at least 8 characters long.';
+
+  // Password Requirements
+  if (
+    code === 'weak_password' ||
+    (message.includes('Password') &&
+      (message.includes('characters') || message.includes('least 6') || message.includes('least 8')))
+  ) {
+    return 'Password does not meet the requirements. It must be at least 8 characters.';
   }
-  if (message.includes('rate limit') || status === 429) {
-    return 'Too many attempts. Please wait a moment and try again.';
+
+  // Rate Limiting
+  if (
+    code === 'over_email_send_rate_limit' ||
+    code === 'over_request_rate_limit' ||
+    message.includes('rate limit') ||
+    status === 429
+  ) {
+    return 'Too many attempts. Please try again later.';
   }
+
+  // Invalid Credentials
+  if (
+    code === 'invalid_credentials' ||
+    message.includes('Invalid login credentials')
+  ) {
+    return 'Invalid email or password. Please check your credentials and try again.';
+  }
+
+  // Malformed Email
   if (message.includes('invalid') && message.includes('email')) {
     return 'Please enter a valid email address.';
   }
+
+  // Phone errors
   if (message.includes('Phone') || message.includes('phone')) {
     if (message.includes('not enabled') || message.includes('not supported')) {
       return 'Phone login is not currently available. Please use email and password.';
     }
     return 'Invalid phone number. Please check and try again.';
   }
+
+  // OTP errors
   if (message.includes('OTP') || message.includes('otp') || message.includes('token')) {
     return 'Invalid verification code. Please check the code and try again.';
   }
+
+  // Session expired
   if (message.includes('session') || message.includes('refresh_token')) {
     return 'Your session has expired. Please sign in again.';
   }
 
+  // Unclassified 400 errors
+  if (status === 400) {
+    return message || 'Invalid request. Please check your details and try again.';
+  }
+
   // Generic fallback — never expose raw Postgres/JWT error
-  return message || 'Something went wrong. Please try again.';
+  return message || 'Unable to complete sign in. Please try again.';
 }
 
 // ---------------------------------------------------------------------------
@@ -123,6 +180,13 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
     });
 
     if (error) {
+      if (__DEV__) {
+        console.log('[REHVO Auth Diagnostic - signUpWithEmail error]', {
+          status: error.status,
+          code: error.code,
+          message: error.message,
+        });
+      }
       return { success: false, error: getUserFriendlyError(error) };
     }
 
@@ -134,12 +198,24 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
     // When email confirmation is enabled, session will be null until confirmed
     const needsConfirmation = !resData.session;
 
+    if (__DEV__) {
+      console.log('[REHVO Auth Diagnostic - signUpWithEmail success]', {
+        userId: resData.user.id,
+        email: resData.user.email,
+        needsConfirmation,
+        hasSession: Boolean(resData.session),
+      });
+    }
+
     return {
       success: true,
       data: { userId: resData.user.id, email: resData.user.email || data.email },
       requiresEmailConfirmation: needsConfirmation,
     };
   } catch (err) {
+    if (__DEV__) {
+      console.log('[REHVO Auth Diagnostic - signUpWithEmail catch]', err);
+    }
     return { success: false, error: getUserFriendlyError(err) };
   }
 }
@@ -157,6 +233,13 @@ export async function signInWithEmail(email: string, password: string): Promise<
     });
 
     if (error) {
+      if (__DEV__) {
+        console.log('[REHVO Auth Diagnostic - signInWithEmail error]', {
+          status: error.status,
+          code: error.code,
+          message: error.message,
+        });
+      }
       return { success: false, error: getUserFriendlyError(error) };
     }
 
@@ -164,11 +247,21 @@ export async function signInWithEmail(email: string, password: string): Promise<
       return { success: false, error: 'Login failed. Please try again.' };
     }
 
+    if (__DEV__) {
+      console.log('[REHVO Auth Diagnostic - signInWithEmail success]', {
+        userId: data.user.id,
+        email: data.user.email,
+      });
+    }
+
     return {
       success: true,
       data: { userId: data.user.id, email: data.user.email || email },
     };
   } catch (err) {
+    if (__DEV__) {
+      console.log('[REHVO Auth Diagnostic - signInWithEmail catch]', err);
+    }
     return { success: false, error: getUserFriendlyError(err) };
   }
 }

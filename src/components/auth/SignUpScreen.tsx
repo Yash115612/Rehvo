@@ -116,7 +116,9 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
         password,
       });
       if (res.success) {
-        onSuccessSignUp();
+        if (!res.requiresVerification) {
+          onSuccessSignUp();
+        }
       } else {
         setErrors({ form: res.error || 'Unable to create account. Please try again.' });
       }
