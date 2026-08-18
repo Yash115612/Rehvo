@@ -422,10 +422,96 @@ export async function getMyProperties(
 }
 
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Pure Base64 & Local File Utilities for Cross-Platform Image Uploads
+// ---------------------------------------------------------------------------
+
+function decodeBase64ToArrayBuffer(base64: string): ArrayBuffer {
+  const cleaned = base64.includes(',') ? base64.split(',')[1] : base64;
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const lookup = new Uint8Array(256);
+  for (let i = 0; i < chars.length; i++) {
+    lookup[chars.charCodeAt(i)] = i;
+  }
+
+  let bufferLength = cleaned.length * 0.75;
+  if (cleaned[cleaned.length - 1] === '=') {
+    bufferLength--;
+    if (cleaned[cleaned.length - 2] === '=') {
+      bufferLength--;
+    }
+  }
+
+  const arrayBuffer = new ArrayBuffer(bufferLength);
+  const bytes = new Uint8Array(arrayBuffer);
+
+  let p = 0;
+  for (let i = 0; i < cleaned.length; i += 4) {
+    const encoded1 = lookup[cleaned.charCodeAt(i)];
+    const encoded2 = lookup[cleaned.charCodeAt(i + 1)];
+    const encoded3 = lookup[cleaned.charCodeAt(i + 2)];
+    const encoded4 = lookup[cleaned.charCodeAt(i + 3)];
+
+    bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
+    if (encoded3 !== undefined && cleaned[i + 2] !== '=') {
+      bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+    }
+    if (encoded4 !== undefined && cleaned[i + 3] !== '=') {
+      bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+    }
+  }
+
+  return arrayBuffer;
+}
+
+async function readUriAsArrayBufferOrBlob(
+  uri: string
+): Promise<{ data: ArrayBuffer | Blob; contentType: string }> {
+  // 1. If data URI
+  if (uri.startsWith('data:')) {
+    const [header, base64Data] = uri.split(',');
+    const mimeMatch = header.match(/:(.*?);/);
+    const contentType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+    return { data: decodeBase64ToArrayBuffer(base64Data), contentType };
+  }
+
+  // 2. If local file URI in React Native (Expo)
+  if (
+    uri.startsWith('file:') ||
+    uri.startsWith('content:') ||
+    uri.startsWith('ph:')
+  ) {
+    try {
+      const FileSystem = require('expo-file-system');
+      if (FileSystem && FileSystem.readAsStringAsync) {
+        const base64 = await FileSystem.readAsStringAsync(uri, {
+          encoding: FileSystem.EncodingType
+            ? FileSystem.EncodingType.Base64
+            : 'base64',
+        });
+        return {
+          data: decodeBase64ToArrayBuffer(base64),
+          contentType: 'image/jpeg',
+        };
+      }
+    } catch (fsErr) {
+      if (__DEV__) {
+        console.warn('[Storage] FileSystem read error, falling back to fetch:', fsErr);
+      }
+    }
+  }
+
+  // 3. Fallback to fetch
+  const response = await fetch(uri);
+  const blob = await response.blob();
+  return { data: blob, contentType: blob.type || 'image/jpeg' };
+}
+
+// ---------------------------------------------------------------------------
 // Mutation Operations (Create, Update, Status, Delete)
 // ---------------------------------------------------------------------------
 
-/** Create a new property listing with optional images and atomic rollback */
+/** Create a new property listing with optional images, follow-up verification, and atomic rollback */
 export async function createProperty(
   input: PropertyInput,
   imagesToUpload?: { uri: string; isCover?: boolean }[]
@@ -440,7 +526,7 @@ export async function createProperty(
     const currentUserId = authData?.user?.id;
 
     if (!currentUserId || authError) {
-      return { success: false, error: 'You must be signed in to publish a property.' };
+      return { success: false, error: 'Please log in again before publishing.' };
     }
 
     // 2. Validate required property fields
@@ -535,7 +621,7 @@ export async function createProperty(
           }
         } else {
           imageUploadFailed = true;
-          imageUploadErrorMsg = uploadResult.error || "Failed to upload property image.";
+          imageUploadErrorMsg = uploadResult.error || "Failed to upload property photo.";
           break;
         }
       } else {
@@ -572,7 +658,39 @@ export async function createProperty(
       };
     }
 
-    // 6. Ensure profile role reflects lister/owner status
+    // 6. Follow-up confirmation read to strictly verify property exists in Supabase with published status
+    const { data: verifyRow, error: verifyErr } = await supabase
+      .from('properties')
+      .select(`
+        *,
+        property_images (*),
+        profiles:owner_id (full_name, phone, profile_photo)
+      `)
+      .eq('id', propertyId)
+      .single();
+
+    if (verifyErr || !verifyRow) {
+      return {
+        success: false,
+        error: "Property was created but failed confirmation verification. Please check your network connection.",
+      };
+    }
+
+    if (verifyRow.owner_id !== currentUserId) {
+      return {
+        success: false,
+        error: "Security verification failed: Owner ID mismatch.",
+      };
+    }
+
+    if (verifyRow.status !== 'published') {
+      return {
+        success: false,
+        error: `Property created with unexpected status (${verifyRow.status}). Expected published.`,
+      };
+    }
+
+    // 7. Ensure profile role reflects lister/owner status
     supabase
       .from('profiles')
       .update({ role: 'owner' })
@@ -581,9 +699,15 @@ export async function createProperty(
       .then(() => {}, () => {});
 
     const createdProperty = mapSupabasePropertyToApp(
-      propRow,
-      uploadedImages,
-      propRow.profiles
+      verifyRow,
+      verifyRow.property_images?.map((img: any) => ({
+        id: img.id,
+        property_id: img.property_id,
+        url: img.image_url,
+        is_cover: img.is_cover,
+        sort_order: img.sort_order,
+      })) || uploadedImages,
+      verifyRow.profiles
     );
 
     return { success: true, data: createdProperty };
@@ -757,13 +881,12 @@ export async function uploadPropertyImage(
       uri.startsWith('content:') ||
       uri.startsWith('data:')
     ) {
-      const response = await fetch(uri);
-      const blob = await response.blob();
+      const { data: uploadPayload, contentType } = await readUriAsArrayBufferOrBlob(uri);
 
       const { error: uploadError } = await supabase.storage
         .from('property-images')
-        .upload(storagePath, blob, {
-          contentType: 'image/jpeg',
+        .upload(storagePath, uploadPayload, {
+          contentType: contentType || 'image/jpeg',
           upsert: true,
         });
 
