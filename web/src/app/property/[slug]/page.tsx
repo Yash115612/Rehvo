@@ -23,6 +23,7 @@ import { generateBreadcrumbSchema, generatePropertySchema } from '@/lib/seo/sche
 import { JsonLd } from '@/components/public/JsonLd';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { PropertyCard } from '@/components/public/PropertyCard';
+import { PropertyActionButtons } from '@/components/public/PropertyActionButtons';
 import { AppDownloadBanner } from '@/components/public/AppDownloadBanner';
 import { generatePropertySlug, normalizeLocalitySlug } from '@/lib/seo/slugs';
 
@@ -274,48 +275,33 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
             )}
           </div>
 
-          {/* Right Sidebar: Direct Action Card */}
+          {/* Right Sidebar: Live Direct Action Card */}
           <div className="lg:col-span-4">
             <div className="sticky top-24 bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-lg space-y-6">
-              <div className="text-center pb-6 border-b border-stone-100">
-                <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-3">
-                  <ShieldCheck className="w-7 h-7" />
+              <div className="text-center pb-5 border-b border-stone-100">
+                <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-2.5">
+                  <ShieldCheck className="w-6 h-6" />
                 </div>
-                <h3 className="text-lg font-extrabold text-stone-900">Direct Host Connection</h3>
-                <p className="text-xs text-stone-500 mt-1">
-                  Connect with the verified homeowner directly on REHVO app.
+                <h3 className="text-base font-extrabold text-stone-900">Direct Owner Connection</h3>
+                <p className="text-xs text-stone-500 mt-0.5">
+                  Zero Brokerage • Direct Inquiries & Tours
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <Link
-                  href={`rehvo://property/${property.id}`}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow-md"
-                >
-                  <Smartphone className="w-4 h-4" />
-                  <span>Open & Chat in REHVO App</span>
-                </Link>
-
-                <Link
-                  href="https://rehvo.com/app"
-                  target="_blank"
-                  className="w-full bg-stone-900 hover:bg-black text-white font-semibold py-3 px-6 rounded-2xl transition flex items-center justify-center text-xs"
-                >
-                  Download REHVO App
-                </Link>
-              </div>
+              {/* Interactive Actions (Schedule Visit, Chat, Enquire, Save, Share) */}
+              <PropertyActionButtons property={property} />
 
               <div className="text-xs text-stone-500 space-y-2 pt-2 border-t border-stone-100">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                   <span>100% Zero Brokerage guarantee</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Government ID verified host</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span>Verified physical inspection</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
                   <span>Confirmed visit scheduling</span>
                 </div>
               </div>

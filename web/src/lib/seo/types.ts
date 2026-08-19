@@ -38,6 +38,7 @@ export interface PublicProperty {
 
 export interface PublicFlatmate {
   id: string;
+  user_id?: string;
   name: string;
   photo: string | null;
   age: number | null;
@@ -45,6 +46,7 @@ export interface PublicFlatmate {
   profession: string;
   city: string;
   locality: string;
+  bio?: string | null;
   budget_min: number;
   budget_max: number;
   room_preference: string;

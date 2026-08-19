@@ -253,6 +253,7 @@ export async function getPublishedFlatmates(city: string = 'Mumbai'): Promise<Pu
 
     return (data as any[]).map((row) => ({
       id: row.id,
+      user_id: row.user_id,
       name: (row.profiles as any)?.full_name || 'REHVO Member',
       photo: sanitizeImageUrl(row.photo || (row.profiles as any)?.profile_photo),
       age: row.age,
@@ -260,6 +261,7 @@ export async function getPublishedFlatmates(city: string = 'Mumbai'): Promise<Pu
       profession: row.profession || 'Professional',
       city: row.city,
       locality: row.locality,
+      bio: row.bio,
       budget_min: row.budget_min,
       budget_max: row.budget_max,
       room_preference: row.room_preference,
@@ -270,6 +272,61 @@ export async function getPublishedFlatmates(city: string = 'Mumbai'): Promise<Pu
   } catch (err) {
     console.warn('[REHVO SEO] Error in getPublishedFlatmates:', err);
     return [];
+  }
+}
+
+/** Get a single flatmate profile by ID */
+export async function getFlatmateById(id: string): Promise<PublicFlatmate | null> {
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from('flatmate_profiles')
+      .select(`
+        id,
+        user_id,
+        photo,
+        age,
+        gender,
+        profession,
+        city,
+        locality,
+        bio,
+        budget_min,
+        budget_max,
+        room_preference,
+        move_in_date,
+        lifestyle_preferences,
+        created_at,
+        profiles:user_id (full_name, profile_photo)
+      `)
+      .eq('id', id)
+      .single();
+
+    if (error || !data) {
+      return null;
+    }
+
+    return {
+      id: data.id,
+      user_id: data.user_id,
+      name: (data.profiles as any)?.full_name || 'REHVO Member',
+      photo: sanitizeImageUrl(data.photo || (data.profiles as any)?.profile_photo),
+      age: data.age,
+      gender: data.gender,
+      profession: data.profession || 'Professional',
+      city: data.city,
+      locality: data.locality,
+      bio: data.bio,
+      budget_min: data.budget_min,
+      budget_max: data.budget_max,
+      room_preference: data.room_preference,
+      move_in_date: data.move_in_date,
+      lifestyle_preferences: data.lifestyle_preferences || [],
+      created_at: data.created_at,
+    };
+  } catch (err) {
+    console.warn('[REHVO SEO] Error in getFlatmateById:', err);
+    return null;
   }
 }
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   Home,
   Users,
@@ -14,15 +14,29 @@ import {
   PlusCircle,
   LogOut,
   User,
-  GitCompare,
+  MessageSquare,
+  Bell,
+  CalendarCheck,
+  ClipboardList,
+  LayoutDashboard,
   ChevronDown,
-  Sparkles,
+  Settings,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 
 export const PublicNavbar: React.FC = () => {
   const router = useRouter();
-  const { user, profile, isAuthenticated, savedPropertyIds, signOut } = useAuth();
+  const pathname = usePathname();
+  const {
+    user,
+    profile,
+    isAuthenticated,
+    savedPropertyIds,
+    unreadNotificationsCount,
+    unreadMessagesCount,
+    signOut,
+  } = useAuth();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -70,38 +84,48 @@ export const PublicNavbar: React.FC = () => {
           <nav className="hidden lg:flex items-center space-x-1 text-xs sm:text-sm font-bold text-stone-600 bg-stone-100/70 p-1 rounded-full border border-stone-200/60">
             <Link
               href="/mumbai"
-              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
+              className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
+                pathname === '/mumbai' ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+              }`}
             >
               <span>Properties</span>
             </Link>
             <Link
               href="/flatmates/mumbai"
-              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
+              className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
+                pathname.startsWith('/flatmates') ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+              }`}
             >
               <span>Flatmates</span>
             </Link>
             <Link
               href="/pg/mumbai"
-              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
+              className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
+                pathname.startsWith('/pg') ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+              }`}
             >
               <span>PG & Rooms</span>
             </Link>
             <Link
               href="/localities"
-              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
+              className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
+                pathname === '/localities' ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+              }`}
             >
               <span>Locations</span>
             </Link>
             <Link
               href="/compare/andheri-west-vs-bandra-west"
-              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
+              className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
+                pathname.startsWith('/compare') ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+              }`}
             >
               <span>Compare</span>
             </Link>
           </nav>
 
-          {/* Right: Actions (Saved, List Property, Auth) */}
-          <div className="hidden sm:flex items-center space-x-2.5">
+          {/* Right: Actions (Saved, Messages, Notifications, List Property, Auth) */}
+          <div className="hidden sm:flex items-center space-x-2">
             {/* Saved Collection Pill */}
             <Link
               href="/saved"
@@ -117,9 +141,42 @@ export const PublicNavbar: React.FC = () => {
               )}
             </Link>
 
+            {/* Authenticated Fast Links (Chat & Notifications) */}
+            {isAuthenticated && (
+              <>
+                <Link
+                  href="/chat"
+                  className="relative p-2 rounded-full text-stone-600 hover:text-purple-600 hover:bg-stone-100 transition"
+                  title="Messages"
+                  aria-label="View chat messages"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  {unreadMessagesCount > 0 && (
+                    <span className="absolute top-0 right-0 w-4 h-4 bg-purple-600 text-white text-[9px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
+                      {unreadMessagesCount}
+                    </span>
+                  )}
+                </Link>
+
+                <Link
+                  href="/notifications"
+                  className="relative p-2 rounded-full text-stone-600 hover:text-purple-600 hover:bg-stone-100 transition"
+                  title="Notifications"
+                  aria-label="View notifications"
+                >
+                  <Bell className="w-4 h-4" />
+                  {unreadNotificationsCount > 0 && (
+                    <span className="absolute top-0 right-0 w-4 h-4 bg-amber-500 text-white text-[9px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
+                      {unreadNotificationsCount}
+                    </span>
+                  )}
+                </Link>
+              </>
+            )}
+
             {/* List Property (Free) */}
             <Link
-              href="/list-property"
+              href="/owner/properties/new"
               className="text-xs font-bold text-stone-800 hover:text-purple-700 bg-stone-100 hover:bg-purple-50 hover:border-purple-200 border border-stone-200/80 px-4 py-2 rounded-full transition flex items-center gap-1.5"
             >
               <PlusCircle className="w-3.5 h-3.5 text-purple-600" />
@@ -145,13 +202,21 @@ export const PublicNavbar: React.FC = () => {
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-60 bg-white rounded-3xl shadow-2xl border border-stone-200 py-2.5 z-50 divide-y divide-stone-100 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-3xl shadow-2xl border border-stone-200 py-2.5 z-50 divide-y divide-stone-100 animate-in fade-in zoom-in-95 duration-150">
                     <div className="px-5 py-3">
                       <p className="text-xs font-extrabold text-stone-900 truncate">{displayName}</p>
                       <p className="text-[11px] text-stone-500 truncate">{user?.email}</p>
                     </div>
 
                     <div className="py-1.5">
+                      <Link
+                        href="/profile"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
+                      >
+                        <User className="w-4 h-4 text-stone-400" />
+                        <span>Profile Hub</span>
+                      </Link>
                       <Link
                         href="/saved"
                         onClick={() => setUserDropdownOpen(false)}
@@ -161,16 +226,52 @@ export const PublicNavbar: React.FC = () => {
                         <span>Saved Properties ({savedPropertyIds.length})</span>
                       </Link>
                       <Link
-                        href="/list-property"
+                        href="/enquiries"
                         onClick={() => setUserDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
                       >
-                        <PlusCircle className="w-4 h-4 text-stone-400" />
-                        <span>Post a Property Listing</span>
+                        <ClipboardList className="w-4 h-4 text-stone-400" />
+                        <span>My Enquiries</span>
+                      </Link>
+                      <Link
+                        href="/visits"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
+                      >
+                        <CalendarCheck className="w-4 h-4 text-stone-400" />
+                        <span>Scheduled Visits</span>
+                      </Link>
+                    </div>
+
+                    {/* Owner & Flatmate Hubs */}
+                    <div className="py-1.5">
+                      <Link
+                        href="/owner"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-purple-700 hover:bg-purple-50 transition"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-purple-600" />
+                        <span>Owner Dashboard</span>
+                      </Link>
+                      <Link
+                        href="/flatmates/profile"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
+                      >
+                        <Users className="w-4 h-4 text-stone-400" />
+                        <span>My Flatmate Profile</span>
                       </Link>
                     </div>
 
                     <div className="py-1.5">
+                      <Link
+                        href="/settings"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-stone-50 transition"
+                      >
+                        <Settings className="w-4 h-4 text-stone-400" />
+                        <span>Settings</span>
+                      </Link>
                       <button
                         type="button"
                         onClick={handleSignOut}
@@ -216,6 +317,21 @@ export const PublicNavbar: React.FC = () => {
               )}
             </Link>
 
+            {isAuthenticated && (
+              <Link
+                href="/chat"
+                className="relative p-2 text-stone-700"
+                aria-label="Chat messages"
+              >
+                <MessageSquare className="w-5 h-5" />
+                {unreadMessagesCount > 0 && (
+                  <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-purple-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                    {unreadMessagesCount}
+                  </span>
+                )}
+              </Link>
+            )}
+
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -230,7 +346,7 @@ export const PublicNavbar: React.FC = () => {
 
       {/* Mobile Curved Drawer Card */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto mt-2 bg-white/95 backdrop-blur-xl border border-stone-200 shadow-2xl rounded-3xl p-5 space-y-4 animate-in slide-in-from-top-3 duration-200">
+        <div className="pointer-events-auto mt-2 bg-white/95 backdrop-blur-xl border border-stone-200 shadow-2xl rounded-3xl p-5 space-y-4 animate-in slide-in-from-top-3 duration-200 max-h-[85vh] overflow-y-auto">
           <nav className="space-y-1">
             <Link
               href="/mumbai"
@@ -265,7 +381,7 @@ export const PublicNavbar: React.FC = () => {
               <span>Locations</span>
             </Link>
             <Link
-              href="/list-property"
+              href="/owner/properties/new"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-purple-700 bg-purple-50"
             >
@@ -281,6 +397,38 @@ export const PublicNavbar: React.FC = () => {
                   <span className="text-xs font-bold text-stone-900 block">{displayName}</span>
                   <span className="text-[11px] text-stone-500 block truncate">{user?.email}</span>
                 </div>
+
+                <div className="grid grid-cols-2 gap-2 text-xs font-semibold">
+                  <Link
+                    href="/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-3 bg-stone-50 rounded-2xl text-center text-stone-800 hover:bg-purple-50"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href="/owner"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-3 bg-purple-50 text-purple-700 rounded-2xl text-center font-bold"
+                  >
+                    Owner Hub
+                  </Link>
+                  <Link
+                    href="/enquiries"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-3 bg-stone-50 rounded-2xl text-center text-stone-800"
+                  >
+                    Enquiries
+                  </Link>
+                  <Link
+                    href="/visits"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-3 bg-stone-50 rounded-2xl text-center text-stone-800"
+                  >
+                    Visits
+                  </Link>
+                </div>
+
                 <button
                   type="button"
                   onClick={handleSignOut}
