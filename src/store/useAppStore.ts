@@ -1168,9 +1168,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
 
   startOrGetFlatmateConversation: async (flatmate) => {
-    const { user } = get();
+    const { user, myFlatmateProfile } = get();
     if (!user?.id) {
       get().showToast('Please sign in to message this flatmate', 'info');
+      return '';
+    }
+
+    if ((flatmate.user_id && user.id === flatmate.user_id) || (myFlatmateProfile && myFlatmateProfile.id === flatmate.id)) {
+      get().showToast('You cannot chat with yourself.', 'info');
       return '';
     }
 

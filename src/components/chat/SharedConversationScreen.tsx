@@ -115,12 +115,34 @@ export const SharedConversationScreen: React.FC<
   // Check if this is a flatmate conversation
   const flatmate = useMemo<FlatmateProfile | null>(() => {
     if (!conversation) return null;
-    return flatmates.find((f) => f.id === conversation.property_id) || null;
+    const flatmateId =
+      conversation.flatmate_profile_id ||
+      (conversation.property_title?.includes('Flatmate') ? conversation.property_id : undefined);
+
+    if (!flatmateId) return null;
+    const found = flatmates.find((f) => f.id === flatmateId);
+    if (found) return found;
+
+    // Return synthetic flatmate profile from conversation metadata
+    return {
+      id: flatmateId,
+      name: conversation.flatmate_name || conversation.owner_name || 'Flatmate',
+      avatar: conversation.flatmate_avatar || conversation.owner_avatar || '',
+      locality: conversation.property_locality?.split(',')[0] || 'Mumbai',
+      city: conversation.property_locality?.split(',')[1]?.trim() || 'Mumbai',
+      budget_min: 0,
+      budget_max: conversation.rent || 30000,
+      room_preference: 'Any',
+      move_in_date: 'Immediately',
+      bio: '',
+      lifestyle_preferences: [],
+      occupation: 'Member',
+    } as FlatmateProfile;
   }, [flatmates, conversation]);
 
   // Find property
   const property = useMemo<Property | null>(() => {
-    if (!conversation || flatmate || !conversation.property_id) return null;
+    if (!conversation || flatmate || !conversation.property_id || conversation.flatmate_profile_id) return null;
     return (
       properties.find((p) => p.id === conversation.property_id) ||
       null

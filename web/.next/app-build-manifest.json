@@ -160,6 +160,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/list-property/page.js"
+    ],
+    "/chat/[conversationId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/[conversationId]/page.js"
     ]
   }
 }

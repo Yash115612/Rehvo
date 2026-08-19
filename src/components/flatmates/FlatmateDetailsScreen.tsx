@@ -48,6 +48,8 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const {
+    user,
+    myFlatmateProfile,
     savedFlatmateIds,
     toggleSaveFlatmate,
     startOrGetFlatmateConversation,
@@ -55,6 +57,10 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
   } = useAppStore();
 
   const isSaved = savedFlatmateIds.includes(profile.id);
+  const isOwnProfile = Boolean(
+    (user?.id && profile.user_id && user.id === profile.user_id) ||
+    (myFlatmateProfile && myFlatmateProfile.id === profile.id)
+  );
 
   // Report Modal State
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
@@ -84,17 +90,34 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
 
   const handleStartChat = async () => {
     if (isStartingChat) return;
+
     if (__DEV__) {
-      console.log('[REHVO CHAT BUTTON] pressed on flatmate profile:', profile.id);
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 1 button_pressed on flatmate profile:', profile.id);
     }
+
+    if (!user?.id) {
+      showToast('Please sign in to message this flatmate', 'info');
+      return;
+    }
+
+    if (isOwnProfile) {
+      showToast('You cannot chat with yourself.', 'info');
+      return;
+    }
+
     setIsStartingChat(true);
     try {
       const convId = await startOrGetFlatmateConversation(profile);
       if (convId) {
+        if (__DEV__) {
+          console.log('[REHVO FLATMATE CHAT DEBUG] STEP 9 navigation_started to route: /(renter)/chat/' + convId);
+        }
         router.push(`/(renter)/chat/${convId}`);
       }
-    } catch (err) {
-      console.warn('[REHVO CHAT BUTTON] error starting chat with flatmate:', err);
+    } catch (err: any) {
+      if (__DEV__) {
+        console.warn('[REHVO FLATMATE CHAT DEBUG] Error in button handler:', err?.message);
+      }
       showToast("Unable to start chat. Please try again.", 'error');
     } finally {
       setIsStartingChat(false);
@@ -357,24 +380,35 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
           />
         </Pressable>
 
-        <Pressable
-          style={[styles.chatActionBtn, isStartingChat && styles.chatActionBtnDisabled]}
-          onPress={handleStartChat}
-          disabled={isStartingChat}
-          accessibilityRole="button"
-          accessibilityLabel={`Chat with ${profile.name}`}
-        >
-          {isStartingChat ? (
-            <ActivityIndicator size="small" color="#FFFFFF" />
-          ) : (
-            <>
-              <MessageCircle size={19} color="#FFFFFF" strokeWidth={2.2} />
-              <Text style={styles.chatActionBtnText}>
-                Chat with {profile.display_name || profile.name.split(' ')[0]}
-              </Text>
-            </>
-          )}
-        </Pressable>
+        {isOwnProfile ? (
+          <Pressable
+            style={[styles.chatActionBtn, { backgroundColor: '#171522' }]}
+            onPress={() => router.push('/(renter)/flatmate/edit')}
+            accessibilityRole="button"
+            accessibilityLabel="Edit your flatmate profile"
+          >
+            <Text style={styles.chatActionBtnText}>Edit Your Profile</Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            style={[styles.chatActionBtn, isStartingChat && styles.chatActionBtnDisabled]}
+            onPress={handleStartChat}
+            disabled={isStartingChat}
+            accessibilityRole="button"
+            accessibilityLabel={`Chat with ${profile.name}`}
+          >
+            {isStartingChat ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              <>
+                <MessageCircle size={19} color="#FFFFFF" strokeWidth={2.2} />
+                <Text style={styles.chatActionBtnText}>
+                  Chat with {profile.display_name || profile.name.split(' ')[0]}
+                </Text>
+              </>
+            )}
+          </Pressable>
+        )}
       </View>
 
       {/* 10. Report Profile Modal */}

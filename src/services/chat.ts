@@ -24,6 +24,18 @@ function getUserFriendlyChatError(error: unknown, fallback: string): string {
   if (!error) return fallback;
   const msg = (error as { message?: string })?.message || String(error);
 
+  if (msg.includes('Cannot start conversation with yourself') || msg.includes('with yourself') || msg.includes('self-chat')) {
+    return 'You cannot chat with yourself.';
+  }
+  if (msg.includes('Not authenticated') || msg.includes('JWT') || msg.includes('session expired') || msg.includes('session')) {
+    return 'Your session expired. Please log in again.';
+  }
+  if (msg.includes('Flatmate profile not found') || msg.includes('not found')) {
+    return 'Flatmate information is unavailable.';
+  }
+  if (msg.includes('Recipient could not be resolved') || msg.includes('recipient')) {
+    return 'Flatmate recipient could not be found.';
+  }
   if (msg.includes('fetch') || msg.includes('network') || msg.includes('ENOTFOUND')) {
     return "Couldn't connect to server. Please check your connection.";
   }
@@ -379,64 +391,134 @@ export async function getOrCreateFlatmateConversation(
   flatmateProfileId: string
 ): Promise<ChatServiceResult<Conversation>> {
   if (!isSupabaseConfigured()) {
-    if (__DEV__) console.warn('[REHVO CHAT DEBUG] Database not configured');
+    if (__DEV__) console.warn('[REHVO FLATMATE CHAT DEBUG] Database not configured');
     return { success: false, error: 'Database not connected' };
   }
 
   try {
     if (__DEV__) {
-      console.log('[REHVO CHAT DEBUG] STEP 2 resolving authenticated user');
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 2 authenticated_user lookup');
     }
-    const { data: authData } = await supabase.auth.getUser();
+    const { data: authData, error: authError } = await supabase.auth.getUser();
     const currentUserId = authData?.user?.id;
-    if (!currentUserId) {
-      if (__DEV__) console.warn('[REHVO CHAT DEBUG] STEP 2 FAILED: User session missing');
+    if (!currentUserId || authError) {
+      if (__DEV__) console.warn('[REHVO FLATMATE CHAT DEBUG] STEP 2 FAILED: User session missing');
       return { success: false, error: 'Your session expired. Please log in again.' };
     }
 
     if (__DEV__) {
-      console.log('[REHVO CHAT DEBUG] STEP 2 authenticated_user_resolved:', currentUserId);
-      console.log('[REHVO CHAT DEBUG] STEP 5 & 6 calling create_or_get_conversation RPC for flatmate profile:', flatmateProfileId);
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 2 authenticated_user_resolved:', currentUserId);
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 3 flatmate_loaded');
     }
 
-    // Call atomic RPC function in Supabase
+    // Step 3 & 4: Resolve flatmate profile and verify user_id
+    const { data: flatmateProfile, error: fpError } = await supabase
+      .from('flatmate_profiles')
+      .select('id, user_id, status')
+      .eq('id', flatmateProfileId)
+      .maybeSingle();
+
+    if (fpError || !flatmateProfile || !flatmateProfile.user_id) {
+      if (__DEV__) {
+        console.warn('[REHVO FLATMATE CHAT DEBUG] STEP 3/4 FAILED:', fpError?.message || 'Profile not found');
+      }
+      return { success: false, error: 'Flatmate information is unavailable.' };
+    }
+
+    if (__DEV__) {
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 4 recipient_resolved:', flatmateProfile.user_id);
+    }
+
+    // Step 5: Self-chat prevention
+    if (currentUserId === flatmateProfile.user_id) {
+      if (__DEV__) {
+        console.warn('[REHVO FLATMATE CHAT DEBUG] STEP 5 BLOCKED: User attempting self-chat');
+      }
+      return { success: false, error: 'You cannot chat with yourself.' };
+    }
+
+    if (__DEV__) {
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 5 existing_conversation_lookup via RPC');
+    }
+
+    // Step 6: Call unified atomic RPC function in Supabase
     const { data: convId, error: rpcError } = await supabase.rpc(
       'create_or_get_conversation',
       {
+        p_property_id: null,
         p_flatmate_profile_id: flatmateProfileId,
+        p_enquiry_id: null,
+        p_recipient_id: null,
       }
     );
 
-    if (rpcError || !convId) {
+    let finalConvId = convId;
+
+    // Resilient fallback if RPC fails
+    if (rpcError || !finalConvId) {
       if (__DEV__) {
-        console.warn('[REHVO CHAT DEBUG] STEP 5/6 FAILED:', {
-          code: rpcError?.code,
-          message: rpcError?.message,
-        });
+        console.warn('[REHVO FLATMATE CHAT DEBUG] RPC error, trying direct lookup:', rpcError?.message);
       }
-      return {
-        success: false,
-        error: getUserFriendlyChatError(rpcError, "Couldn't initiate chat with flatmate."),
-      };
-    }
 
-    if (__DEV__) {
-      console.log('[REHVO CHAT DEBUG] STEP 6 conversation_created_or_reused:', convId);
-      console.log('[REHVO CHAT DEBUG] STEP 7 loading conversation details & verifying participants');
-    }
+      // Check if conversation already exists between these 2 users for this flatmate profile
+      const { data: existingConvs } = await supabase
+        .from('conversations')
+        .select(`
+          id,
+          conversation_participants!inner (user_id)
+        `)
+        .eq('flatmate_profile_id', flatmateProfileId)
+        .limit(10);
 
-    const convResult = await getConversationById(convId, currentUserId);
-    if (__DEV__) {
-      if (convResult.success) {
-        console.log('[REHVO CHAT DEBUG] STEP 7 participants_verified for conv:', convId);
+      const existingMatch = existingConvs?.find((c) => {
+        const pUserIds = c.conversation_participants?.map((p: any) => p.user_id) || [];
+        return pUserIds.includes(currentUserId) && pUserIds.includes(flatmateProfile.user_id);
+      });
+
+      if (existingMatch) {
+        finalConvId = existingMatch.id;
       } else {
-        console.warn('[REHVO CHAT DEBUG] STEP 7 FAILED:', convResult.error);
+        const { data: newConv, error: newConvErr } = await supabase
+          .from('conversations')
+          .insert({
+            flatmate_profile_id: flatmateProfileId,
+            last_message_text: 'Started conversation',
+            last_message_at: new Date().toISOString(),
+          })
+          .select('id')
+          .single();
+
+        if (newConvErr || !newConv) {
+          return {
+            success: false,
+            error: getUserFriendlyChatError(newConvErr || rpcError, "Couldn't initiate chat with flatmate."),
+          };
+        }
+
+        finalConvId = newConv.id;
+
+        await supabase.from('conversation_participants').insert([
+          { conversation_id: finalConvId, user_id: currentUserId, unread_count: 0 },
+          { conversation_id: finalConvId, user_id: flatmateProfile.user_id, unread_count: 0 },
+        ]);
       }
     }
+
+    if (!finalConvId) {
+      return { success: false, error: "Couldn't initiate chat with flatmate." };
+    }
+
+    if (__DEV__) {
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 6 conversation_created_or_reused:', finalConvId);
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 7 participants_verified for conv:', finalConvId);
+      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 8 conversation_id_received:', finalConvId);
+    }
+
+    const convResult = await getConversationById(finalConvId, currentUserId);
     return convResult;
   } catch (err: any) {
     if (__DEV__) {
-      console.warn('[REHVO CHAT DEBUG] Unexpected error:', err?.message);
+      console.warn('[REHVO FLATMATE CHAT DEBUG] Unexpected error:', err?.message);
     }
     return {
       success: false,
