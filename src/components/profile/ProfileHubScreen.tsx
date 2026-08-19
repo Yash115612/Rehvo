@@ -155,6 +155,18 @@ export const ProfileHubScreen: React.FC<ProfileHubScreenProps> = () => {
 
   const isVerified = user?.verification_status === 'VERIFIED';
 
+  // Real profile completion percentage based on filled profile attributes
+  const profileCompletionPercent = useMemo(() => {
+    if (!user) return 0;
+    let score = 0;
+    if (user.name) score += 20;
+    if (user.email) score += 20;
+    if (user.phone) score += 20;
+    if (user.avatar) score += 20;
+    if (user.locality || user.city || user.occupation) score += 20;
+    return score;
+  }, [user]);
+
   // Dynamic role badge in profile hero
   const roleBadgeText = useMemo(() => {
     if (isBothOwnerAndFlatmate) return 'Owner & Flatmate';
@@ -263,28 +275,31 @@ export const ProfileHubScreen: React.FC<ProfileHubScreenProps> = () => {
           />
         }
       >
-        {/* 2. Compact Profile Header Card */}
+        {/* 2. Premium Vertical Profile Hero */}
         <View style={styles.heroCard}>
-          <ProfileAvatarEditor
-            uri={user?.avatar}
-            name={user?.name}
-            size={58}
-            editable={true}
-            containerStyle={{ marginRight: 14 }}
-          />
+          {/* Avatar Anchor */}
+          <View style={styles.heroAvatarWrap}>
+            <ProfileAvatarEditor
+              uri={user?.avatar}
+              name={user?.name}
+              size={92}
+              editable={true}
+            />
+          </View>
 
-          <View style={styles.heroInfo}>
-            <View style={styles.heroNameRow}>
-              <Text style={styles.heroName} numberOfLines={1}>
-                {user?.name || 'Member'}
-              </Text>
-            </View>
-
-            <Text style={styles.heroContact} numberOfLines={1}>
-              {user?.email || user?.phone || 'Verified Account'}
+          {/* User Name & Details */}
+          <View style={styles.heroContentCenter}>
+            <Text style={styles.heroName} numberOfLines={1}>
+              {user?.name || 'Member'}
             </Text>
 
-            <View style={styles.badgeRow}>
+            <Text style={styles.heroContact} numberOfLines={1}>
+              {user?.email || user?.phone || 'Account Profile'}
+            </Text>
+
+            {/* Badges Row */}
+            <View style={styles.heroBadgesRow}>
+              {/* Role Badge */}
               <View
                 style={[
                   styles.roleBadge,
@@ -301,9 +316,10 @@ export const ProfileHubScreen: React.FC<ProfileHubScreenProps> = () => {
                 </Text>
               </View>
 
+              {/* Verification Badge */}
               {isVerified ? (
                 <View style={styles.verifiedTag}>
-                  <CheckCircle2 size={12} color="#10B981" strokeWidth={2.4} />
+                  <CheckCircle2 size={12} color="#059669" strokeWidth={2.4} />
                   <Text style={styles.verifiedTagText}>Verified</Text>
                 </View>
               ) : (
@@ -311,23 +327,36 @@ export const ProfileHubScreen: React.FC<ProfileHubScreenProps> = () => {
                   onPress={() => setInfoSheetType('verification')}
                   style={styles.unverifiedTag}
                   hitSlop={4}
+                  accessibilityRole="button"
+                  accessibilityLabel="Get Verified"
                 >
                   <Clock size={11} color="#6C4DFF" strokeWidth={2} />
                   <Text style={styles.unverifiedTagText}>Get Verified</Text>
                 </Pressable>
               )}
-            </View>
-          </View>
 
-          <Pressable
-            onPress={() => setIsEditProfileOpen(true)}
-            style={styles.editHeroBtn}
-            accessibilityRole="button"
-            accessibilityLabel="Edit Profile"
-          >
-            <Pencil size={13} color="#6C4DFF" strokeWidth={2.2} />
-            <Text style={styles.editHeroBtnText}>Edit</Text>
-          </Pressable>
+              {/* Profile Completion if < 100 */}
+              {profileCompletionPercent < 100 && (
+                <View style={styles.completionTag}>
+                  <Text style={styles.completionTagText}>{profileCompletionPercent}% Complete</Text>
+                </View>
+              )}
+            </View>
+
+            {/* Primary Action: Edit Profile */}
+            <Pressable
+              onPress={() => setIsEditProfileOpen(true)}
+              style={({ pressed }) => [
+                styles.editProfileBtn,
+                pressed && styles.editProfileBtnPressed,
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="Edit Profile"
+            >
+              <Pencil size={13} color="#171522" strokeWidth={2.2} />
+              <Text style={styles.editProfileBtnText}>Edit Profile</Text>
+            </Pressable>
+          </View>
         </View>
 
         {/* 3. Section: MY ACTIVITY */}
@@ -843,59 +872,65 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
 
-  // Hero Card
+  // Premium Profile Hero Card
   heroCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 16,
+    borderRadius: 20,
+    paddingVertical: 22,
+    paddingHorizontal: 20,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#EFECE6',
     marginBottom: 20,
     ...Platform.select({
       ios: {
         shadowColor: '#171522',
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.04,
-        shadowRadius: 8,
+        shadowRadius: 10,
       },
       android: {
-        elevation: 1,
+        elevation: 2,
       },
     }),
   },
-  heroInfo: {
-    flex: 1,
-  },
-  heroNameRow: {
-    flexDirection: 'row',
+  heroAvatarWrap: {
+    marginBottom: 12,
     alignItems: 'center',
-    gap: 8,
-    marginBottom: 2,
+    justifyContent: 'center',
+  },
+  heroContentCenter: {
+    alignItems: 'center',
+    width: '100%',
   },
   heroName: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '800',
     color: '#171522',
-    letterSpacing: -0.3,
+    letterSpacing: -0.4,
+    textAlign: 'center',
+    marginBottom: 3,
   },
   heroContact: {
-    fontSize: 13,
+    fontSize: 13.5,
     fontWeight: '500',
     color: '#716E7D',
-    marginBottom: 6,
+    textAlign: 'center',
+    marginBottom: 10,
   },
-  badgeRow: {
+  heroBadgesRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     gap: 6,
+    marginBottom: 14,
   },
   roleBadge: {
     backgroundColor: '#F4F2EE',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 6,
+    paddingHorizontal: 9,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   roleBadgeActive: {
     backgroundColor: '#ECE8FF',
@@ -904,6 +939,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
     color: '#716E7D',
+    letterSpacing: 0.1,
   },
   roleBadgeTextActive: {
     color: '#6C4DFF',
@@ -913,9 +949,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
     backgroundColor: '#ECFDF5',
-    paddingHorizontal: 7,
-    paddingVertical: 3,
-    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   verifiedTagText: {
     fontSize: 11,
@@ -927,30 +963,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
     backgroundColor: '#F5F3FF',
-    paddingHorizontal: 7,
-    paddingVertical: 3,
-    borderRadius: 6,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   unverifiedTagText: {
     fontSize: 11,
     fontWeight: '700',
     color: '#6C4DFF',
   },
-  editHeroBtn: {
+  completionTag: {
+    backgroundColor: '#FFFBEB',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#FEF3C7',
+  },
+  completionTagText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#D97706',
+  },
+  editProfileBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#F5F3FF',
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 10,
+    justifyContent: 'center',
+    gap: 6,
+    backgroundColor: '#F7F5F0',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#E4DCFD',
+    borderColor: '#E8E5DD',
   },
-  editHeroBtnText: {
-    fontSize: 12,
+  editProfileBtnPressed: {
+    backgroundColor: '#EBE7DF',
+    transform: [{ scale: 0.98 }],
+  },
+  editProfileBtnText: {
+    fontSize: 13,
     fontWeight: '700',
-    color: '#6C4DFF',
+    color: '#171522',
+    letterSpacing: -0.1,
   },
 
   // Sections
