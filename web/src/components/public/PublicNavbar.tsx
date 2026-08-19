@@ -54,14 +54,20 @@ export const PublicNavbar: React.FC = () => {
           </nav>
 
           {/* Right Action Button */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
+            <Link
+              href="/list-property"
+              className="text-xs font-bold text-stone-700 hover:text-purple-600 px-3 py-2 transition"
+            >
+              List Property (Free)
+            </Link>
             <Link
               href="https://rehvo.com/app"
               target="_blank"
               className="inline-flex items-center gap-2 bg-stone-900 hover:bg-black text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-full transition shadow-sm"
             >
               <Smartphone className="w-3.5 h-3.5" />
-              Get REHVO App
+              Get App
             </Link>
           </div>
 
@@ -93,7 +99,7 @@ export const PublicNavbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(false)}
             className="block px-3 py-2 rounded-lg text-base font-semibold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
           >
-            Find Flatmates
+            Flatmates
           </Link>
           <Link
             href="/pg/mumbai"
@@ -101,6 +107,13 @@ export const PublicNavbar: React.FC = () => {
             className="block px-3 py-2 rounded-lg text-base font-semibold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
           >
             PG & Co-Living
+          </Link>
+          <Link
+            href="/list-property"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-lg text-base font-semibold text-purple-700 bg-purple-50"
+          >
+            Post Free Property Listing
           </Link>
           <Link
             href="/about"

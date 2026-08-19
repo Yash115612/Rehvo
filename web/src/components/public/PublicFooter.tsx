@@ -150,6 +150,11 @@ export const PublicFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
+                <Link href="/list-property" className="text-purple-400 hover:text-white font-semibold transition">
+                  List Property (Free)
+                </Link>
+              </li>
+              <li>
                 <Link href="/mumbai" className="hover:text-white transition">
                   Flats in Mumbai
                 </Link>

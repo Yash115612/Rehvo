@@ -16,6 +16,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/list-property/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/list-property/page.js"
+    ],
+    "/compare/[slug]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/compare/[slug]/page.js"
+    ],
     "/mumbai/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -70,11 +80,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/mumbai/[locality]/pg/page.js"
-    ],
-    "/mumbai/[locality]/studios-for-rent/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/mumbai/[locality]/studios-for-rent/page.js"
     ],
     "/flatmates/[city]/page": [
       "static/chunks/webpack.js",
