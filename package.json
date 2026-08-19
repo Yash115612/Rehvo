@@ -11,6 +11,9 @@
     "dev": "expo start",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
+    "web:dev": "cd admin && npm run dev",
+    "web:build": "cd admin && npm run build",
+    "web:typecheck": "cd admin && npm run typecheck",
     "build:android": "eas build --platform android --profile preview"
   },
   "dependencies": {
