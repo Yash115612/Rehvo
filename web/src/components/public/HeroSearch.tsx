@@ -2,7 +2,19 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, Building, Users, Home, ArrowRight, X, Check, Wallet, SlidersHorizontal } from 'lucide-react';
+import {
+  Search,
+  MapPin,
+  Building,
+  Users,
+  Home,
+  ArrowRight,
+  X,
+  Check,
+  Wallet,
+  SlidersHorizontal,
+  Sparkles,
+} from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
 
 export const HeroSearch: React.FC = () => {
@@ -14,7 +26,7 @@ export const HeroSearch: React.FC = () => {
   const [selectedLocalitySlug, setSelectedLocalitySlug] = useState('');
   const [selectedBhk, setSelectedBhk] = useState<string>('');
   const [selectedBudget, setSelectedBudget] = useState<string>('');
-  
+
   const [localityDropdownOpen, setLocalityDropdownOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -81,87 +93,47 @@ export const HeroSearch: React.FC = () => {
   };
 
   return (
-    <div ref={containerRef} className="w-full max-w-4xl mx-auto my-6 relative z-30">
-      {/* Category Segmented Control Pills */}
-      <div className="flex items-center justify-center sm:justify-start gap-1 p-1 bg-stone-900/40 backdrop-blur-md rounded-full w-fit mx-auto sm:mx-0 mb-3 border border-white/10 shadow-md">
-        <button
-          type="button"
-          onClick={() => setActiveTab('all')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
-            activeTab === 'all'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-300 hover:text-white hover:bg-white/10'
-          }`}
-        >
-          <Home className="w-3.5 h-3.5" />
-          <span>All</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('flat')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
-            activeTab === 'flat'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-300 hover:text-white hover:bg-white/10'
-          }`}
-        >
-          <Building className="w-3.5 h-3.5" />
-          <span>Flats</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('room')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
-            activeTab === 'room'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-300 hover:text-white hover:bg-white/10'
-          }`}
-        >
-          <span>Rooms</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('pg')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
-            activeTab === 'pg'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-300 hover:text-white hover:bg-white/10'
-          }`}
-        >
-          <span>PG</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('flatmate')}
-          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
-            activeTab === 'flatmate'
-              ? 'bg-purple-600 text-white shadow-sm'
-              : 'text-purple-300 hover:text-white hover:bg-purple-600/30'
-          }`}
-        >
-          <Users className="w-3.5 h-3.5" />
-          <span>Flatmates</span>
-        </button>
+    <div ref={containerRef} className="w-full relative z-30">
+      {/* Category Segmented Tabs */}
+      <div className="flex items-center gap-1.5 p-1 bg-stone-900/60 backdrop-blur-xl rounded-2xl w-fit mb-3 border border-white/10 shadow-lg">
+        {[
+          { id: 'all', label: 'All Rentals', icon: Home },
+          { id: 'flat', label: 'Flats & BHKs', icon: Building },
+          { id: 'room', label: 'Single Rooms', icon: Home },
+          { id: 'pg', label: 'PG / Co-Living', icon: Building },
+          { id: 'flatmate', label: 'Flatmates', icon: Users },
+        ].map((tab) => {
+          const Icon = tab.icon;
+          const isSelected = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setActiveTab(tab.id as any)}
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
+                isSelected
+                  ? 'bg-white text-stone-900 shadow-md scale-[1.02]'
+                  : 'text-stone-300 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-purple-600' : 'text-stone-400'}`} />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Main Search Panel Surface */}
+      {/* Main Physical Search Surface */}
       <form
         onSubmit={handleSearchSubmit}
-        className="bg-white/95 backdrop-blur-xl rounded-3xl p-3 sm:p-4 shadow-2xl border border-stone-200/90 grid grid-cols-1 md:grid-cols-12 gap-3 items-center"
+        className="bg-white/95 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 border border-stone-200/90 shadow-2xl shadow-stone-950/20 grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-3 items-center"
       >
-        {/* Location / Locality Input */}
-        <div className="relative md:col-span-5 flex items-center border-b md:border-b-0 md:border-r border-stone-200/70 pb-3 md:pb-0 md:pr-3">
-          <div className="p-2 text-stone-400">
-            <MapPin className="w-5 h-5 text-purple-600" />
-          </div>
-          <div className="flex-1">
-            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
-              Where in Mumbai?
-            </label>
+        {/* Input 1: Location Autocomplete */}
+        <div className="md:col-span-5 relative">
+          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
+            Location in Mumbai
+          </label>
+          <div className="relative">
             <input
               type="text"
               value={localityQuery}
@@ -171,100 +143,96 @@ export const HeroSearch: React.FC = () => {
                 setLocalityDropdownOpen(true);
               }}
               onFocus={() => setLocalityDropdownOpen(true)}
-              placeholder="Search locality (e.g. Andheri, Bandra)..."
-              className="w-full bg-transparent text-stone-900 placeholder:text-stone-400 text-sm font-bold focus:outline-none"
+              placeholder="e.g. Bandra West, Andheri, Powai..."
+              className="w-full pl-9 pr-7 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
             />
+            <MapPin className="w-4 h-4 text-purple-600 absolute left-3 top-3" />
+            {localityQuery && (
+              <button
+                type="button"
+                onClick={() => {
+                  setLocalityQuery('');
+                  setSelectedLocalitySlug('');
+                }}
+                className="absolute right-2.5 top-3 p-0.5 text-stone-400 hover:text-stone-700"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
-          {localityQuery && (
-            <button
-              type="button"
-              onClick={() => {
-                setLocalityQuery('');
-                setSelectedLocalitySlug('');
-              }}
-              className="p-1 text-stone-400 hover:text-stone-600"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
 
-          {/* Autocomplete Dropdown */}
+          {/* Location Autocomplete Dropdown */}
           {localityDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden z-50 divide-y divide-stone-100 max-h-64 overflow-y-auto">
-              <div className="p-3 bg-stone-50 text-[10px] font-bold text-stone-500 uppercase tracking-wider">
-                {localityQuery.trim() ? 'Matching Localities' : 'Popular Mumbai Localities'}
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-stone-200 py-2 z-50 max-h-60 overflow-y-auto animate-in fade-in zoom-in-95 duration-150 divide-y divide-stone-50">
+              <div className="px-3 py-1.5 text-[10px] font-extrabold text-purple-600 uppercase tracking-wider">
+                Popular Mumbai Hubs
               </div>
               {filteredLocalities.map((loc) => (
                 <button
                   key={loc.slug}
                   type="button"
                   onClick={() => handleSelectLocality(loc.slug, loc.name)}
-                  className="w-full px-4 py-2.5 text-left hover:bg-purple-50 flex items-center justify-between transition group"
+                  className="w-full text-left px-3.5 py-2 hover:bg-purple-50 flex items-center justify-between text-xs transition group"
                 >
-                  <div>
-                    <span className="text-xs font-bold text-stone-900 group-hover:text-purple-700 block">
-                      {loc.name}
-                    </span>
-                    <span className="text-[10px] text-stone-500">{loc.zone} • Zero Brokerage</span>
-                  </div>
-                  {selectedLocalitySlug === loc.slug && (
-                    <Check className="w-4 h-4 text-purple-600" />
-                  )}
+                  <span className="font-bold text-stone-800 group-hover:text-purple-700">
+                    {loc.name}
+                  </span>
+                  <span className="text-[10px] font-semibold text-stone-400 group-hover:text-purple-500">
+                    {loc.zone}
+                  </span>
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        {/* BHK Configuration */}
-        <div className="md:col-span-3 flex items-center border-b md:border-b-0 md:border-r border-stone-200/70 pb-3 md:pb-0 md:pr-3">
-          <div className="flex-1 pl-2">
-            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
-              Bedrooms
-            </label>
-            <select
-              value={selectedBhk}
-              onChange={(e) => setSelectedBhk(e.target.value)}
-              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-0.5"
-            >
-              <option value="">Any BHK</option>
-              <option value="1">1 BHK</option>
-              <option value="2">2 BHK</option>
-              <option value="3">3 BHK</option>
-              <option value="4">4+ BHK</option>
-            </select>
-          </div>
+        {/* Input 2: Format / BHK Selector */}
+        <div className="md:col-span-3">
+          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
+            Format / Bedrooms
+          </label>
+          <select
+            value={selectedBhk}
+            onChange={(e) => setSelectedBhk(e.target.value)}
+            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer"
+          >
+            <option value="">Any Layout / BHK</option>
+            <option value="1">1 BHK Apartment</option>
+            <option value="2">2 BHK Apartment</option>
+            <option value="3">3 BHK Apartment</option>
+            <option value="4">4+ BHK Apartment</option>
+            <option value="studio">Studio Flat / 1 RK</option>
+            <option value="room">Private Single Room</option>
+          </select>
         </div>
 
-        {/* Budget Max */}
-        <div className="md:col-span-2 flex items-center pb-3 md:pb-0 md:pr-2">
-          <div className="flex-1 pl-2">
-            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
-              Max Rent
-            </label>
-            <select
-              value={selectedBudget}
-              onChange={(e) => setSelectedBudget(e.target.value)}
-              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-0.5"
-            >
-              <option value="">Any Budget</option>
-              <option value="25000">Up to ₹25,000</option>
-              <option value="40000">Up to ₹40,000</option>
-              <option value="60000">Up to ₹60,000</option>
-              <option value="100000">Up to ₹1,00,000</option>
-              <option value="200000">Up to ₹2,00,000</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Search Submit Action Button */}
+        {/* Input 3: Budget Selector */}
         <div className="md:col-span-2">
+          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
+            Max Budget
+          </label>
+          <select
+            value={selectedBudget}
+            onChange={(e) => setSelectedBudget(e.target.value)}
+            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer"
+          >
+            <option value="">Any Budget</option>
+            <option value="25000">Under ₹25k/mo</option>
+            <option value="40000">Under ₹40k/mo</option>
+            <option value="60000">Under ₹60k/mo</option>
+            <option value="100000">Under ₹1 Lakh/mo</option>
+            <option value="150000">₹1.5 Lakh+</option>
+          </select>
+        </div>
+
+        {/* Search Submit Button */}
+        <div className="md:col-span-2 md:pt-4">
           <button
             type="submit"
-            className="w-full bg-stone-900 hover:bg-black text-white font-bold text-xs py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+            className="w-full bg-purple-600 hover:bg-purple-700 active:scale-98 text-white font-extrabold text-xs py-3 px-4 rounded-2xl shadow-lg shadow-purple-600/25 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
+            <Search className="w-4 h-4 group-hover:rotate-12 transition-transform" />
             <span>Search</span>
-            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </form>
