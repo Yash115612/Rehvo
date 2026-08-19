@@ -1,6 +1,6 @@
 import React from 'react';
-import { OwnerProfileScreen } from '../../src/components/owner/profile/OwnerProfileScreen';
+import { ProfileHubScreen } from '../../src/components/profile/ProfileHubScreen';
 
 export default function OwnerProfileRoute() {
-  return <OwnerProfileScreen />;
+  return <ProfileHubScreen initialRole="OWNER" />;
 }
