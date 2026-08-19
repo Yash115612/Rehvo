@@ -26,15 +26,55 @@
       "static/chunks/main-app.js",
       "static/chunks/app/mumbai/[locality]/page.js"
     ],
+    "/mumbai/[locality]/1-bhk-flats-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/1-bhk-flats-for-rent/page.js"
+    ],
+    "/mumbai/[locality]/2-bhk-flats-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/2-bhk-flats-for-rent/page.js"
+    ],
+    "/mumbai/[locality]/3-bhk-flats-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/3-bhk-flats-for-rent/page.js"
+    ],
     "/mumbai/[locality]/flats-for-rent/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/mumbai/[locality]/flats-for-rent/page.js"
     ],
-    "/property/[slug]/page": [
+    "/mumbai/[locality]/flats-under-30000/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/property/[slug]/page.js"
+      "static/chunks/app/mumbai/[locality]/flats-under-30000/page.js"
+    ],
+    "/mumbai/[locality]/flats-under-50000/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/flats-under-50000/page.js"
+    ],
+    "/mumbai/[locality]/fully-furnished-flats-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/fully-furnished-flats-for-rent/page.js"
+    ],
+    "/mumbai/[locality]/rooms-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/rooms-for-rent/page.js"
+    ],
+    "/mumbai/[locality]/pg/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/pg/page.js"
+    ],
+    "/mumbai/[locality]/studios-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/studios-for-rent/page.js"
     ],
     "/flatmates/[city]/page": [
       "static/chunks/webpack.js",

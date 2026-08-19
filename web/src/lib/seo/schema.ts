@@ -1,4 +1,5 @@
 import type { PublicProperty } from './queries';
+import { generatePropertySlug } from './slugs';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.com';
 
@@ -35,6 +36,22 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
       position: idx + 1,
       name: item.name,
       item: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`,
+    })),
+  };
+}
+
+/** Schema.org FAQPage for rich search engine Q&A snippets */
+export function generateFaqSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
     })),
   };
 }
@@ -104,14 +121,29 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
 
 /** Schema.org ItemList for Locality / Search listings */
 export function generateItemListSchema(
-  title: string,
-  items: { name: string; url: string; image?: string; price?: number }[]
+  titleOrProperties: string | PublicProperty[],
+  itemsOrTitle?: { name: string; url: string; image?: string; price?: number }[] | string
 ) {
+  let title = 'Properties on REHVO';
+  let formattedItems: { name: string; url: string; image?: string }[] = [];
+
+  if (Array.isArray(titleOrProperties)) {
+    title = typeof itemsOrTitle === 'string' ? itemsOrTitle : 'Properties on REHVO';
+    formattedItems = titleOrProperties.map((p) => ({
+      name: p.title,
+      url: `/property/${generatePropertySlug(p)}`,
+      image: p.property_images?.[0]?.image_url,
+    }));
+  } else {
+    title = titleOrProperties;
+    formattedItems = Array.isArray(itemsOrTitle) ? itemsOrTitle : [];
+  }
+
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: title,
-    itemListElement: items.map((item, idx) => ({
+    itemListElement: formattedItems.map((item, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
       url: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`,

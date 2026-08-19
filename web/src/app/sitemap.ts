@@ -61,6 +61,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     });
     routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/1-bhk-flats-for-rent`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.75,
+    });
+    routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/2-bhk-flats-for-rent`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.75,
+    });
+    routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/3-bhk-flats-for-rent`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    });
+    routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/flats-under-30000`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    });
+    routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/flats-under-50000`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    });
+    routes.push({
+      url: `${BASE_URL}/mumbai/${localitySlug}/fully-furnished-flats-for-rent`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    });
+    routes.push({
       url: `${BASE_URL}/mumbai/${localitySlug}/rooms-for-rent`,
       lastModified: new Date(),
       changeFrequency: 'daily',

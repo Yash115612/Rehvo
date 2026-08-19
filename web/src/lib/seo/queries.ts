@@ -99,6 +99,9 @@ export async function getPublishedProperties(options?: {
   city?: string;
   locality?: string;
   type?: 'flat' | 'room' | 'pg' | 'studio';
+  bedrooms?: string;
+  maxPrice?: number;
+  furnishing?: 'fully_furnished' | 'semi_furnished' | 'unfurnished';
   limit?: number;
   offset?: number;
 }): Promise<{ properties: PublicProperty[]; totalCount: number }> {
@@ -151,6 +154,18 @@ export async function getPublishedProperties(options?: {
 
     if (options?.type) {
       query = query.eq('type', options.type);
+    }
+
+    if (options?.bedrooms) {
+      query = query.ilike('bedrooms', `%${options.bedrooms}%`);
+    }
+
+    if (options?.maxPrice) {
+      query = query.lte('price', options.maxPrice);
+    }
+
+    if (options?.furnishing) {
+      query = query.eq('furnishing', options.furnishing);
     }
 
     query = query

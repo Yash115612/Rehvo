@@ -110,25 +110,55 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
             </div>
           )}
 
-          {/* Sub-Category Navigation */}
+          {/* Sub-Category Filter Navigation Cluster */}
           <div className="mt-6 pt-6 border-t border-stone-100 flex flex-wrap items-center gap-2">
             <Link
-              href={`/mumbai/${localitySlug}/flats-for-rent`}
-              className="text-xs font-bold px-4 py-2 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
+              href={`/mumbai/${localitySlug}/1-bhk-flats-for-rent`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
             >
-              Flats for Rent in {localityName}
+              1 BHK Flats
+            </Link>
+            <Link
+              href={`/mumbai/${localitySlug}/2-bhk-flats-for-rent`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
+            >
+              2 BHK Flats
+            </Link>
+            <Link
+              href={`/mumbai/${localitySlug}/3-bhk-flats-for-rent`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition"
+            >
+              3 BHK Flats
+            </Link>
+            <Link
+              href={`/mumbai/${localitySlug}/flats-under-30000`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition"
+            >
+              Under ₹30k
+            </Link>
+            <Link
+              href={`/mumbai/${localitySlug}/flats-under-50000`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition"
+            >
+              Under ₹50k
+            </Link>
+            <Link
+              href={`/mumbai/${localitySlug}/fully-furnished-flats-for-rent`}
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
+            >
+              Furnished Flats
             </Link>
             <Link
               href={`/mumbai/${localitySlug}/rooms-for-rent`}
-              className="text-xs font-bold px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
             >
-              Rooms for Rent in {localityName}
+              Rooms
             </Link>
             <Link
               href={`/mumbai/${localitySlug}/pg`}
-              className="text-xs font-bold px-4 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
+              className="text-xs font-bold px-3.5 py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
             >
-              PG in {localityName}
+              PGs
             </Link>
           </div>
         </div>
@@ -169,26 +199,70 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
           )}
         </section>
 
-        {/* Locality Insights Guide */}
-        <section className="bg-white rounded-3xl p-8 sm:p-10 border border-stone-200 mb-16 space-y-6">
-          <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900">
-            Living in {localityName}, Mumbai
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs text-stone-600 leading-relaxed">
+        {/* Locality Insights & Commute Guide */}
+        <section className="bg-white rounded-3xl p-8 sm:p-10 border border-stone-200 mb-16 space-y-8">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900">
+              Living in {localityName}, Mumbai
+            </h2>
+            <p className="text-sm text-stone-600 mt-1">
+              Local commute options, average rental pricing, and neighborhood highlights.
+            </p>
+          </div>
+
+          {localityInfo && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-100">
+                <span className="text-xs font-bold text-purple-700 block uppercase tracking-wider mb-1">
+                  1 BHK Range
+                </span>
+                <span className="text-base font-extrabold text-stone-900">{localityInfo.avgRent.bhk1}</span>
+                <span className="text-[11px] text-stone-500 block mt-0.5">Zero brokerage on REHVO</span>
+              </div>
+
+              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-100">
+                <span className="text-xs font-bold text-purple-700 block uppercase tracking-wider mb-1">
+                  2 BHK Range
+                </span>
+                <span className="text-base font-extrabold text-stone-900">{localityInfo.avgRent.bhk2}</span>
+                <span className="text-[11px] text-stone-500 block mt-0.5">Direct from owner</span>
+              </div>
+
+              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-100">
+                <span className="text-xs font-bold text-purple-700 block uppercase tracking-wider mb-1">
+                  3 BHK Range
+                </span>
+                <span className="text-base font-extrabold text-stone-900">{localityInfo.avgRent.bhk3}</span>
+                <span className="text-[11px] text-stone-500 block mt-0.5">Family gated societies</span>
+              </div>
+
+              <div className="bg-purple-50/70 p-4 rounded-2xl border border-purple-100">
+                <span className="text-xs font-bold text-purple-700 block uppercase tracking-wider mb-1">
+                  Private Room / PG
+                </span>
+                <span className="text-base font-extrabold text-stone-900">{localityInfo.avgRent.room}</span>
+                <span className="text-[11px] text-stone-500 block mt-0.5">Shared accommodations</span>
+              </div>
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs text-stone-600 leading-relaxed pt-4 border-t border-stone-100">
             <div className="space-y-3">
-              <h3 className="text-sm font-bold text-stone-900">Neighborhood Profile & Connectivity</h3>
+              <h3 className="text-sm font-bold text-stone-900">Transit & Metro Connectivity</h3>
               <p>
-                {localityName} is one of Mumbai&apos;s most active residential hubs, favored by working professionals, students, and families. The area enjoys seamless connectivity via local trains, metro lines, and arterial roads to key business centers.
+                {localityName} connects to major Mumbai hubs via {localityInfo?.metroStation || 'local metro networks'} and {localityInfo?.railwayStation || 'suburban railway'}.
               </p>
-              <p>
-                Commercial amenities including supermarkets, cafes, fitness centers, and medical facilities are within walking distance of most residential complexes.
-              </p>
+              {localityInfo?.commercialHubs && (
+                <p>
+                  Key business centers and tech parks nearby include {localityInfo.commercialHubs.join(', ')}.
+                </p>
+              )}
             </div>
 
             <div className="space-y-3">
               <h3 className="text-sm font-bold text-stone-900">Zero-Brokerage Rentals with REHVO</h3>
               <p>
-                Renters in {localityName} traditionally pay 1-2 months of rent as broker commission. On REHVO, you connect directly with verified property owners and flatmates, saving ₹35,000 to ₹90,000 in brokerage fees.
+                Renters in {localityName} typically pay 1-2 months of rent as broker commission. On REHVO, you connect directly with verified property owners and flatmates, saving ₹35,000 to ₹90,000 in brokerage fees.
               </p>
               <p>
                 Every listing undergoes identity verification to ensure genuine property details, accurate photographs, and transparent pricing.
