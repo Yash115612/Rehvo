@@ -10,6 +10,7 @@ import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { PropertyCard } from '@/components/public/PropertyCard';
 import { LocalityCard } from '@/components/public/LocalityCard';
 import { AppDownloadBanner } from '@/components/public/AppDownloadBanner';
+import { HeroSearch } from '@/components/public/HeroSearch';
 import { MUMBAI_LOCALITIES, generatePropertySlug } from '@/lib/seo/slugs';
 
 export const revalidate = 60;
@@ -71,6 +72,8 @@ export default async function MumbaiCityPage({ searchParams }: MumbaiPageProps) 
               Explore {totalCount} verified homes available directly from homeowners. Save 100% on brokerage fees and schedule confirmed property tours across Western Suburbs, South Mumbai, and Central Hubs.
             </p>
           </div>
+
+          <HeroSearch />
 
           {/* Quick Filter Sub-Navigation */}
           <div className="mt-8 pt-6 border-t border-stone-100 flex flex-wrap items-center gap-2">

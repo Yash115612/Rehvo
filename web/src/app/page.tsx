@@ -10,6 +10,7 @@ import { PropertyCard } from '@/components/public/PropertyCard';
 import { LocalityCard } from '@/components/public/LocalityCard';
 import { FlatmateCard } from '@/components/public/FlatmateCard';
 import { AppDownloadBanner } from '@/components/public/AppDownloadBanner';
+import { HeroSearch } from '@/components/public/HeroSearch';
 import { MUMBAI_LOCALITIES, generatePropertySlug } from '@/lib/seo/slugs';
 
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -61,6 +62,9 @@ export default async function HomePage() {
             <p className="text-base sm:text-lg text-stone-300 max-w-2xl mx-auto leading-relaxed">
               Connect directly with verified property owners and compatible roommates across Mumbai. No brokers, no spam, zero hidden fees.
             </p>
+
+            {/* Interactive Locality Search Bar */}
+            <HeroSearch />
 
             {/* Quick Category Jump Pills */}
             <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
