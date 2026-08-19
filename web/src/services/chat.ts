@@ -1,8 +1,6 @@
 import { createClient } from '@/lib/supabase/client';
 import { Conversation, Message } from '@/lib/types';
 
-const supabase = createClient();
-
 export interface ChatServiceResult<T = void> {
   success: boolean;
   data?: T;
@@ -14,6 +12,8 @@ export async function getConversations(
   userId: string
 ): Promise<ChatServiceResult<Conversation[]>> {
   try {
+    const supabase = createClient();
+
     // 1. Get participant conversation IDs
     const { data: partRows, error: partError } = await supabase
       .from('conversation_participants')
@@ -35,7 +35,7 @@ export async function getConversations(
       .select(`
         *,
         properties (id, title, locality, city, price, property_images (*)),
-        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name)),
+        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name, profile_photo)),
         conversation_participants (
           id,
           user_id,
@@ -85,18 +85,20 @@ export async function getConversations(
   }
 }
 
-/** Get a single conversation by ID */
+/** Get a single conversation by ID with strict participation check */
 export async function getConversationById(
   conversationId: string,
   userId: string
 ): Promise<ChatServiceResult<Conversation>> {
   try {
+    const supabase = createClient();
+
     const { data, error } = await supabase
       .from('conversations')
       .select(`
         *,
         properties (id, title, locality, city, price, address, owner_id, property_images (*)),
-        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name)),
+        flatmate_profiles (id, user_id, photo, locality, city, budget_max, room_preference, profiles:profiles!flatmate_profiles_user_id_fkey (full_name, profile_photo)),
         conversation_participants (
           id,
           user_id,
@@ -113,6 +115,12 @@ export async function getConversationById(
     }
 
     const participants = data.conversation_participants || [];
+    const isParticipant = participants.some((p: any) => p.user_id === userId);
+
+    if (!isParticipant) {
+      return { success: false, error: 'Unauthorized: You do not have access to this conversation.' };
+    }
+
     const otherPart = participants.find((p: any) => p.user_id !== userId) || participants[0];
 
     const conv: Conversation = {
@@ -146,15 +154,20 @@ export async function getConversationById(
 export async function getOrCreatePropertyConversation(
   propertyId: string,
   userId: string,
-  enquiryId?: string
+  enquiryId?: string,
+  recipientId?: string
 ): Promise<ChatServiceResult<string>> {
   try {
+    const supabase = createClient();
+
     // 1. Call atomic RPC function in Supabase
     const { data: convId, error: rpcError } = await supabase.rpc(
       'create_or_get_conversation',
       {
         p_property_id: propertyId,
+        p_flatmate_profile_id: null,
         p_enquiry_id: enquiryId || null,
+        p_recipient_id: recipientId || null,
       }
     );
 
@@ -170,6 +183,12 @@ export async function getOrCreatePropertyConversation(
         return { success: false, error: 'Property not found.' };
       }
 
+      const targetId = recipientId || property.owner_id;
+
+      if (targetId === userId) {
+        return { success: false, error: 'You cannot chat with yourself.' };
+      }
+
       // Check if conversation exists
       const { data: newConv, error: newConvErr } = await supabase
         .from('conversations')
@@ -181,12 +200,12 @@ export async function getOrCreatePropertyConversation(
         .single();
 
       if (newConvErr || !newConv) {
-        return { success: false, error: 'Failed to start conversation with owner.' };
+        return { success: false, error: rpcError?.message || 'Failed to start conversation.' };
       }
 
       await supabase.from('conversation_participants').insert([
         { conversation_id: newConv.id, user_id: userId },
-        { conversation_id: newConv.id, user_id: property.owner_id },
+        { conversation_id: newConv.id, user_id: targetId },
       ]);
 
       return { success: true, data: newConv.id };
@@ -204,10 +223,16 @@ export async function getOrCreateFlatmateConversation(
   userId: string
 ): Promise<ChatServiceResult<string>> {
   try {
+    const supabase = createClient();
+
+    // 1. Call unified atomic RPC function in Supabase
     const { data: convId, error: rpcError } = await supabase.rpc(
-      'create_or_get_flatmate_conversation',
+      'create_or_get_conversation',
       {
+        p_property_id: null,
         p_flatmate_profile_id: flatmateProfileId,
+        p_enquiry_id: null,
+        p_recipient_id: null,
       }
     );
 
@@ -222,6 +247,10 @@ export async function getOrCreateFlatmateConversation(
         return { success: false, error: 'Flatmate profile not found.' };
       }
 
+      if (flatmate.user_id === userId) {
+        return { success: false, error: 'You cannot chat with yourself.' };
+      }
+
       const { data: newConv, error: newConvErr } = await supabase
         .from('conversations')
         .insert({
@@ -231,7 +260,7 @@ export async function getOrCreateFlatmateConversation(
         .single();
 
       if (newConvErr || !newConv) {
-        return { success: false, error: 'Failed to start conversation with flatmate.' };
+        return { success: false, error: rpcError?.message || 'Failed to start conversation with flatmate.' };
       }
 
       await supabase.from('conversation_participants').insert([
@@ -253,6 +282,8 @@ export async function getMessages(
   conversationId: string
 ): Promise<ChatServiceResult<Message[]>> {
   try {
+    const supabase = createClient();
+
     const { data, error } = await supabase
       .from('messages')
       .select(`
@@ -293,6 +324,8 @@ export async function sendMessage(
   messageType: 'text' | 'image' | 'visit_request' = 'text'
 ): Promise<ChatServiceResult<Message>> {
   try {
+    const supabase = createClient();
+
     const { data, error } = await supabase
       .from('messages')
       .insert({
@@ -336,6 +369,8 @@ export async function markMessagesAsRead(
   userId: string
 ): Promise<void> {
   try {
+    const supabase = createClient();
+
     await supabase
       .from('conversation_participants')
       .update({

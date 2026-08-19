@@ -16,6 +16,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/chat/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/page.js"
+    ],
+    "/chat/[conversationId]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/chat/[conversationId]/page.js"
+    ],
     "/search/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
@@ -95,11 +105,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/visits/page.js"
-    ],
-    "/chat/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/chat/page.js"
     ],
     "/notifications/page": [
       "static/chunks/webpack.js",

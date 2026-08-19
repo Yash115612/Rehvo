@@ -66,9 +66,9 @@ export default function OwnerVisitsPage() {
     }
   };
 
-  const handleOpenChat = async (propertyId: string) => {
+  const handleOpenChat = async (propertyId: string, renterUserId: string) => {
     if (!user) return;
-    const res = await getOrCreatePropertyConversation(propertyId, user.id);
+    const res = await getOrCreatePropertyConversation(propertyId, user.id, undefined, renterUserId);
     if (res.success && res.data) {
       router.push(`/chat/${res.data}`);
     }
@@ -202,7 +202,7 @@ export default function OwnerVisitsPage() {
                   {prop && (
                     <button
                       type="button"
-                      onClick={() => handleOpenChat(prop.id)}
+                      onClick={() => handleOpenChat(prop.id, visit.user_id)}
                       className="p-3 rounded-2xl bg-stone-100 text-stone-700 hover:bg-stone-200 transition"
                       title="Chat with renter"
                     >
