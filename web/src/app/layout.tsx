@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { PublicNavbar } from '../components/public/PublicNavbar';
 import { PublicFooter } from '../components/public/PublicFooter';
+import { AuthProvider } from '@/lib/auth/AuthContext';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.com'),
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-[#FDFBF7] text-stone-900 selection:bg-purple-500 selection:text-white antialiased">
-        <PublicNavbar />
-        <main className="flex-1">{children}</main>
-        <PublicFooter />
+        <AuthProvider>
+          <PublicNavbar />
+          <main className="flex-1">{children}</main>
+          <PublicFooter />
+        </AuthProvider>
       </body>
     </html>
   );

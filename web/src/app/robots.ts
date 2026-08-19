@@ -21,6 +21,9 @@ export default function robots(): MetadataRoute.Robots {
           '/admin',
           '/admin/*',
           '/login',
+          '/signup',
+          '/saved',
+          '/auth/*',
           '/api/*',
           '/private/*',
           '/*?*', // Disallow crawling arbitrary query parameters to avoid duplicate content indexing
@@ -29,7 +32,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: 'Googlebot',
         allow: '/',
-        disallow: ['/admin', '/admin/*', '/login', '/api/*'],
+        disallow: ['/admin', '/admin/*', '/login', '/signup', '/saved', '/auth/*', '/api/*'],
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,

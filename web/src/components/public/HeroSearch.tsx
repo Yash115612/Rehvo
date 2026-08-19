@@ -2,13 +2,20 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, Building, ArrowRight, X } from 'lucide-react';
+import { Search, MapPin, Building, Users, Home, ArrowRight, X, ChevronDown, Check } from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
 
 export const HeroSearch: React.FC = () => {
   const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+
+  // Search States
+  const [activeTab, setActiveTab] = useState<'all' | 'flat' | 'room' | 'pg' | 'flatmate'>('all');
+  const [localityQuery, setLocalityQuery] = useState('');
+  const [selectedLocalitySlug, setSelectedLocalitySlug] = useState('');
+  const [selectedBhk, setSelectedBhk] = useState<string>('');
+  const [selectedBudget, setSelectedBudget] = useState<string>('');
+  
+  const [localityDropdownOpen, setLocalityDropdownOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const localities = Object.entries(MUMBAI_LOCALITIES).map(([slug, info]) => ({
@@ -17,132 +24,251 @@ export const HeroSearch: React.FC = () => {
     zone: info.zone,
   }));
 
-  const filteredLocalities = query.trim()
+  const filteredLocalities = localityQuery.trim()
     ? localities.filter(
         (l) =>
-          l.name.toLowerCase().includes(query.toLowerCase()) ||
-          l.zone.toLowerCase().includes(query.toLowerCase())
+          l.name.toLowerCase().includes(localityQuery.toLowerCase()) ||
+          l.zone.toLowerCase().includes(localityQuery.toLowerCase())
       )
     : localities.slice(0, 6);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        setLocalityDropdownOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelect = (slug: string) => {
-    setIsOpen(false);
-    router.push(`/mumbai/${slug}`);
+  const handleSelectLocality = (slug: string, name: string) => {
+    setSelectedLocalitySlug(slug);
+    setLocalityQuery(name);
+    setLocalityDropdownOpen(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (filteredLocalities.length > 0) {
-      handleSelect(filteredLocalities[0].slug);
-    } else {
-      router.push('/mumbai');
+
+    if (activeTab === 'flatmate') {
+      router.push('/flatmates/mumbai');
+      return;
     }
+
+    // Build URL search params
+    const params = new URLSearchParams();
+    params.set('city', 'mumbai');
+
+    if (selectedLocalitySlug) {
+      params.set('locality', selectedLocalitySlug);
+    } else if (localityQuery.trim()) {
+      params.set('locality', localityQuery.trim().toLowerCase().replace(/\s+/g, '-'));
+    }
+
+    if (activeTab !== 'all') {
+      params.set('type', activeTab);
+    }
+
+    if (selectedBhk) {
+      params.set('bedrooms', selectedBhk);
+    }
+
+    if (selectedBudget) {
+      params.set('maxPrice', selectedBudget);
+    }
+
+    router.push(`/search?${params.toString()}`);
   };
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto my-6 z-30">
-      <form
-        onSubmit={handleSubmit}
-        className="relative flex items-center bg-white rounded-2xl p-2 shadow-2xl border border-stone-200 focus-within:border-purple-500 focus-within:ring-4 focus-within:ring-purple-500/10 transition-all duration-300"
-      >
-        <div className="pl-3 pr-2 text-stone-400">
-          <Search className="w-5 h-5 text-purple-600" />
-        </div>
-
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setIsOpen(true);
-          }}
-          onFocus={() => setIsOpen(true)}
-          placeholder="Search locality in Mumbai (e.g. Andheri West, Bandra, Powai)..."
-          className="w-full bg-transparent text-stone-900 placeholder:text-stone-400 text-sm font-medium focus:outline-none py-2.5"
-        />
-
-        {query && (
-          <button
-            type="button"
-            onClick={() => setQuery('')}
-            className="p-1 text-stone-400 hover:text-stone-600 transition mr-1"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        )}
+    <div ref={containerRef} className="w-full max-w-4xl mx-auto my-6 relative z-30">
+      {/* Category Filter Tabs */}
+      <div className="flex items-center gap-1.5 p-1.5 bg-stone-900/60 backdrop-blur-md rounded-2xl w-fit mb-3 border border-white/10 shadow-lg">
+        <button
+          type="button"
+          onClick={() => setActiveTab('all')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'all'
+              ? 'bg-white text-stone-900 shadow-sm'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          <Home className="w-3.5 h-3.5" />
+          <span>All Rentals</span>
+        </button>
 
         <button
-          type="submit"
-          className="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-5 py-3 rounded-xl transition flex items-center gap-1.5 flex-shrink-0 shadow-sm"
+          type="button"
+          onClick={() => setActiveTab('flat')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'flat'
+              ? 'bg-white text-stone-900 shadow-sm'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
         >
-          <span>Search</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <Building className="w-3.5 h-3.5" />
+          <span>Flats</span>
         </button>
-      </form>
 
-      {/* Autocomplete Dropdown */}
-      {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-50 divide-y divide-stone-100 animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="p-3 bg-stone-50 text-[11px] font-bold text-stone-500 uppercase tracking-wider">
-            {query.trim() ? 'Matching Localities in Mumbai' : 'Popular Neighbourhoods'}
+        <button
+          type="button"
+          onClick={() => setActiveTab('room')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'room'
+              ? 'bg-white text-stone-900 shadow-sm'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          <span>Private Rooms</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('pg')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'pg'
+              ? 'bg-white text-stone-900 shadow-sm'
+              : 'text-stone-300 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          <span>PG / Co-Living</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setActiveTab('flatmate')}
+          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+            activeTab === 'flatmate'
+              ? 'bg-purple-600 text-white shadow-sm'
+              : 'text-purple-300 hover:text-white hover:bg-purple-600/30'
+          }`}
+        >
+          <Users className="w-3.5 h-3.5" />
+          <span>Flatmates</span>
+        </button>
+      </div>
+
+      {/* Main Search Panel */}
+      <form
+        onSubmit={handleSearchSubmit}
+        className="bg-white rounded-3xl p-3 sm:p-4 shadow-2xl border border-stone-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-center"
+      >
+        {/* Locality Input */}
+        <div className="relative md:col-span-5 flex items-center border-b md:border-b-0 md:border-r border-stone-100 pb-3 md:pb-0 md:pr-3">
+          <div className="p-2 text-stone-400">
+            <MapPin className="w-5 h-5 text-purple-600" />
           </div>
-
-          <div className="max-h-64 overflow-y-auto divide-y divide-stone-50">
-            {filteredLocalities.length > 0 ? (
-              filteredLocalities.map((loc) => (
-                <button
-                  key={loc.slug}
-                  type="button"
-                  onClick={() => handleSelect(loc.slug)}
-                  className="w-full px-4 py-3 text-left hover:bg-purple-50 flex items-center justify-between transition group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition">
-                      <MapPin className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-bold text-stone-900 group-hover:text-purple-700 transition block">
-                        {loc.name}
-                      </span>
-                      <span className="text-[11px] text-stone-500">{loc.zone} • Zero Brokerage</span>
-                    </div>
-                  </div>
-
-                  <ArrowRight className="w-4 h-4 text-stone-300 group-hover:text-purple-600 group-hover:translate-x-0.5 transition" />
-                </button>
-              ))
-            ) : (
-              <div className="p-6 text-center text-xs text-stone-500">
-                No matching locality found. Press Search to explore all Mumbai rentals.
-              </div>
-            )}
+          <div className="flex-1">
+            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
+              Location in Mumbai
+            </label>
+            <input
+              type="text"
+              value={localityQuery}
+              onChange={(e) => {
+                setLocalityQuery(e.target.value);
+                setSelectedLocalitySlug('');
+                setLocalityDropdownOpen(true);
+              }}
+              onFocus={() => setLocalityDropdownOpen(true)}
+              placeholder="Search locality (e.g. Andheri, Bandra)..."
+              className="w-full bg-transparent text-stone-900 placeholder:text-stone-400 text-sm font-bold focus:outline-none"
+            />
           </div>
-
-          <div className="p-3 bg-stone-50/70 flex items-center justify-between text-xs text-stone-500">
-            <span>Looking for flatmates?</span>
+          {localityQuery && (
             <button
               type="button"
               onClick={() => {
-                setIsOpen(false);
-                router.push('/flatmates/mumbai');
+                setLocalityQuery('');
+                setSelectedLocalitySlug('');
               }}
-              className="text-purple-600 font-bold hover:underline"
+              className="p-1 text-stone-400 hover:text-stone-600"
             >
-              Explore Flatmates →
+              <X className="w-4 h-4" />
             </button>
+          )}
+
+          {/* Autocomplete Dropdown */}
+          {localityDropdownOpen && (
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-50 divide-y divide-stone-100 max-h-64 overflow-y-auto">
+              <div className="p-2.5 bg-stone-50 text-[10px] font-bold text-stone-500 uppercase tracking-wider">
+                {localityQuery.trim() ? 'Matching Localities' : 'Popular Mumbai Localities'}
+              </div>
+              {filteredLocalities.map((loc) => (
+                <button
+                  key={loc.slug}
+                  type="button"
+                  onClick={() => handleSelectLocality(loc.slug, loc.name)}
+                  className="w-full px-4 py-2.5 text-left hover:bg-purple-50 flex items-center justify-between transition group"
+                >
+                  <div>
+                    <span className="text-xs font-bold text-stone-900 group-hover:text-purple-700 block">
+                      {loc.name}
+                    </span>
+                    <span className="text-[10px] text-stone-500">{loc.zone} • Zero Brokerage</span>
+                  </div>
+                  {selectedLocalitySlug === loc.slug && (
+                    <Check className="w-4 h-4 text-purple-600" />
+                  )}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* BHK Configuration */}
+        <div className="md:col-span-3 flex items-center border-b md:border-b-0 md:border-r border-stone-100 pb-3 md:pb-0 md:pr-3">
+          <div className="flex-1 pl-2">
+            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
+              Configuration
+            </label>
+            <select
+              value={selectedBhk}
+              onChange={(e) => setSelectedBhk(e.target.value)}
+              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-1"
+            >
+              <option value="">Any BHK</option>
+              <option value="1">1 BHK</option>
+              <option value="2">2 BHK</option>
+              <option value="3">3 BHK</option>
+              <option value="4">4+ BHK</option>
+            </select>
           </div>
         </div>
-      )}
+
+        {/* Budget Max */}
+        <div className="md:col-span-2 flex items-center pb-3 md:pb-0 md:pr-2">
+          <div className="flex-1 pl-2">
+            <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
+              Max Rent
+            </label>
+            <select
+              value={selectedBudget}
+              onChange={(e) => setSelectedBudget(e.target.value)}
+              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-1"
+            >
+              <option value="">Any Budget</option>
+              <option value="25000">Up to ₹25,000</option>
+              <option value="40000">Up to ₹40,000</option>
+              <option value="60000">Up to ₹60,000</option>
+              <option value="100000">Up to ₹1,00,000</option>
+              <option value="200000">Up to ₹2,00,000</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Submit Search Button */}
+        <div className="md:col-span-2">
+          <button
+            type="submit"
+            className="w-full bg-stone-900 hover:bg-black text-white font-bold text-xs py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+          >
+            <span>Search</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

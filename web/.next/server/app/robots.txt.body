@@ -1,0 +1,30 @@
+User-Agent: *
+Allow: /
+Allow: /mumbai
+Allow: /mumbai/*
+Allow: /property/*
+Allow: /flatmates/*
+Allow: /pg/*
+Allow: /about
+Allow: /contact
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /signup
+Disallow: /saved
+Disallow: /auth/*
+Disallow: /api/*
+Disallow: /private/*
+Disallow: /*?*
+
+User-Agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /login
+Disallow: /signup
+Disallow: /saved
+Disallow: /auth/*
+Disallow: /api/*
+
+Sitemap: https://rehvo.com/sitemap.xml
