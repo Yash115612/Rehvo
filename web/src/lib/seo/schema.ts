@@ -39,9 +39,10 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
   };
 }
 
-/** Schema.org Accommodation / RealEstateListing for Property Detail Page */
 export function generatePropertySchema(property: PublicProperty, canonicalUrl: string) {
-  const images = (property.property_images || []).map((img) => img.image_url);
+  const images = (property.property_images || [])
+    .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
+    .map((img) => img.image_url);
   const coverImage = images[0] || `${BASE_URL}/og-default.jpg`;
 
   let accommodationType = 'Apartment';

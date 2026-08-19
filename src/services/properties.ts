@@ -608,35 +608,10 @@ export async function createProperty(
 
     for (let i = 0; i < candidateImages.length; i++) {
       const item = candidateImages[i];
-      const isLocal =
-        item.uri.startsWith('file:') ||
-        item.uri.startsWith('blob:') ||
-        item.uri.startsWith('ph:') ||
-        item.uri.startsWith('content:') ||
-        item.uri.startsWith('data:');
+      const isAlreadyRemoteHttps = typeof item.uri === 'string' && item.uri.startsWith('https://');
 
-      if (isLocal) {
-        // Upload local file to Supabase Storage
-        const uploadResult = await uploadPropertyImage(
-          propertyId,
-          item.uri,
-          item.isCover,
-          item.sortOrder,
-          currentUserId
-        );
-
-        if (uploadResult.success && uploadResult.data) {
-          uploadedImages.push(uploadResult.data);
-          if (uploadResult.data.id) {
-            uploadedStoragePaths.push(`${currentUserId}/${propertyId}`);
-          }
-        } else {
-          imageUploadFailed = true;
-          imageUploadErrorMsg = uploadResult.error || "Failed to upload property photo.";
-          break;
-        }
-      } else {
-        // Remote HTTP/HTTPS URL: insert row into property_images directly
+      if (isAlreadyRemoteHttps) {
+        // Remote HTTPS URL: insert row into property_images directly
         const { data: imgRow, error: imgError } = await supabase
           .from('property_images')
           .insert({
@@ -656,6 +631,26 @@ export async function createProperty(
             is_cover: imgRow.is_cover,
             sort_order: imgRow.sort_order,
           });
+        }
+      } else {
+        // Local file URI or unverified scheme: MUST upload to Supabase Storage
+        const uploadResult = await uploadPropertyImage(
+          propertyId,
+          item.uri,
+          item.isCover,
+          item.sortOrder,
+          currentUserId
+        );
+
+        if (uploadResult.success && uploadResult.data && uploadResult.data.url?.startsWith('https://')) {
+          uploadedImages.push(uploadResult.data);
+          if (uploadResult.data.id) {
+            uploadedStoragePaths.push(`${currentUserId}/${propertyId}`);
+          }
+        } else {
+          imageUploadFailed = true;
+          imageUploadErrorMsg = uploadResult.error || "Failed to upload property photo to remote storage.";
+          break;
         }
       }
     }
@@ -879,24 +874,20 @@ export async function uploadPropertyImage(
       return { success: false, error: 'You must be signed in to upload property images.' };
     }
 
-    const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`;
-    const storagePath = `${resolvedOwnerId}/${propertyId}/${fileName}`;
+    let publicUrl = '';
+    let resolvedStoragePath: string | null = null;
 
-    let publicUrl = uri;
+    if (typeof uri === 'string' && uri.startsWith('https://')) {
+      publicUrl = uri;
+    } else {
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.jpg`;
+      resolvedStoragePath = `${resolvedOwnerId}/${propertyId}/${fileName}`;
 
-    // Only upload to Supabase Storage if it's a local file URI (e.g. file://, blob:, ph://, content:, data:)
-    if (
-      uri.startsWith('file:') ||
-      uri.startsWith('blob:') ||
-      uri.startsWith('ph:') ||
-      uri.startsWith('content:') ||
-      uri.startsWith('data:')
-    ) {
       const { data: uploadPayload, contentType } = await readUriAsArrayBufferOrBlob(uri);
 
       const { error: uploadError } = await supabase.storage
         .from('property-images')
-        .upload(storagePath, uploadPayload, {
+        .upload(resolvedStoragePath, uploadPayload, {
           contentType: contentType || 'image/jpeg',
           upsert: true,
         });
@@ -910,9 +901,17 @@ export async function uploadPropertyImage(
 
       const { data: urlData } = supabase.storage
         .from('property-images')
-        .getPublicUrl(storagePath);
+        .getPublicUrl(resolvedStoragePath);
 
       publicUrl = urlData.publicUrl;
+    }
+
+    // STRICT DEFENSE: Reject any non-HTTPS URL before inserting into property_images
+    if (!publicUrl || !publicUrl.startsWith('https://')) {
+      return {
+        success: false,
+        error: 'Failed to generate a valid public HTTPS image URL. Local files cannot be saved directly.',
+      };
     }
 
     // Insert record in property_images table
@@ -921,7 +920,7 @@ export async function uploadPropertyImage(
       .insert({
         property_id: propertyId,
         image_url: publicUrl,
-        storage_path: storagePath,
+        storage_path: resolvedStoragePath,
         is_cover: isCover,
         sort_order: sortOrder,
       })

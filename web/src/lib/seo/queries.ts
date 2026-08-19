@@ -71,6 +71,29 @@ export interface LocalityStats {
   };
 }
 
+/** Validates and returns a safe HTTPS image URL or null */
+export function sanitizeImageUrl(url?: string | null): string | null {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  if (trimmed.startsWith('https://')) {
+    return trimmed;
+  }
+  return null;
+}
+
+/** Sanitizes and filters property_images to strictly valid remote HTTPS URLs */
+export function sanitizePropertyImages(images?: any[]): PublicPropertyImage[] {
+  if (!Array.isArray(images)) return [];
+  return images
+    .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
+    .map((img) => ({
+      id: String(img.id),
+      image_url: img.image_url.trim(),
+      is_cover: Boolean(img.is_cover),
+      sort_order: Number(img.sort_order || 0),
+    }));
+}
+
 /** Get published properties with optional filters */
 export async function getPublishedProperties(options?: {
   city?: string;
@@ -141,8 +164,13 @@ export async function getPublishedProperties(options?: {
       return { properties: [], totalCount: 0 };
     }
 
+    const sanitized = (data as any[]).map((row) => ({
+      ...row,
+      property_images: sanitizePropertyImages(row.property_images),
+    })) as PublicProperty[];
+
     return {
-      properties: data as unknown as PublicProperty[],
+      properties: sanitized,
       totalCount: count || data.length,
     };
   } catch (err) {
@@ -200,7 +228,12 @@ export async function getPropertyBySlug(slugOrId: string): Promise<PublicPropert
       return null;
     }
 
-    return data as unknown as PublicProperty;
+    const property = {
+      ...(data as any),
+      property_images: sanitizePropertyImages((data as any).property_images),
+    } as PublicProperty;
+
+    return property;
   } catch (err) {
     console.warn('[REHVO SEO] Error loading property by slug:', err);
     return null;
@@ -224,17 +257,17 @@ export async function getLocalityStats(city: string, locality: string): Promise<
     };
   }
 
-  const prices = properties.map((p) => p.price).filter((p) => p > 0);
+  const prices = properties.map((p) => p.price);
   const minRent = Math.min(...prices);
   const maxRent = Math.max(...prices);
-  const avgRent = Math.round(prices.reduce((a, b) => a + b, 0) / prices.length);
+  const avgRent = Math.round(prices.reduce((sum, p) => sum + p, 0) / total);
 
-  const typesBreakdown = {
-    flat: properties.filter((p) => (p as any).type === 'flat').length,
-    room: properties.filter((p) => (p as any).type === 'room').length,
-    pg: properties.filter((p) => (p as any).type === 'pg').length,
-    studio: properties.filter((p) => (p as any).type === 'studio').length,
-  };
+  const typesBreakdown = { flat: 0, room: 0, pg: 0, studio: 0 };
+  properties.forEach((p) => {
+    if (p.type in typesBreakdown) {
+      typesBreakdown[p.type as keyof typeof typesBreakdown]++;
+    }
+  });
 
   return {
     locality,
@@ -267,25 +300,25 @@ export async function getPublishedFlatmates(city: string = 'Mumbai'): Promise<Pu
         move_in_date,
         lifestyle_preferences,
         created_at,
-        profiles:profiles!flatmate_profiles_user_id_fkey (full_name, profile_photo)
+        profiles:user_id (full_name, profile_photo)
       `)
       .eq('status', 'published')
       .ilike('city', `%${city}%`)
       .order('created_at', { ascending: false })
-      .limit(30);
+      .limit(20);
 
     if (error || !data) {
       console.warn('[REHVO SEO] Error fetching flatmates:', error);
       return [];
     }
 
-    return data.map((row: any) => ({
+    return (data as any[]).map((row) => ({
       id: row.id,
-      name: row.profiles?.full_name || 'Verified Flatmate',
-      photo: row.photo || row.profiles?.profile_photo,
+      name: (row.profiles as any)?.full_name || 'REHVO Member',
+      photo: sanitizeImageUrl(row.photo || (row.profiles as any)?.profile_photo),
       age: row.age,
       gender: row.gender,
-      profession: row.profession,
+      profession: row.profession || 'Professional',
       city: row.city,
       locality: row.locality,
       budget_min: row.budget_min,

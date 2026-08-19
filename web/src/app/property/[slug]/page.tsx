@@ -82,8 +82,14 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
   const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
   const propertySchema = generatePropertySchema(property, canonicalUrl);
 
-  const images = property.property_images?.sort((a, b) => a.sort_order - b.sort_order) || [];
-  const mainImage = images[0]?.image_url || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80';
+  const DEFAULT_FALLBACK_COVER =
+    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80';
+
+  const images = (property.property_images || [])
+    .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
+    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+  const mainImage = images[0]?.image_url || DEFAULT_FALLBACK_COVER;
 
   const furnishingLabel =
     property.furnishing === 'fully_furnished'

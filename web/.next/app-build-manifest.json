@@ -1,134 +1,60 @@
 {
   "pages": {
-    "/not-found": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/app/not-found-2bf4164fe4e89fa1.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/app/_not-found/page-c1bbe1b4bc8170a6.js"
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
     ],
     "/layout": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/css/2928847042de593b.css",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/app/layout-f4ed193929d720f0.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/layout.css",
+      "static/chunks/app/layout.js"
     ],
-    "/mumbai/[locality]/pg/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/[locality]/pg/page-ed7a7b18f2330bff.js"
-    ],
-    "/contact/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/app/contact/page-c8daa9401f97eda3.js"
-    ],
-    "/flatmates/[city]/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/flatmates/[city]/page-9d57ec5bc9fab877.js"
-    ],
-    "/about/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/app/about/page-a27e9e64d93dc499.js"
-    ],
-    "/mumbai/[locality]/flats-for-rent/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/[locality]/flats-for-rent/page-9283d5f0b32ea63c.js"
-    ],
-    "/mumbai/[locality]/rooms-for-rent/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/[locality]/rooms-for-rent/page-76bb6553de7bcb8f.js"
-    ],
-    "/mumbai/[locality]/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/[locality]/page-044cf318bd67b72e.js"
-    ],
-    "/pg/[city]/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/pg/[city]/page-f9d62a761bdd67d5.js"
-    ],
-    "/mumbai/[locality]/studios-for-rent/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/[locality]/studios-for-rent/page-491c60db60226c64.js"
-    ],
-    "/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/page-bb820a6df663bc1d.js"
+    "/not-found": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/not-found.js"
     ],
     "/mumbai/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/mumbai/page-e6ed9b5a8370f033.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/page.js"
+    ],
+    "/mumbai/[locality]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/page.js"
+    ],
+    "/mumbai/[locality]/flats-for-rent/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/mumbai/[locality]/flats-for-rent/page.js"
     ],
     "/property/[slug]/page": [
-      "static/chunks/webpack-616e068a201ad621.js",
-      "static/chunks/fd9d1056-357a9aa7cf7b0906.js",
-      "static/chunks/117-2da535c0e578b6a9.js",
-      "static/chunks/main-app-1c9151d0bd737171.js",
-      "static/chunks/972-ed5ec83d6b8990f7.js",
-      "static/chunks/878-7215fc146babfa68.js",
-      "static/chunks/app/property/[slug]/page-6faae261bfd39257.js"
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/property/[slug]/page.js"
+    ],
+    "/flatmates/[city]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/flatmates/[city]/page.js"
+    ],
+    "/pg/[city]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/pg/[city]/page.js"
+    ],
+    "/about/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/about/page.js"
+    ],
+    "/contact/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/contact/page.js"
     ]
   }
 }

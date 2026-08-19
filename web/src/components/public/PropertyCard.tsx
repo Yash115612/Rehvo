@@ -10,12 +10,17 @@ interface PropertyCardProps {
   priority?: boolean;
 }
 
+const DEFAULT_FALLBACK_IMAGE =
+  'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80';
+
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, priority = false }) => {
   const slug = generatePropertySlug(property);
-  const coverImage =
-    property.property_images?.find((img) => img.is_cover)?.image_url ||
-    property.property_images?.[0]?.image_url ||
-    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80';
+  
+  const rawCover =
+    property.property_images?.find((img) => img.is_cover && img.image_url?.startsWith('https://'))?.image_url ||
+    property.property_images?.find((img) => img.image_url?.startsWith('https://'))?.image_url;
+
+  const coverImage = rawCover && rawCover.startsWith('https://') ? rawCover : DEFAULT_FALLBACK_IMAGE;
 
   const formattedPrice = `₹${property.price.toLocaleString('en-IN')}`;
   const furnishingLabel =
