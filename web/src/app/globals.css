@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #F8F7F4;
+  --foreground: #171522;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Information-Dense Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8E5EC;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D3C9FF;
+}
+
+/* Custom Table Utilities */
+.table-dense th {
+  padding: 0.625rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #777482;
+  border-bottom: 1px solid #E8E5EC;
+  background-color: #FAF9F6;
+}
+
+.table-dense td {
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid #F3F0EA;
+  color: #171522;
+}
+
+.table-dense tr:hover td {
+  background-color: #FDFCFB;
+}

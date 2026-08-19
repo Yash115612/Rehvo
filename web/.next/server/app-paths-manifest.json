@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/mumbai/[locality]/pg/page": "app/mumbai/[locality]/pg/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/flatmates/[city]/page": "app/flatmates/[city]/page.js",
+  "/about/page": "app/about/page.js",
+  "/mumbai/[locality]/flats-for-rent/page": "app/mumbai/[locality]/flats-for-rent/page.js",
+  "/mumbai/[locality]/rooms-for-rent/page": "app/mumbai/[locality]/rooms-for-rent/page.js",
+  "/mumbai/[locality]/page": "app/mumbai/[locality]/page.js",
+  "/pg/[city]/page": "app/pg/[city]/page.js",
+  "/mumbai/[locality]/studios-for-rent/page": "app/mumbai/[locality]/studios-for-rent/page.js",
+  "/page": "app/page.js",
+  "/mumbai/page": "app/mumbai/page.js",
+  "/property/[slug]/page": "app/property/[slug]/page.js"
+}
