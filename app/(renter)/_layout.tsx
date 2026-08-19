@@ -46,6 +46,7 @@ export default function RenterLayout() {
   return (
     <View style={styles.root} pointerEvents="box-none">
       <Tabs
+        backBehavior="history"
         screenOptions={{
           headerShown: false,
           tabBarStyle: { display: 'none' },
@@ -68,6 +69,10 @@ export default function RenterLayout() {
         <Tabs.Screen name="settings" options={{ href: null }} />
         <Tabs.Screen name="chat/index" options={{ href: null }} />
         <Tabs.Screen name="chat/[id]" options={{ href: null }} />
+        <Tabs.Screen name="flatmate/[id]" options={{ href: null }} />
+        <Tabs.Screen name="flatmate/create" options={{ href: null }} />
+        <Tabs.Screen name="flatmate/edit" options={{ href: null }} />
+        <Tabs.Screen name="flatmate/my-profile" options={{ href: null }} />
       </Tabs>
 
       {showFloatingNav && (

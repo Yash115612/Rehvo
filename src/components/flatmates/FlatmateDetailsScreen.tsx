@@ -120,7 +120,13 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
       <View style={styles.headerBar}>
         <Pressable
           style={styles.headerBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(renter)/flatmates');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Go back"

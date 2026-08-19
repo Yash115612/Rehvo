@@ -126,7 +126,13 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
       <View style={styles.headerBar}>
         <Pressable
           style={styles.headerBackBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace(role === 'OWNER' ? '/(owner)/profile' : '/(renter)/profile');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Back to profile"

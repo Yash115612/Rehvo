@@ -130,15 +130,21 @@ export default function ScheduleVisitRoute() {
             <Text style={styles.modalSub}>
               Your visit for {property?.title} is scheduled for {selectedDate} at {selectedTime}.
             </Text>
-            <Pressable
-              style={styles.modalBtn}
-              onPress={() => {
-                setModalVisible(false);
-                router.replace('/(renter)/home');
-              }}
-            >
-              <Text style={styles.modalBtnText}>Back to Home</Text>
-            </Pressable>
+              <Pressable
+                style={styles.modalBtn}
+                onPress={() => {
+                  setModalVisible(false);
+                  if (property?.id) {
+                    router.replace(`/(renter)/property/${property.id}`);
+                  } else if (router.canGoBack()) {
+                    router.back();
+                  } else {
+                    router.replace('/(renter)/home');
+                  }
+                }}
+              >
+                <Text style={styles.modalBtnText}>Done</Text>
+              </Pressable>
           </View>
         </View>
       </Modal>

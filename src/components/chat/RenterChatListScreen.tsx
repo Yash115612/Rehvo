@@ -82,7 +82,13 @@ export const RenterChatListScreen: React.FC = () => {
       <View style={styles.header}>
         <Pressable
           style={styles.backBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(renter)/profile');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Go back"

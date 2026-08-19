@@ -52,7 +52,13 @@ export const CategoryHeader: React.FC<CategoryHeaderProps> = ({
       <View style={styles.topBar}>
         <Pressable
           style={styles.backBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(renter)/home');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Back to previous screen"

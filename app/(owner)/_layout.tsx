@@ -63,6 +63,7 @@ export default function OwnerLayout() {
   return (
     <View style={styles.root} pointerEvents="box-none">
       <Tabs
+        backBehavior="history"
         screenOptions={{
           headerShown: false,
           tabBarStyle: { display: 'none' },

@@ -209,7 +209,13 @@ export const SharedConversationScreen: React.FC<
         renterName={otherName}
         renterAvatar={otherAvatar}
         property={property}
-        onBack={() => router.back()}
+        onBack={() => {
+          if (router.canGoBack()) {
+            router.back();
+          } else {
+            router.replace(isOwner ? '/(owner)/chat' : '/(renter)/chat');
+          }
+        }}
         onOpenProperty={handleOpenProperty}
         onOpenMore={() => setMoreModalVisible(true)}
       />

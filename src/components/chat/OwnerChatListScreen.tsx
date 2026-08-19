@@ -82,7 +82,13 @@ export const OwnerChatListScreen: React.FC = () => {
       <View style={styles.header}>
         <Pressable
           style={styles.backBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(owner)/dashboard');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Go back"

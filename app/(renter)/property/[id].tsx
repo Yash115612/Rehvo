@@ -85,7 +85,13 @@ export default function PropertyDetailsRoute() {
       property={property}
       isSaved={savedPropertyIds.includes(property.id)}
       onToggleSave={toggleSaveProperty}
-      onBack={() => router.back()}
+      onBack={() => {
+        if (router.canGoBack()) {
+          router.back();
+        } else {
+          router.replace('/(renter)/search');
+        }
+      }}
     />
   );
 }

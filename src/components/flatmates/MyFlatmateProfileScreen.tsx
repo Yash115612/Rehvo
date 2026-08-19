@@ -116,7 +116,13 @@ export const MyFlatmateProfileScreen: React.FC = () => {
       <View style={styles.headerBar}>
         <Pressable
           style={styles.headerBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(renter)/profile');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Back"

@@ -33,7 +33,13 @@ export default function FlatmatesDiscoveryPage() {
       <View style={styles.header}>
         <Pressable
           style={styles.backBtn}
-          onPress={() => router.back()}
+          onPress={() => {
+            if (router.canGoBack()) {
+              router.back();
+            } else {
+              router.replace('/(renter)/home');
+            }
+          }}
           hitSlop={8}
           accessibilityRole="button"
           accessibilityLabel="Back to home"

@@ -53,8 +53,16 @@ export default function FlatmateDetailPage() {
         <View style={styles.header}>
           <Pressable
             style={styles.backBtn}
-            onPress={() => router.back()}
+            onPress={() => {
+              if (router.canGoBack()) {
+                router.back();
+              } else {
+                router.replace('/(renter)/flatmates');
+              }
+            }}
             hitSlop={8}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
           >
             <ArrowLeft size={20} color="#171522" strokeWidth={2.2} />
           </Pressable>
