@@ -16,13 +16,17 @@ export function constructSeoMetadata({
   title,
   description,
   canonicalUrl,
-  imageUrl = `${BASE_URL}/og-default.jpg`,
+  imageUrl,
   noIndex = false,
   type = 'website',
 }: SeoMetadataOptions): Metadata {
   const fullCanonical = canonicalUrl.startsWith('http')
     ? canonicalUrl
     : `${BASE_URL}${canonicalUrl}`;
+
+  const resolvedImageUrl =
+    imageUrl ||
+    `${BASE_URL}/api/og?title=${encodeURIComponent(title)}&subtitle=${encodeURIComponent(description.slice(0, 90))}...`;
 
   return {
     title: `${title} | ${SITE_NAME}`,
@@ -49,7 +53,7 @@ export function constructSeoMetadata({
       siteName: SITE_NAME,
       images: [
         {
-          url: imageUrl,
+          url: resolvedImageUrl,
           width: 1200,
           height: 630,
           alt: title,
@@ -62,7 +66,7 @@ export function constructSeoMetadata({
       card: 'summary_large_image',
       title: `${title} | ${SITE_NAME}`,
       description,
-      images: [imageUrl],
+      images: [resolvedImageUrl],
       creator: '@rehvoapp',
     },
   };

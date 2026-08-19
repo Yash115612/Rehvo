@@ -16,6 +16,11 @@
       "static/chunks/main-app.js",
       "static/chunks/app/not-found.js"
     ],
+    "/localities/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/localities/page.js"
+    ],
     "/list-property/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",

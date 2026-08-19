@@ -31,6 +31,13 @@ export const PublicNavbar: React.FC = () => {
               Mumbai Rentals
             </Link>
             <Link
+              href="/localities"
+              className="text-sm font-semibold text-stone-600 hover:text-purple-600 transition flex items-center gap-1.5"
+            >
+              <Building2 className="w-4 h-4" />
+              Localities
+            </Link>
+            <Link
               href="/flatmates/mumbai"
               className="text-sm font-semibold text-stone-600 hover:text-purple-600 transition flex items-center gap-1.5"
             >
@@ -42,7 +49,7 @@ export const PublicNavbar: React.FC = () => {
               className="text-sm font-semibold text-stone-600 hover:text-purple-600 transition flex items-center gap-1.5"
             >
               <Building2 className="w-4 h-4" />
-              PG & Co-Living
+              PG
             </Link>
             <Link
               href="/about"
