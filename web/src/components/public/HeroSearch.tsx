@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, MapPin, Building, Users, Home, ArrowRight, X, ChevronDown, Check } from 'lucide-react';
+import { Search, MapPin, Building, Users, Home, ArrowRight, X, Check, Wallet, SlidersHorizontal } from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
 
 export const HeroSearch: React.FC = () => {
@@ -30,7 +30,7 @@ export const HeroSearch: React.FC = () => {
           l.name.toLowerCase().includes(localityQuery.toLowerCase()) ||
           l.zone.toLowerCase().includes(localityQuery.toLowerCase())
       )
-    : localities.slice(0, 6);
+    : localities.slice(0, 8);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -56,7 +56,6 @@ export const HeroSearch: React.FC = () => {
       return;
     }
 
-    // Build URL search params
     const params = new URLSearchParams();
     params.set('city', 'mumbai');
 
@@ -83,25 +82,25 @@ export const HeroSearch: React.FC = () => {
 
   return (
     <div ref={containerRef} className="w-full max-w-4xl mx-auto my-6 relative z-30">
-      {/* Category Filter Tabs */}
-      <div className="flex items-center gap-1.5 p-1.5 bg-stone-900/60 backdrop-blur-md rounded-2xl w-fit mb-3 border border-white/10 shadow-lg">
+      {/* Category Segmented Control Pills */}
+      <div className="flex items-center justify-center sm:justify-start gap-1 p-1 bg-stone-900/40 backdrop-blur-md rounded-full w-fit mx-auto sm:mx-0 mb-3 border border-white/10 shadow-md">
         <button
           type="button"
           onClick={() => setActiveTab('all')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
             activeTab === 'all'
               ? 'bg-white text-stone-900 shadow-sm'
               : 'text-stone-300 hover:text-white hover:bg-white/10'
           }`}
         >
           <Home className="w-3.5 h-3.5" />
-          <span>All Rentals</span>
+          <span>All</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('flat')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
             activeTab === 'flat'
               ? 'bg-white text-stone-900 shadow-sm'
               : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -114,31 +113,31 @@ export const HeroSearch: React.FC = () => {
         <button
           type="button"
           onClick={() => setActiveTab('room')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
             activeTab === 'room'
               ? 'bg-white text-stone-900 shadow-sm'
               : 'text-stone-300 hover:text-white hover:bg-white/10'
           }`}
         >
-          <span>Private Rooms</span>
+          <span>Rooms</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('pg')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
             activeTab === 'pg'
               ? 'bg-white text-stone-900 shadow-sm'
               : 'text-stone-300 hover:text-white hover:bg-white/10'
           }`}
         >
-          <span>PG / Co-Living</span>
+          <span>PG</span>
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab('flatmate')}
-          className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-150 flex items-center gap-1.5 ${
             activeTab === 'flatmate'
               ? 'bg-purple-600 text-white shadow-sm'
               : 'text-purple-300 hover:text-white hover:bg-purple-600/30'
@@ -149,19 +148,19 @@ export const HeroSearch: React.FC = () => {
         </button>
       </div>
 
-      {/* Main Search Panel */}
+      {/* Main Search Panel Surface */}
       <form
         onSubmit={handleSearchSubmit}
-        className="bg-white rounded-3xl p-3 sm:p-4 shadow-2xl border border-stone-200 grid grid-cols-1 md:grid-cols-12 gap-3 items-center"
+        className="bg-white/95 backdrop-blur-xl rounded-3xl p-3 sm:p-4 shadow-2xl border border-stone-200/90 grid grid-cols-1 md:grid-cols-12 gap-3 items-center"
       >
-        {/* Locality Input */}
-        <div className="relative md:col-span-5 flex items-center border-b md:border-b-0 md:border-r border-stone-100 pb-3 md:pb-0 md:pr-3">
+        {/* Location / Locality Input */}
+        <div className="relative md:col-span-5 flex items-center border-b md:border-b-0 md:border-r border-stone-200/70 pb-3 md:pb-0 md:pr-3">
           <div className="p-2 text-stone-400">
             <MapPin className="w-5 h-5 text-purple-600" />
           </div>
           <div className="flex-1">
             <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
-              Location in Mumbai
+              Where in Mumbai?
             </label>
             <input
               type="text"
@@ -191,8 +190,8 @@ export const HeroSearch: React.FC = () => {
 
           {/* Autocomplete Dropdown */}
           {localityDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-50 divide-y divide-stone-100 max-h-64 overflow-y-auto">
-              <div className="p-2.5 bg-stone-50 text-[10px] font-bold text-stone-500 uppercase tracking-wider">
+            <div className="absolute top-full left-0 right-0 mt-3 bg-white rounded-3xl shadow-2xl border border-stone-200 overflow-hidden z-50 divide-y divide-stone-100 max-h-64 overflow-y-auto">
+              <div className="p-3 bg-stone-50 text-[10px] font-bold text-stone-500 uppercase tracking-wider">
                 {localityQuery.trim() ? 'Matching Localities' : 'Popular Mumbai Localities'}
               </div>
               {filteredLocalities.map((loc) => (
@@ -218,15 +217,15 @@ export const HeroSearch: React.FC = () => {
         </div>
 
         {/* BHK Configuration */}
-        <div className="md:col-span-3 flex items-center border-b md:border-b-0 md:border-r border-stone-100 pb-3 md:pb-0 md:pr-3">
+        <div className="md:col-span-3 flex items-center border-b md:border-b-0 md:border-r border-stone-200/70 pb-3 md:pb-0 md:pr-3">
           <div className="flex-1 pl-2">
             <label className="block text-[10px] font-extrabold text-stone-400 uppercase tracking-wider">
-              Configuration
+              Bedrooms
             </label>
             <select
               value={selectedBhk}
               onChange={(e) => setSelectedBhk(e.target.value)}
-              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-1"
+              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-0.5"
             >
               <option value="">Any BHK</option>
               <option value="1">1 BHK</option>
@@ -246,7 +245,7 @@ export const HeroSearch: React.FC = () => {
             <select
               value={selectedBudget}
               onChange={(e) => setSelectedBudget(e.target.value)}
-              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-1"
+              className="w-full bg-transparent text-stone-900 text-sm font-bold focus:outline-none cursor-pointer py-0.5"
             >
               <option value="">Any Budget</option>
               <option value="25000">Up to ₹25,000</option>
@@ -258,7 +257,7 @@ export const HeroSearch: React.FC = () => {
           </div>
         </div>
 
-        {/* Submit Search Button */}
+        {/* Search Submit Action Button */}
         <div className="md:col-span-2">
           <button
             type="submit"

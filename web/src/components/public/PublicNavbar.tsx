@@ -11,15 +11,12 @@ import {
   Heart,
   Menu,
   X,
-  Smartphone,
   PlusCircle,
   LogOut,
   User,
-  CalendarCheck,
-  MessageSquare,
-  Shield,
   GitCompare,
   ChevronDown,
+  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 
@@ -47,74 +44,74 @@ export const PublicNavbar: React.FC = () => {
     router.push('/');
   };
 
-  const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User';
+  const displayName =
+    profile?.full_name ||
+    user?.user_metadata?.full_name ||
+    user?.email?.split('@')[0] ||
+    'User';
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-stone-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 py-3">
-          {/* Brand Logo */}
-          <Link href="/" className="flex items-center space-x-2.5 group flex-shrink-0">
-            <div className="w-10 h-10 rounded-2xl bg-purple-600 flex items-center justify-center text-white font-extrabold text-xl shadow-md group-hover:bg-purple-700 transition">
+    <div className="sticky top-3 sm:top-4 z-50 px-3 sm:px-6 w-full max-w-7xl mx-auto pointer-events-none">
+      {/* Floating Curved Pill Container */}
+      <header className="pointer-events-auto bg-white/95 backdrop-blur-xl border border-stone-200/90 shadow-xl shadow-stone-900/5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-300">
+        <div className="flex items-center justify-between">
+          {/* Left: Brand Logo */}
+          <Link href="/" className="flex items-center space-x-2.5 group flex-shrink-0 pl-1">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-900 group-hover:bg-purple-600 flex items-center justify-center text-white font-extrabold text-base sm:text-lg shadow-sm transition-colors duration-200">
               R
             </div>
-            <span className="font-extrabold text-2xl tracking-tight text-stone-900">
+            <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-stone-900">
               REHVO<span className="text-purple-600">.</span>
             </span>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-6 text-sm font-semibold text-stone-600">
+          {/* Center: Desktop Navigation Pills */}
+          <nav className="hidden lg:flex items-center space-x-1 text-xs sm:text-sm font-bold text-stone-600 bg-stone-100/70 p-1 rounded-full border border-stone-200/60">
             <Link
               href="/mumbai"
-              className="hover:text-purple-600 transition flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
             >
-              <Home className="w-4 h-4 text-stone-400" />
-              <span>Mumbai Rentals</span>
+              <span>Properties</span>
             </Link>
             <Link
               href="/flatmates/mumbai"
-              className="hover:text-purple-600 transition flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
             >
-              <Users className="w-4 h-4 text-stone-400" />
               <span>Flatmates</span>
             </Link>
             <Link
               href="/pg/mumbai"
-              className="hover:text-purple-600 transition flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
             >
-              <Building2 className="w-4 h-4 text-stone-400" />
               <span>PG & Rooms</span>
             </Link>
             <Link
               href="/localities"
-              className="hover:text-purple-600 transition flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
             >
-              <MapPin className="w-4 h-4 text-stone-400" />
-              <span>Localities</span>
+              <span>Locations</span>
             </Link>
             <Link
               href="/compare/andheri-west-vs-bandra-west"
-              className="hover:text-purple-600 transition flex items-center gap-1.5"
+              className="px-3.5 py-1.5 rounded-full hover:text-stone-900 hover:bg-white transition-all duration-150 flex items-center gap-1.5"
             >
-              <GitCompare className="w-4 h-4 text-stone-400" />
               <span>Compare</span>
             </Link>
           </nav>
 
-          {/* Right Actions */}
-          <div className="hidden sm:flex items-center space-x-3">
-            {/* Saved Properties Button */}
+          {/* Right: Actions (Saved, List Property, Auth) */}
+          <div className="hidden sm:flex items-center space-x-2.5">
+            {/* Saved Collection Pill */}
             <Link
               href="/saved"
-              className="relative p-2.5 rounded-2xl text-stone-600 hover:text-purple-600 hover:bg-stone-100 transition"
+              className="relative p-2 rounded-full text-stone-600 hover:text-purple-600 hover:bg-stone-100 transition"
               title="Saved Properties"
               aria-label="View saved properties"
             >
-              <Heart className="w-5 h-5" />
+              <Heart className="w-4 h-4" />
               {savedPropertyIds.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 bg-rose-500 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
+                <span className="absolute top-0 right-0 w-4 h-4 bg-rose-500 text-white text-[9px] font-extrabold rounded-full flex items-center justify-center shadow-sm">
                   {savedPropertyIds.length}
                 </span>
               )}
@@ -123,9 +120,9 @@ export const PublicNavbar: React.FC = () => {
             {/* List Property (Free) */}
             <Link
               href="/list-property"
-              className="text-xs font-bold text-stone-800 hover:text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200/60 px-4 py-2.5 rounded-2xl transition flex items-center gap-1.5"
+              className="text-xs font-bold text-stone-800 hover:text-purple-700 bg-stone-100 hover:bg-purple-50 hover:border-purple-200 border border-stone-200/80 px-4 py-2 rounded-full transition flex items-center gap-1.5"
             >
-              <PlusCircle className="w-4 h-4 text-purple-600" />
+              <PlusCircle className="w-3.5 h-3.5 text-purple-600" />
               <span>List Property</span>
             </Link>
 
@@ -135,30 +132,30 @@ export const PublicNavbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1.5 rounded-2xl hover:bg-stone-100 transition border border-transparent hover:border-stone-200"
+                  className="flex items-center gap-2 p-1 pl-1.5 pr-2.5 rounded-full bg-stone-100 hover:bg-stone-200/80 transition border border-stone-200"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-stone-900 text-white font-bold text-xs flex items-center justify-center shadow-sm">
+                  <div className="w-7 h-7 rounded-full bg-stone-900 text-white font-bold text-xs flex items-center justify-center shadow-sm">
                     {initial}
                   </div>
-                  <span className="text-xs font-bold text-stone-800 max-w-[100px] truncate hidden md:inline-block">
+                  <span className="text-xs font-bold text-stone-800 max-w-[90px] truncate hidden md:inline-block">
                     {displayName}
                   </span>
-                  <ChevronDown className="w-3.5 h-3.5 text-stone-400" />
+                  <ChevronDown className="w-3 h-3 text-stone-400" />
                 </button>
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border border-stone-200 py-2 z-50 divide-y divide-stone-100 animate-in fade-in zoom-in-95 duration-150">
-                    <div className="px-4 py-3">
+                  <div className="absolute right-0 mt-3 w-60 bg-white rounded-3xl shadow-2xl border border-stone-200 py-2.5 z-50 divide-y divide-stone-100 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="px-5 py-3">
                       <p className="text-xs font-extrabold text-stone-900 truncate">{displayName}</p>
                       <p className="text-[11px] text-stone-500 truncate">{user?.email}</p>
                     </div>
 
-                    <div className="py-1">
+                    <div className="py-1.5">
                       <Link
                         href="/saved"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
                       >
                         <Heart className="w-4 h-4 text-stone-400" />
                         <span>Saved Properties ({savedPropertyIds.length})</span>
@@ -166,18 +163,18 @@ export const PublicNavbar: React.FC = () => {
                       <Link
                         href="/list-property"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
+                        className="flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-stone-700 hover:bg-purple-50 hover:text-purple-700 transition"
                       >
                         <PlusCircle className="w-4 h-4 text-stone-400" />
                         <span>Post a Property Listing</span>
                       </Link>
                     </div>
 
-                    <div className="py-1">
+                    <div className="py-1.5">
                       <button
                         type="button"
                         onClick={handleSignOut}
-                        className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition"
+                        className="w-full flex items-center gap-2.5 px-5 py-2.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition"
                       >
                         <LogOut className="w-4 h-4" />
                         <span>Sign Out</span>
@@ -187,16 +184,16 @@ export const PublicNavbar: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1.5">
                 <Link
                   href="/login"
-                  className="text-xs font-bold text-stone-700 hover:text-stone-900 px-3 py-2.5 rounded-2xl hover:bg-stone-100 transition"
+                  className="text-xs font-bold text-stone-700 hover:text-stone-900 px-3.5 py-2 rounded-full hover:bg-stone-100 transition"
                 >
                   Log in
                 </Link>
                 <Link
                   href="/signup"
-                  className="bg-stone-900 hover:bg-black text-white text-xs font-bold px-4 py-2.5 rounded-2xl shadow-sm transition"
+                  className="bg-stone-900 hover:bg-black text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm transition"
                 >
                   Sign up
                 </Link>
@@ -204,8 +201,8 @@ export const PublicNavbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 sm:hidden">
+          {/* Mobile Right Controls */}
+          <div className="flex items-center gap-1.5 sm:hidden">
             <Link
               href="/saved"
               className="relative p-2 text-stone-700"
@@ -213,7 +210,7 @@ export const PublicNavbar: React.FC = () => {
             >
               <Heart className="w-5 h-5" />
               {savedPropertyIds.length > 0 && (
-                <span className="absolute top-0 right-0 w-3.5 h-3.5 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                   {savedPropertyIds.length}
                 </span>
               )}
@@ -222,31 +219,31 @@ export const PublicNavbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-stone-700 hover:bg-stone-100 transition"
+              className="p-2 rounded-full text-stone-700 hover:bg-stone-100 transition"
               aria-label="Toggle mobile menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Curved Drawer Card */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-stone-200 bg-white px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top duration-200">
+        <div className="pointer-events-auto mt-2 bg-white/95 backdrop-blur-xl border border-stone-200 shadow-2xl rounded-3xl p-5 space-y-4 animate-in slide-in-from-top-3 duration-200">
           <nav className="space-y-1">
             <Link
               href="/mumbai"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
             >
               <Home className="w-4 h-4 text-purple-600" />
-              <span>Mumbai Rentals</span>
+              <span>Properties</span>
             </Link>
             <Link
               href="/flatmates/mumbai"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
             >
               <Users className="w-4 h-4 text-purple-600" />
               <span>Flatmates</span>
@@ -254,7 +251,7 @@ export const PublicNavbar: React.FC = () => {
             <Link
               href="/pg/mumbai"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
             >
               <Building2 className="w-4 h-4 text-purple-600" />
               <span>PG & Rooms</span>
@@ -262,42 +259,32 @@ export const PublicNavbar: React.FC = () => {
             <Link
               href="/localities"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
             >
               <MapPin className="w-4 h-4 text-purple-600" />
-              <span>Localities Directory</span>
+              <span>Locations</span>
             </Link>
             <Link
               href="/list-property"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-bold text-purple-700 bg-purple-50"
+              className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-purple-700 bg-purple-50"
             >
               <PlusCircle className="w-4 h-4 text-purple-600" />
-              <span>List Property (Zero Brokerage)</span>
+              <span>List a Property</span>
             </Link>
           </nav>
 
-          <div className="pt-4 border-t border-stone-100 space-y-2">
+          <div className="pt-3 border-t border-stone-100 space-y-2">
             {isAuthenticated ? (
               <div className="space-y-2">
-                <div className="px-3 py-2 bg-stone-50 rounded-xl">
+                <div className="px-4 py-2.5 bg-stone-50 rounded-2xl">
                   <span className="text-xs font-bold text-stone-900 block">{displayName}</span>
                   <span className="text-[11px] text-stone-500 block truncate">{user?.email}</span>
                 </div>
-                <Link
-                  href="/saved"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2 text-xs font-bold text-stone-700"
-                >
-                  <span>Saved Properties</span>
-                  <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">
-                    {savedPropertyIds.length}
-                  </span>
-                </Link>
                 <button
                   type="button"
                   onClick={handleSignOut}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 text-xs font-bold text-rose-600 bg-rose-50 rounded-xl"
+                  className="w-full flex items-center justify-center gap-2 py-3 text-xs font-bold text-rose-600 bg-rose-50 rounded-2xl"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
@@ -308,14 +295,14 @@ export const PublicNavbar: React.FC = () => {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 text-xs font-bold text-stone-800 bg-stone-100 rounded-xl"
+                  className="w-full text-center py-3 text-xs font-bold text-stone-800 bg-stone-100 rounded-2xl"
                 >
                   Log In
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full text-center py-2.5 text-xs font-bold text-white bg-stone-900 rounded-xl"
+                  className="w-full text-center py-3 text-xs font-bold text-white bg-stone-900 rounded-2xl"
                 >
                   Sign Up
                 </Link>
@@ -324,6 +311,6 @@ export const PublicNavbar: React.FC = () => {
           </div>
         </div>
       )}
-    </header>
+    </div>
   );
 };
