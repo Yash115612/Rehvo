@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, Sparkles, Heart, ArrowRight } from 'lucide-react';
-import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
 
 export const PublicFooter: React.FC = () => {
   return (
@@ -9,7 +7,7 @@ export const PublicFooter: React.FC = () => {
       {/* Main Footer Links Columns */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-10">
-          {/* Col 1: Brand & Identity (4 cols on desktop) */}
+          {/* Brand Column (4 cols on desktop) */}
           <div className="col-span-2 md:col-span-4 space-y-4 pr-0 lg:pr-6">
             <Link href="/" className="inline-flex items-center space-x-2.5 group">
               <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-extrabold text-base shadow-sm">
@@ -34,7 +32,7 @@ export const PublicFooter: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 2: EXPLORE (2 cols) */}
+          {/* EXPLORE (2 cols) */}
           <div className="col-span-1 md:col-span-2 space-y-3">
             <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
               Explore
@@ -73,10 +71,10 @@ export const PublicFooter: React.FC = () => {
             </ul>
           </div>
 
-          {/* Col 3: FOR RENTERS (2 cols) */}
+          {/* RENTERS (2 cols) */}
           <div className="col-span-1 md:col-span-2 space-y-3">
             <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
-              For Renters
+              Renters
             </h4>
             <ul className="space-y-2 text-xs text-stone-400 font-medium">
               <li>
@@ -86,31 +84,26 @@ export const PublicFooter: React.FC = () => {
               </li>
               <li>
                 <Link href="/saved" className="hover:text-white transition">
-                  Saved Collection
+                  Saved
                 </Link>
               </li>
               <li>
                 <Link href="/enquiries" className="hover:text-white transition">
-                  My Enquiries
+                  Enquiries
                 </Link>
               </li>
               <li>
                 <Link href="/visits" className="hover:text-white transition">
-                  Scheduled Visits
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white transition">
-                  How It Works
+                  Visits
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: FOR HOSTS (2 cols) */}
+          {/* HOSTS (2 cols) */}
           <div className="col-span-1 md:col-span-2 space-y-3">
             <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
-              For Hosts
+              Hosts
             </h4>
             <ul className="space-y-2 text-xs text-stone-400 font-medium">
               <li>
@@ -120,7 +113,7 @@ export const PublicFooter: React.FC = () => {
               </li>
               <li>
                 <Link href="/owner" className="hover:text-white transition">
-                  Host Dashboard
+                  Owner Dashboard
                 </Link>
               </li>
               <li>
@@ -130,18 +123,18 @@ export const PublicFooter: React.FC = () => {
               </li>
               <li>
                 <Link href="/owner/enquiries" className="hover:text-white transition">
-                  Tenant Enquiries
+                  Enquiries
                 </Link>
               </li>
               <li>
                 <Link href="/owner/visits" className="hover:text-white transition">
-                  Visit Requests
+                  Visits
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 5: COMPANY & LEGAL (2 cols) */}
+          {/* COMPANY & LEGAL (2 cols) */}
           <div className="col-span-1 md:col-span-2 space-y-3">
             <h4 className="text-xs font-extrabold text-white uppercase tracking-wider">
               Company
@@ -149,22 +142,22 @@ export const PublicFooter: React.FC = () => {
             <ul className="space-y-2 text-xs text-stone-400 font-medium">
               <li>
                 <Link href="/about" className="hover:text-white transition">
-                  About REHVO
+                  About
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="hover:text-white transition">
-                  Contact Support
+                  Contact
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="hover:text-white transition">
-                  Privacy Policy
+                  Blog
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-white transition">
-                  Terms of Service
+                <Link href="/contact" className="hover:text-white transition">
+                  Help
                 </Link>
               </li>
               <li>

@@ -10,9 +10,6 @@ import {
   Heart,
   CheckCircle2,
   MapPin,
-  Bed,
-  Bath,
-  Maximize2,
   Sparkles,
 } from 'lucide-react';
 import { PublicProperty } from '@/lib/seo/types';
@@ -78,7 +75,8 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
   const primary = properties[0];
   const secondary = properties.slice(1, 3);
-  const tertiary = properties.slice(3, 6);
+  const wideProperty = properties[3] || null;
+  const remaining = properties.slice(4, 7);
 
   return (
     <section className="bg-[#F8F7F4] py-20 sm:py-28 border-b border-stone-200/80">
@@ -109,15 +107,15 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
           </Link>
         </div>
 
-        {/* Editorial Asymmetrical Composition */}
+        {/* Magazine-Style Composition: Property A (Large) + Property B & C (Stacked) */}
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* 1. LARGE FEATURED PROPERTY CARD (Left 7 Cols on Desktop) */}
+            {/* PROPERTY A: LARGE DOMINANT FEATURED CARD (Left 7 Cols) */}
             {primary && (
               <article className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-2xl hover:border-purple-200 transition-all duration-300 flex flex-col group relative">
                 <Link
                   href={`/property/${generatePropertySlug(primary)}`}
-                  className="block relative aspect-[16/10] sm:aspect-[16/10] lg:aspect-[16/11] w-full bg-stone-100 overflow-hidden"
+                  className="block relative aspect-[16/11] sm:aspect-[16/10] lg:aspect-[16/11] w-full bg-stone-100 overflow-hidden"
                 >
                   <Image
                     src={getSafeImageUrl(primary.property_images?.[0]?.image_url, 0)}
@@ -127,12 +125,12 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/70 via-stone-950/10 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950/75 via-stone-950/15 to-transparent pointer-events-none" />
 
                   {/* Badges Over Image */}
                   <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2">
                     <span className="bg-stone-900/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
-                      Featured Collection
+                      Featured Residence
                     </span>
                     <span className="bg-purple-600 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm">
                       0% Brokerage
@@ -145,7 +143,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     )}
                   </div>
 
-                  {/* Save Button */}
+                  {/* Clean Floating Save Button */}
                   <button
                     type="button"
                     onClick={(e) => handleSaveClick(e, primary)}
@@ -159,7 +157,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     <Heart className={`w-4 h-4 ${isSaved(primary.id) ? 'fill-current' : ''}`} />
                   </button>
 
-                  {/* Ambient Location Bottom Left over Image */}
+                  {/* Overlay Metadata over Image */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
                     <span className="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 block">
                       {primary.locality} • Mumbai
@@ -170,7 +168,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                   </div>
                 </Link>
 
-                {/* Primary Card Content & Minimal Specs */}
+                {/* Primary Card Details */}
                 <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-4">
                   <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                     <div className="flex items-baseline gap-1.5">
@@ -211,7 +209,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               </article>
             )}
 
-            {/* 2. COMPACT STACKED SUPPORTING LISTINGS (Right 5 Cols on Desktop) */}
+            {/* PROPERTY B & C: TWO COMPACT STACKED LISTINGS (Right 5 Cols) */}
             <div className="lg:col-span-5 flex flex-col gap-6">
               {secondary.map((prop, idx) => (
                 <article
@@ -293,10 +291,100 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
             </div>
           </div>
 
-          {/* 3. TERTIARY ROW (If 3+ additional listings exist) */}
-          {tertiary.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-              {tertiary.map((prop, idx) => (
+          {/* PROPERTY D: ONE WIDE PANORAMIC PROPERTY BLOCK BELOW */}
+          {wideProperty && (
+            <article className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 group relative">
+              <Link
+                href={`/property/${generatePropertySlug(wideProperty)}`}
+                className="lg:col-span-6 relative aspect-[16/9] lg:aspect-auto min-h-[260px] bg-stone-100 overflow-hidden block"
+              >
+                <Image
+                  src={getSafeImageUrl(wideProperty.property_images?.[0]?.image_url, 3)}
+                  alt={wideProperty.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent pointer-events-none" />
+
+                <div className="absolute top-4 left-4 flex items-center gap-2">
+                  <span className="bg-stone-900/90 text-white text-[9px] font-extrabold uppercase px-3 py-1.5 rounded-full backdrop-blur-md">
+                    Featured Choice
+                  </span>
+                  <span className="bg-purple-600 text-white text-[9px] font-extrabold px-3 py-1.5 rounded-full">
+                    0% Brokerage
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={(e) => handleSaveClick(e, wideProperty)}
+                  aria-label={isSaved(wideProperty.id) ? 'Saved' : 'Save listing'}
+                  className={`absolute top-4 right-4 w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-200 shadow-md ${
+                    isSaved(wideProperty.id)
+                      ? 'bg-rose-500 text-white scale-105'
+                      : 'bg-stone-900/40 text-white hover:bg-white hover:text-rose-500'
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 ${isSaved(wideProperty.id) ? 'fill-current' : ''}`} />
+                </button>
+              </Link>
+
+              <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest">
+                      {wideProperty.locality} • Mumbai
+                    </span>
+                    {wideProperty.verification_status === 'verified' && (
+                      <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Verified Listing
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 group-hover:text-purple-700 transition leading-tight">
+                    <Link href={`/property/${generatePropertySlug(wideProperty)}`}>
+                      {wideProperty.title}
+                    </Link>
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-stone-500 line-clamp-2 leading-relaxed">
+                    {wideProperty.description ||
+                      'Spacious layout with high ceiling, modern kitchen fittings, 24/7 security, and dedicated parking.'}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-stone-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl font-extrabold text-stone-900 tracking-tight">
+                      ₹{wideProperty.price.toLocaleString('en-IN')}
+                    </span>
+                    <span className="text-xs text-stone-500 font-semibold">/ month</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-bold text-stone-600 bg-stone-100 px-3 py-1.5 rounded-full">
+                      {wideProperty.bedrooms} BHK • {wideProperty.bathrooms} Baths • {wideProperty.area} sq.ft
+                    </span>
+
+                    <Link
+                      href={`/property/${generatePropertySlug(wideProperty)}`}
+                      className="bg-stone-900 hover:bg-black text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow-sm"
+                    >
+                      Explore →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </article>
+          )}
+
+          {/* Tertiary Row if additional listings exist */}
+          {remaining.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+              {remaining.map((prop, idx) => (
                 <article
                   key={prop.id}
                   className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col group relative"
@@ -306,25 +394,23 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     className="relative aspect-[16/10] w-full bg-stone-100 overflow-hidden block"
                   >
                     <Image
-                      src={getSafeImageUrl(prop.property_images?.[0]?.image_url, idx + 3)}
+                      src={getSafeImageUrl(prop.property_images?.[0]?.image_url, idx + 4)}
                       alt={prop.title}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 100vw, 33vw"
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent pointer-events-none" />
 
-                    <div className="absolute top-3.5 left-3.5 flex items-center gap-1.5">
-                      <span className="bg-stone-900/90 text-white text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-full backdrop-blur-sm">
-                        {prop.bedrooms} BHK • 0% Fee
-                      </span>
-                    </div>
+                    <span className="absolute top-3 left-3 bg-stone-900/90 text-white text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-full backdrop-blur-sm">
+                      {prop.bedrooms} BHK
+                    </span>
 
                     <button
                       type="button"
                       onClick={(e) => handleSaveClick(e, prop)}
                       aria-label={isSaved(prop.id) ? 'Saved' : 'Save listing'}
-                      className={`absolute top-3.5 right-3.5 w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-200 shadow-md ${
+                      className={`absolute top-3 right-3 w-8 h-8 rounded-full backdrop-blur-md flex items-center justify-center transition-all duration-200 shadow-md ${
                         isSaved(prop.id)
                           ? 'bg-rose-500 text-white scale-105'
                           : 'bg-stone-900/40 text-white hover:bg-white hover:text-rose-500'
@@ -334,32 +420,27 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     </button>
                   </Link>
 
-                  <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
+                  <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                     <div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest">
-                          {prop.locality}
-                        </span>
-                        <div className="flex items-baseline gap-1">
-                          <span className="text-lg font-extrabold text-stone-900">
-                            ₹{prop.price.toLocaleString('en-IN')}
-                          </span>
-                          <span className="text-[10px] text-stone-400 font-semibold">/mo</span>
-                        </div>
-                      </div>
-
+                      <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest block">
+                        {prop.locality}
+                      </span>
                       <h4 className="text-sm font-extrabold text-stone-900 group-hover:text-purple-700 transition leading-tight mt-1 line-clamp-1">
                         <Link href={`/property/${generatePropertySlug(prop)}`}>{prop.title}</Link>
                       </h4>
+                      <div className="flex items-baseline gap-1 mt-1.5">
+                        <span className="text-lg font-extrabold text-stone-900">
+                          ₹{prop.price.toLocaleString('en-IN')}
+                        </span>
+                        <span className="text-[10px] text-stone-400 font-semibold">/mo</span>
+                      </div>
                     </div>
 
                     <div className="pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500 font-semibold">
-                      <span>
-                        {prop.area} sq.ft • {prop.furnishing.replace('_', ' ')}
-                      </span>
+                      <span>{prop.furnishing.replace('_', ' ')}</span>
                       <Link
                         href={`/property/${generatePropertySlug(prop)}`}
-                        className="text-purple-600 font-extrabold group-hover:translate-x-1 transition-transform flex items-center gap-0.5"
+                        className="text-purple-600 font-extrabold flex items-center gap-0.5"
                       >
                         <span>Details</span>
                         <ChevronRight className="w-3.5 h-3.5" />

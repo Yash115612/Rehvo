@@ -10,9 +10,6 @@ import {
   Home,
   ArrowRight,
   X,
-  Check,
-  Wallet,
-  SlidersHorizontal,
   Sparkles,
 } from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
@@ -94,8 +91,8 @@ export const HeroSearch: React.FC = () => {
 
   return (
     <div ref={containerRef} className="w-full relative z-30">
-      {/* Category Segmented Tabs */}
-      <div className="flex items-center gap-1.5 p-1 bg-stone-900/60 backdrop-blur-xl rounded-2xl w-fit mb-3 border border-white/10 shadow-lg">
+      {/* Floating Category Segmented Tabs */}
+      <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-stone-900/80 backdrop-blur-2xl rounded-2xl w-fit mb-3.5 border border-white/10 shadow-xl">
         {[
           { id: 'all', label: 'All Rentals', icon: Home },
           { id: 'flat', label: 'Flats & BHKs', icon: Building },
@@ -110,7 +107,7 @@ export const HeroSearch: React.FC = () => {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
+              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all duration-200 flex items-center gap-1.5 ${
                 isSelected
                   ? 'bg-white text-stone-900 shadow-md scale-[1.02]'
                   : 'text-stone-300 hover:text-white hover:bg-white/10'
@@ -123,14 +120,14 @@ export const HeroSearch: React.FC = () => {
         })}
       </div>
 
-      {/* Main Physical Search Surface */}
+      {/* Main Luxury Floating Search Dock Surface */}
       <form
         onSubmit={handleSearchSubmit}
-        className="bg-white/95 backdrop-blur-2xl rounded-3xl p-3 sm:p-4 border border-stone-200/90 shadow-2xl shadow-stone-950/20 grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-3 items-center"
+        className="bg-white/95 backdrop-blur-2xl rounded-3xl sm:rounded-[28px] p-3 sm:p-4 border border-stone-200/90 shadow-2xl shadow-stone-950/25 grid grid-cols-1 md:grid-cols-12 gap-3 items-center"
       >
         {/* Input 1: Location Autocomplete */}
-        <div className="md:col-span-5 relative">
-          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
+        <div className="md:col-span-5 relative pr-0 md:pr-2 border-b md:border-b-0 md:border-r border-stone-200/80 pb-2.5 md:pb-0">
+          <label className="block text-[10px] font-extrabold uppercase tracking-widest text-stone-400 pl-3 mb-0.5">
             Location in Mumbai
           </label>
           <div className="relative">
@@ -187,16 +184,16 @@ export const HeroSearch: React.FC = () => {
         </div>
 
         {/* Input 2: Format / BHK Selector */}
-        <div className="md:col-span-3">
-          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
-            Format / Bedrooms
+        <div className="md:col-span-3 pr-0 md:pr-2 border-b md:border-b-0 md:border-r border-stone-200/80 pb-2.5 md:pb-0">
+          <label className="block text-[10px] font-extrabold uppercase tracking-widest text-stone-400 pl-3 mb-0.5">
+            I&apos;m looking for
           </label>
           <select
             value={selectedBhk}
             onChange={(e) => setSelectedBhk(e.target.value)}
             className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer"
           >
-            <option value="">Any Layout / BHK</option>
+            <option value="">Any Format / BHK</option>
             <option value="1">1 BHK Apartment</option>
             <option value="2">2 BHK Apartment</option>
             <option value="3">3 BHK Apartment</option>
@@ -207,8 +204,8 @@ export const HeroSearch: React.FC = () => {
         </div>
 
         {/* Input 3: Budget Selector */}
-        <div className="md:col-span-2">
-          <label className="block text-[10px] font-extrabold uppercase tracking-wider text-stone-400 pl-3 mb-0.5">
+        <div className="md:col-span-2 pb-2.5 md:pb-0">
+          <label className="block text-[10px] font-extrabold uppercase tracking-widest text-stone-400 pl-3 mb-0.5">
             Max Budget
           </label>
           <select
@@ -226,10 +223,10 @@ export const HeroSearch: React.FC = () => {
         </div>
 
         {/* Search Submit Button */}
-        <div className="md:col-span-2 md:pt-4">
+        <div className="md:col-span-2">
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 active:scale-98 text-white font-extrabold text-xs py-3 px-4 rounded-2xl shadow-lg shadow-purple-600/25 transition-all duration-200 flex items-center justify-center gap-2 group"
+            className="w-full bg-purple-600 hover:bg-purple-700 active:scale-98 text-white font-extrabold text-xs py-3 px-4 rounded-2xl shadow-lg shadow-purple-600/30 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
             <Search className="w-4 h-4 group-hover:rotate-12 transition-transform" />
             <span>Search</span>
