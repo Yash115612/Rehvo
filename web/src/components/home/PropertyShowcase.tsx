@@ -4,14 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  ShieldCheck,
-  MapPin,
   Heart,
   ArrowRight,
   Bed,
   Bath,
   Maximize2,
-  Sparkles,
 } from 'lucide-react';
 import { PublicProperty } from '@/lib/seo/types';
 import { generatePropertySlug, getSafeImageUrl } from '@/lib/seo/slugs';

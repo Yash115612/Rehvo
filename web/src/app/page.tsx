@@ -5,13 +5,13 @@ import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 
-// Modular Dedicated Homepage Presentation Components
-import { HeroSection } from '@/components/home/HeroSection';
+// New Bespoke Homepage Presentation Modules from src/components/home/
+import { Hero } from '@/components/home/Hero';
 import { SearchDock } from '@/components/home/SearchDock';
 import { TrustStrip } from '@/components/home/TrustStrip';
-import { LocationShowcase } from '@/components/home/LocationShowcase';
+import { Locations } from '@/components/home/Locations';
 import { PropertyShowcase } from '@/components/home/PropertyShowcase';
-import { CategoryShowcase } from '@/components/home/CategoryShowcase';
+import { Categories } from '@/components/home/Categories';
 import { FlatmateShowcase } from '@/components/home/FlatmateShowcase';
 import { WhyRehvo } from '@/components/home/WhyRehvo';
 import { HowItWorks } from '@/components/home/HowItWorks';
@@ -48,7 +48,7 @@ export default async function HomePage() {
       <JsonLd data={itemListSchema} />
 
       {/* 1. EDITORIAL REAL ESTATE COVER HERO (40% Left Typography / 60% Right Visual) */}
-      <HeroSection primaryProperty={primaryProperty} />
+      <Hero primaryProperty={primaryProperty} />
 
       {/* 2. FLOATING SEARCH DOCK OVERLAPPING LOWER HERO */}
       <SearchDock />
@@ -57,13 +57,13 @@ export default async function HomePage() {
       <TrustStrip />
 
       {/* 4. POPULAR LOCATIONS (1 Large Featured + 4 Smaller Locality Hubs) */}
-      <LocationShowcase />
+      <Locations />
 
       {/* 5. EDITORIAL PROPERTY SHOWCASE (1 Large + 2 Stacked + 1 Wide Below) */}
       <PropertyShowcase properties={featuredProperties} totalCount={totalCount} />
 
       {/* 6. BROWSE BY PROPERTY TYPE (5 Large Visual Panels: Flats, Rooms, PG...) */}
-      <CategoryShowcase />
+      <Categories />
 
       {/* 7. FLATMATE DISCOVERY (Social Style Human Layout) */}
       <FlatmateShowcase flatmates={flatmates} />

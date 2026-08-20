@@ -1,5 +1,5 @@
 import React from 'react';
-import { Smartphone, Search, MessageSquare, CalendarCheck, ShieldCheck } from 'lucide-react';
+import { Smartphone } from 'lucide-react';
 
 export const AppShowcase: React.FC = () => {
   return (

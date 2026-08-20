@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
-export const LocationShowcase: React.FC = () => {
+export const Locations: React.FC = () => {
   const topLocalities = [
     {
       slug: 'andheri-west',

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, ChevronRight } from 'lucide-react';
 
-export const CategoryShowcase: React.FC = () => {
+export const Categories: React.FC = () => {
   const categories = [
     {
       id: 'flats',

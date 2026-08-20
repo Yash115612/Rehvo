@@ -5,12 +5,12 @@ import { ArrowRight, PlusCircle, CheckCircle2, ShieldCheck } from 'lucide-react'
 import { PublicProperty } from '@/lib/seo/types';
 import { generatePropertySlug, getSafeImageUrl } from '@/lib/seo/slugs';
 
-interface HeroSectionProps {
+interface HeroProps {
   primaryProperty?: PublicProperty | null;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ primaryProperty }) => {
-  const propertyTitle = primaryProperty?.title || '3 BHK Designer Penthouse';
+export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
+  const propertyTitle = primaryProperty?.title || '3 BHK Designer Residence';
   const propertyLocality = primaryProperty?.locality || 'Bandra West';
   const propertyPrice = primaryProperty?.price || 120000;
   const propertySlug = primaryProperty ? generatePropertySlug(primaryProperty) : 'mumbai';
