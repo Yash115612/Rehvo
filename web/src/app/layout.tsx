@@ -2,8 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
-import { PublicNavbar } from '@/components/public/PublicNavbar';
-import { PublicFooter } from '@/components/public/PublicFooter';
+import { RehvoHeader } from '@/components/home/RehvoHeader';
+import { RehvoFooter } from '@/components/home/RehvoFooter';
 import { AuthProvider } from '@/lib/auth/AuthContext';
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -30,11 +30,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={plusJakarta.variable}>
-      <body className={`${plusJakarta.className} min-h-screen flex flex-col bg-[#F8F7F4] text-[#171522] selection:bg-purple-500 selection:text-white antialiased`}>
+      <body className={`${plusJakarta.className} min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-orange-500 selection:text-white antialiased`}>
         <AuthProvider>
-          <PublicNavbar />
+          <RehvoHeader />
           <main className="flex-1">{children}</main>
-          <PublicFooter />
+          <RehvoFooter />
         </AuthProvider>
       </body>
     </html>

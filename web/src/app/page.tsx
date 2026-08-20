@@ -5,31 +5,26 @@ import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 
-// New Bespoke Homepage Presentation Modules from src/components/home/
-import { Hero } from '@/components/home/Hero';
-import { SearchDock } from '@/components/home/SearchDock';
-import { TrustStrip } from '@/components/home/TrustStrip';
-import { Locations } from '@/components/home/Locations';
-import { PropertyShowcase } from '@/components/home/PropertyShowcase';
-import { Categories } from '@/components/home/Categories';
-import { FlatmateShowcase } from '@/components/home/FlatmateShowcase';
-import { WhyRehvo } from '@/components/home/WhyRehvo';
-import { HowItWorks } from '@/components/home/HowItWorks';
-import { HostCTA } from '@/components/home/HostCTA';
-import { AppShowcase } from '@/components/home/AppShowcase';
-import { FinalCTA } from '@/components/home/FinalCTA';
+// Bespoke Modules built to match exact reference image
+import { RehvoHero } from '@/components/home/RehvoHero';
+import { PopularLocalities } from '@/components/home/PopularLocalities';
+import { FeaturedHomes } from '@/components/home/FeaturedHomes';
+import { BrowseCategory } from '@/components/home/BrowseCategory';
+import { FindFlatmate } from '@/components/home/FindFlatmate';
+import { WhyChooseRehvo } from '@/components/home/WhyChooseRehvo';
+import { DualPromoSection } from '@/components/home/DualPromoSection';
 
-export const revalidate = 60; // 60s Incremental Static Regeneration
+export const revalidate = 60; // 60s ISR
 
 export const metadata: Metadata = constructSeoMetadata({
   title: 'REHVO — Zero-Brokerage Verified Rentals & Flatmates in Mumbai',
   description:
-    'Discover verified 1, 2, 3 BHK apartments, single rooms, PGs and flatmates across Mumbai with zero brokerage. Direct owner chat, confirmed physical visits, and transparent pricing.',
+    'Discover verified 1, 2, 3 BHK flats, private rooms, PGs & flatmates for rent in Mumbai with zero brokerage. Direct owner chat, confirmed physical visits, and transparent pricing.',
   canonicalUrl: 'https://rehvo.com',
 });
 
 export default async function HomePage() {
-  const [{ properties: featuredProperties, totalCount }, flatmates] = await Promise.all([
+  const [{ properties: featuredProperties }, flatmates] = await Promise.all([
     getPublishedProperties({ city: 'Mumbai', limit: 8 }),
     getPublishedFlatmates('Mumbai'),
   ]);
@@ -40,48 +35,31 @@ export default async function HomePage() {
     'Featured Zero-Brokerage Properties in Mumbai'
   );
 
-  const primaryProperty = featuredProperties[0] || null;
-
   return (
     <>
       <JsonLd data={orgSchema} />
       <JsonLd data={itemListSchema} />
 
-      {/* 1. EDITORIAL REAL ESTATE COVER HERO (40% Left Typography / 60% Right Visual) */}
-      <Hero primaryProperty={primaryProperty} />
+      {/* 1. HERO + FLOATING SEARCH DOCK + TRUST BADGES */}
+      <RehvoHero />
 
-      {/* 2. FLOATING SEARCH DOCK OVERLAPPING LOWER HERO */}
-      <SearchDock />
+      {/* 2. POPULAR LOCALITIES (5 Locality Tiles with Counts) */}
+      <PopularLocalities />
 
-      {/* 3. COMPACT TRUST STRIP WITH THIN DIVIDERS */}
-      <TrustStrip />
+      {/* 3. PLACES WORTH SEEING (1 Large Dominant + 2 Stacked Feature Cards) */}
+      <FeaturedHomes properties={featuredProperties} />
 
-      {/* 4. POPULAR LOCATIONS (1 Large Featured + 4 Smaller Locality Hubs) */}
-      <Locations />
+      {/* 4. BROWSE BY CATEGORY (5 Visual Category Panels with Circular Icons) */}
+      <BrowseCategory />
 
-      {/* 5. EDITORIAL PROPERTY SHOWCASE (1 Large + 2 Stacked + 1 Wide Below) */}
-      <PropertyShowcase properties={featuredProperties} totalCount={totalCount} />
+      {/* 5. FIND YOUR FLATMATE (Left Column + 4 Social Profile Cards) */}
+      <FindFlatmate flatmates={flatmates} />
 
-      {/* 6. BROWSE BY PROPERTY TYPE (5 Large Visual Panels: Flats, Rooms, PG...) */}
-      <Categories />
+      {/* 6. WHY CHOOSE REHVO? (Horizontal Warm Banner with 4 Pillars) */}
+      <WhyChooseRehvo />
 
-      {/* 7. FLATMATE DISCOVERY (Social Style Human Layout) */}
-      <FlatmateShowcase flatmates={flatmates} />
-
-      {/* 8. WHY REHVO (Midnight #121118 Statement Typography & 4 Rows) */}
-      <WhyRehvo />
-
-      {/* 9. HOW IT WORKS (Horizontal Story: 01, 02, 03) */}
-      <HowItWorks />
-
-      {/* 10. LIST YOUR PROPERTY (Obsidian #171522 Split Section for Homeowners) */}
-      <HostCTA />
-
-      {/* 11. REHVO MOBILE APP SHOWCASE */}
-      <AppShowcase />
-
-      {/* 12. FINAL CLOSING CTA (Midnight #0E0D14 Canvas) */}
-      <FinalCTA />
+      {/* 7. DUAL PROMO BANNERS (Host Section on Left + App Showcase on Right) */}
+      <DualPromoSection />
     </>
   );
 }
