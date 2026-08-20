@@ -21,6 +21,7 @@ import {
   LayoutDashboard,
   ChevronDown,
   Settings,
+  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { HeaderUnifiedCTA } from '@/components/public/HeaderUnifiedCTA';
@@ -128,12 +129,12 @@ export const PublicNavbar: React.FC = () => {
               <span>Locations</span>
             </Link>
             <Link
-              href="/compare/andheri-west-vs-bandra-west"
+              href="/about"
               className={`px-3.5 py-1.5 rounded-full transition-all duration-150 flex items-center gap-1.5 ${
-                pathname.startsWith('/compare') ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
+                pathname === '/about' ? 'bg-white text-stone-900 shadow-sm' : 'hover:text-stone-900 hover:bg-white'
               }`}
             >
-              <span>Compare</span>
+              <span>About</span>
             </Link>
           </nav>
 
@@ -393,12 +394,12 @@ export const PublicNavbar: React.FC = () => {
               <span>Locations</span>
             </Link>
             <Link
-              href="/compare/andheri-west-vs-bandra-west"
+              href="/about"
               onClick={() => setMobileMenuOpen(false)}
               className="flex items-center gap-2.5 px-4 py-3 rounded-2xl text-sm font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
             >
-              <span className="text-purple-600 font-extrabold text-sm">VS</span>
-              <span>Compare Localities</span>
+              <Sparkles className="w-4 h-4 text-purple-600" />
+              <span>About</span>
             </Link>
           </nav>
 
