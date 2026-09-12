@@ -11,7 +11,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Heart,
   Wallet,
   CheckCircle2,
 } from 'lucide-react';
@@ -175,7 +174,7 @@ export const HeroSearch: React.FC = () => {
               </button>
             </form>
 
-            {/* Right Action Icons: AI, Saved & Wallet (Exact topRightActions from Mobile App) */}
+            {/* Right Action Icons: AI & Wallet */}
             <div className="flex items-center gap-2 shrink-0">
               {/* REHVO AI Assistant Icon Button */}
               <Link
@@ -184,18 +183,6 @@ export const HeroSearch: React.FC = () => {
                 className="w-11 h-11 rounded-full bg-[#CCFBF1] hover:bg-[#0F766E] text-[#0F766E] hover:text-white border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 stroke-[2.4]" />
-              </Link>
-
-              {/* Saved Items Icon Button */}
-              <Link
-                href="/search?saved=true"
-                title="Saved Properties"
-                className="w-11 h-11 rounded-full bg-white/95 hover:bg-white text-[#031B2A] hover:text-[#EF4444] border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 relative cursor-pointer"
-              >
-                <Heart className="w-4 h-4 stroke-[2.2]" />
-                <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] rounded-full bg-[#EF4444] text-white text-[9px] font-black flex items-center justify-center px-1 border-2 border-white">
-                  0
-                </span>
               </Link>
 
               {/* Wallet Hub Icon Button */}

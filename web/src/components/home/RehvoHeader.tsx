@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Heart,
   Menu,
   X,
   ChevronDown,
@@ -65,7 +64,7 @@ const GLOBAL_NAV_ITEMS: NavItem[] = [
 
 export const RehvoHeader: React.FC = () => {
   const pathname = usePathname();
-  const { user, profile, savedPropertyIds, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -159,33 +158,6 @@ export const RehvoHeader: React.FC = () => {
         {/* 3. UTILITY LIQUID-GLASS CAPSULES (Location, Saved, Auth, Primary CTA)     */}
         {/* ========================================================================= */}
         <div className="flex items-center gap-2 pointer-events-auto">
-
-          {/* Saved Properties Liquid-Glass Capsule */}
-          <Link
-            href="/saved"
-            aria-label="Saved properties"
-            className={`h-10 px-3 sm:px-3.5 rounded-full text-xs font-bold flex items-center gap-1.5 cursor-pointer ${
-              pathname === '/saved'
-                ? 'rehvo-glass-capsule-active text-[#031B2A] font-black'
-                : isScrolled
-                ? 'rehvo-glass-capsule-scrolled text-[#031B2A]'
-                : 'rehvo-glass-capsule text-[#031B2A]'
-            }`}
-          >
-            <Heart
-              className={`w-3.5 h-3.5 ${
-                savedPropertyIds.length > 0
-                  ? 'fill-[#0F766E] text-[#0F766E]'
-                  : 'text-[#64748B] hover:text-[#0F766E]'
-              }`}
-            />
-            <span className="hidden sm:inline">Saved</span>
-            {savedPropertyIds.length > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[10px] font-black">
-                {savedPropertyIds.length}
-              </span>
-            )}
-          </Link>
 
           {/* User Profile / Auth Liquid-Glass Capsule */}
           {user ? (
@@ -364,22 +336,6 @@ export const RehvoHeader: React.FC = () => {
                 <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B] px-2 mb-2 block">
                   Account & Shortcuts
                 </span>
-
-                <Link
-                  href="/saved"
-                  onClick={() => setMobileOpen(false)}
-                  className="w-full py-2.5 px-4 rounded-2xl rehvo-glass-capsule text-xs font-bold text-[#031B2A] flex items-center justify-between"
-                >
-                  <span className="flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-[#0F766E]" />
-                    <span>Saved Properties</span>
-                  </span>
-                  {savedPropertyIds.length > 0 && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[10px] font-black">
-                      {savedPropertyIds.length}
-                    </span>
-                  )}
-                </Link>
 
                 {!user && (
                   <Link

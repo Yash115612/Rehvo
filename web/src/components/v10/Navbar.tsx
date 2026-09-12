@@ -11,7 +11,6 @@ import {
   X,
   Check,
   ArrowRight,
-  Heart,
   Home,
   Building2,
   Users,
@@ -86,33 +85,12 @@ const LOCALITIES = [
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, hasPublishedProperty, hasFlatmateProfile, savedPropertyIds } = useAuth();
+  const { isAuthenticated, hasPublishedProperty, hasFlatmateProfile } = useAuth();
   const { currentAd } = useHeroTheme();
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
-  const [localSavedCount, setLocalSavedCount] = useState(0);
-
-  useEffect(() => {
-    const updateSavedCount = () => {
-      try {
-        const stored = JSON.parse(localStorage.getItem('rehvo_saved_properties') || '[]');
-        setLocalSavedCount(Array.isArray(stored) ? stored.length : 0);
-      } catch {
-        setLocalSavedCount(0);
-      }
-    };
-    updateSavedCount();
-    window.addEventListener('rehvo_saved_updated', updateSavedCount);
-    window.addEventListener('storage', updateSavedCount);
-    return () => {
-      window.removeEventListener('rehvo_saved_updated', updateSavedCount);
-      window.removeEventListener('storage', updateSavedCount);
-    };
-  }, []);
-
-  const totalSavedCount = (savedPropertyIds && savedPropertyIds.length > 0) ? savedPropertyIds.length : localSavedCount;
 
   const servicesRef = useRef<HTMLDivElement>(null);
 
@@ -300,30 +278,6 @@ export const Navbar: React.FC = () => {
             3. UTILITY LIQUID-GLASS CAPSULES (LOCATION, SAVED & SINGLE BUTTON CTA)
            ===================================================================== */}
         <div className="flex items-center gap-2 pointer-events-auto">
-          
-
-          {/* Saved Capsule */}
-          <Link
-            href="/search?filter=saved"
-            aria-label="Saved properties"
-            className={`hidden sm:flex h-10 px-3.5 rounded-full text-xs font-bold items-center gap-1.5 cursor-pointer transition-all ${
-              isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
-            }`}
-          >
-            <Heart
-              className={`w-3.5 h-3.5 ${
-                totalSavedCount > 0
-                  ? 'fill-[#EF4444] text-[#EF4444]'
-                  : 'text-[#64748B] hover:text-[#0F766E]'
-              }`}
-            />
-            {totalSavedCount > 0 && (
-              <span className="px-1.5 py-0.2 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[10px] font-black">
-                {totalSavedCount}
-              </span>
-            )}
-          </Link>
-
           {/* Direct List Property Capsule */}
           <Link
             href="/list-property"
