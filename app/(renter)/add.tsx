@@ -6,12 +6,12 @@ export default function AddRoute() {
   const router = useRouter();
 
   useEffect(() => {
-    router.replace('/(renter)/listing/property-type' as any);
+    router.replace('/(renter)/listing' as any);
   }, []);
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <ActivityIndicator size="large" color="#6C4DFF" />
+      <ActivityIndicator size="large" color="#FF5533" />
     </View>
   );
 }

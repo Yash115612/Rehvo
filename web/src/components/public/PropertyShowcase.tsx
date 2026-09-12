@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   ArrowRight,
@@ -15,6 +14,7 @@ import {
 import { PublicProperty } from '@/lib/seo/types';
 import { generatePropertySlug, getSafeImageUrl } from '@/lib/seo/slugs';
 import { useAuth } from '@/lib/auth/AuthContext';
+import { RehvoImage } from '@/components/ui/RehvoImage';
 
 interface PropertyShowcaseProps {
   properties: PublicProperty[];
@@ -33,32 +33,40 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
     e.preventDefault();
     e.stopPropagation();
 
-    const slug = generatePropertySlug(property);
-    if (!user) {
-      router.push(`/login?next=${encodeURIComponent(`/property/${slug}`)}`);
-      return;
+    try {
+      const saved = JSON.parse(localStorage.getItem('rehvo_saved_properties') || '[]');
+      const isAlready = saved.includes(property.id);
+      const nextSaved = isAlready
+        ? saved.filter((id: string) => id !== property.id)
+        : [...saved, property.id];
+      localStorage.setItem('rehvo_saved_properties', JSON.stringify(nextSaved));
+      window.dispatchEvent(new Event('rehvo_saved_updated'));
+    } catch {
+      // ignore
     }
 
-    if (savingId === property.id) return;
-    setSavingId(property.id);
-    try {
-      await toggleSaveProperty(property.id);
-    } finally {
-      setSavingId(null);
+    if (user) {
+      if (savingId === property.id) return;
+      setSavingId(property.id);
+      try {
+        await toggleSaveProperty(property.id);
+      } finally {
+        setSavingId(null);
+      }
     }
   };
 
   if (!properties || properties.length === 0) {
     return (
-      <section className="bg-[#F8F7F4] py-20 sm:py-28 border-b border-stone-200/80">
+      <section className="bg-[#F8FAFC] py-20 sm:py-28 border-b border-stone-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-3xl p-16 text-center border border-stone-200/80 max-w-xl mx-auto shadow-sm space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto">
+            <div className="w-14 h-14 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center mx-auto">
               <Sparkles className="w-7 h-7" />
             </div>
             <h3 className="text-xl font-extrabold text-stone-900">New verified homes coming online</h3>
             <p className="text-xs text-stone-500 max-w-sm mx-auto leading-relaxed">
-              Explore all active listings across Mumbai or list your own property with zero brokerage.
+              Explore all active listings across Mumbai or list your own property with verified marketplace.
             </p>
             <Link
               href="/mumbai"
@@ -79,14 +87,14 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
   const remaining = properties.slice(4, 7);
 
   return (
-    <section className="bg-[#F8F7F4] py-20 sm:py-28 border-b border-stone-200/80">
+    <section className="bg-[#F8FAFC] py-20 sm:py-28 border-b border-stone-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Editorial Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div className="space-y-1.5 max-w-xl">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-600" />
-              <span className="text-xs font-extrabold text-purple-700 uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#0F766E]" />
+              <span className="text-xs font-extrabold text-[#0F766E] uppercase tracking-widest">
                 Featured Homes
               </span>
             </div>
@@ -94,16 +102,16 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               Places worth seeing
             </h2>
             <p className="text-xs sm:text-sm text-stone-500 font-normal leading-relaxed pt-0.5">
-              Curated zero-brokerage residences and rooms verified directly with property owners.
+              Curated verified residences and rooms listed directly by property owners and trusted brokers.
             </p>
           </div>
 
           <Link
             href="/mumbai"
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-purple-600 transition flex-shrink-0"
+            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-[#0F766E] transition flex-shrink-0"
           >
             <span>View all {totalCount > 0 ? `${totalCount} verified homes` : 'homes'}</span>
-            <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -112,16 +120,17 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* PROPERTY A: LARGE DOMINANT FEATURED CARD (Left 7 Cols) */}
             {primary && (
-              <article className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-2xl hover:border-purple-200 transition-all duration-300 flex flex-col group relative">
+              <article className="lg:col-span-7 bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-2xl hover:border-[#99F6E4] transition-all duration-300 flex flex-col group relative">
                 <Link
                   href={`/property/${generatePropertySlug(primary)}`}
                   className="block relative aspect-[16/11] sm:aspect-[16/10] lg:aspect-[16/11] w-full bg-stone-100 overflow-hidden"
                 >
-                  <Image
+                  <RehvoImage
                     src={getSafeImageUrl(primary.property_images?.[0]?.image_url, 0)}
                     alt={primary.title}
                     fill
                     priority
+                    fallbackCategory="property"
                     sizes="(max-width: 1024px) 100vw, 60vw"
                     className="object-cover group-hover:scale-[1.02] transition-transform duration-700 ease-out"
                   />
@@ -132,8 +141,8 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     <span className="bg-stone-900/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
                       Featured Residence
                     </span>
-                    <span className="bg-purple-600 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm">
-                      0% Brokerage
+                    <span className="bg-[#0F766E] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full shadow-sm">
+                      Verified Listing
                     </span>
                     {primary.verification_status === 'verified' && (
                       <span className="bg-emerald-600/90 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1.5 rounded-full flex items-center gap-1 shadow-sm">
@@ -159,10 +168,10 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
                   {/* Overlay Metadata over Image */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-purple-300 block">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#CCFBF1] block">
                       {primary.locality} • Mumbai
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight mt-0.5 group-hover:text-purple-200 transition">
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight mt-0.5 group-hover:text-[#CCFBF1] transition">
                       {primary.title}
                     </h3>
                   </div>
@@ -199,7 +208,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
                     <Link
                       href={`/property/${generatePropertySlug(primary)}`}
-                      className="text-xs font-extrabold text-purple-600 hover:text-purple-800 flex items-center gap-1 group/btn"
+                      className="text-xs font-extrabold text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1 group/btn"
                     >
                       <span>Explore home</span>
                       <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
@@ -214,16 +223,17 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               {secondary.map((prop, idx) => (
                 <article
                   key={prop.id}
-                  className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col sm:flex-row flex-1 group relative"
+                  className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-[#99F6E4] transition-all duration-300 flex flex-col sm:flex-row flex-1 group relative"
                 >
                   <Link
                     href={`/property/${generatePropertySlug(prop)}`}
                     className="relative aspect-[16/10] sm:aspect-square sm:w-52 bg-stone-100 flex-shrink-0 overflow-hidden block"
                   >
-                    <Image
+                    <RehvoImage
                       src={getSafeImageUrl(prop.property_images?.[0]?.image_url, idx + 1)}
                       alt={prop.title}
                       fill
+                      fallbackCategory="property"
                       sizes="(max-width: 640px) 100vw, 220px"
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     />
@@ -250,7 +260,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                   <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-3">
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest">
+                        <span className="text-[10px] font-extrabold text-[#0F766E] uppercase tracking-widest">
                           {prop.locality}
                         </span>
                         {prop.verification_status === 'verified' && (
@@ -261,7 +271,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                         )}
                       </div>
 
-                      <h4 className="text-base font-extrabold text-stone-900 group-hover:text-purple-700 transition leading-tight mt-1 line-clamp-1">
+                      <h4 className="text-base font-extrabold text-stone-900 group-hover:text-[#0F766E] transition leading-tight mt-1 line-clamp-1">
                         <Link href={`/property/${generatePropertySlug(prop)}`}>{prop.title}</Link>
                       </h4>
 
@@ -279,7 +289,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                       </span>
                       <Link
                         href={`/property/${generatePropertySlug(prop)}`}
-                        className="text-purple-600 font-extrabold group-hover:translate-x-1 transition-transform flex items-center gap-0.5"
+                        className="text-[#0F766E] font-extrabold group-hover:translate-x-1 transition-transform flex items-center gap-0.5"
                       >
                         <span>View</span>
                         <ChevronRight className="w-3.5 h-3.5" />
@@ -293,15 +303,16 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
           {/* PROPERTY D: ONE WIDE PANORAMIC PROPERTY BLOCK BELOW */}
           {wideProperty && (
-            <article className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 group relative">
+            <article className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-[#99F6E4] transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 group relative">
               <Link
                 href={`/property/${generatePropertySlug(wideProperty)}`}
                 className="lg:col-span-6 relative aspect-[16/9] lg:aspect-auto min-h-[260px] bg-stone-100 overflow-hidden block"
               >
-                <Image
+                <RehvoImage
                   src={getSafeImageUrl(wideProperty.property_images?.[0]?.image_url, 3)}
                   alt={wideProperty.title}
                   fill
+                  fallbackCategory="property"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                 />
@@ -311,8 +322,8 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                   <span className="bg-stone-900/90 text-white text-[9px] font-extrabold uppercase px-3 py-1.5 rounded-full backdrop-blur-md">
                     Featured Choice
                   </span>
-                  <span className="bg-purple-600 text-white text-[9px] font-extrabold px-3 py-1.5 rounded-full">
-                    0% Brokerage
+                  <span className="bg-[#0F766E] text-white text-[9px] font-extrabold px-3 py-1.5 rounded-full">
+                    Verified Listing
                   </span>
                 </div>
 
@@ -333,7 +344,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               <div className="lg:col-span-6 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest">
+                    <span className="text-[10px] font-extrabold text-[#0F766E] uppercase tracking-widest">
                       {wideProperty.locality} • Mumbai
                     </span>
                     {wideProperty.verification_status === 'verified' && (
@@ -344,7 +355,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                     )}
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 group-hover:text-purple-700 transition leading-tight">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 group-hover:text-[#0F766E] transition leading-tight">
                     <Link href={`/property/${generatePropertySlug(wideProperty)}`}>
                       {wideProperty.title}
                     </Link>
@@ -387,16 +398,17 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               {remaining.map((prop, idx) => (
                 <article
                   key={prop.id}
-                  className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-purple-200 transition-all duration-300 flex flex-col group relative"
+                  className="bg-white rounded-3xl overflow-hidden border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-[#99F6E4] transition-all duration-300 flex flex-col group relative"
                 >
                   <Link
                     href={`/property/${generatePropertySlug(prop)}`}
                     className="relative aspect-[16/10] w-full bg-stone-100 overflow-hidden block"
                   >
-                    <Image
+                    <RehvoImage
                       src={getSafeImageUrl(prop.property_images?.[0]?.image_url, idx + 4)}
                       alt={prop.title}
                       fill
+                      fallbackCategory="property"
                       sizes="(max-width: 640px) 100vw, 33vw"
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
                     />
@@ -422,10 +434,10 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                     <div>
-                      <span className="text-[10px] font-extrabold text-purple-700 uppercase tracking-widest block">
+                      <span className="text-[10px] font-extrabold text-[#0F766E] uppercase tracking-widest block">
                         {prop.locality}
                       </span>
-                      <h4 className="text-sm font-extrabold text-stone-900 group-hover:text-purple-700 transition leading-tight mt-1 line-clamp-1">
+                      <h4 className="text-sm font-extrabold text-stone-900 group-hover:text-[#0F766E] transition leading-tight mt-1 line-clamp-1">
                         <Link href={`/property/${generatePropertySlug(prop)}`}>{prop.title}</Link>
                       </h4>
                       <div className="flex items-baseline gap-1 mt-1.5">
@@ -440,7 +452,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                       <span>{prop.furnishing.replace('_', ' ')}</span>
                       <Link
                         href={`/property/${generatePropertySlug(prop)}`}
-                        className="text-purple-600 font-extrabold flex items-center gap-0.5"
+                        className="text-[#0F766E] font-extrabold flex items-center gap-0.5"
                       >
                         <span>Details</span>
                         <ChevronRight className="w-3.5 h-3.5" />

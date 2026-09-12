@@ -5,26 +5,40 @@ import {
   StyleSheet,
   Pressable,
   Image,
+  TextInput,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import {
   Users,
   PlusCircle,
-  UserRoundCheck,
   ChevronRight,
   Sparkles,
   Eye,
   Pencil,
-  EyeOff,
-  UserCheck,
   ArrowRight,
-  Trash2,
   Sliders,
+  Flame,
+  Search,
+  X,
+  MapPin,
 } from 'lucide-react-native';
 import { FlatmateProfile } from '../../types';
 import { FlatmateCard } from './FlatmateCard';
 import { FlatmateFilterBar, FlatmateFilterId } from './FlatmateFilterBar';
 import { useAppStore } from '../../store/useAppStore';
+import { V4_COLORS, V4_SHADOWS } from '../../theme/v4Theme';
+
+const LOCALITY_SHORTCUTS = [
+  'Bandra West',
+  'Khar West',
+  'Santacruz',
+  'Pali Hill',
+  'Powai',
+  'Andheri West',
+  'Juhu',
+];
 
 interface FlatmateDiscoveryFeedProps {
   flatmates: FlatmateProfile[];
@@ -49,15 +63,44 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
   const {
     flatmateDraft,
     clearFlatmateDraft,
-    pauseFlatmateProfile,
-    resumeFlatmateProfile,
   } = useAppStore();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedLocality, setSelectedLocality] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<FlatmateFilterId>('all');
 
   const filteredFlatmates = useMemo(() => {
     // Exclude paused profiles unless they belong to the current user
     let list = flatmates.filter((f) => !f.is_paused);
 
+    // 1. Locality shortcut filter
+    if (selectedLocality) {
+      list = list.filter((fm) => {
+        const matchLoc = (fm.locality || '').toLowerCase().includes(selectedLocality.toLowerCase());
+        const matchPrefs = (fm.preferred_locations || fm.preferred_localities || []).some((l) =>
+          l.toLowerCase().includes(selectedLocality.toLowerCase())
+        );
+        return matchLoc || matchPrefs;
+      });
+    }
+
+    // 2. Search query filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      list = list.filter((fm) => {
+        const matchName = fm.name.toLowerCase().includes(q);
+        const matchLoc = (fm.locality || '').toLowerCase().includes(q);
+        const matchCity = (fm.city || '').toLowerCase().includes(q);
+        const matchProf = (fm.profession || fm.occupation || '').toLowerCase().includes(q);
+        const matchCompany = (fm.company_or_college || '').toLowerCase().includes(q);
+        const matchPrefs = (fm.preferred_locations || fm.preferred_localities || []).some((l) =>
+          l.toLowerCase().includes(q)
+        );
+        return matchName || matchLoc || matchCity || matchProf || matchCompany || matchPrefs;
+      });
+    }
+
+    // 3. Category Filter
     switch (activeFilter) {
       case 'private_room':
         list = list.filter((f) => f.room_preference === 'Private Room');
@@ -70,10 +113,10 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
         );
         break;
       case 'under_15k':
-        list = list.filter((f) => f.budget_min <= 15000 || f.budget_max <= 20000);
+        list = list.filter((f) => (f.budget_min || 0) <= 15000 || (f.budget_max || 0) <= 20000);
         break;
       case 'under_25k':
-        list = list.filter((f) => f.budget_max <= 25000);
+        list = list.filter((f) => (f.budget_max || 0) <= 25000);
         break;
       case 'near_metro':
         list = list.filter((f) =>
@@ -84,6 +127,8 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
         break;
       case 'wfh':
         list = list.filter((f) =>
+          f.work_style === 'wfh' ||
+          f.work_style === 'Work From Home' ||
           f.lifestyle_preferences?.some(
             (p) =>
               p.toLowerCase().includes('work from home') ||
@@ -93,6 +138,7 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
         break;
       case 'pet_friendly':
         list = list.filter((f) =>
+          f.pets !== 'not_allowed' &&
           f.lifestyle_preferences?.some((p) =>
             p.toLowerCase().includes('pet')
           )
@@ -101,16 +147,7 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
     }
 
     return list;
-  }, [flatmates, activeFilter]);
-
-  const handleTogglePause = () => {
-    if (!myProfile) return;
-    if (myProfile.is_paused) {
-      resumeFlatmateProfile(myProfile.id);
-    } else {
-      pauseFlatmateProfile(myProfile.id);
-    }
-  };
+  }, [flatmates, activeFilter, searchQuery, selectedLocality]);
 
   return (
     <View style={styles.container}>
@@ -118,30 +155,102 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
       <View style={styles.header}>
         <View style={styles.headerTextGroup}>
           <View style={styles.pillBadge}>
-            <Sparkles size={12} color="#6C4DFF" strokeWidth={2.5} />
-            <Text style={styles.pillBadgeText}>Roommate Marketplace</Text>
+            <Sparkles size={12} color="#0F766E" strokeWidth={2.5} />
+            <Text style={styles.pillBadgeText}>100% Verified Co-Living</Text>
           </View>
-          <Text style={styles.title}>Find your flatmate</Text>
+          <Text style={styles.title}>Find your ideal flatmate</Text>
           <Text style={styles.subtitle}>
-            Discover people looking for a place like you.
+            Discover verified roommates in Mumbai matching your vibe, budget & schedule.
           </Text>
         </View>
       </View>
 
-      {/* 2. State-Aware CTA Card (State 1, 2, 3, or 4) */}
+      {/* 2. REAL-TIME SEARCH BAR */}
+      <View style={styles.searchWrap}>
+        <View style={styles.searchBar}>
+          <Search size={16} color="#0F766E" strokeWidth={2.4} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search locality, college, company, or name..."
+            placeholderTextColor="#94A3B8"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+          {!!searchQuery && (
+            <Pressable onPress={() => setSearchQuery('')} hitSlop={6}>
+              <X size={15} color="#94A3B8" />
+            </Pressable>
+          )}
+        </View>
+      </View>
+
+      {/* 3. LOCALITY SHORTCUT CHIPS */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.localityScroll}
+      >
+        {LOCALITY_SHORTCUTS.map((loc) => {
+          const isSelected = selectedLocality === loc;
+          return (
+            <Pressable
+              key={loc}
+              style={[styles.localityChip, isSelected && styles.localityChipActive]}
+              onPress={() => setSelectedLocality(isSelected ? null : loc)}
+            >
+              <MapPin size={11} color={isSelected ? '#FFFFFF' : '#0F766E'} />
+              <Text style={[styles.localityChipText, isSelected && styles.localityChipTextActive]}>
+                {loc}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </ScrollView>
+
+      {/* 4. SWIPE FEATURE HIGHLIGHT CARD */}
+      <View style={styles.swipeBannerWrap}>
+        <Pressable
+          style={styles.swipeBanner}
+          onPress={() => router.push('/(renter)/flatmate/discover' as any)}
+        >
+          <View style={styles.swipeBannerLeft}>
+            <View style={styles.swipeIconCircle}>
+              <Flame size={20} color="#D97706" strokeWidth={2.6} />
+            </View>
+            <View style={styles.swipeTextCol}>
+              <View style={styles.swipeTitleRow}>
+                <Text style={styles.swipeTitle}>Interactive Swipe Deck</Text>
+                <View style={styles.newFeatureBadge}>
+                  <Text style={styles.newFeatureText}>NEW</Text>
+                </View>
+              </View>
+              <Text style={styles.swipeSub}>
+                Swipe right to wave & match instantly with roommates.
+              </Text>
+            </View>
+          </View>
+
+          <View style={styles.swipeLaunchBtn}>
+            <Text style={styles.swipeLaunchBtnText}>Launch</Text>
+            <ArrowRight size={13} color="#FFFFFF" strokeWidth={2.6} />
+          </View>
+        </Pressable>
+      </View>
+
+      {/* 5. State-Aware CTA Card (State 1, 2, 3, or 4) */}
       {!myProfile && !flatmateDraft && (
-        /* STATE 1 — NO PROFILE EXISTS (RESPONSIVE NON-OVERFLOWING CARD) */
+        /* STATE 1 — NO PROFILE EXISTS */
         <View style={styles.createCardWrap}>
           <View style={styles.createCard}>
             <View style={styles.createCardHeader}>
               <View style={styles.createCardIconWrap}>
-                <Users size={20} color="#6C4DFF" strokeWidth={2.2} />
+                <Users size={20} color="#0F766E" strokeWidth={2.4} />
               </View>
               <Text style={styles.createCardTitle}>Want people to discover you too?</Text>
             </View>
 
             <Text style={styles.createCardSub}>
-              Create your Flatmate Profile and let people looking for a roommate discover you.
+              Create your Flatmate Profile in 2 minutes and let people looking for a roommate discover you.
             </Text>
 
             <View style={styles.createCardFooter}>
@@ -207,7 +316,7 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
       )}
 
       {myProfile && (
-        /* STATE 3 & 4 — USER'S FLATMATE PROFILE (RESPONSIVE NON-OVERFLOWING CARD) */
+        /* STATE 3 & 4 — USER'S FLATMATE PROFILE */
         <View style={styles.manageCardWrap}>
           <View style={[styles.manageCard, myProfile.is_paused && styles.pausedCardBorder]}>
             <View style={styles.manageTopRow}>
@@ -246,14 +355,14 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
                   </Text>
                   <Text style={styles.manageCardSub} numberOfLines={1}>
                     {myProfile.locality || 'Mumbai'} • {myProfile.room_preference} (₹
-                    {(myProfile.budget_min / 1000).toFixed(0)}K–₹
-                    {(myProfile.budget_max / 1000).toFixed(0)}K/mo)
+                    {((myProfile.budget_min || 15000) / 1000).toFixed(0)}K–₹
+                    {((myProfile.budget_max || 30000) / 1000).toFixed(0)}K/mo)
                   </Text>
                 </View>
               </View>
             </View>
 
-            {/* Responsive Actions Row: All buttons fit 100% inside card */}
+            {/* Responsive Actions Row */}
             <View style={styles.manageActionsRow}>
               <Pressable
                 style={styles.managePrimaryBtn}
@@ -271,7 +380,7 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
                 accessibilityRole="button"
                 accessibilityLabel="View Public Profile"
               >
-                <Eye size={16} color="#171522" strokeWidth={2} />
+                <Eye size={16} color="#031B2A" strokeWidth={2} />
                 <Text style={styles.manageSecondaryBtnText}>View Public</Text>
               </Pressable>
             </View>
@@ -279,13 +388,13 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
         </View>
       )}
 
-      {/* 3. Filter Bar */}
+      {/* 6. Filter Bar */}
       <FlatmateFilterBar
         activeFilter={activeFilter}
         onSelectFilter={setActiveFilter}
       />
 
-      {/* 4. Section Subheading */}
+      {/* 7. Section Subheading */}
       <View style={styles.sectionHeader}>
         <Text style={styles.sectionTitle}>People looking for a flatmate</Text>
         <View style={styles.countBadge}>
@@ -293,21 +402,24 @@ export const FlatmateDiscoveryFeed: React.FC<FlatmateDiscoveryFeedProps> = ({
         </View>
       </View>
 
-      {/* 5. Profile Cards List */}
+      {/* 8. Profile Cards List with direct Wave & Chat */}
       <View style={styles.listSection}>
         {filteredFlatmates.length === 0 ? (
           <View style={styles.emptyCard}>
-            <Users size={32} color="#777482" strokeWidth={1.8} />
+            <Users size={32} color="#64748B" strokeWidth={1.8} />
             <Text style={styles.emptyTitle}>No flatmates found</Text>
             <Text style={styles.emptyDesc}>
-              Try adjusting your filter or create your own profile to connect with
-              people searching in this area.
+              Try adjusting your search query, locality chips, or filter parameters.
             </Text>
             <Pressable
               style={styles.emptyResetBtn}
-              onPress={() => setActiveFilter('all')}
+              onPress={() => {
+                setSearchQuery('');
+                setSelectedLocality(null);
+                setActiveFilter('all');
+              }}
             >
-              <Text style={styles.emptyResetText}>View All Flatmates</Text>
+              <Text style={styles.emptyResetText}>Reset All Filters</Text>
             </Pressable>
           </View>
         ) : (
@@ -340,32 +452,163 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 20,
     alignSelf: 'flex-start',
     borderWidth: 1,
-    borderColor: '#DED6FD',
+    borderColor: '#CCFBF1',
   },
   pillBadgeText: {
     fontSize: 11.5,
-    fontWeight: '700',
-    color: '#6C4DFF',
+    fontWeight: '800',
+    color: '#0F766E',
   },
   title: {
     fontSize: 22,
-    fontWeight: '800',
-    color: '#171522',
+    fontWeight: '900',
+    color: '#031B2A',
     letterSpacing: -0.4,
     marginTop: 4,
   },
   subtitle: {
     fontSize: 13.5,
-    color: '#777482',
+    color: '#64748B',
     lineHeight: 19,
     fontWeight: '500',
   },
+
+  /* SEARCH BAR */
+  searchWrap: {
+    paddingHorizontal: 16,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingHorizontal: 14,
+    paddingVertical: Platform.OS === 'ios' ? 11 : 7,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    gap: 10,
+    ...V4_SHADOWS.soft,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 13,
+    color: '#031B2A',
+    fontWeight: '500',
+  },
+
+  /* LOCALITIES */
+  localityScroll: {
+    paddingHorizontal: 16,
+    gap: 7,
+    paddingVertical: 2,
+  },
+  localityChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+  },
+  localityChipActive: {
+    backgroundColor: '#0F766E',
+    borderColor: '#0F766E',
+  },
+  localityChipText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#475569',
+  },
+  localityChipTextActive: {
+    color: '#FFFFFF',
+  },
+
+  /* SWIPE FEATURE BANNER */
+  swipeBannerWrap: {
+    paddingHorizontal: 16,
+  },
+  swipeBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: '#FEF3C7',
+    padding: 12,
+    ...V4_SHADOWS.soft,
+  },
+  swipeBannerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    flex: 1,
+  },
+  swipeIconCircle: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#FEF3C7',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  swipeTextCol: {
+    flex: 1,
+    gap: 2,
+  },
+  swipeTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  swipeTitle: {
+    fontSize: 13.5,
+    fontWeight: '800',
+    color: '#031B2A',
+  },
+  newFeatureBadge: {
+    backgroundColor: '#D97706',
+    paddingHorizontal: 5,
+    paddingVertical: 1.5,
+    borderRadius: 6,
+  },
+  newFeatureText: {
+    fontSize: 8.5,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 0.4,
+  },
+  swipeSub: {
+    fontSize: 11.5,
+    color: '#64748B',
+    lineHeight: 15,
+  },
+  swipeLaunchBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#0F766E',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 12,
+    marginLeft: 8,
+  },
+  swipeLaunchBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+
+  /* CREATE CARD */
   createCardWrap: {
     paddingHorizontal: 16,
   },
@@ -373,14 +616,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1.5,
-    borderColor: '#DED6FD',
+    borderColor: '#CCFBF1',
     padding: 16,
     gap: 10,
-    shadowColor: '#6C4DFF',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 2,
+    ...V4_SHADOWS.soft,
   },
   draftCardBorder: {
     borderColor: '#FDE68A',
@@ -402,14 +641,14 @@ const styles = StyleSheet.create({
     width: 38,
     height: 38,
     borderRadius: 12,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
   createCardTitle: {
     fontSize: 15,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
     flex: 1,
     flexShrink: 1,
   },
@@ -426,7 +665,7 @@ const styles = StyleSheet.create({
   },
   createCardSub: {
     fontSize: 13,
-    color: '#5B5768',
+    color: '#475569',
     lineHeight: 18,
   },
   createCardFooter: {
@@ -440,32 +679,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     paddingHorizontal: 16,
-    height: 44,
+    height: 42,
     borderRadius: 14,
   },
   createPrimaryBtnText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#FFFFFF',
   },
   freeListingNote: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '500',
   },
   discardDraftBtn: {
     paddingHorizontal: 10,
-    height: 44,
+    height: 42,
     alignItems: 'center',
     justifyContent: 'center',
   },
   discardDraftText: {
     fontSize: 12.5,
     fontWeight: '600',
-    color: '#E5484D',
+    color: '#EF4444',
   },
+
+  /* MANAGE PROFILE CARD */
   manageCardWrap: {
     paddingHorizontal: 16,
   },
@@ -473,14 +714,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E5EEF0',
     padding: 14,
     gap: 12,
-    shadowColor: '#171522',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 2,
+    ...V4_SHADOWS.soft,
   },
   pausedCardBorder: {
     borderColor: '#FDE68A',
@@ -505,7 +742,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -517,11 +754,11 @@ const styles = StyleSheet.create({
   manageCardTitle: {
     fontSize: 14.5,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   manageCardSub: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '500',
   },
   statusPillLive: {
@@ -531,7 +768,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 2,
     borderRadius: 6,
-    backgroundColor: '#EAF8F0',
+    backgroundColor: '#DCFCE7',
   },
   statusPillPaused: {
     flexDirection: 'row',
@@ -546,7 +783,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#32B768',
+    backgroundColor: '#16A34A',
   },
   statusDotPaused: {
     width: 6,
@@ -556,39 +793,39 @@ const styles = StyleSheet.create({
   },
   statusPillTextLive: {
     fontSize: 10.5,
-    fontWeight: '700',
-    color: '#1B8246',
+    fontWeight: '800',
+    color: '#15803D',
     letterSpacing: 0.2,
   },
   statusPillTextPaused: {
     fontSize: 10.5,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#B45309',
     letterSpacing: 0.2,
   },
   manageUserName: {
     fontSize: 15,
-    fontWeight: '700',
-    color: '#171522',
+    fontWeight: '800',
+    color: '#031B2A',
     marginTop: 1,
   },
   manageAvatarInitial: {
     fontSize: 18,
-    fontWeight: '800',
-    color: '#6C4DFF',
+    fontWeight: '900',
+    color: '#0F766E',
   },
   manageActionsRow: {
     flexDirection: 'row',
     gap: 8,
     paddingTop: 8,
     borderTopWidth: 1,
-    borderTopColor: '#F3F0EA',
+    borderTopColor: '#F1F5F9',
   },
   managePrimaryBtn: {
     flex: 1.2,
-    height: 44,
+    height: 42,
     borderRadius: 14,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -597,16 +834,16 @@ const styles = StyleSheet.create({
   },
   managePrimaryBtnText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#FFFFFF',
   },
   manageSecondaryBtn: {
     flex: 1,
-    height: 44,
+    height: 42,
     borderRadius: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -615,9 +852,11 @@ const styles = StyleSheet.create({
   },
   manageSecondaryBtnText: {
     fontSize: 13,
-    fontWeight: '700',
-    color: '#171522',
+    fontWeight: '800',
+    color: '#031B2A',
   },
+
+  /* FILTER SECTION */
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -628,19 +867,21 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 14,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
     letterSpacing: -0.2,
   },
   countBadge: {
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#CCFBF1',
   },
   countBadgeText: {
     fontSize: 11.5,
-    fontWeight: '700',
-    color: '#6C4DFF',
+    fontWeight: '800',
+    color: '#0F766E',
   },
   listSection: {
     paddingHorizontal: 16,
@@ -650,33 +891,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 28,
     alignItems: 'center',
     gap: 8,
   },
   emptyTitle: {
     fontSize: 16,
-    fontWeight: '700',
-    color: '#171522',
+    fontWeight: '800',
+    color: '#031B2A',
     marginTop: 4,
   },
   emptyDesc: {
     fontSize: 13,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'center',
     lineHeight: 18,
   },
   emptyResetBtn: {
     marginTop: 8,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
+    borderWidth: 1,
+    borderColor: '#CCFBF1',
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 12,
   },
   emptyResetText: {
     fontSize: 13,
-    fontWeight: '700',
-    color: '#6C4DFF',
+    fontWeight: '800',
+    color: '#0F766E',
   },
 });

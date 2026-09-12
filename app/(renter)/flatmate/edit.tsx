@@ -1,13 +1,7 @@
 import React from 'react';
-import { FlatmateCreateFlowScreen } from '../../../src/components/flatmates/FlatmateCreateFlowScreen';
-import { useAppStore } from '../../../src/store/useAppStore';
+import { V4EditFlatmateProfileScreen } from '../../../src/components/v4/screens/V4EditFlatmateProfileScreen';
 
 export default function EditFlatmatePage() {
-  const { myFlatmateProfile } = useAppStore();
-  return (
-    <FlatmateCreateFlowScreen
-      initialData={myFlatmateProfile}
-      isEditing={true}
-    />
-  );
+  return <V4EditFlatmateProfileScreen />;
 }
+

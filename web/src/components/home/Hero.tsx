@@ -17,7 +17,7 @@ export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
   const propertyImage = getSafeImageUrl(primaryProperty?.property_images?.[0]?.image_url, 0);
 
   return (
-    <section className="relative bg-[#121118] text-white pt-24 pb-20 sm:pt-32 sm:pb-28 overflow-hidden border-b border-stone-800/80">
+    <section className="relative bg-[#031B2A] text-white pt-24 pb-20 sm:pt-32 sm:pb-28 overflow-hidden border-b border-stone-800/80">
       {/* Ambient Lighting Accents */}
       <div className="absolute top-0 left-1/4 w-[650px] h-[650px] bg-purple-900/20 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-[550px] h-[550px] bg-indigo-900/15 rounded-full blur-[140px] pointer-events-none" />
@@ -28,7 +28,7 @@ export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
           {/* Left Column (~40% on Desktop / 5 Columns) */}
           <div className="lg:col-span-5 space-y-6 sm:space-y-7">
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-purple-300 text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 text-[#CCFBF1] text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Rent. Live. Belong.</span>
             </div>
@@ -54,14 +54,14 @@ export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
                 className="bg-white hover:bg-stone-100 text-stone-950 font-extrabold text-xs sm:text-sm px-7 py-4 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 flex items-center gap-2 group"
               >
                 <span>Explore Homes</span>
-                <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
               </Link>
 
               <Link
                 href="/owner/properties/new"
                 className="bg-white/10 hover:bg-white/15 text-white font-extrabold text-xs sm:text-sm px-6 py-4 rounded-2xl border border-white/20 backdrop-blur-md transition-all duration-200 flex items-center gap-2"
               >
-                <PlusCircle className="w-4 h-4 text-purple-400" />
+                <PlusCircle className="w-4 h-4 text-[#0F766E]" />
                 <span>List Your Property</span>
               </Link>
             </div>
@@ -70,11 +70,11 @@ export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
             <div className="flex flex-wrap items-center gap-5 pt-3 text-xs font-bold text-stone-400">
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>100% Zero Brokerage</span>
+                <span>100% Verified Marketplace</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                <span>Direct Owner Chat</span>
+                <span>Chat with Owner or Broker</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
@@ -101,14 +101,14 @@ export const Hero: React.FC<HeroProps> = ({ primaryProperty }) => {
                 {/* Caption on Image */}
                 <div className="absolute bottom-6 left-6 right-6 text-white flex items-end justify-between">
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-300 block">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#CCFBF1] block">
                       {propertyLocality} • Mumbai
                     </span>
                     <h3 className="font-extrabold text-xl sm:text-2xl text-white leading-tight mt-0.5">
                       {propertyTitle}
                     </h3>
                     <p className="text-xs text-stone-300 font-semibold mt-1">
-                      ₹{propertyPrice.toLocaleString('en-IN')}/mo • 0% Brokerage
+                      ₹{propertyPrice.toLocaleString('en-IN')}/mo • Verified Listing
                     </p>
                   </div>
 

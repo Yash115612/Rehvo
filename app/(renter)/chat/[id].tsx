@@ -1,14 +1,6 @@
 import React from 'react';
-import { useLocalSearchParams } from 'expo-router';
-import { SharedConversationScreen } from '../../../src/components/chat/SharedConversationScreen';
+import { V4ChatRoomScreen } from '../../../src/components/v4/screens/V4ChatRoomScreen';
 
 export default function RenterChatConversationRoute() {
-  const { id } = useLocalSearchParams<{ id: string }>();
-
-  return (
-    <SharedConversationScreen
-      conversationId={id || 'conv_01'}
-      isOwner={false}
-    />
-  );
+  return <V4ChatRoomScreen />;
 }

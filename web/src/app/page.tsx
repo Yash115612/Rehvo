@@ -1,38 +1,44 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Metadata } from 'next';
-import { getPublishedProperties, getPublishedFlatmates } from '@/lib/seo/queries';
+import { getPublishedProperties } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 
-// Bespoke Modules built to match exact reference image
-import { RehvoHero } from '@/components/home/RehvoHero';
-import { PopularLocalities } from '@/components/home/PopularLocalities';
-import { FeaturedHomes } from '@/components/home/FeaturedHomes';
-import { BrowseCategory } from '@/components/home/BrowseCategory';
-import { FindFlatmate } from '@/components/home/FindFlatmate';
-import { WhyChooseRehvo } from '@/components/home/WhyChooseRehvo';
-import { DualPromoSection } from '@/components/home/DualPromoSection';
+// REHVO App-Mirrored Desktop Landing Page Components (Strict Hierarchy)
+import { HeroSearch } from '@/components/v10/HeroSearch';
+import { RentPropertiesGrid } from '@/components/v10/RentPropertiesGrid';
+import { ExploreServices } from '@/components/v10/ExploreServices';
+import { BenefitsStrip } from '@/components/v10/BenefitsStrip';
+import { HostAndEarn } from '@/components/v10/HostAndEarn';
+import { TrustAndRateUs } from '@/components/v10/TrustAndRateUs';
+import { FeaturedProperties } from '@/components/v10/FeaturedProperties';
+import { FlatmatesSection } from '@/components/v10/FlatmatesSection';
+import { AIConciergeBanner } from '@/components/v10/AIConciergeBanner';
+import { TrendingLocalities } from '@/components/v10/TrendingLocalities';
+import { DownloadAppCTA } from '@/components/v10/DownloadAppCTA';
 
 export const revalidate = 60; // 60s ISR
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'REHVO — Zero-Brokerage Verified Rentals & Flatmates in Mumbai',
+  title: 'REHVO — Verified Listing Flats, Rooms & Flatmates in Mumbai',
   description:
-    'Discover verified 1, 2, 3 BHK flats, private rooms, PGs & flatmates for rent in Mumbai with zero brokerage. Direct owner chat, confirmed physical visits, and transparent pricing.',
-  canonicalUrl: 'https://rehvo.com',
+    'Discover verified 1, 2, 3 BHK flats, commercial spaces, PGs & flatmates for rent in Mumbai with verified marketplace. Direct owner chat, confirmed physical visits, and transparent pricing.',
+  canonicalUrl: 'https://rehvo.in',
 });
 
 export default async function HomePage() {
-  const [{ properties: featuredProperties }, flatmates] = await Promise.all([
-    getPublishedProperties({ city: 'Mumbai', limit: 8 }),
-    getPublishedFlatmates('Mumbai'),
-  ]);
+  // Fetch real published properties from Supabase backend
+  const { properties: featuredListings } = await getPublishedProperties({
+    category: 'residential',
+    city: 'Mumbai',
+    limit: 12,
+  });
 
   const orgSchema = generateOrganizationSchema();
   const itemListSchema = generateItemListSchema(
-    featuredProperties,
-    'Featured Zero-Brokerage Properties in Mumbai'
+    featuredListings,
+    'Featured Verified Properties in Mumbai — REHVO'
   );
 
   return (
@@ -40,26 +46,38 @@ export default async function HomePage() {
       <JsonLd data={orgSchema} />
       <JsonLd data={itemListSchema} />
 
-      {/* 1. HERO + FLOATING SEARCH DOCK + TRUST BADGES */}
-      <RehvoHero />
+      {/* 01: UNIFIED HERO AD STAGE + SEARCH PILL + LOCALITY SELECTOR */}
+      <HeroSearch />
 
-      {/* 2. POPULAR LOCALITIES (5 Locality Tiles with Counts) */}
-      <PopularLocalities />
+      {/* 02: RENT PROPERTIES (3 ASYMMETRIC APP CATEGORY CARDS) */}
+      <RentPropertiesGrid />
 
-      {/* 3. PLACES WORTH SEEING (1 Large Dominant + 2 Stacked Feature Cards) */}
-      <FeaturedHomes properties={featuredProperties} />
+      {/* 03: EXPLORE SERVICES (ZOOMCAR-INSPIRED 6-CARD ECOSYSTEM) */}
+      <ExploreServices />
 
-      {/* 4. BROWSE BY CATEGORY (5 Visual Category Panels with Circular Icons) */}
-      <BrowseCategory />
+      {/* 04: BENEFITS 3-PILL STRIP (R-CASH, REWARDS, SHARE & EARN) */}
+      <BenefitsStrip />
 
-      {/* 5. FIND YOUR FLATMATE (Left Column + 4 Social Profile Cards) */}
-      <FindFlatmate flatmates={flatmates} />
+      {/* 05: HOST AND EARN + INTERACTIVE RENTAL YIELD ESTIMATOR */}
+      <HostAndEarn />
 
-      {/* 6. WHY CHOOSE REHVO? (Horizontal Warm Banner with 4 Pillars) */}
-      <WhyChooseRehvo />
+      {/* 06: LOVING REHVO APP? RATE US + 4 TRUST PILLARS */}
+      <TrustAndRateUs />
 
-      {/* 7. DUAL PROMO BANNERS (Host Section on Left + App Showcase on Right) */}
-      <DualPromoSection />
+      {/* 07: FEATURED & HIGH DEMAND HOMES (CAROUSEL) */}
+      <FeaturedProperties properties={featuredListings} />
+
+      {/* 08: FIND YOUR IDEAL FLATMATE (VIBEMATCH OS) */}
+      <FlatmatesSection />
+
+      {/* 09: REHVO AI CONCIERGE OPERATING SYSTEM BANNER */}
+      <AIConciergeBanner />
+
+      {/* 10: TRENDING LOCALITIES IN MUMBAI */}
+      <TrendingLocalities />
+
+      {/* 11: DOWNLOAD MOBILE APP CTA */}
+      <DownloadAppCTA />
     </>
   );
 }

@@ -159,8 +159,8 @@ export const FlatmateCreateFlowScreen: React.FC<
   const [age, setAge] = useState<string>(
     effectiveData?.age ? String(effectiveData.age) : '24'
   );
-  const [gender, setGender] = useState<'Male' | 'Female' | 'Any' | 'Other'>(
-    effectiveData?.gender || 'Male'
+  const [gender, setGender] = useState<'Male' | 'Female'>(
+    (effectiveData?.gender as any) === 'Female' ? 'Female' : 'Male'
   );
   const [occupation, setOccupation] = useState<string>(
     effectiveData?.occupation || user?.occupation || 'Working Professional'
@@ -189,7 +189,7 @@ export const FlatmateCreateFlowScreen: React.FC<
 
   const [roomPreference, setRoomPreference] = useState<
     'Private Room' | 'Shared Room' | 'Any'
-  >(effectiveData?.room_preference || 'Private Room');
+  >((effectiveData?.room_preference as any) || 'Private Room');
   const [selectedPropTypes, setSelectedPropTypes] = useState<string[]>(
     effectiveData?.property_types || ['2 BHK', '3 BHK']
   );
@@ -282,8 +282,8 @@ export const FlatmateCreateFlowScreen: React.FC<
       if (!result.canceled && result.assets?.[0]?.uri) {
         setAvatar(result.assets[0].uri);
       }
-    } catch (e) {
-      console.warn('Image picker error:', e);
+    } catch (_e) {
+      // silent catch in production
     }
   };
 
@@ -307,8 +307,8 @@ export const FlatmateCreateFlowScreen: React.FC<
       if (!result.canceled && result.assets?.[0]?.uri) {
         setAvatar(result.assets[0].uri);
       }
-    } catch (e) {
-      console.warn('Camera error:', e);
+    } catch (_e) {
+      // silent catch in production
     }
   };
 
@@ -430,7 +430,7 @@ export const FlatmateCreateFlowScreen: React.FC<
           <View style={styles.stepContainer}>
             <View style={styles.titleGroup}>
               <View style={styles.pillBadge}>
-                <Sparkles size={12} color="#6C4DFF" strokeWidth={2.5} />
+                <Sparkles size={12} color="#0F766E" strokeWidth={2.5} />
                 <Text style={styles.pillBadgeText}>Flatmate Profile Setup</Text>
               </View>
               <Text style={styles.heading}>Create your Flatmate Profile</Text>
@@ -445,7 +445,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                   <Image source={{ uri: avatar }} style={styles.largeAvatar} />
                 ) : (
                   <View style={styles.largeAvatarPlaceholder}>
-                    <Camera size={44} color="#6C4DFF" strokeWidth={1.8} />
+                    <Camera size={44} color="#0F766E" strokeWidth={1.8} />
                     <Text style={styles.placeholderText}>Tap to add photo</Text>
                   </View>
                 )}
@@ -458,7 +458,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                   accessibilityRole="button"
                   accessibilityLabel="Choose photo from gallery"
                 >
-                  <ImageIcon size={18} color="#6C4DFF" />
+                  <ImageIcon size={18} color="#0F766E" />
                   <Text style={styles.photoActionText}>Choose Gallery</Text>
                 </Pressable>
 
@@ -468,7 +468,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                   accessibilityRole="button"
                   accessibilityLabel="Take photo with camera"
                 >
-                  <Camera size={18} color="#6C4DFF" />
+                  <Camera size={18} color="#0F766E" />
                   <Text style={styles.photoActionText}>Take Photo</Text>
                 </Pressable>
 
@@ -541,7 +541,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                 <View style={[styles.inputGroup, { flex: 1.5 }]}>
                   <Text style={styles.inputLabel}>Gender</Text>
                   <View style={styles.genderRow}>
-                    {(['Male', 'Female', 'Other'] as const).map((g) => (
+                    {(['Male', 'Female'] as const).map((g) => (
                       <Pressable
                         key={g}
                         style={[
@@ -655,7 +655,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                     {isSelected && (
                       <CheckCircle2
                         size={20}
-                        color="#6C4DFF"
+                        color="#0F766E"
                         strokeWidth={2.5}
                       />
                     )}
@@ -693,9 +693,9 @@ export const FlatmateCreateFlowScreen: React.FC<
                     style={styles.selectedLocChip}
                     onPress={() => handleToggleLocation(loc)}
                   >
-                    <MapPin size={12} color="#6C4DFF" />
+                    <MapPin size={12} color="#0F766E" />
                     <Text style={styles.selectedLocChipText}>{loc}</Text>
-                    <X size={12} color="#6C4DFF" strokeWidth={2.5} />
+                    <X size={12} color="#0F766E" strokeWidth={2.5} />
                   </Pressable>
                 ))}
               </View>
@@ -727,7 +727,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                         {loc}
                       </Text>
                       {isSelected ? (
-                        <Check size={14} color="#6C4DFF" strokeWidth={2.5} />
+                        <Check size={14} color="#0F766E" strokeWidth={2.5} />
                       ) : (
                         <Plus size={14} color="#C9C5CC" />
                       )}
@@ -771,7 +771,7 @@ export const FlatmateCreateFlowScreen: React.FC<
             <View style={styles.budgetDisplayCard}>
               <Text style={styles.budgetDisplayLabel}>Monthly Share</Text>
               <View style={styles.budgetDisplayRow}>
-                <IndianRupee size={22} color="#6C4DFF" strokeWidth={2.5} />
+                <IndianRupee size={22} color="#0F766E" strokeWidth={2.5} />
                 <Text style={styles.budgetDisplayText}>
                   {budgetMin.toLocaleString('en-IN')} –{' '}
                   {budgetMax.toLocaleString('en-IN')}
@@ -810,7 +810,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                     {isSelected && (
                       <CheckCircle2
                         size={20}
-                        color="#6C4DFF"
+                        color="#0F766E"
                         strokeWidth={2.5}
                       />
                     )}
@@ -971,7 +971,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                         {tag}
                       </Text>
                       {isSelected && (
-                        <Check size={14} color="#6C4DFF" strokeWidth={2.5} />
+                        <Check size={14} color="#0F766E" strokeWidth={2.5} />
                       )}
                     </Pressable>
                   );
@@ -1022,7 +1022,7 @@ export const FlatmateCreateFlowScreen: React.FC<
                     {isSelected && (
                       <CheckCircle2
                         size={20}
-                        color="#6C4DFF"
+                        color="#0F766E"
                         strokeWidth={2.5}
                       />
                     )}
@@ -1081,7 +1081,7 @@ export const FlatmateCreateFlowScreen: React.FC<
           <View style={styles.stepContainer}>
             <View style={styles.titleGroup}>
               <View style={styles.pillBadge}>
-                <Sparkles size={12} color="#6C4DFF" strokeWidth={2.5} />
+                <Sparkles size={12} color="#0F766E" strokeWidth={2.5} />
                 <Text style={styles.pillBadgeText}>Profile Preview</Text>
               </View>
               <Text style={styles.heading}>Here's how you'll look</Text>
@@ -1122,26 +1122,26 @@ export const FlatmateCreateFlowScreen: React.FC<
 
                 <View style={styles.previewMetaGrid}>
                   <View style={styles.previewMetaItem}>
-                    <MapPin size={13} color="#6C4DFF" />
+                    <MapPin size={13} color="#0F766E" />
                     <Text style={styles.previewMetaText}>
                       {locations.join(', ')}
                     </Text>
                   </View>
                   <View style={styles.previewMetaItem}>
-                    <IndianRupee size={13} color="#6C4DFF" />
+                    <IndianRupee size={13} color="#0F766E" />
                     <Text style={styles.previewMetaText}>
                       ₹{(budgetMin / 1000).toFixed(0)}K – ₹
                       {(budgetMax / 1000).toFixed(0)}K / mo
                     </Text>
                   </View>
                   <View style={styles.previewMetaItem}>
-                    <BedDouble size={13} color="#6C4DFF" />
+                    <BedDouble size={13} color="#0F766E" />
                     <Text style={styles.previewMetaText}>
                       {roomPreference} · {selectedPropTypes.join(', ')}
                     </Text>
                   </View>
                   <View style={styles.previewMetaItem}>
-                    <Calendar size={13} color="#6C4DFF" />
+                    <Calendar size={13} color="#0F766E" />
                     <Text style={styles.previewMetaText}>{moveInTiming}</Text>
                   </View>
                 </View>
@@ -1239,7 +1239,7 @@ export const FlatmateCreateFlowScreen: React.FC<
               accessibilityRole="button"
               accessibilityLabel="Back"
             >
-              <ArrowLeft size={20} color="#171522" strokeWidth={2.2} />
+              <ArrowLeft size={20} color="#031B2A" strokeWidth={2.2} />
             </Pressable>
 
             <View style={styles.progressCol}>
@@ -1261,7 +1261,7 @@ export const FlatmateCreateFlowScreen: React.FC<
               onPress={() => router.back()}
               hitSlop={8}
             >
-              <X size={20} color="#777482" />
+              <X size={20} color="#64748B" />
             </Pressable>
           </View>
         )}
@@ -1275,7 +1275,7 @@ export const FlatmateCreateFlowScreen: React.FC<
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
   },
   topHeader: {
     flexDirection: 'row',
@@ -1291,7 +1291,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1301,7 +1301,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1313,7 +1313,7 @@ const styles = StyleSheet.create({
   stepText: {
     fontSize: 11.5,
     fontWeight: '700',
-    color: '#777482',
+    color: '#64748B',
     textTransform: 'uppercase',
     letterSpacing: 0.4,
   },
@@ -1321,12 +1321,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 4,
     borderRadius: 2,
-    backgroundColor: '#E8E5EC',
+    backgroundColor: '#E2E8F0',
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     borderRadius: 2,
   },
   stepContainer: {
@@ -1343,28 +1343,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 20,
     alignSelf: 'flex-start',
     borderWidth: 1,
-    borderColor: '#DED6FD',
+    borderColor: '#CCFBF1',
   },
   pillBadgeText: {
     fontSize: 11.5,
     fontWeight: '700',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   heading: {
     fontSize: 24,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
     letterSpacing: -0.4,
   },
   subheading: {
     fontSize: 14,
-    color: '#777482',
+    color: '#64748B',
     lineHeight: 20,
     fontWeight: '500',
   },
@@ -1379,8 +1379,8 @@ const styles = StyleSheet.create({
     borderRadius: 70,
     overflow: 'hidden',
     borderWidth: 3,
-    borderColor: '#6C4DFF',
-    backgroundColor: '#FAF9FF',
+    borderColor: '#0F766E',
+    backgroundColor: '#F8FAFB',
   },
   largeAvatar: {
     width: '100%',
@@ -1395,7 +1395,7 @@ const styles = StyleSheet.create({
   placeholderText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   photoActionsRow: {
     flexDirection: 'row',
@@ -1407,7 +1407,7 @@ const styles = StyleSheet.create({
     gap: 6,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 14,
@@ -1419,7 +1419,7 @@ const styles = StyleSheet.create({
   photoActionText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   formScroll: {
     paddingVertical: 8,
@@ -1431,17 +1431,17 @@ const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   input: {
     height: 50,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     borderRadius: 14,
     paddingHorizontal: 14,
     fontSize: 15,
-    color: '#171522',
+    color: '#031B2A',
   },
   rowInputs: {
     flexDirection: 'row',
@@ -1459,19 +1459,19 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
   },
   genderPillActive: {
-    borderColor: '#6C4DFF',
-    backgroundColor: '#FAF9FF',
+    borderColor: '#0F766E',
+    backgroundColor: '#F8FAFB',
   },
   genderPillText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   genderPillTextActive: {
-    color: '#6C4DFF',
+    color: '#0F766E',
     fontWeight: '700',
   },
   pillRow: {
@@ -1485,19 +1485,19 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
   },
   chipPillActive: {
-    borderColor: '#6C4DFF',
-    backgroundColor: '#FAF9FF',
+    borderColor: '#0F766E',
+    backgroundColor: '#F8FAFB',
   },
   chipPillText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   chipPillTextActive: {
-    color: '#6C4DFF',
+    color: '#0F766E',
     fontWeight: '700',
   },
   cardOption: {
@@ -1508,19 +1508,19 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
   },
   cardOptionActive: {
-    borderColor: '#6C4DFF',
-    backgroundColor: '#FAF9FF',
+    borderColor: '#0F766E',
+    backgroundColor: '#F8FAFB',
   },
   cardOptionText: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#171522',
+    color: '#031B2A',
   },
   cardOptionTextActive: {
-    color: '#6C4DFF',
+    color: '#0F766E',
     fontWeight: '700',
   },
   selectedLocationsWrap: {
@@ -1533,9 +1533,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     borderWidth: 1,
-    borderColor: '#DED6FD',
+    borderColor: '#CCFBF1',
     borderRadius: 12,
     paddingHorizontal: 10,
     paddingVertical: 6,
@@ -1543,12 +1543,12 @@ const styles = StyleSheet.create({
   selectedLocChipText: {
     fontSize: 12.5,
     fontWeight: '700',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   subSectionTitle: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#777482',
+    color: '#64748B',
   },
   locGrid: {
     flexDirection: 'row',
@@ -1560,30 +1560,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     borderRadius: 14,
     paddingHorizontal: 12,
     paddingVertical: 9,
     gap: 6,
   },
   locPillSelected: {
-    borderColor: '#6C4DFF',
-    backgroundColor: '#FAF9FF',
+    borderColor: '#0F766E',
+    backgroundColor: '#F8FAFB',
   },
   locPillText: {
     fontSize: 13.5,
     fontWeight: '600',
-    color: '#171522',
+    color: '#031B2A',
   },
   locPillTextSelected: {
-    color: '#6C4DFF',
+    color: '#0F766E',
     fontWeight: '700',
   },
   budgetDisplayCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1.5,
-    borderColor: '#6C4DFF',
+    borderColor: '#0F766E',
     padding: 16,
     alignItems: 'center',
     gap: 4,
@@ -1592,7 +1592,7 @@ const styles = StyleSheet.create({
   budgetDisplayLabel: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#777482',
+    color: '#64748B',
     textTransform: 'uppercase',
     letterSpacing: 0.3,
   },
@@ -1604,12 +1604,12 @@ const styles = StyleSheet.create({
   budgetDisplayText: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   budgetDisplayPeriod: {
     fontSize: 13,
     fontWeight: '500',
-    color: '#777482',
+    color: '#64748B',
   },
   prefSection: {
     gap: 8,
@@ -1618,20 +1618,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 14,
     gap: 8,
   },
   bioInput: {
     fontSize: 14.5,
-    color: '#171522',
+    color: '#031B2A',
     lineHeight: 21,
     height: 140,
     textAlignVertical: 'top',
   },
   bioCounter: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'right',
     fontWeight: '600',
   },
@@ -1639,7 +1639,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 16,
     gap: 12,
   },
@@ -1656,15 +1656,15 @@ const styles = StyleSheet.create({
   previewName: {
     fontSize: 16.5,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   previewOccupation: {
     fontSize: 12.5,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '500',
   },
   previewLookingPill: {
-    backgroundColor: '#FAF9FF',
+    backgroundColor: '#F8FAFB',
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 6,
@@ -1674,7 +1674,7 @@ const styles = StyleSheet.create({
   previewLookingText: {
     fontSize: 11,
     fontWeight: '600',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   previewBio: {
     fontSize: 13,
@@ -1683,7 +1683,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   previewMetaGrid: {
-    backgroundColor: '#FAF9FF',
+    backgroundColor: '#F8FAFB',
     padding: 10,
     borderRadius: 14,
     gap: 6,
@@ -1696,7 +1696,7 @@ const styles = StyleSheet.create({
   previewMetaText: {
     fontSize: 12.5,
     fontWeight: '600',
-    color: '#171522',
+    color: '#031B2A',
   },
   previewTagsRow: {
     flexDirection: 'row',
@@ -1704,21 +1704,21 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   previewTagPill: {
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
   },
   previewTagText: {
     fontSize: 11.5,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '600',
   },
   successCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 24,
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 24,
     alignItems: 'center',
     gap: 12,
@@ -1735,11 +1735,11 @@ const styles = StyleSheet.create({
   successTitle: {
     fontSize: 22,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   successDesc: {
     fontSize: 13.5,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -1751,7 +1751,7 @@ const styles = StyleSheet.create({
   successPrimaryBtn: {
     height: 52,
     borderRadius: 16,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1765,14 +1765,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     alignItems: 'center',
     justifyContent: 'center',
   },
   successSecondaryBtnText: {
     fontSize: 14.5,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   footer: {
     paddingVertical: 12,
@@ -1781,12 +1781,12 @@ const styles = StyleSheet.create({
   continueBtn: {
     height: 54,
     borderRadius: 16,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    shadowColor: '#6C4DFF',
+    shadowColor: '#0F766E',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.22,
     shadowRadius: 10,
@@ -1805,7 +1805,7 @@ const styles = StyleSheet.create({
   primaryPublishBtn: {
     height: 54,
     borderRadius: 16,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1824,6 +1824,6 @@ const styles = StyleSheet.create({
   editStepBtnText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
 });

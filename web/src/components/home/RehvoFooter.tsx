@@ -1,189 +1,190 @@
 import React from 'react';
 import Link from 'next/link';
-import { Globe, Facebook, Youtube, Twitter } from 'lucide-react';
+import { Globe, Facebook, Twitter, Instagram, Linkedin, ShieldCheck, Heart } from 'lucide-react';
 
 export const RehvoFooter: React.FC = () => {
   return (
-    <footer className="bg-white text-stone-700 border-t border-stone-200/80">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-16 sm:py-20">
+    <footer className="bg-[#064E3B] text-white border-t border-[#0F766E]/40">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-10">
           {/* Brand Column (4 Cols on Desktop) */}
           <div className="col-span-2 md:col-span-4 space-y-4 pr-0 lg:pr-8">
             <Link href="/" className="inline-flex items-center space-x-2.5 group">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#FF5533] to-[#FF7744] flex items-center justify-center text-white font-extrabold text-base shadow-sm">
+              <div className="w-8 h-8 rounded-xl bg-[#0F766E] flex items-center justify-center text-white font-black text-base shadow-xs">
                 R
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-xl tracking-tight text-stone-900 leading-none">
+                <span className="font-black text-xl tracking-tight text-white leading-none">
                   REHVO
                 </span>
-                <span className="text-[8px] font-bold text-[#FF5533] tracking-widest uppercase mt-0.5">
-                  Rent. Live. Belong.
+                <span className="text-[8px] font-bold text-[#CCFBF1] tracking-widest uppercase mt-0.5">
+                  VERIFIED LISTING
                 </span>
               </div>
             </Link>
 
-            <p className="text-xs text-stone-500 leading-relaxed max-w-sm">
-              India&apos;s trusted rental marketplace for flats, rooms, PGs and flatmates.
+            <p className="text-xs text-[#CCFBF1]/80 leading-relaxed max-w-sm">
+              Homes, commercial spaces, stays and people brought together under one trusted marketplace.
             </p>
 
             {/* Social Icons */}
-            <div className="flex items-center space-x-3 pt-2 text-stone-400">
-              <a href="#" className="w-8 h-8 rounded-full bg-stone-100 hover:bg-orange-50 hover:text-[#FF5533] flex items-center justify-center transition" aria-label="Website">
-                <Globe className="w-4 h-4" />
+            <div className="flex items-center space-x-2.5 pt-1 text-white">
+              <a
+                href="#"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#0F766E] text-white flex items-center justify-center transition"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-stone-100 hover:bg-orange-50 hover:text-[#FF5533] flex items-center justify-center transition" aria-label="Facebook">
-                <Facebook className="w-4 h-4" />
+              <a
+                href="#"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#0F766E] text-white flex items-center justify-center transition"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-stone-100 hover:bg-orange-50 hover:text-[#FF5533] flex items-center justify-center transition" aria-label="YouTube">
-                <Youtube className="w-4 h-4" />
+              <a
+                href="#"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#0F766E] text-white flex items-center justify-center transition"
+                aria-label="Twitter / X"
+              >
+                <Twitter className="w-3.5 h-3.5" />
               </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-stone-100 hover:bg-orange-50 hover:text-[#FF5533] flex items-center justify-center transition" aria-label="Twitter / X">
-                <Twitter className="w-4 h-4" />
+              <a
+                href="#"
+                className="w-7 h-7 rounded-full bg-white/10 hover:bg-[#0F766E] text-white flex items-center justify-center transition"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
 
-          {/* Column 1: EXPLORE */}
+          {/* Column 1: Explore */}
           <div className="col-span-1 md:col-span-2 space-y-3">
-            <h4 className="text-[11px] font-extrabold text-stone-900 uppercase tracking-wider">
-              EXPLORE
-            </h4>
-            <ul className="space-y-2 text-xs text-stone-600 font-medium">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">Explore</h4>
+            <ul className="space-y-2 text-xs text-[#CCFBF1]/80 font-medium">
               <li>
-                <Link href="/mumbai" className="hover:text-[#FF5533] transition">
-                  Flats
+                <Link href="/rent" className="hover:text-white transition">
+                  Rent Homes
                 </Link>
               </li>
               <li>
-                <Link href="/rooms/mumbai" className="hover:text-[#FF5533] transition">
-                  Rooms
+                <Link href="/commercial" className="hover:text-white transition">
+                  Commercial
                 </Link>
               </li>
               <li>
-                <Link href="/pg/mumbai" className="hover:text-[#FF5533] transition">
-                  PGs
+                <Link href="/pg-rooms" className="hover:text-white transition">
+                  PG & Rooms
                 </Link>
               </li>
               <li>
-                <Link href="/studios/mumbai" className="hover:text-[#FF5533] transition">
-                  Studios
+                <Link href="/flatmates" className="hover:text-white transition">
+                  Flatmates
                 </Link>
               </li>
               <li>
-                <Link href="/localities" className="hover:text-[#FF5533] transition">
+                <Link href="/localities" className="hover:text-white transition">
                   Localities
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 2: FOR RENTERS */}
+          {/* Column 2: Company */}
           <div className="col-span-1 md:col-span-2 space-y-3">
-            <h4 className="text-[11px] font-extrabold text-stone-900 uppercase tracking-wider">
-              FOR RENTERS
-            </h4>
-            <ul className="space-y-2 text-xs text-stone-600 font-medium">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">Company</h4>
+            <ul className="space-y-2 text-xs text-[#CCFBF1]/80 font-medium">
               <li>
-                <Link href="/search" className="hover:text-[#FF5533] transition">
-                  Search Homes
-                </Link>
-              </li>
-              <li>
-                <Link href="/flatmates/mumbai" className="hover:text-[#FF5533] transition">
-                  Flatmates
-                </Link>
-              </li>
-              <li>
-                <Link href="/saved" className="hover:text-[#FF5533] transition">
-                  Saved
-                </Link>
-              </li>
-              <li>
-                <Link href="/enquiries" className="hover:text-[#FF5533] transition">
-                  Enquiries
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#FF5533] transition">
-                  How It Works
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: FOR HOSTS */}
-          <div className="col-span-1 md:col-span-2 space-y-3">
-            <h4 className="text-[11px] font-extrabold text-stone-900 uppercase tracking-wider">
-              FOR HOSTS
-            </h4>
-            <ul className="space-y-2 text-xs text-stone-600 font-medium">
-              <li>
-                <Link href="/owner/properties/new" className="hover:text-[#FF5533] transition">
-                  List Your Property
-                </Link>
-              </li>
-              <li>
-                <Link href="/owner" className="hover:text-[#FF5533] transition">
-                  Host Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="/owner/properties" className="hover:text-[#FF5533] transition">
-                  Manage Properties
-                </Link>
-              </li>
-              <li>
-                <Link href="/owner/enquiries" className="hover:text-[#FF5533] transition">
-                  Enquiries
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-[#FF5533] transition">
-                  Resources
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: COMPANY & LEGAL */}
-          <div className="col-span-1 md:col-span-2 space-y-3">
-            <h4 className="text-[11px] font-extrabold text-stone-900 uppercase tracking-wider">
-              COMPANY
-            </h4>
-            <ul className="space-y-2 text-xs text-stone-600 font-medium">
-              <li>
-                <Link href="/about" className="hover:text-[#FF5533] transition">
+                <Link href="/about" className="hover:text-white transition">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#FF5533] transition">
-                  Contact Us
+                <Link href="/about#how-it-works" className="hover:text-white transition">
+                  How it Works
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#FF5533] transition">
+                <Link href="/careers" className="hover:text-white transition">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-[#FF5533] transition">
+                <Link href="/blog" className="hover:text-white transition">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Support */}
+          <div className="col-span-1 md:col-span-2 space-y-3">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">Support</h4>
+            <ul className="space-y-2 text-xs text-[#CCFBF1]/80 font-medium">
+              <li>
+                <Link href="/help" className="hover:text-white transition">
                   Help Center
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-stone-400 hover:text-stone-700 transition">
+                <Link href="/safety" className="hover:text-white transition">
+                  Safety Tips
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition">
                   Privacy Policy
                 </Link>
               </li>
             </ul>
           </div>
+
+          {/* Column 4: Get the App */}
+          <div className="col-span-1 md:col-span-2 space-y-3">
+            <h4 className="text-xs font-black text-white uppercase tracking-wider">Get the App</h4>
+            <div className="space-y-2">
+              <a
+                href="#"
+                className="block p-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/10 transition shadow-2xs"
+              >
+                <div className="text-[8px] font-bold text-[#CCFBF1]/70 uppercase leading-none">
+                  Download on the
+                </div>
+                <div className="text-xs font-black leading-tight mt-0.5">App Store</div>
+              </a>
+              <a
+                href="#"
+                className="block p-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/10 transition shadow-2xs"
+              >
+                <div className="text-[8px] font-bold text-[#CCFBF1]/70 uppercase leading-none">
+                  GET IT ON
+                </div>
+                <div className="text-xs font-black leading-tight mt-0.5">Google Play</div>
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-14 pt-8 border-t border-stone-200/80 text-center text-xs text-stone-400">
-          <p>© {new Date().getFullYear()} REHVO. All rights reserved.</p>
+        {/* Bottom Legal & Made with Love */}
+        <div className="mt-12 pt-6 border-t border-[#0F766E]/40 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#CCFBF1]/70">
+          <p>© 2026 REHVO. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            <span>Made with</span>
+            <span className="text-[#34D399]">♥</span>
+            <span>in Mumbai</span>
+          </p>
         </div>
       </div>
     </footer>

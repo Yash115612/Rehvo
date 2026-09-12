@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --clear",
+    "tunnel": "expo start --tunnel --clear",
+    "lan": "expo start --lan --clear",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
@@ -13,6 +15,7 @@
     "typecheck": "tsc --noEmit",
     "web:dev": "cd web && npm run dev",
     "web:build": "cd web && npm run build",
+    "web:start": "cd web && npm run start",
     "web:typecheck": "cd web && npm run typecheck",
     "admin:dev": "cd admin && npm run dev",
     "admin:build": "cd admin && npm run build",
@@ -20,6 +23,7 @@
     "build:android": "eas build --platform android --profile preview"
   },
   "dependencies": {
+    "@expo/ngrok": "^4.1.3",
     "@expo/vector-icons": "^15.0.2",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.45.4",
@@ -30,6 +34,7 @@
     "expo-blur": "~15.0.8",
     "expo-constants": "~18.0.13",
     "expo-crypto": "~15.0.9",
+    "expo-dev-client": "~6.0.21",
     "expo-font": "~14.0.12",
     "expo-image-picker": "~17.0.11",
     "expo-linking": "~8.0.12",

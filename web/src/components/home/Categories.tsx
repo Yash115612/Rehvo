@@ -53,8 +53,8 @@ export const Categories: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div className="space-y-1.5 max-w-xl">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-600" />
-              <span className="text-xs font-extrabold text-purple-700 uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#0F766E]" />
+              <span className="text-xs font-extrabold text-[#0F766E] uppercase tracking-widest">
                 Categories
               </span>
             </div>
@@ -68,10 +68,10 @@ export const Categories: React.FC = () => {
 
           <Link
             href="/mumbai"
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-purple-600 transition flex-shrink-0"
+            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-[#0F766E] transition flex-shrink-0"
           >
             <span>Explore all formats</span>
-            <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -81,7 +81,7 @@ export const Categories: React.FC = () => {
             <Link
               key={cat.id}
               href={cat.href}
-              className={`group relative rounded-3xl overflow-hidden min-h-[260px] sm:min-h-[300px] flex flex-col justify-end p-6 sm:p-7 shadow-sm hover:shadow-2xl hover:border-purple-300 transition-all duration-300 border border-stone-200/90 ${
+              className={`group relative rounded-3xl overflow-hidden min-h-[260px] sm:min-h-[300px] flex flex-col justify-end p-6 sm:p-7 shadow-sm hover:shadow-2xl hover:border-[#99F6E4] transition-all duration-300 border border-stone-200/90 ${
                 idx === 0 ? 'lg:col-span-2' : 'lg:col-span-1'
               }`}
             >
@@ -98,14 +98,14 @@ export const Categories: React.FC = () => {
                 <span className="bg-white/20 backdrop-blur-md text-white text-[9px] font-extrabold uppercase px-2.5 py-1 rounded-full inline-block">
                   {cat.tag}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight group-hover:text-purple-300 transition">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight group-hover:text-[#CCFBF1] transition">
                   {cat.name}
                 </h3>
                 <p className="text-xs text-stone-300 line-clamp-2 max-w-sm">
                   {cat.descriptor}
                 </p>
 
-                <div className="pt-2 flex items-center gap-1 text-xs font-extrabold text-purple-300 group-hover:translate-x-1 transition-transform">
+                <div className="pt-2 flex items-center gap-1 text-xs font-extrabold text-[#CCFBF1] group-hover:translate-x-1 transition-transform">
                   <span>Browse Collection</span>
                   <ChevronRight className="w-4 h-4" />
                 </div>

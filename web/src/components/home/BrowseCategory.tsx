@@ -11,8 +11,17 @@ export const BrowseCategory: React.FC = () => {
       descriptor: 'Find your perfect flat',
       href: '/mumbai',
       icon: Building,
-      iconBg: 'bg-orange-500 text-white',
+      iconBg: 'bg-[#CCFBF1]0 text-white',
       image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80',
+    },
+    {
+      id: 'commercial',
+      name: 'Commercial',
+      descriptor: 'Offices, Shops & Showrooms',
+      href: '/commercial',
+      icon: Building2,
+      iconBg: 'bg-[#0F766E] text-white',
+      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&auto=format&fit=crop&q=80',
     },
     {
       id: 'rooms',
@@ -47,39 +56,39 @@ export const BrowseCategory: React.FC = () => {
       descriptor: 'Find your match',
       href: '/flatmates/mumbai',
       icon: Users,
-      iconBg: 'bg-purple-600 text-white',
+      iconBg: 'bg-emerald-600 text-white',
       image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&auto=format&fit=crop&q=80',
     },
   ];
 
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-24 border-b border-stone-200/60">
+    <section className="bg-[#F8FAFC] py-16 sm:py-24 border-b border-stone-200/60">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-8 sm:mb-10">
           <div className="space-y-1">
-            <span className="text-[11px] font-extrabold text-[#FF5533] uppercase tracking-wider block">
+            <span className="text-[11px] font-extrabold text-[#0F766E] uppercase tracking-wider block">
               BROWSE
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
               Browse by Category
             </h2>
             <p className="text-xs sm:text-sm text-stone-500 font-normal">
-              Whatever you&apos;re looking for, we&apos;ve got it.
+              Residential homes, commercial workspaces, and verified flatmates.
             </p>
           </div>
 
           <Link
             href="/mumbai"
-            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#FF5533] hover:text-[#EE4422] transition"
+            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0F766E] hover:text-[#064E3B] transition"
           >
             <span>Explore all categories</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        {/* 5 Category Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+        {/* 6 Category Cards */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-5">
           {categories.map((cat) => {
             const Icon = cat.icon;
             return (
@@ -92,7 +101,7 @@ export const BrowseCategory: React.FC = () => {
                   src={cat.image}
                   alt={cat.name}
                   fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/40 to-transparent pointer-events-none" />
@@ -104,7 +113,7 @@ export const BrowseCategory: React.FC = () => {
 
                 {/* Details */}
                 <div className="relative z-10 space-y-0.5 text-white">
-                  <h3 className="text-base sm:text-lg font-extrabold text-white group-hover:text-orange-300 transition">
+                  <h3 className="text-base sm:text-lg font-extrabold text-white group-hover:text-[#CCFBF1] transition">
                     {cat.name}
                   </h3>
                   <p className="text-[11px] text-stone-300 font-medium">

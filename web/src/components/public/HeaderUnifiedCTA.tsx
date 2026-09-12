@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
   PlusCircle,
@@ -62,16 +61,16 @@ export const HeaderUnifiedCTA: React.FC<HeaderUnifiedCTAProps> = ({
 
   // Destination URLs
   const propertyDestination = !isAuthenticated
-    ? '/login?next=/owner/properties/new'
+    ? '/download'
     : hasPublishedProperty
     ? '/owner'
     : '/owner/properties/new';
 
   const flatmateDestination = !isAuthenticated
-    ? '/login?next=/flatmates/create'
+    ? '/download'
     : hasFlatmateProfile
     ? '/flatmates/profile'
-    : '/flatmates/create';
+    : '/download';
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
@@ -81,15 +80,10 @@ export const HeaderUnifiedCTA: React.FC<HeaderUnifiedCTAProps> = ({
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className="group text-xs font-bold text-white bg-stone-900 hover:bg-black px-4 py-2 sm:py-2.5 rounded-full transition-all duration-200 flex items-center gap-1.5 shadow-sm hover:shadow-md active:scale-98"
+        className="group text-xs font-extrabold text-white bg-[#0F766E] hover:bg-[#064E3B] px-4 py-2 sm:py-2.5 rounded-full transition-all duration-200 flex items-center gap-1.5 shadow-md shadow-teal-800/20 active:scale-98"
       >
-        <PlusCircle className="w-3.5 h-3.5 text-purple-400 group-hover:rotate-90 transition-transform duration-200" />
         <span>Start on REHVO</span>
-        <ChevronDown
-          className={`w-3 h-3 text-stone-400 transition-transform duration-200 ${
-            isOpen ? 'rotate-180 text-white' : ''
-          }`}
-        />
+        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
       </button>
 
       {/* Dropdown / Popover Dialog */}
@@ -111,7 +105,7 @@ export const HeaderUnifiedCTA: React.FC<HeaderUnifiedCTAProps> = ({
             {/* Header section inside popover */}
             <div className="flex items-center justify-between px-2 pb-3 border-b border-stone-100">
               <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+                <Sparkles className="w-3.5 h-3.5 text-[#0F766E]" />
                 <h3 className="font-extrabold text-xs text-stone-900 uppercase tracking-wider">
                   Start on REHVO
                 </h3>
@@ -125,14 +119,23 @@ export const HeaderUnifiedCTA: React.FC<HeaderUnifiedCTAProps> = ({
               </button>
             </div>
 
-            {/* Option 1: Property Listing / Management */}
+            {/* Options */}
             <div className="pt-2 space-y-2">
+              {/* Option 1: Residential Property */}
               <button
                 type="button"
-                onClick={() => handleOptionClick(propertyDestination)}
-                className="w-full text-left p-3 rounded-2xl hover:bg-purple-50/70 border border-transparent hover:border-purple-200/80 transition flex items-start gap-3.5 group"
+                onClick={() =>
+                  handleOptionClick(
+                    hasPublishedProperty
+                      ? '/owner'
+                      : !isAuthenticated
+                      ? '/download'
+                      : '/owner/properties/new?category=residential'
+                  )
+                }
+                className="w-full text-left p-3 rounded-2xl hover:bg-[#CCFBF1]/70 border border-transparent hover:border-[#99F6E4]/80 transition flex items-start gap-3.5 group"
               >
-                <div className="p-2.5 rounded-xl bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition flex-shrink-0 mt-0.5 shadow-sm">
+                <div className="p-2.5 rounded-xl bg-[#CCFBF1] text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white transition flex-shrink-0 mt-0.5 shadow-sm">
                   {hasPublishedProperty ? (
                     <LayoutDashboard className="w-4 h-4" />
                   ) : (
@@ -142,35 +145,64 @@ export const HeaderUnifiedCTA: React.FC<HeaderUnifiedCTAProps> = ({
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="font-extrabold text-xs text-stone-900 group-hover:text-purple-700 transition">
-                      {hasPublishedProperty ? 'Manage Your Properties' : 'List Your Property'}
+                    <h4 className="font-extrabold text-xs text-stone-900 group-hover:text-[#0F766E] transition">
+                      {hasPublishedProperty ? 'Manage Your Properties' : 'List Residential Property'}
                     </h4>
-                    <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                    <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#0F766E] group-hover:translate-x-0.5 transition-all" />
                   </div>
                   <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">
                     {hasPublishedProperty
                       ? 'View enquiries, visits & active listings'
-                      : 'Rent out your property with 100% zero brokerage'}
+                      : 'Post flats, rooms, PGs, or studios for free'}
                   </p>
                 </div>
               </button>
 
-              {/* Option 2: Flatmate Profile / Discovery */}
+              {/* Option 2: Commercial Space */}
+              <button
+                type="button"
+                onClick={() =>
+                  handleOptionClick(
+                    !isAuthenticated
+                      ? '/download'
+                      : '/owner/properties/new?category=commercial'
+                  )
+                }
+                className="w-full text-left p-3 rounded-2xl hover:bg-[#CCFBF1]/70 border border-transparent hover:border-[#99F6E4]/80 transition flex items-start gap-3.5 group"
+              >
+                <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-[#0F766E] group-hover:text-white transition flex-shrink-0 mt-0.5 shadow-sm">
+                  <Sparkles className="w-4 h-4" />
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-1">
+                    <h4 className="font-extrabold text-xs text-stone-900 group-hover:text-[#0F766E] transition">
+                      List Commercial Space
+                    </h4>
+                    <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#0F766E] group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                  <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">
+                    Offices, retail shops, showrooms & warehouses
+                  </p>
+                </div>
+              </button>
+
+              {/* Option 3: Flatmate Profile */}
               <button
                 type="button"
                 onClick={() => handleOptionClick(flatmateDestination)}
-                className="w-full text-left p-3 rounded-2xl hover:bg-purple-50/70 border border-transparent hover:border-purple-200/80 transition flex items-start gap-3.5 group"
+                className="w-full text-left p-3 rounded-2xl hover:bg-[#CCFBF1]/70 border border-transparent hover:border-[#99F6E4]/80 transition flex items-start gap-3.5 group"
               >
-                <div className="p-2.5 rounded-xl bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition flex-shrink-0 mt-0.5 shadow-sm">
+                <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition flex-shrink-0 mt-0.5 shadow-sm">
                   <Users className="w-4 h-4" />
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-1">
-                    <h4 className="font-extrabold text-xs text-stone-900 group-hover:text-purple-700 transition">
+                    <h4 className="font-extrabold text-xs text-stone-900 group-hover:text-[#0F766E] transition">
                       {hasFlatmateProfile ? 'My Flatmate Profile' : 'Create Flatmate Profile'}
                     </h4>
-                    <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all" />
+                    <ArrowRight className="w-3.5 h-3.5 text-stone-300 group-hover:text-[#0F766E] group-hover:translate-x-0.5 transition-all" />
                   </div>
                   <p className="text-[11px] text-stone-500 mt-0.5 leading-relaxed">
                     {hasFlatmateProfile

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -6,33 +6,43 @@ import { useAppStore } from '../src/store/useAppStore';
 import { supabase, isSupabaseConfigured } from '../src/lib/supabase';
 import { UserRole } from '../src/types';
 import * as profileService from '../src/services/profile';
+import { V4ErrorBoundary } from '../src/components/v4/ui/V4ErrorBoundary';
+import { V4AppLockGate } from '../src/components/v4/security/V4AppLockGate';
+import { V4OfflineNotice } from '../src/components/v4/ui/V4OfflineNotice';
+import { addConnectivityListener } from '../src/services/offlineEngine';
 
 export default function RootLayout() {
   const { login, logout, initializeFromStorage } = useAppStore();
+  const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
+    const unsub = addConnectivityListener((online) => {
+      setIsOffline(!online);
+    });
+    return unsub;
+  }, []);
 
-    const initAll = async () => {
+  useEffect(() => {
+    let mounted = true;
+
+    const init = async () => {
       try {
         await initializeFromStorage();
-      } catch (e) {
-        console.warn('[REHVO] Storage init failed:', e);
+      } catch {
+        // Silent catch for storage init
       }
 
       if (!isSupabaseConfigured()) {
-        console.warn('[REHVO] Supabase is not fully configured. Auth lifecycle disabled.');
         return;
       }
 
       try {
         const { data } = await supabase.auth.getSession();
-        if (data?.session?.user && isMounted) {
+        if (data?.session?.user && mounted) {
           const sUser = data.session.user;
           const userRole = (sUser.user_metadata?.role as UserRole) || 'RENTER';
           const onboardingDone = sUser.user_metadata?.onboarding_completed ?? true;
 
-          // Fetch or ensure profile from Supabase profiles table
           const profileResult = await profileService.ensureProfileExists(sUser.id, {
             name: sUser.user_metadata?.full_name || sUser.email?.split('@')[0] || 'User',
             email: sUser.email || '',
@@ -40,26 +50,27 @@ export default function RootLayout() {
             role: userRole,
           });
 
-          if (profileResult.success && profileResult.data && isMounted) {
+          if (profileResult.success && profileResult.data && mounted) {
             login({
               ...profileResult.data,
               onboarding_completed: onboardingDone,
             });
           }
         }
-      } catch (err) {
-        console.warn('[REHVO] Session init warning:', err);
+      } catch {
+        // Silent catch for session init
       }
     };
 
-    initAll();
+    init();
 
-    // Single canonical auth state listener
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!isMounted) return;
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
 
       switch (event) {
-        case 'SIGNED_IN': {
+        case 'SIGNED_IN':
+        case 'TOKEN_REFRESHED':
+        case 'USER_UPDATED': {
           if (session?.user) {
             const sUser = session.user;
             const userRole = (sUser.user_metadata?.role as UserRole) || 'RENTER';
@@ -72,7 +83,7 @@ export default function RootLayout() {
               role: userRole,
             });
 
-            if (profileResult.success && profileResult.data && isMounted) {
+            if (profileResult.success && profileResult.data && mounted) {
               login({
                 ...profileResult.data,
                 onboarding_completed: onboardingDone,
@@ -87,42 +98,39 @@ export default function RootLayout() {
           break;
         }
 
-        case 'USER_UPDATED': {
-          if (session?.user && isMounted) {
-            const sUser = session.user;
-            const profileResult = await profileService.getProfile(sUser.id);
-            if (profileResult.success && profileResult.data && isMounted) {
-              login(profileResult.data);
-            }
-          }
-          break;
-        }
-
-        case 'TOKEN_REFRESHED': {
-          // Token refreshed silently by Supabase SDK; session remains intact without re-fetching profile
-          break;
-        }
-
         default:
           break;
       }
     });
 
     return () => {
-      isMounted = false;
-      authListener?.subscription?.unsubscribe();
+      mounted = false;
+      listener?.subscription?.unsubscribe();
     };
   }, []);
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="dark" />
-      <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(renter)" options={{ headerShown: false }} />
-        <Stack.Screen name="(owner)" options={{ headerShown: false }} />
-      </Stack>
+      <V4ErrorBoundary>
+        <V4AppLockGate>
+          <StatusBar style="dark" />
+          <V4OfflineNotice isOffline={isOffline} />
+          <Stack
+            initialRouteName="index"
+            screenOptions={{
+              headerShown: false,
+              animation: 'default',
+              freezeOnBlur: true,
+            }}
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(renter)" options={{ headerShown: false }} />
+            <Stack.Screen name="(owner)" options={{ headerShown: false }} />
+            <Stack.Screen name="(broker)" options={{ headerShown: false }} />
+          </Stack>
+        </V4AppLockGate>
+      </V4ErrorBoundary>
     </SafeAreaProvider>
   );
 }

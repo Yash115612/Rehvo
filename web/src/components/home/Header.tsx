@@ -49,13 +49,12 @@ export const Header: React.FC = () => {
       <header className="pointer-events-auto bg-white/95 backdrop-blur-2xl border border-stone-200/90 shadow-xl shadow-stone-900/5 rounded-full px-4 sm:px-6 py-2.5 sm:py-3 transition-all duration-300">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2.5 group flex-shrink-0 pl-1">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-900 group-hover:bg-purple-600 flex items-center justify-center text-white font-extrabold text-base sm:text-lg shadow-sm transition-colors duration-200">
-              R
-            </div>
-            <span className="font-extrabold text-xl sm:text-2xl tracking-tight text-stone-900">
-              REHVO<span className="text-purple-600">.</span>
-            </span>
+          <Link href="/" className="flex items-center group flex-shrink-0 pl-1">
+            <img
+              src="/rehvo-logo.png"
+              alt="REHVO"
+              className="h-7 sm:h-8 w-auto object-contain"
+            />
           </Link>
 
           {/* Center Navigation Pills (Desktop) */}
@@ -83,13 +82,13 @@ export const Header: React.FC = () => {
             {/* Saved Properties Heart */}
             <Link
               href="/saved"
-              className="relative p-2.5 rounded-full text-stone-600 hover:text-purple-600 hover:bg-stone-100 transition"
+              className="relative p-2.5 rounded-full text-stone-600 hover:text-[#0F766E] hover:bg-stone-100 transition"
               title="Saved Properties"
               aria-label="View saved properties"
             >
               <Heart className="w-4 h-4" />
               {savedPropertyIds.length > 0 && (
-                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-purple-600 text-white text-[9px] font-extrabold flex items-center justify-center">
+                <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-[#0F766E] text-white text-[9px] font-extrabold flex items-center justify-center">
                   {savedPropertyIds.length}
                 </span>
               )}
@@ -106,7 +105,7 @@ export const Header: React.FC = () => {
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-900 text-xs font-bold transition"
                 >
-                  <div className="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center text-[10px] font-extrabold">
+                  <div className="w-6 h-6 rounded-full bg-[#0F766E] text-white flex items-center justify-center text-[10px] font-extrabold">
                     {profile?.full_name?.charAt(0) || user.email?.charAt(0).toUpperCase() || 'U'}
                   </div>
                   <span className="max-w-[80px] truncate">{profile?.full_name?.split(' ')[0] || 'Account'}</span>
@@ -120,7 +119,7 @@ export const Header: React.FC = () => {
                       onClick={() => setUserDropdownOpen(false)}
                       className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-50"
                     >
-                      <User className="w-4 h-4 text-purple-600" />
+                      <User className="w-4 h-4 text-[#0F766E]" />
                       <span>My Profile</span>
                     </Link>
                     <Link
@@ -128,7 +127,7 @@ export const Header: React.FC = () => {
                       onClick={() => setUserDropdownOpen(false)}
                       className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-stone-700 hover:bg-stone-50"
                     >
-                      <Building className="w-4 h-4 text-purple-600" />
+                      <Building className="w-4 h-4 text-[#0F766E]" />
                       <span>Owner Dashboard</span>
                     </Link>
                     <div className="border-t border-stone-100 my-1" />
@@ -148,10 +147,10 @@ export const Header: React.FC = () => {
               </div>
             ) : (
               <Link
-                href="/login"
-                className="text-xs font-extrabold text-stone-800 hover:text-stone-950 px-3 py-2 rounded-full hover:bg-stone-100 transition"
+                href="/download"
+                className="text-xs font-extrabold text-[#0F766E] hover:text-[#064E3B] px-3 py-2 rounded-full hover:bg-emerald-50 transition"
               >
-                Sign In
+                Download App
               </Link>
             )}
           </div>
@@ -160,7 +159,7 @@ export const Header: React.FC = () => {
           <div className="flex sm:hidden items-center gap-2">
             <Link
               href="/saved"
-              className="p-2 text-stone-700 hover:text-purple-600"
+              className="p-2 text-stone-700 hover:text-[#0F766E]"
               aria-label="Saved"
             >
               <Heart className="w-4 h-4" />
@@ -168,7 +167,7 @@ export const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="p-2 text-stone-800 hover:text-purple-600"
+              className="p-2 text-stone-800 hover:text-[#0F766E]"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -184,7 +183,7 @@ export const Header: React.FC = () => {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2 rounded-xl text-xs font-bold text-stone-800 hover:bg-purple-50 hover:text-purple-700"
+                className="block px-3 py-2 rounded-xl text-xs font-bold text-stone-800 hover:bg-[#CCFBF1] hover:text-[#0F766E]"
               >
                 {link.label}
               </Link>
@@ -193,7 +192,7 @@ export const Header: React.FC = () => {
               <Link
                 href="/owner/properties/new"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 bg-purple-600 text-white text-xs font-extrabold py-2.5 rounded-xl shadow-md"
+                className="flex items-center justify-center gap-2 bg-[#0F766E] text-white text-xs font-extrabold py-2.5 rounded-xl shadow-md"
               >
                 <PlusCircle className="w-4 h-4" />
                 <span>List Your Property</span>
@@ -203,7 +202,7 @@ export const Header: React.FC = () => {
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 bg-stone-100 text-stone-800 text-xs font-extrabold py-2.5 rounded-xl border border-stone-200"
               >
-                <Users className="w-4 h-4 text-purple-600" />
+                <Users className="w-4 h-4 text-[#0F766E]" />
                 <span>Find Flatmate</span>
               </Link>
             </div>

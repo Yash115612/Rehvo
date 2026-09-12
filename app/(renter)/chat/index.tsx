@@ -1,6 +1,6 @@
 import React from 'react';
-import { RenterChatListScreen } from '../../../src/components/chat/RenterChatListScreen';
+import { V4ChatListScreen } from '../../../src/components/v4/screens/V4ChatListScreen';
 
 export default function RenterChatListRoute() {
-  return <RenterChatListScreen />;
+  return <V4ChatListScreen />;
 }

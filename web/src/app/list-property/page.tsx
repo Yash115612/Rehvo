@@ -1,219 +1,236 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Metadata } from 'next';
 import {
   Building2,
   ShieldCheck,
-  Zap,
-  CalendarCheck,
-  Users,
   CheckCircle2,
   Sparkles,
   ArrowRight,
-  TrendingUp,
-  Clock,
-  HelpCircle,
+  UploadCloud,
+  FileCheck,
+  Coins,
+  Send,
 } from 'lucide-react';
-import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generateFaqSchema } from '@/lib/seo/schema';
-import { JsonLd } from '@/components/public/JsonLd';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
-import { AppDownloadBanner } from '@/components/public/AppDownloadBanner';
-
-export const revalidate = 3600;
-
-export async function generateMetadata(): Promise<Metadata> {
-  return constructSeoMetadata({
-    title: 'List Property for Rent with Zero Brokerage in Mumbai | REHVO',
-    description:
-      'List your flat, apartment, or room for rent in Mumbai with 100% zero brokerage. Connect directly with verified working professionals and schedule visits on REHVO.',
-    canonicalUrl: 'https://rehvo.com/list-property',
-  });
-}
 
 export default function ListPropertyPage() {
-  const breadcrumbs = [
-    { name: 'Home', url: '/' },
-    { name: 'List Property', url: '/list-property' },
-  ];
+  const [submitted, setSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    locality: '',
+    propertyType: 'flat',
+    bedrooms: '2',
+    expectedRent: '',
+  });
 
-  const faqs = [
-    {
-      question: 'Is listing a property on REHVO completely free for owners?',
-      answer:
-        'Yes. Listing your residential property on REHVO is 100% free with zero brokerage fees or hidden listing commissions.',
-    },
-    {
-      question: 'How do tenant visits work on REHVO?',
-      answer:
-        'Prospective tenants choose an available date and timeslot. You receive instant push notifications and can confirm, reschedule, or communicate directly via in-app chat.',
-    },
-    {
-      question: 'Are tenant profiles verified before they can book visits?',
-      answer:
-        'Yes. REHVO requires verified user profiles and phone numbers to ensure safety, respectful communication, and genuine inquiries.',
-    },
-    {
-      question: 'How fast can I find a tenant on REHVO?',
-      answer:
-        'Most verified listings in high-demand Mumbai localities like Andheri, Bandra, Powai, and Goregaon receive qualified inquiries within 24 to 48 hours.',
-    },
-  ];
-
-  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
-  const faqSchema = generateFaqSchema(faqs);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
 
   return (
-    <>
-      <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={faqSchema} />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <Breadcrumb items={breadcrumbs} />
+    <div className="min-h-screen bg-[#F8FAFC] py-8 sm:py-12">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+        <Breadcrumb items={[{ name: 'List Property', url: '/list-property' }]} />
 
         {/* Hero Section */}
-        <div className="bg-gradient-to-br from-stone-900 via-stone-900 to-purple-950 rounded-3xl p-8 sm:p-14 text-white my-6 shadow-xl relative overflow-hidden">
-          <div className="max-w-2xl relative z-10">
-            <div className="inline-flex items-center gap-2 bg-purple-500/20 backdrop-blur-md border border-purple-400/30 text-purple-300 text-xs font-bold px-3.5 py-1.5 rounded-full mb-6 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" /> For Mumbai Homeowners & Hosts
+        <div className="text-center max-w-3xl mx-auto my-12 space-y-4">
+          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
+            <Building2 className="w-4 h-4 text-[#0F766E]" />
+            <span>FOR PROPERTY OWNERS & LANDLORDS</span>
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+            Rent your property faster. <br />
+            With 100% verified marketplace.
+          </h1>
+
+          <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
+            Connect directly with verified working professionals and families in Mumbai. Free physical verification, free photography, and zero commission.
+          </p>
+        </div>
+
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
+              <Coins className="w-6 h-6" />
             </div>
-
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              List Your Flat with <span className="text-purple-400">Zero Brokerage</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-stone-300 mt-4 leading-relaxed">
-              Reach thousands of verified working professionals and families searching for rental homes across Mumbai. Save on broker fees and manage tenant visits seamlessly.
+            <h3 className="text-base font-black text-[#031B2A]">100% Verified Marketplace</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              No upfront fees, no monthly cuts, and zero tenant sourcing commission. Keep 100% of your rental returns.
             </p>
+          </div>
 
-            <div className="flex flex-wrap items-center gap-4 mt-8">
-              <Link
-                href="https://rehvo.com/app"
-                target="_blank"
-                className="bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm px-7 py-3.5 rounded-2xl shadow-lg hover:shadow-purple-600/30 transition flex items-center gap-2"
-              >
-                Post Property on Mobile App
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/mumbai"
-                className="bg-white/10 hover:bg-white/15 backdrop-blur-md text-white font-semibold text-sm px-6 py-3.5 rounded-2xl border border-white/20 transition"
-              >
-                Explore Active Listings
-              </Link>
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
+              <ShieldCheck className="w-6 h-6" />
             </div>
+            <h3 className="text-base font-black text-[#031B2A]">Free Walkthrough Verification</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Our field team conducts physical visits to photograph your flat, inspect title documents, and issue the Verified badge.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-black text-[#031B2A]">Pre-Screened Tenants</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Every applicant passes corporate employment verification, Aadhaar KYC verification, and background checks.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center">
+              <FileCheck className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-black text-[#031B2A]">Digital Lease & E-Sign</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Automated rental agreement drafts with government e-stamping and biometric doorstep registration.
+            </p>
           </div>
         </div>
 
-        {/* Why Owners Choose REHVO */}
-        <section className="my-16">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">
-              Why Homeowners Choose REHVO
-            </h2>
-            <p className="text-sm text-stone-600 mt-2">
-              A modern, transparent rental marketplace engineered for quality tenants and hassle-free management.
-            </p>
+        {/* Quick Property Intake Form */}
+        <div className="max-w-2xl mx-auto bg-white rounded-[32px] p-8 sm:p-12 border border-[#E2E8F0] shadow-card-hover mb-16">
+          <div className="text-center space-y-1.5 mb-8">
+            <h2 className="text-2xl font-black text-[#031B2A]">List Your Property in 2 Minutes</h2>
+            <p className="text-xs text-[#64748B]">Fill in basic details — our Mumbai operations team will confirm your listing within 24 hours.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm hover:border-purple-300 transition">
-              <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 mb-6">
-                <Zap className="w-6 h-6" />
+          {submitted ? (
+            <div className="text-center py-10 space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">100% Zero Brokerage</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                Keep your full rental income. Never pay 1 or 2 months of rent to middleman brokers.
+              <h3 className="text-xl font-black text-[#031B2A]">Property Submission Received!</h3>
+              <p className="text-xs text-[#64748B] max-w-sm mx-auto">
+                Thank you, {formData.fullName || 'Landlord'}. Our Mumbai verification coordinator will call you to arrange free photography and physical walkthrough.
               </p>
+              <button
+                type="button"
+                onClick={() => setSubmitted(false)}
+                className="text-xs font-bold text-[#0F766E] hover:underline pt-2"
+              >
+                Submit another listing
+              </button>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                    Your Full Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.fullName}
+                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                    placeholder="e.g. Vikram Malhotra"
+                    className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
+                  />
+                </div>
 
-            <div className="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm hover:border-purple-300 transition">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 mb-6">
-                <ShieldCheck className="w-6 h-6" />
+                <div>
+                  <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                    Phone Number (WhatsApp)
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="e.g. 98200 12345"
+                    className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
+                  />
+                </div>
               </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">Verified Tenants Only</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                Connect with corporate employees, IT professionals, and verified families with complete background transparency.
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                    Property Type
+                  </label>
+                  <select
+                    value={formData.propertyType}
+                    onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
+                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none"
+                  >
+                    <option value="flat">Apartment / Flat</option>
+                    <option value="villa">Independent Villa</option>
+                    <option value="pg">PG / Co-Living</option>
+                    <option value="commercial">Commercial Space</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                    BHK Config
+                  </label>
+                  <select
+                    value={formData.bedrooms}
+                    onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
+                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none"
+                  >
+                    <option value="1">1 BHK</option>
+                    <option value="2">2 BHK</option>
+                    <option value="3">3 BHK</option>
+                    <option value="4">4+ BHK</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                    Expected Rent (₹/mo)
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    value={formData.expectedRent}
+                    onChange={(e) => setFormData({ ...formData, expectedRent: e.target.value })}
+                    placeholder="e.g. 45000"
+                    className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                  Locality & Building Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.locality}
+                  onChange={(e) => setFormData({ ...formData, locality: e.target.value })}
+                  placeholder="e.g. Bandra West, Pali Hill or Hiranandani Powai"
+                  className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
+                />
+              </div>
+
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  className="w-full h-12 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Submit Property for Free Verification</span>
+                </button>
+              </div>
+
+              <p className="text-[11px] text-center text-[#64748B] pt-2">
+                By submitting, you agree to REHVO&apos;s Verified Marketplace Policy. No brokerage fee will be charged to you or your tenant.
               </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-8 border border-stone-200 shadow-sm hover:border-purple-300 transition">
-              <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 mb-6">
-                <CalendarCheck className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-stone-900 mb-2">Smart Visit Scheduling</h3>
-              <p className="text-sm text-stone-600 leading-relaxed">
-                Set your visit availability timeslots and let prospective tenants book visits without constant back-and-forth phone calls.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 3 Step Process */}
-        <section className="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200 mb-16">
-          <div className="max-w-3xl mb-10">
-            <span className="text-xs font-bold text-purple-600 uppercase tracking-wider block mb-1">
-              Simple 3-Step Flow
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">
-              How to Publish Your Property in Minutes
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-stone-900 text-white font-extrabold flex items-center justify-center text-base">
-                1
-              </div>
-              <h3 className="text-base font-bold text-stone-900">Open Listing Flow</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
-                Switch to Owner Mode in the REHVO app and tap “Post New Property”.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-stone-900 text-white font-extrabold flex items-center justify-center text-base">
-                2
-              </div>
-              <h3 className="text-base font-bold text-stone-900">Add Photos & Pricing</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
-                Upload clear room photos, set monthly rent, deposit amount, and select furnishing details.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-stone-900 text-white font-extrabold flex items-center justify-center text-base">
-                3
-              </div>
-              <h3 className="text-base font-bold text-stone-900">Go Live & Receive Visits</h3>
-              <p className="text-xs text-stone-600 leading-relaxed">
-                Your listing instantly appears on both the mobile app and the public web directory for verified renters.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200 mb-16">
-          <div className="flex items-center gap-2 mb-6">
-            <HelpCircle className="w-5 h-5 text-purple-600" />
-            <h2 className="text-xl sm:text-2xl font-bold text-stone-900">
-              Frequently Asked Questions for Owners
-            </h2>
-          </div>
-
-          <div className="space-y-6 divide-y divide-stone-100">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className={idx > 0 ? 'pt-6' : ''}>
-                <h3 className="text-base font-bold text-stone-900 mb-2">{faq.question}</h3>
-                <p className="text-sm text-stone-600 leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <AppDownloadBanner />
+            </form>
+          )}
+        </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.com';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 const SITE_NAME = 'REHVO';
 
 export interface SeoMetadataOptions {

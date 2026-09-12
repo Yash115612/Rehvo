@@ -1,16 +1,18 @@
 import React from 'react';
-import { OwnerDashboardScreen } from '../../src/components/owner/OwnerDashboardScreen';
-import { useAppStore } from '../../src/store/useAppStore';
-import { useRouter } from 'expo-router';
+import { View, StyleSheet } from 'react-native';
+import { V4OwnerDashboardScreen } from '../../src/components/v4/screens/V4OwnerDashboardScreen';
 
 export default function OwnerDashboardRoute() {
-  const router = useRouter();
-  const { user, logout } = useAppStore();
-
-  const handleLogout = () => {
-    logout();
-    router.replace('/(auth)/login');
-  };
-
-  return <OwnerDashboardScreen user={user} onLogout={handleLogout} />;
+  return (
+    <View style={styles.container}>
+      <V4OwnerDashboardScreen hideHeader />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F8FAFC',
+  },
+});

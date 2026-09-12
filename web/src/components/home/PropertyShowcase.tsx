@@ -43,22 +43,33 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
   const handleToggleSave = async (e: React.MouseEvent, propertyId: string) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!user) {
-      window.location.href = '/login?redirect=/saved';
-      return;
+
+    try {
+      const saved = JSON.parse(localStorage.getItem('rehvo_saved_properties') || '[]');
+      const isAlready = saved.includes(propertyId);
+      const nextSaved = isAlready
+        ? saved.filter((id: string) => id !== propertyId)
+        : [...saved, propertyId];
+      localStorage.setItem('rehvo_saved_properties', JSON.stringify(nextSaved));
+      window.dispatchEvent(new Event('rehvo_saved_updated'));
+    } catch {
+      // ignore
     }
-    await toggleSaveProperty(propertyId);
+
+    if (user) {
+      await toggleSaveProperty(propertyId);
+    }
   };
 
   return (
-    <section className="bg-[#F8F7F4] py-20 sm:py-28 border-b border-stone-200/90 overflow-hidden">
+    <section className="bg-[#F8FAFC] py-20 sm:py-28 border-b border-stone-200/90 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div className="space-y-1.5 max-w-xl">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-600" />
-              <span className="text-xs font-extrabold text-purple-700 uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#0F766E]" />
+              <span className="text-xs font-extrabold text-[#0F766E] uppercase tracking-widest">
                 Selected Residences
               </span>
             </div>
@@ -66,16 +77,16 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               Homes worth discovering
             </h2>
             <p className="text-xs sm:text-sm text-stone-500 font-normal leading-relaxed pt-0.5">
-              Curated verified residences in high-demand Mumbai neighborhoods with 100% zero brokerage fees.
+              Curated verified residences in high-demand Mumbai neighborhoods with 100% verified marketplace fees.
             </p>
           </div>
 
           <Link
             href="/mumbai"
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-purple-600 transition flex-shrink-0"
+            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-[#0F766E] transition flex-shrink-0"
           >
             <span>Explore all {totalCount || properties.length} homes</span>
-            <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -121,7 +132,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
                   {/* Image Lower Caption */}
                   <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-300">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#CCFBF1]">
                       {propA.locality} • Mumbai
                     </span>
                     <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
@@ -135,19 +146,19 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                   <div className="flex items-center gap-4 text-xs text-stone-600 font-bold">
                     {propA.bedrooms && (
                       <span className="flex items-center gap-1.5 bg-stone-100 px-3 py-1.5 rounded-xl">
-                        <Bed className="w-3.5 h-3.5 text-purple-600" />
+                        <Bed className="w-3.5 h-3.5 text-[#0F766E]" />
                         <span>{propA.bedrooms} {propA.bedrooms.includes('BHK') ? '' : 'BHK'}</span>
                       </span>
                     )}
                     {propA.bathrooms && (
                       <span className="flex items-center gap-1.5 bg-stone-100 px-3 py-1.5 rounded-xl">
-                        <Bath className="w-3.5 h-3.5 text-purple-600" />
+                        <Bath className="w-3.5 h-3.5 text-[#0F766E]" />
                         <span>{propA.bathrooms} Baths</span>
                       </span>
                     )}
                     {propA.area && (
                       <span className="flex items-center gap-1.5 bg-stone-100 px-3 py-1.5 rounded-xl">
-                        <Maximize2 className="w-3.5 h-3.5 text-purple-600" />
+                        <Maximize2 className="w-3.5 h-3.5 text-[#0F766E]" />
                         <span>{propA.area} sq.ft</span>
                       </span>
                     )}
@@ -160,11 +171,11 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                         <span className="text-xs font-semibold text-stone-500">/mo</span>
                       </span>
                       <span className="text-[10px] font-extrabold text-emerald-600 uppercase">
-                        0% Brokerage
+                        Verified Listing
                       </span>
                     </div>
 
-                    <span className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition">
+                    <span className="w-9 h-9 rounded-xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center group-hover:bg-[#0F766E] group-hover:text-white transition">
                       <ArrowRight className="w-4 h-4" />
                     </span>
                   </div>
@@ -204,10 +215,10 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
                     <div>
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700 block">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0F766E] block">
                         {prop.locality}
                       </span>
-                      <h4 className="text-base font-extrabold text-stone-900 leading-tight group-hover:text-purple-600 transition">
+                      <h4 className="text-base font-extrabold text-stone-900 leading-tight group-hover:text-[#0F766E] transition">
                         {prop.title}
                       </h4>
                     </div>
@@ -223,7 +234,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                         </span>
                       </div>
 
-                      <span className="text-xs font-extrabold text-purple-600 group-hover:translate-x-1 transition-transform flex items-center gap-1">
+                      <span className="text-xs font-extrabold text-[#0F766E] group-hover:translate-x-1 transition-transform flex items-center gap-1">
                         <span>Details</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
@@ -257,10 +268,10 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
 
               <div className="md:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700">
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0F766E]">
                     {propD.locality} • Mumbai
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 leading-tight group-hover:text-purple-600 transition">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 leading-tight group-hover:text-[#0F766E] transition">
                     {propD.title}
                   </h3>
                   <p className="text-xs text-stone-500 line-clamp-2">
@@ -288,11 +299,11 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                       <span className="text-xs font-normal text-stone-500">/mo</span>
                     </span>
                     <span className="text-[10px] font-extrabold text-emerald-600 uppercase">
-                      Zero Brokerage
+                      Verified Marketplace
                     </span>
                   </div>
 
-                  <span className="inline-flex items-center gap-1.5 bg-stone-900 text-white text-xs font-bold px-4 py-2 rounded-xl group-hover:bg-purple-600 transition">
+                  <span className="inline-flex items-center gap-1.5 bg-stone-900 text-white text-xs font-bold px-4 py-2 rounded-xl group-hover:bg-[#0F766E] transition">
                     <span>View Home</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
@@ -333,10 +344,10 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                   </div>
 
                   <div className="p-5 space-y-2">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700 block">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#0F766E] block">
                       {prop.locality}
                     </span>
-                    <h4 className="text-base font-extrabold text-stone-900 leading-tight group-hover:text-purple-600 transition">
+                    <h4 className="text-base font-extrabold text-stone-900 leading-tight group-hover:text-[#0F766E] transition">
                       {prop.title}
                     </h4>
 
@@ -346,7 +357,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
                         <span className="text-[11px] font-normal text-stone-500">/mo</span>
                       </span>
 
-                      <span className="text-xs font-bold text-purple-600 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      <span className="text-xs font-bold text-[#0F766E] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                         <span>Details</span>
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>

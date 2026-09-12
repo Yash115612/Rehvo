@@ -1,7 +1,7 @@
 import type { PublicProperty } from './queries';
 import { generatePropertySlug } from './slugs';
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.com';
+const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 /** Schema.org Organization for REHVO */
 export function generateOrganizationSchema() {
@@ -11,7 +11,7 @@ export function generateOrganizationSchema() {
     name: 'REHVO',
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
-    description: 'Zero-Brokerage Verified Rental & Flatmate Marketplace in Mumbai, India.',
+    description: 'Verified Verified Rental & Flatmate Marketplace in Mumbai, India.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Mumbai',
@@ -89,7 +89,7 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
             longitude: property.longitude,
           }
         : undefined,
-    numberOfRooms: parseInt(property.bedrooms) || 1,
+    numberOfRooms: property.bedrooms ? parseInt(String(property.bedrooms)) || 1 : 1,
     numberOfBathroomsTotal: property.bathrooms || 1,
     floorSize: property.area
       ? {

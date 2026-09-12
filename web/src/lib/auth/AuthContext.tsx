@@ -93,9 +93,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     async function initAuth() {
       try {
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise<{ data: { session: null }; error: null }>((resolve) =>
+          setTimeout(() => resolve({ data: { session: null }, error: null }), 600)
+        );
         const {
           data: { session: initialSession },
-        } = await supabase.auth.getSession();
+        } = await Promise.race([sessionPromise, timeoutPromise]);
 
         if (mounted) {
           setSession(initialSession);

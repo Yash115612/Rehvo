@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
-import { SlidersHorizontal } from 'lucide-react-native';
+import { V4_COLORS } from '../../theme/v4Theme';
 
 export type FlatmateFilterId =
   | 'all'
@@ -82,22 +82,22 @@ const styles = StyleSheet.create({
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: 20,
+    borderRadius: 16,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
   },
   chipSelected: {
-    backgroundColor: '#6C4DFF',
-    borderColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
+    borderColor: '#0F766E',
   },
   chipText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: '#171522',
+    fontSize: 12.5,
+    fontWeight: '700',
+    color: '#475569',
   },
   chipTextSelected: {
     color: '#FFFFFF',
-    fontWeight: '700',
+    fontWeight: '800',
   },
 });

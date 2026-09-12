@@ -1,6 +1,6 @@
 import React from 'react';
-import { SettingsScreen } from '../../src/components/settings/SettingsScreen';
+import { V4SettingsScreen } from '../../src/components/v4/screens/V4SettingsScreen';
 
-export default function RenterSettingsRoute() {
-  return <SettingsScreen role="RENTER" />;
+export default function SettingsRoute() {
+  return <V4SettingsScreen />;
 }

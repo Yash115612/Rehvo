@@ -32,8 +32,14 @@ import {
   Compass,
   FileText,
   UserCheck,
+  Utensils,
+  Sun,
+  Flame,
+  Heart,
+  ShieldCheck,
 } from 'lucide-react-native';
 import { useAppStore, selectUserCapabilities } from '../../store/useAppStore';
+import { V4ProfileCompletionCard } from './ui/V4ProfileCompletionCard';
 
 export const MyFlatmateProfileScreen: React.FC = () => {
   const router = useRouter();
@@ -110,6 +116,54 @@ export const MyFlatmateProfileScreen: React.FC = () => {
       .join('')
       .toUpperCase() || 'FP';
 
+  const checklist = [
+    {
+      key: 'photos',
+      label: 'Profile Photos',
+      isCompleted: Boolean(
+        myFlatmateProfile.avatar ||
+          (myFlatmateProfile.photos && myFlatmateProfile.photos.length > 0)
+      ),
+    },
+    {
+      key: 'bio',
+      label: 'Personal Bio',
+      isCompleted: Boolean(myFlatmateProfile.bio && myFlatmateProfile.bio.length > 10),
+    },
+    {
+      key: 'occupation',
+      label: 'Work / College',
+      isCompleted: Boolean(
+        myFlatmateProfile.occupation || myFlatmateProfile.profession
+      ),
+    },
+    {
+      key: 'verification',
+      label: 'DigiLocker KYC',
+      isCompleted: Boolean(myFlatmateProfile.is_kyc_verified),
+    },
+    {
+      key: 'lifestyle',
+      label: 'Lifestyle & Diet',
+      isCompleted: Boolean(myFlatmateProfile.food_preference),
+    },
+    {
+      key: 'budget',
+      label: 'Monthly Budget',
+      isCompleted: Boolean(myFlatmateProfile.budget_max),
+    },
+    {
+      key: 'move_in',
+      label: 'Move-in Timeline',
+      isCompleted: Boolean(
+        myFlatmateProfile.move_in_timing || myFlatmateProfile.move_in_date
+      ),
+    },
+  ];
+
+  const completedCount = checklist.filter((item) => item.isCompleted).length;
+  const progressPercentage = Math.round((completedCount / checklist.length) * 100);
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       {/* 1. Header */}
@@ -127,7 +181,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
           accessibilityRole="button"
           accessibilityLabel="Back"
         >
-          <ArrowLeft size={20} color="#171522" strokeWidth={2.2} />
+          <ArrowLeft size={20} color="#031B2A" strokeWidth={2.2} />
         </Pressable>
 
         <Text style={styles.headerTitle}>My Flatmate Profile</Text>
@@ -139,7 +193,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
           accessibilityRole="button"
           accessibilityLabel="Edit Profile"
         >
-          <Pencil size={18} color="#171522" strokeWidth={2} />
+          <Pencil size={18} color="#031B2A" strokeWidth={2} />
         </Pressable>
       </View>
 
@@ -147,149 +201,189 @@ export const MyFlatmateProfileScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
           styles.scrollContent,
-            { paddingBottom: Math.max(insets.bottom, 20) + 40 },
-          ]}
-        >
-          {/* 2. Profile Hero Card */}
-          <View style={styles.heroCard}>
-            <View style={styles.heroTopRow}>
-              {myFlatmateProfile.avatar ? (
-                <Image
-                  source={{ uri: myFlatmateProfile.avatar }}
-                  style={styles.heroAvatar}
-                />
-              ) : (
-                <View style={styles.heroAvatarPlaceholder}>
-                  <Text style={styles.avatarInitialText}>{initials}</Text>
-                </View>
-              )}
+          { paddingBottom: Math.max(insets.bottom, 20) + 40 },
+        ]}
+      >
+        {/* 2. Profile Hero Card */}
+        <View style={styles.heroCard}>
+          <View style={styles.heroTopRow}>
+            {myFlatmateProfile.avatar ? (
+              <Image
+                source={{ uri: myFlatmateProfile.avatar }}
+                style={styles.heroAvatar}
+              />
+            ) : (
+              <View style={styles.heroAvatarPlaceholder}>
+                <Text style={styles.avatarInitialText}>{initials}</Text>
+              </View>
+            )}
 
-              <View style={styles.heroInfo}>
-                <View style={styles.heroNameRow}>
-                  <Text style={styles.heroName} numberOfLines={1}>
-                    {myFlatmateProfile.name}
-                  </Text>
-                  {isLive ? (
-                    <View style={styles.liveBadge}>
-                      <View style={styles.liveDot} />
-                      <Text style={styles.liveBadgeText}>Live</Text>
-                    </View>
-                  ) : (
-                    <View style={styles.pausedBadge}>
-                      <Clock size={10} color="#B45309" strokeWidth={2} />
-                      <Text style={styles.pausedBadgeText}>Paused</Text>
-                    </View>
-                  )}
-                </View>
-
-                <Text style={styles.heroOcc} numberOfLines={1}>
-                  {myFlatmateProfile.occupation || 'Working Professional'}
+            <View style={styles.heroInfo}>
+              <View style={styles.heroNameRow}>
+                <Text style={styles.heroName} numberOfLines={1}>
+                  {myFlatmateProfile.name}
                 </Text>
-
-                <View style={styles.heroLocRow}>
-                  <MapPin size={12} color="#777482" strokeWidth={2} />
-                  <Text style={styles.heroLocText} numberOfLines={1}>
-                    {myFlatmateProfile.preferred_locations?.join(', ') ||
-                      myFlatmateProfile.locality ||
-                      'Mumbai'}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            {/* Quick Hero Actions (100% inside card, responsive) */}
-            <View style={styles.heroActionsRow}>
-              <Pressable
-                style={styles.heroPrimaryBtn}
-                onPress={() => router.push('/(renter)/flatmate/edit')}
-                accessibilityRole="button"
-                accessibilityLabel="Edit Profile"
-              >
-                <Pencil size={15} color="#FFFFFF" strokeWidth={2.2} />
-                <Text style={styles.heroPrimaryBtnText}>Edit Profile</Text>
-              </Pressable>
-
-              <Pressable
-                style={styles.heroSecondaryBtn}
-                onPress={() =>
-                  router.push(`/(renter)/flatmate/${myFlatmateProfile.id}`)
-                }
-                accessibilityRole="button"
-                accessibilityLabel="Preview Public Profile"
-              >
-                <Eye size={15} color="#171522" strokeWidth={2.2} />
-                <Text style={styles.heroSecondaryBtnText}>Preview Public</Text>
-              </Pressable>
-            </View>
-          </View>
-
-          {/* 3. Visibility Controls Card */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>VISIBILITY CONTROLS</Text>
-            <View
-              style={[
-                styles.visibilityCard,
-                isLive ? styles.visibilityCardLive : styles.visibilityCardPaused,
-              ]}
-            >
-              <View style={styles.visibilityHeaderRow}>
-                <View style={styles.visibilityStatusIcon}>
-                  {isLive ? (
-                    <CheckCircle2 size={20} color="#16A34A" strokeWidth={2.2} />
-                  ) : (
-                    <EyeOff size={20} color="#D97706" strokeWidth={2.2} />
-                  )}
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={[
-                      styles.visibilityTitle,
-                      isLive
-                        ? styles.visibilityTitleLive
-                        : styles.visibilityTitlePaused,
-                    ]}
-                  >
-                    {isLive
-                      ? 'Profile is Live in Discovery'
-                      : 'Profile is Currently Hidden'}
-                  </Text>
-                  <Text style={styles.visibilityDesc}>
-                    {isLive
-                      ? 'Your flatmate profile is visible to verified roommates searching in Mumbai.'
-                      : 'Your profile is hidden from search results. Potential flatmates cannot see or message you.'}
-                  </Text>
-                </View>
-              </View>
-
-              <Pressable
-                style={[
-                  styles.visibilityToggleBtn,
-                  isLive
-                    ? styles.visibilityToggleBtnPause
-                    : styles.visibilityToggleBtnResume,
-                ]}
-                onPress={handleTogglePause}
-                accessibilityRole="button"
-                accessibilityLabel={isLive ? 'Pause Profile' : 'Resume Profile'}
-              >
                 {isLive ? (
-                  <>
-                    <EyeOff size={16} color="#777482" strokeWidth={2} />
-                    <Text style={styles.visibilityToggleBtnPauseText}>
-                      Pause Profile (Hide from Discovery)
-                    </Text>
-                  </>
+                  <View style={styles.liveBadge}>
+                    <View style={styles.liveDot} />
+                    <Text style={styles.liveBadgeText}>Live</Text>
+                  </View>
                 ) : (
-                  <>
-                    <Eye size={16} color="#FFFFFF" strokeWidth={2.2} />
-                    <Text style={styles.visibilityToggleBtnResumeText}>
-                      Resume Profile (Publish Live)
-                    </Text>
-                  </>
+                  <View style={styles.pausedBadge}>
+                    <Clock size={10} color="#B45309" strokeWidth={2} />
+                    <Text style={styles.pausedBadgeText}>Paused</Text>
+                  </View>
                 )}
-              </Pressable>
+              </View>
+
+              <Text style={styles.heroOcc} numberOfLines={1}>
+                {myFlatmateProfile.occupation || 'Working Professional'}
+              </Text>
+
+              <View style={styles.heroLocRow}>
+                <MapPin size={12} color="#64748B" strokeWidth={2} />
+                <Text style={styles.heroLocText} numberOfLines={1}>
+                  {myFlatmateProfile.preferred_locations?.join(', ') ||
+                    myFlatmateProfile.locality ||
+                    'Mumbai'}
+                </Text>
+              </View>
             </View>
           </View>
+
+          {/* Quick Hero Actions */}
+          <View style={styles.heroActionsRow}>
+            <Pressable
+              style={styles.heroPrimaryBtn}
+              onPress={() => router.push('/(renter)/flatmate/edit')}
+              accessibilityRole="button"
+              accessibilityLabel="Edit Profile"
+            >
+              <Pencil size={15} color="#FFFFFF" strokeWidth={2.2} />
+              <Text style={styles.heroPrimaryBtnText}>Edit Profile</Text>
+            </Pressable>
+
+            <Pressable
+              style={styles.heroSecondaryBtn}
+              onPress={() =>
+                router.push(`/(renter)/flatmate/${myFlatmateProfile.id}`)
+              }
+              accessibilityRole="button"
+              accessibilityLabel="Preview Public Profile"
+            >
+              <Eye size={15} color="#031B2A" strokeWidth={2.2} />
+              <Text style={styles.heroSecondaryBtnText}>Preview Public</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        {/* 3. Profile Completion Card */}
+        <V4ProfileCompletionCard
+          progressPercentage={progressPercentage}
+          checklist={checklist}
+          onCompletePress={() => router.push('/(renter)/flatmate/edit')}
+        />
+
+        {/* 4. Dashboard Metrics Cards (5 Stats) */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>PROFILE PERFORMANCE</Text>
+          <View style={styles.dashboardGrid}>
+            <View style={styles.dashboardCard}>
+              <Text style={styles.dashboardNum}>148</Text>
+              <Text style={styles.dashboardLabel}>Profile Views</Text>
+            </View>
+
+            <View style={styles.dashboardCard}>
+              <Text style={[styles.dashboardNum, { color: '#059669' }]}>
+                {myFlatmateProfile.waves_count || 18}
+              </Text>
+              <Text style={styles.dashboardLabel}>Waves Received</Text>
+            </View>
+
+            <View style={styles.dashboardCard}>
+              <Text style={[styles.dashboardNum, { color: '#0F766E' }]}>6</Text>
+              <Text style={styles.dashboardLabel}>Matches</Text>
+            </View>
+
+            <View style={styles.dashboardCard}>
+              <Text style={[styles.dashboardNum, { color: '#EF4444' }]}>12</Text>
+              <Text style={styles.dashboardLabel}>Saved By</Text>
+            </View>
+
+            <View style={styles.dashboardCard}>
+              <Text style={[styles.dashboardNum, { color: '#059669' }]}>98%</Text>
+              <Text style={styles.dashboardLabel}>AI Score</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* 5. Visibility Controls Card */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>VISIBILITY CONTROLS</Text>
+          <View
+            style={[
+              styles.visibilityCard,
+              isLive ? styles.visibilityCardLive : styles.visibilityCardPaused,
+            ]}
+          >
+            <View style={styles.visibilityHeaderRow}>
+              <View style={styles.visibilityStatusIcon}>
+                {isLive ? (
+                  <CheckCircle2 size={20} color="#16A34A" strokeWidth={2.2} />
+                ) : (
+                  <EyeOff size={20} color="#D97706" strokeWidth={2.2} />
+                )}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[
+                    styles.visibilityTitle,
+                    isLive
+                      ? styles.visibilityTitleLive
+                      : styles.visibilityTitlePaused,
+                  ]}
+                >
+                  {isLive
+                    ? 'Profile is Live in Discovery'
+                    : 'Profile is Currently Hidden'}
+                </Text>
+                <Text style={styles.visibilityDesc}>
+                  {isLive
+                    ? 'Your flatmate profile is visible to verified roommates searching in Mumbai.'
+                    : 'Your profile is hidden from search results. Potential flatmates cannot see or message you.'}
+                </Text>
+              </View>
+            </View>
+
+            <Pressable
+              style={[
+                styles.visibilityToggleBtn,
+                isLive
+                  ? styles.visibilityToggleBtnPause
+                  : styles.visibilityToggleBtnResume,
+              ]}
+              onPress={handleTogglePause}
+              accessibilityRole="button"
+              accessibilityLabel={isLive ? 'Pause Profile' : 'Resume Profile'}
+            >
+              {isLive ? (
+                <>
+                  <EyeOff size={16} color="#64748B" strokeWidth={2} />
+                  <Text style={styles.visibilityToggleBtnPauseText}>
+                    Pause Profile (Hide from Discovery)
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Eye size={16} color="#FFFFFF" strokeWidth={2.2} />
+                  <Text style={styles.visibilityToggleBtnResumeText}>
+                    Resume Profile (Publish Live)
+                  </Text>
+                </>
+              )}
+            </Pressable>
+          </View>
+        </View>
 
           {/* 4. Activity & Real Statistics */}
           <View style={styles.section}>
@@ -333,7 +427,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
             <View style={styles.groupedCard}>
               {flatmateConversations.length === 0 ? (
                 <View style={styles.emptyMessagesWrap}>
-                  <MessageCircle size={24} color="#777482" strokeWidth={1.8} />
+                  <MessageCircle size={24} color="#64748B" strokeWidth={1.8} />
                   <Text style={styles.emptyMessagesTitle}>No messages yet</Text>
                   <Text style={styles.emptyMessagesSub}>
                     When potential flatmates discover your profile and message you,
@@ -403,7 +497,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
 
             <View style={styles.groupedCard}>
               <DetailRow
-                icon={<BedDouble size={16} color="#6C4DFF" strokeWidth={2} />}
+                icon={<BedDouble size={16} color="#0F766E" strokeWidth={2} />}
                 label="Looking for"
                 value={
                   myFlatmateProfile.looking_for ||
@@ -413,7 +507,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
               />
               <View style={styles.divider} />
               <DetailRow
-                icon={<MapPin size={16} color="#6C4DFF" strokeWidth={2} />}
+                icon={<MapPin size={16} color="#0F766E" strokeWidth={2} />}
                 label="Preferred Locations"
                 value={
                   myFlatmateProfile.preferred_locations?.join(', ') ||
@@ -423,13 +517,13 @@ export const MyFlatmateProfileScreen: React.FC = () => {
               />
               <View style={styles.divider} />
               <DetailRow
-                icon={<IndianRupee size={16} color="#6C4DFF" strokeWidth={2} />}
+                icon={<IndianRupee size={16} color="#0F766E" strokeWidth={2} />}
                 label="Monthly Budget"
                 value={`₹${(myFlatmateProfile.budget_min || 15000).toLocaleString('en-IN')} – ₹${(myFlatmateProfile.budget_max || 30000).toLocaleString('en-IN')}`}
               />
               <View style={styles.divider} />
               <DetailRow
-                icon={<Calendar size={16} color="#6C4DFF" strokeWidth={2} />}
+                icon={<Calendar size={16} color="#0F766E" strokeWidth={2} />}
                 label="Move-in Timing"
                 value={
                   myFlatmateProfile.move_in_timing ||
@@ -442,8 +536,8 @@ export const MyFlatmateProfileScreen: React.FC = () => {
                   <View style={styles.divider} />
                   <View style={styles.lifestyleBlock}>
                     <View style={styles.lifestyleHeader}>
-                      <Sparkles size={16} color="#6C4DFF" strokeWidth={2} />
-                      <Text style={styles.lifestyleLabel}>Lifestyle & Habits</Text>
+                      <Sparkles size={16} color="#0F766E" strokeWidth={2} />
+                      <Text style={styles.lifestyleLabel}>Lifestyle & Interests</Text>
                     </View>
                     <View style={styles.tagWrap}>
                       {myFlatmateProfile.lifestyle_preferences.map((tag, idx) => (
@@ -455,6 +549,19 @@ export const MyFlatmateProfileScreen: React.FC = () => {
                   </View>
                 </>
               ) : null}
+
+              <View style={styles.divider} />
+              <DetailRow
+                icon={<Utensils size={16} color="#0F766E" strokeWidth={2} />}
+                label="Diet & Food"
+                value={myFlatmateProfile.food_preference || 'Vegetarian Friendly'}
+              />
+              <View style={styles.divider} />
+              <DetailRow
+                icon={<Sun size={16} color="#0F766E" strokeWidth={2} />}
+                label="Sleep & Work"
+                value={`${myFlatmateProfile.sleep_habit || 'Flexible'} • ${myFlatmateProfile.work_style || 'Hybrid'}`}
+              />
             </View>
           </View>
 
@@ -514,7 +621,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
                 accessibilityRole="button"
                 accessibilityLabel="Preview Public Profile"
               >
-                <Eye size={16} color="#6C4DFF" strokeWidth={2.2} />
+                <Eye size={16} color="#0F766E" strokeWidth={2.2} />
                 <Text style={styles.previewCtaBtnText}>
                   Preview Full Public Profile
                 </Text>
@@ -530,7 +637,7 @@ export const MyFlatmateProfileScreen: React.FC = () => {
             accessibilityLabel="Explore Flatmates Marketplace"
           >
             <View style={styles.exploreIconCircle}>
-              <Compass size={20} color="#6C4DFF" strokeWidth={2.2} />
+              <Compass size={20} color="#0F766E" strokeWidth={2.2} />
             </View>
             <View style={{ flex: 1 }}>
               <Text style={styles.exploreTitle}>
@@ -592,7 +699,7 @@ function DetailRow({ icon, label, value }: DetailRowProps) {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
   },
   headerBar: {
     flexDirection: 'row',
@@ -602,20 +709,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#F0EEE9',
+    borderBottomColor: '#E5EEF0',
   },
   headerBtn: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: 17,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
     letterSpacing: -0.2,
   },
   scrollContent: {
@@ -626,12 +733,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 16,
     gap: 14,
     ...Platform.select({
       ios: {
-        shadowColor: '#171522',
+        shadowColor: '#031B2A',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.04,
         shadowRadius: 6,
@@ -655,7 +762,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -676,7 +783,7 @@ const styles = StyleSheet.create({
   heroName: {
     fontSize: 17,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
     flexShrink: 1,
   },
   liveBadge: {
@@ -715,7 +822,7 @@ const styles = StyleSheet.create({
   },
   heroOcc: {
     fontSize: 13,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '500',
   },
   heroLocRow: {
@@ -725,7 +832,7 @@ const styles = StyleSheet.create({
   },
   heroLocText: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
     fontWeight: '500',
   },
   heroActionsRow: {
@@ -733,13 +840,13 @@ const styles = StyleSheet.create({
     gap: 8,
     paddingTop: 10,
     borderTopWidth: 1,
-    borderTopColor: '#F3F0EA',
+    borderTopColor: '#EEF2F6',
   },
   heroPrimaryBtn: {
     flex: 1.2,
     height: 44,
     borderRadius: 14,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -757,7 +864,7 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -767,7 +874,7 @@ const styles = StyleSheet.create({
   heroSecondaryBtnText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   section: {
     gap: 8,
@@ -780,13 +887,13 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#777482',
+    color: '#64748B',
     letterSpacing: 0.6,
   },
   sectionActionLink: {
     fontSize: 12,
     fontWeight: '700',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   visibilityCard: {
     borderRadius: 16,
@@ -845,7 +952,7 @@ const styles = StyleSheet.create({
     color: '#4B5563',
   },
   visibilityToggleBtnResume: {
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
   },
   visibilityToggleBtnResumeText: {
     fontSize: 12.5,
@@ -864,29 +971,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
   },
   metricNum: {
     fontSize: 17,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   metricLabel: {
     fontSize: 11,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
     marginTop: 2,
   },
   groupedCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     overflow: 'hidden',
   },
   divider: {
     height: 0.5,
-    backgroundColor: '#F0EDF5',
+    backgroundColor: '#EEF2F6',
     marginLeft: 44,
   },
   emptyMessagesWrap: {
@@ -897,11 +1004,11 @@ const styles = StyleSheet.create({
   emptyMessagesTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   emptyMessagesSub: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'center',
     lineHeight: 17,
   },
@@ -924,7 +1031,7 @@ const styles = StyleSheet.create({
   msgName: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
     flex: 1,
   },
   msgTime: {
@@ -933,10 +1040,10 @@ const styles = StyleSheet.create({
   },
   msgSnippet: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
   },
   unreadBadge: {
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     paddingHorizontal: 6,
     paddingVertical: 2,
     borderRadius: 10,
@@ -962,19 +1069,19 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 8,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
   detailLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   detailValue: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
     maxWidth: '50%',
     textAlign: 'right',
   },
@@ -990,7 +1097,7 @@ const styles = StyleSheet.create({
   lifestyleLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   tagWrap: {
     flexDirection: 'row',
@@ -998,35 +1105,35 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   tagPill: {
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 8,
   },
   tagPillText: {
     fontSize: 12,
-    color: '#171522',
+    color: '#031B2A',
     fontWeight: '600',
   },
   bioCard: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 14,
   },
   bioText: {
     fontSize: 13,
-    color: '#171522',
+    color: '#031B2A',
     lineHeight: 19,
   },
   previewContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 14,
     gap: 12,
   },
@@ -1044,7 +1151,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 24,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -1056,21 +1163,21 @@ const styles = StyleSheet.create({
   previewName: {
     fontSize: 15,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   previewOcc: {
     fontSize: 12,
-    color: '#777482',
+    color: '#64748B',
   },
   previewBudget: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   previewCtaBtn: {
     height: 42,
     borderRadius: 12,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1079,7 +1186,7 @@ const styles = StyleSheet.create({
   previewCtaBtnText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#6C4DFF',
+    color: '#0F766E',
   },
   exploreMarketplaceCard: {
     flexDirection: 'row',
@@ -1087,7 +1194,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: '#E8E5EC',
+    borderColor: '#E2E8F0',
     padding: 14,
     gap: 12,
   },
@@ -1095,18 +1202,18 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     alignItems: 'center',
     justifyContent: 'center',
   },
   exploreTitle: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#171522',
+    color: '#031B2A',
   },
   exploreSub: {
     fontSize: 11.5,
-    color: '#777482',
+    color: '#64748B',
     marginTop: 1,
   },
   deleteRow: {
@@ -1130,7 +1237,7 @@ const styles = StyleSheet.create({
   },
   deleteSubtitle: {
     fontSize: 11.5,
-    color: '#777482',
+    color: '#64748B',
     marginTop: 1,
   },
   emptyContainer: {
@@ -1144,7 +1251,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#F0ECFF',
+    backgroundColor: '#F0FDFA',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 6,
@@ -1152,11 +1259,11 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   emptySubtitle: {
     fontSize: 14,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -1164,7 +1271,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     paddingHorizontal: 22,
     paddingVertical: 14,
     borderRadius: 16,
@@ -1174,5 +1281,33 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  dashboardGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  dashboardCard: {
+    flex: 1,
+    minWidth: '28%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 12,
+    borderWidth: 1.2,
+    borderColor: '#E2E8F0',
+    alignItems: 'center',
+    gap: 4,
+  },
+  dashboardNum: {
+    fontSize: 18,
+    fontWeight: '900',
+    color: '#0F172A',
+    letterSpacing: -0.3,
+  },
+  dashboardLabel: {
+    fontSize: 10.5,
+    fontWeight: '700',
+    color: '#64748B',
+    textAlign: 'center',
   },
 });

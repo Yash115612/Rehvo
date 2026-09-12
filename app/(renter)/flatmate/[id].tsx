@@ -4,9 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, Users } from 'lucide-react-native';
 import { useAppStore } from '../../../src/store/useAppStore';
-import { FlatmateDetailsScreen } from '../../../src/components/flatmates/FlatmateDetailsScreen';
+import { V4FlatmateProfileDetailsScreen } from '../../../src/components/v4/screens/V4FlatmateProfileDetailsScreen';
 import * as flatmateService from '../../../src/services/flatmates';
 import { FlatmateProfile } from '../../../src/types';
+import { V4_COLORS } from '../../../src/theme/v4Theme';
 
 export default function FlatmateDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -40,7 +41,7 @@ export default function FlatmateDetailPage() {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingWrap}>
-          <ActivityIndicator size="large" color="#6C4DFF" />
+          <ActivityIndicator size="large" color="#0F766E" />
           <Text style={styles.loadingText}>Loading flatmate profile...</Text>
         </View>
       </SafeAreaView>
@@ -64,14 +65,14 @@ export default function FlatmateDetailPage() {
             accessibilityRole="button"
             accessibilityLabel="Go back"
           >
-            <ArrowLeft size={20} color="#171522" strokeWidth={2.2} />
+            <ArrowLeft size={20} color="#031B2A" strokeWidth={2.4} />
           </Pressable>
           <Text style={styles.headerTitle}>Profile</Text>
           <View style={{ width: 40 }} />
         </View>
 
         <View style={styles.notFoundWrap}>
-          <Users size={40} color="#777482" />
+          <Users size={40} color="#64748B" />
           <Text style={styles.notFoundTitle}>Flatmate profile not found</Text>
           <Text style={styles.notFoundSub}>
             This profile may have been paused or removed by the user.
@@ -91,19 +92,19 @@ export default function FlatmateDetailPage() {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.loadingWrap}>
-          <ActivityIndicator size="large" color="#6C4DFF" />
+          <ActivityIndicator size="large" color="#0F766E" />
         </View>
       </SafeAreaView>
     );
   }
 
-  return <FlatmateDetailsScreen profile={profile} />;
+  return <V4FlatmateProfileDetailsScreen profile={profile} />;
 }
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#F8FAFB',
   },
   header: {
     flexDirection: 'row',
@@ -113,20 +114,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
-    borderBottomColor: '#F0EEE9',
+    borderBottomColor: '#E5EEF0',
   },
   backBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F8F7F4',
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: '#F1F5F9',
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTitle: {
     fontSize: 16.5,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   loadingWrap: {
     flex: 1,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#777482',
+    color: '#64748B',
   },
   notFoundWrap: {
     flex: 1,
@@ -149,23 +150,23 @@ const styles = StyleSheet.create({
   notFoundTitle: {
     fontSize: 18,
     fontWeight: '800',
-    color: '#171522',
+    color: '#031B2A',
   },
   notFoundSub: {
     fontSize: 13.5,
-    color: '#777482',
+    color: '#64748B',
     textAlign: 'center',
   },
   backHomeBtn: {
     marginTop: 12,
-    backgroundColor: '#6C4DFF',
+    backgroundColor: '#0F766E',
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 14,
   },
   backHomeBtnText: {
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '800',
     color: '#FFFFFF',
   },
 });

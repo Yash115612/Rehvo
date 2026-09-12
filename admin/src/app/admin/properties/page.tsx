@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { PageHeader } from '@/components/common/PageHeader';
 import { StatusBadge } from '@/components/common/StatusBadge';
-import { Search, Building2, Eye, MoreHorizontal, ShieldCheck, MapPin, Pause, Play, Loader2 } from 'lucide-react';
+import { Search, Building2, Eye, MoreHorizontal, ShieldCheck, MapPin, Pause, Play, Loader2, Building } from 'lucide-react';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { getProperties, updatePropertyStatus, AdminPropertyRecord } from '@/lib/supabase/admin-service';
 
@@ -11,6 +11,7 @@ export default function AdminPropertiesPage() {
   const [properties, setProperties] = useState<AdminPropertyRecord[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [search, setSearch] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
   const [typeFilter, setTypeFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,7 @@ export default function AdminPropertiesPage() {
     try {
       const res = await getProperties({
         search,
+        category: categoryFilter,
         type: typeFilter,
         status: statusFilter,
         page: 1,
@@ -33,7 +35,7 @@ export default function AdminPropertiesPage() {
     } finally {
       setIsLoading(false);
     }
-  }, [search, typeFilter, statusFilter]);
+  }, [search, categoryFilter, typeFilter, statusFilter]);
 
   useEffect(() => {
     loadProperties();
@@ -60,13 +62,13 @@ export default function AdminPropertiesPage() {
     <div className="space-y-6">
       <PageHeader
         title="Property Listings"
-        subtitle="Manage verified rental inventory, occupancy, and host listings"
+        subtitle="Manage verified residential & commercial rental inventory, occupancy, and host listings"
         badge={`${totalCount} Total Listed`}
       />
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-brand-border p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
-        <div className="relative w-full sm:w-80">
+      <div className="bg-white rounded-xl border border-brand-border p-4 flex flex-col lg:flex-row items-center justify-between gap-3 shadow-xs">
+        <div className="relative w-full lg:w-80">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted" />
           <input
             type="text"
@@ -77,18 +79,40 @@ export default function AdminPropertiesPage() {
           />
         </div>
 
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          {/* Supported Property Types ONLY: Flat, Room, PG, Studio */}
+        <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
+          {/* Category Filter */}
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="bg-brand-canvas border border-brand-border text-xs text-brand-dark font-semibold px-3 py-1.5 rounded-lg focus:outline-none focus:border-brand-primary"
+          >
+            <option value="ALL">All Categories</option>
+            <option value="RESIDENTIAL">Residential</option>
+            <option value="COMMERCIAL">Commercial</option>
+          </select>
+
+          {/* Property Types */}
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
             className="bg-brand-canvas border border-brand-border text-xs text-brand-dark font-semibold px-3 py-1.5 rounded-lg focus:outline-none focus:border-brand-primary"
           >
             <option value="ALL">All Types</option>
-            <option value="FLAT">Flat / Apartment</option>
-            <option value="ROOM">Private Room</option>
-            <option value="PG">PG / Co-living</option>
-            <option value="STUDIO">Studio</option>
+            <optgroup label="Residential">
+              <option value="FLAT">Flat / Apartment</option>
+              <option value="ROOM">Private Room</option>
+              <option value="PG">PG / Co-living</option>
+              <option value="STUDIO">Studio</option>
+            </optgroup>
+            <optgroup label="Commercial">
+              <option value="OFFICE">Office Space</option>
+              <option value="SHOP">Retail Shop</option>
+              <option value="SHOWROOM">Showroom</option>
+              <option value="WAREHOUSE">Warehouse</option>
+              <option value="COWORKING">Co-working</option>
+              <option value="COMMERCIAL_BUILDING">Building / Floor</option>
+              <option value="COMMERCIAL_PLOT">Commercial Plot</option>
+            </optgroup>
           </select>
 
           <select
@@ -123,6 +147,7 @@ export default function AdminPropertiesPage() {
               <thead>
                 <tr>
                   <th>Property</th>
+                  <th>Category</th>
                   <th>Location</th>
                   <th>Monthly Rent</th>
                   <th>Owner</th>
@@ -137,23 +162,33 @@ export default function AdminPropertiesPage() {
                   <tr key={prop.id}>
                     <td>
                       <div className="font-bold text-brand-dark max-w-xs truncate">{prop.title}</div>
-                      <div className="text-[11px] text-brand-muted font-mono">{prop.type} • {prop.id.slice(0, 8)}...</div>
+                      <div className="text-[11px] text-brand-muted font-mono">
+                        {prop.type} {prop.area ? `• ${prop.area} sq.ft` : ''} • {prop.id.slice(0, 8)}...
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wider ${
+                          prop.category === 'COMMERCIAL'
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                            : 'bg-orange-50 text-orange-700 border border-orange-200'
+                        }`}
+                      >
+                        {prop.category || 'RESIDENTIAL'}
+                      </span>
                     </td>
                     <td>
                       <div className="text-xs font-semibold text-brand-dark flex items-center gap-1">
-                        <MapPin size={12} className="text-brand-muted" />
+                        <MapPin size={12} className="text-brand-muted shrink-0" />
                         <span>{prop.location}</span>
                       </div>
                     </td>
                     <td>
-                      <div className="text-xs font-extrabold text-brand-dark">
-                        {formatCurrency(prop.rent)}
-                      </div>
-                      <span className="text-[10px] text-brand-muted">per month</span>
+                      <div className="font-bold text-brand-dark text-xs">{formatCurrency(prop.rent)}/mo</div>
                     </td>
                     <td>
-                      <div className="text-xs font-semibold text-brand-dark">{prop.owner_name}</div>
-                      <div className="text-[11px] text-brand-muted font-mono">{prop.owner_id.slice(0, 8)}...</div>
+                      <div className="text-xs text-brand-dark font-medium">{prop.owner_name}</div>
+                      <div className="text-[10px] text-brand-muted font-mono">{prop.owner_id.slice(0, 8)}...</div>
                     </td>
                     <td>
                       <StatusBadge status={prop.status} />
@@ -161,26 +196,20 @@ export default function AdminPropertiesPage() {
                     <td>
                       <StatusBadge status={prop.verification_status} />
                     </td>
-                    <td className="text-xs text-brand-muted">{formatDate(prop.created_at)}</td>
+                    <td>
+                      <div className="text-xs text-brand-muted">{formatDate(prop.created_at)}</div>
+                    </td>
                     <td className="text-right">
-                      <button
-                        onClick={() => handleToggleStatus(prop)}
-                        disabled={actionLoading}
-                        className="p-1.5 rounded bg-brand-canvas hover:bg-brand-canvas/80 text-brand-dark border border-brand-border text-xs font-semibold inline-flex items-center gap-1"
-                        title={prop.status === 'ACTIVE' ? 'Pause Listing' : 'Resume Listing'}
-                      >
-                        {prop.status === 'ACTIVE' ? (
-                          <>
-                            <Pause size={13} className="text-amber-600" />
-                            <span>Pause</span>
-                          </>
-                        ) : (
-                          <>
-                            <Play size={13} className="text-emerald-600" />
-                            <span>Resume</span>
-                          </>
-                        )}
-                      </button>
+                      <div className="flex items-center justify-end gap-1.5">
+                        <button
+                          onClick={() => handleToggleStatus(prop)}
+                          disabled={actionLoading}
+                          className="p-1.5 rounded-lg border border-brand-border text-brand-muted hover:text-brand-dark hover:bg-brand-canvas transition"
+                          title={prop.status === 'ACTIVE' ? 'Pause Listing' : 'Activate Listing'}
+                        >
+                          {prop.status === 'ACTIVE' ? <Pause size={13} /> : <Play size={13} />}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

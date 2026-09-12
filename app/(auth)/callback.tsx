@@ -113,7 +113,7 @@ export default function AuthCallbackRoute() {
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#6C4DFF" />
+      <ActivityIndicator size="large" color="#FF5533" />
       <Text style={styles.text}>Completing sign in...</Text>
     </View>
   );
@@ -122,7 +122,7 @@ export default function AuthCallbackRoute() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8F7F4',
+    backgroundColor: '#FAF8F5',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 16,

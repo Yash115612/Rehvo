@@ -29,7 +29,7 @@ export interface SlugPropertyInput {
   locality: string;
   city: string;
   type?: string;
-  bedrooms?: string | number;
+  bedrooms?: string | number | null;
 }
 
 /**
@@ -152,7 +152,7 @@ export const MUMBAI_LOCALITIES: Record<string, LocalityInfo> = {
     metroStation: 'Santacruz West Metro (Upcoming 2B)',
     railwayStation: 'Santacruz Station (Western Line)',
     commercialHubs: ['Tagore Road', 'SVT Campus', 'Juhu Road Hub'],
-    highlights: ['Prime central suburb with easy airport & highway access', 'Established family residential complexes', 'Zero-brokerage rental inventory'],
+    highlights: ['Prime central suburb with easy airport & highway access', 'Established family residential complexes', 'Verified rental inventory'],
     avgRent: { bhk1: '₹38,000 - ₹52,000', bhk2: '₹62,000 - ₹95,000', bhk3: '₹1,00,000 - ₹1,65,000', room: '₹18,000 - ₹28,000' },
   },
   'powai': {
@@ -202,7 +202,7 @@ export const MUMBAI_LOCALITIES: Record<string, LocalityInfo> = {
     metroStation: 'Dahanukarwadi & Kandivali West (Line 2A)',
     railwayStation: 'Kandivali Station (Western Line)',
     commercialHubs: ['Mahavir Nagar', 'Charkop Industrial Area', 'Link Road'],
-    highlights: ['Thriving food street culture at Mahavir Nagar', 'Family-friendly gated societies with modern amenities', 'Affordable zero-brokerage rentals'],
+    highlights: ['Thriving food street culture at Mahavir Nagar', 'Family-friendly gated societies with modern amenities', 'Affordable verified rentals'],
     avgRent: { bhk1: '₹22,000 - ₹32,000', bhk2: '₹34,000 - ₹52,000', bhk3: '₹55,000 - ₹85,000', room: '₹11,000 - ₹17,000' },
   },
   'borivali-west': {

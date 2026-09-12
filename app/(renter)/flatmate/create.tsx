@@ -1,6 +1,7 @@
 import React from 'react';
-import { FlatmateCreateFlowScreen } from '../../../src/components/flatmates/FlatmateCreateFlowScreen';
+import { V4CreateFlatmateProfileScreen } from '../../../src/components/v4/screens/V4CreateFlatmateProfileScreen';
 
 export default function CreateFlatmatePage() {
-  return <FlatmateCreateFlowScreen isEditing={false} />;
+  return <V4CreateFlatmateProfileScreen />;
 }
+

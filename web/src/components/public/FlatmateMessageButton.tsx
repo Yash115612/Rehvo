@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { MessageSquare, Loader2 } from 'lucide-react';
-import { useAuth } from '@/lib/auth/AuthContext';
-import { getOrCreateFlatmateConversation } from '@/services/chat';
+import { MessageSquare, Sparkles } from 'lucide-react';
+import { AppDownloadModal } from '@/components/public/AppDownloadModal';
 
 interface FlatmateMessageButtonProps {
   flatmateId: string;
@@ -13,49 +11,27 @@ interface FlatmateMessageButtonProps {
 }
 
 export const FlatmateMessageButton: React.FC<FlatmateMessageButtonProps> = ({
-  flatmateId,
-  userId,
   name,
 }) => {
-  const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
-  const [isStarting, setIsStarting] = useState(false);
-
-  const handleStartChat = async () => {
-    if (!isAuthenticated || !user) {
-      router.push(`/login?next=/flatmates/${flatmateId}`);
-      return;
-    }
-
-    if (userId && user.id === userId) {
-      alert('This is your own profile.');
-      return;
-    }
-
-    setIsStarting(true);
-    const res = await getOrCreateFlatmateConversation(flatmateId, user.id);
-    setIsStarting(false);
-
-    if (res.success && res.data) {
-      router.push(`/chat/${res.data}`);
-    } else {
-      alert(res.error || 'Failed to start conversation.');
-    }
-  };
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <button
-      type="button"
-      disabled={isStarting}
-      onClick={handleStartChat}
-      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-sm py-3.5 px-6 rounded-2xl shadow-lg transition flex items-center justify-center gap-2 disabled:opacity-50"
-    >
-      {isStarting ? (
-        <Loader2 className="w-4 h-4 animate-spin" />
-      ) : (
+    <>
+      <button
+        type="button"
+        onClick={() => setModalOpen(true)}
+        className="w-full bg-[#0F766E] hover:bg-[#064E3B] text-white font-extrabold text-sm py-3.5 px-6 rounded-2xl shadow-lg shadow-teal-800/20 transition flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+      >
         <MessageSquare className="w-4 h-4" />
-      )}
-      <span>Message {name}</span>
-    </button>
+        <span>Message {name} (App Only)</span>
+      </button>
+
+      <AppDownloadModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={`Message ${name} on REHVO App`}
+        subtitle="Chatting with verified flatmates and instant push messaging are exclusively available on the REHVO Mobile App for tenant safety."
+      />
+    </>
   );
 };

@@ -10,18 +10,18 @@ export const AppDownloadBanner: React.FC<AppDownloadBannerProps> = ({ propertyId
   const deepLink = propertyId ? `rehvo://property/${propertyId}` : 'rehvo://home';
 
   return (
-    <section className="bg-gradient-to-br from-purple-900 via-stone-900 to-black text-white rounded-3xl p-8 sm:p-10 shadow-xl overflow-hidden relative border border-purple-800/30 my-10">
+    <section className="bg-gradient-to-br from-stone-900 via-stone-900 to-[#064E3B] text-white rounded-3xl p-8 sm:p-10 shadow-xl overflow-hidden relative border border-[#0F766E]/30 my-10">
       {/* Background ambient glow */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-[#0F766E]/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         <div className="lg:col-span-8 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-purple-500/20 border border-purple-500/30 text-purple-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 bg-[#0F766E]/20 border border-[#0F766E]/30 text-[#CCFBF1] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" /> Direct Host Connection
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Rent Without Middlemen & Brokerage
+            Rent With Verified Owners & Brokers
           </h2>
 
           <p className="text-sm text-stone-300 max-w-xl leading-relaxed">
@@ -45,13 +45,12 @@ export const AppDownloadBanner: React.FC<AppDownloadBannerProps> = ({ propertyId
             href={deepLink}
             className="w-full bg-white hover:bg-stone-100 text-stone-950 font-bold px-6 py-3.5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm"
           >
-            <Smartphone className="w-4 h-4 text-purple-600" />
+            <Smartphone className="w-4 h-4 text-[#0F766E]" />
             <span>Open in REHVO App</span>
           </Link>
           <Link
-            href="https://rehvo.com/app"
-            target="_blank"
-            className="w-full bg-purple-600/30 hover:bg-purple-600/40 border border-purple-500/40 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center justify-center text-xs"
+            href="/download"
+            className="w-full bg-[#0F766E]/30 hover:bg-[#0F766E]/40 border border-[#0F766E]/40 text-white font-semibold px-6 py-3 rounded-xl transition flex items-center justify-center text-xs"
           >
             Download for Android & iOS
           </Link>

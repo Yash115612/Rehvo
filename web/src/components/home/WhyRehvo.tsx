@@ -1,69 +1,75 @@
+'use client';
+
 import React from 'react';
+import { CheckCircle2, ShieldCheck, MessageCircle, CalendarCheck, Sparkles } from 'lucide-react';
 
 export const WhyRehvo: React.FC = () => {
+  const benefits = [
+    {
+      id: 'verified-listings',
+      icon: ShieldCheck,
+      title: 'Verified Listings',
+      desc: '100% physically inspected spaces with authentic photos and confirmed landlord ownership.',
+    },
+    {
+      id: 'verified-marketplace',
+      icon: CheckCircle2,
+      title: 'Verified Listing',
+      desc: 'Connect directly with property owners and flatmates. Transparent pricing with no hidden charges.',
+    },
+    {
+      id: 'direct-chat',
+      icon: MessageCircle,
+      title: 'Direct Chat',
+      desc: 'Message verified landlords and prospective roommates in real time without exposing phone numbers.',
+    },
+    {
+      id: 'easy-visits',
+      icon: CalendarCheck,
+      title: 'Easy Visits',
+      desc: 'Pick your preferred date & time slots online and manage physical property inspections with one click.',
+    },
+  ];
+
   return (
-    <section className="bg-[#121118] text-white py-24 sm:py-32 border-b border-stone-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Side: Statement Display Typography */}
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-extrabold text-purple-400 uppercase tracking-widest block">
-              The Standard
-            </span>
-            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.08]">
-              Find better. <br />
-              Connect directly. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-300">
-                Move confidently.
-              </span>
-            </h2>
-            <p className="text-sm text-stone-400 max-w-sm pt-2 leading-relaxed">
-              REHVO is engineered to remove predatory broker commissions and bring transparent rental living to Mumbai.
-            </p>
-          </div>
+    <section className="py-14 sm:py-18 bg-[#FFFFFF] border-b border-[#E2E8F0]">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#0F766E] bg-[#CCFBF1] px-3 py-1 rounded-full inline-block mb-2">
+            TRUST & ASSURANCE
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#031B2A] tracking-tight">
+            Why REHVO?
+          </h2>
+          <p className="text-sm sm:text-base font-medium text-[#64748B] mt-1.5">
+            A transparent, zero-middleman marketplace built from the ground up for Mumbai.
+          </p>
+        </div>
 
-          {/* Right Side: Editorial Rows with Thin Hairline Separators */}
-          <div className="lg:col-span-7 space-y-8 divide-y divide-white/10">
-            <div className="pt-6 first:pt-0 space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-purple-400">01</span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white">Verified & Genuine</h3>
+        {/* 4 Trust Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          {benefits.map((item) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.id}
+                className="bg-[#F8FAFC] rounded-[22px] p-6 border border-[#E2E8F0] hover:border-[#CBD5E1] hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-[#FFFFFF] border border-[#E2E8F0] text-[#0F766E] flex items-center justify-center mb-4 shadow-2xs">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#031B2A] mb-1.5">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs font-medium text-[#64748B] leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed pl-7">
-                Every property and flatmate profile is physically checked and verified to eliminate fake listings, ghost owners, and duplicate brokers.
-              </p>
-            </div>
-
-            <div className="pt-6 space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-purple-400">02</span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white">Direct Conversations</h3>
-              </div>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed pl-7">
-                Live real-time messaging directly between homeowners and tenants with zero broker interference or phone number leakage.
-              </p>
-            </div>
-
-            <div className="pt-6 space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-purple-400">03</span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white">Easy Scheduling</h3>
-              </div>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed pl-7">
-                Pick your preferred on-site visit date and time slot. Hosts confirm walkthroughs instantly without back-and-forth phone calls.
-              </p>
-            </div>
-
-            <div className="pt-6 space-y-2">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-mono font-bold text-purple-400">04</span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white">Secure & Trusted</h3>
-              </div>
-              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed pl-7">
-                100% zero brokerage policy. Keep your hard-earned 1-2 months’ deposit savings entirely in your own pocket.
-              </p>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>

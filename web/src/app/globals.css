@@ -2,42 +2,271 @@
 @tailwind components;
 @tailwind utilities;
 
+/* REHVO Global Theme Tokens & Emerald Luxury Design System */
 :root {
-  --background: #F8F7F4;
-  --foreground: #171522;
+  /* Brand Core Neutral Luxury Palette */
+  --rehvo-bg: #F8FAFB;
+  --rehvo-background: #F8FAFB;
+  --rehvo-surface: #FFFFFF;
+  --rehvo-surface-soft: #F1F5F9;
+  --rehvo-surface-muted: #E2E8F0;
+  
+  /* Text & Typography */
+  --rehvo-primary: #031B2A;
+  --rehvo-secondary: #64748B;
+  --rehvo-text: #031B2A;
+  --rehvo-text-secondary: #64748B;
+  --rehvo-text-muted: #94A3B8;
+  --rehvo-inverted: #FFFFFF;
+  --rehvo-dark-navy: #031B2A;
+  
+  /* Borders */
+  --rehvo-border: #E2E8F0;
+  --rehvo-border-focus: #CBD5E1;
+  --rehvo-border-light: #F1F5F9;
+  
+  /* Master REHVO Accent (Emerald Luxury) */
+  --rehvo-accent: #0F766E;
+  --rehvo-accent-hover: #064E3B;
+  --rehvo-accent-soft: #CCFBF1;
+  --rehvo-emerald: #0F766E;
+  --rehvo-emerald-700: #0F766E;
+  --rehvo-emerald-900: #064E3B;
+  --rehvo-emerald-dark: #064E3B;
+  --rehvo-mint: #CCFBF1;
+  --rehvo-gold: #D4AF37;
+
+  /* Category-Specific Secondary Accents (Controlled & Subtle) */
+  --rehvo-commercial: #4263EB;
+  --rehvo-commercial-soft: #EEF2FF;
+  
+  --rehvo-pg: #D69E2E;
+  --rehvo-pg-soft: #FEF9C3;
+  
+  --rehvo-flatmates: #3C8D68;
+  --rehvo-flatmates-soft: #EBF5F0;
+  
+  --rehvo-localities: #4C7A86;
+  --rehvo-localities-soft: #EDF6F8;
+  
+  /* Semantic Status */
+  --rehvo-success: #16A34A;
+  --rehvo-success-soft: #ECFDF5;
+
+  --background: #F8FAFB;
+  --foreground: #031B2A;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
+/* Base resets & typography */
+html {
+  font-family: var(--font-inter), var(--font-plus-jakarta), 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: #F8FAFB;
+  color: #031B2A;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Table Utilities */
-.table-dense th {
-  padding: 0.625rem 1rem;
-  font-size: 0.75rem;
+body {
+  background-color: #F8FAFB;
+  color: #031B2A;
+  font-family: inherit;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Explicit link and element resets to completely eliminate browser-default purple/blue links and default margins */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #031B2A;
+  font-family: inherit;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0;
+  color: #64748B;
+}
+
+button {
+  color: inherit;
+  font-family: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  color: #031B2A;
+}
+
+/* Base Container */
+.rehvo-container {
+  width: 100%;
+  max-width: 1360px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .rehvo-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .rehvo-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Master Button System */
+.btn-primary {
+  background-color: #0F766E;
+  color: #FFFFFF;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #777482;
-  border-bottom: 1px solid #E8E5EC;
-  background-color: #FAF9F6;
+  font-size: 0.875rem;
+  border-radius: 0.875rem;
+  padding: 0.6875rem 1.375rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.22);
 }
 
-.table-dense td {
-  padding: 0.75rem 1rem;
-  font-size: 0.8125rem;
-  border-bottom: 1px solid #F3F0EA;
-  color: #171522;
+.btn-primary:hover {
+  background-color: #064E3B;
+  box-shadow: 0 6px 18px rgba(15, 118, 110, 0.32);
+  transform: translateY(-1px);
 }
 
-.table-dense tr:hover td {
-  background-color: #FDFCFB;
+.btn-primary:active {
+  transform: scale(0.98);
 }
 
-/* Information-Dense Scrollbar Styling */
+.btn-dark {
+  background-color: #031B2A;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.875rem;
+  padding: 0.6875rem 1.375rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-dark:hover {
+  background-color: #0B2538;
+  transform: translateY(-1px);
+}
+
+.btn-dark:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #031B2A;
+  border: 1px solid #E2E8F0;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.875rem;
+  padding: 0.6875rem 1.375rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-secondary:hover {
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+.btn-secondary:active {
+  transform: scale(0.98);
+}
+
+/* Master Form Inputs */
+.input-rehvo,
+.select-rehvo,
+.textarea-rehvo {
+  background-color: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 0.875rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #031B2A;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.input-rehvo:focus,
+.select-rehvo:focus,
+.textarea-rehvo:focus {
+  border-color: #0F766E;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+}
+
+.input-rehvo:disabled,
+.select-rehvo:disabled,
+.textarea-rehvo:disabled {
+  background-color: #F8FAFC;
+  color: #64748B;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: #031B2A;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.875rem;
+  padding: 0.6875rem 1.375rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-ghost:hover {
+  background-color: #F1F5F9;
+}
+
+/* Custom Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -48,10 +277,558 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E8E5EC;
+  background: #E2E8F0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D3C9FF;
+  background: #CBD5E1;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ========================================================================= */
+/* REHVO MASTER LIQUID-GLASS MATERIAL SYSTEM                                */
+/* ========================================================================= */
+
+/* Level 1: Glass Subtle (Chips, micro badges, pills, controls, save circles) */
+.glass-subtle,
+.rehvo-glass-subtle {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.38) 100%);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.70);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 4px 14px rgba(3, 27, 42, 0.04);
+  transition: all 0.2s ease-out;
+}
+
+.glass-subtle:hover,
+.rehvo-glass-subtle:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.48) 100%);
+  border-color: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 6px 18px rgba(3, 27, 42, 0.06);
+}
+
+/* Level 2: Glass Medium / Glass Card (Category cards, property cards, trust cards, location cards, CTA container) */
+.glass-medium,
+.glass-surface,
+.rehvo-glass-card,
+.rehvo-glass-standard {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.40) 100%);
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88), 0 10px 35px rgba(3, 27, 42, 0.06);
+  transition: all 0.22s ease-out;
+}
+
+.glass-medium:hover,
+.glass-surface:hover,
+.rehvo-glass-card:hover,
+.rehvo-glass-standard:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.52) 100%);
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 1), 0 16px 40px rgba(3, 27, 42, 0.09);
+  transform: translateY(-2px);
+}
+
+/* Level 3: Glass Strong (Hero search panel, large floating controls, major interactive slabs) */
+.glass-strong,
+.rehvo-glass-hero {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.52) 100%);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.95), 0 14px 44px rgba(3, 27, 42, 0.08);
+  transition: all 0.2s ease-out;
+}
+
+/* Level 4: Glass Accent (Emerald Luxury CTA & Action Buttons) */
+.glass-accent,
+.rehvo-glass-coral,
+.rehvo-glass-emerald,
+.rehvo-glass-capsule-coral,
+.rehvo-glass-capsule-emerald {
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.92) 0%, rgba(6, 78, 59, 0.86) 100%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 24px rgba(15, 118, 110, 0.28);
+  color: #FFFFFF;
+  transition: all 0.2s ease-out;
+}
+
+.glass-accent:hover,
+.rehvo-glass-coral:hover,
+.rehvo-glass-emerald:hover,
+.rehvo-glass-capsule-coral:hover,
+.rehvo-glass-capsule-emerald:hover {
+  background: linear-gradient(180deg, rgba(15, 118, 110, 0.98) 0%, rgba(4, 55, 41, 0.92) 100%);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.70), 0 12px 30px rgba(15, 118, 110, 0.38);
+  transform: translateY(-1px);
+}
+
+.glass-accent:active,
+.rehvo-glass-coral:active,
+.rehvo-glass-emerald:active,
+.rehvo-glass-capsule-coral:active,
+.rehvo-glass-capsule-emerald:active {
+  transform: scale(0.98);
+}
+
+/* ========================================================================= */
+/* HEADER CAPSULE GLASS SPECIALIZATIONS                                      */
+/* ========================================================================= */
+
+.rehvo-glass-capsule {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.35) 100%);
+  backdrop-filter: blur(16px) saturate(145%);
+  -webkit-backdrop-filter: blur(16px) saturate(145%);
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 4px 16px rgba(3, 27, 42, 0.05);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rehvo-glass-capsule:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.50) 100%);
+  border-color: rgba(255, 255, 255, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 6px 20px rgba(3, 27, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+.rehvo-glass-capsule-scrolled {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0.58) 100%);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 8px 24px rgba(3, 27, 42, 0.08);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rehvo-glass-capsule-scrolled:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.68) 100%);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1), 0 10px 28px rgba(3, 27, 42, 0.10);
+  transform: translateY(-1px);
+}
+
+.rehvo-glass-capsule-active {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.90);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1), 0 6px 20px rgba(3, 27, 42, 0.08);
+  color: #031B2A;
+}
+
+/* ========================================================================= */
+/* GLASS OVERLAY & CONTROL MICRO-SURFACES                                    */
+/* ========================================================================= */
+
+.rehvo-glass-overlay {
+  background: rgba(3, 27, 42, 0.65);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+}
+
+.rehvo-glass-overlay-light {
+  background: rgba(255, 255, 255, 0.68);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.80);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.90), 0 4px 12px rgba(3, 27, 42, 0.06);
+  color: #031B2A;
+}
+
+/* Liquid-Glass Floating Dropdown Surface */
+.glass-dropdown,
+.rehvo-glass-dropdown {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 100%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.90);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 1), 0 20px 50px rgba(3, 27, 42, 0.16);
+  border-radius: 20px;
+}
+
+/* ========================================================================= */
+/* BROWSER FALLBACK FOR LEGACY BROWSERS WITHOUT BACKDROP-FILTER              */
+/* ========================================================================= */
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-subtle,
+  .rehvo-glass-subtle,
+  .rehvo-glass-capsule {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.90);
+  }
+
+  .glass-medium,
+  .glass-surface,
+  .rehvo-glass-card,
+  .rehvo-glass-standard,
+  .rehvo-glass-capsule-scrolled,
+  .rehvo-glass-capsule-active {
+    background: rgba(255, 255, 255, 0.90);
+    border: 1px solid #E2E8F0;
+  }
+
+  .glass-strong,
+  .rehvo-glass-hero,
+  .glass-dropdown,
+  .rehvo-glass-dropdown {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #CBD5E1;
+  }
+
+  .glass-accent,
+  .rehvo-glass-coral,
+  .rehvo-glass-emerald,
+  .rehvo-glass-capsule-coral,
+  .rehvo-glass-capsule-emerald {
+    background: #0F766E;
+  }
+
+  .rehvo-glass-overlay {
+    background: rgba(3, 27, 42, 0.85);
+  }
+}
+
+/* ========================================================================= */
+/* HERO APP EXPERIENCE MICRO-ANIMATIONS                                     */
+/* ========================================================================= */
+
+@keyframes floatPhoneSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(-1.5deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(-0.5deg);
+  }
+}
+
+@keyframes floatCardGentle1 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatCardGentle2 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(7px);
+  }
+}
+
+@keyframes floatCardGentle3 {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes pulseGlowSlow {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes pulseBadgeSubtle {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-float-phone {
+  animation: floatPhoneSlow 7s ease-in-out infinite;
+}
+
+.animate-float-card-1 {
+  animation: floatCardGentle1 5s ease-in-out infinite;
+}
+
+.animate-float-card-2 {
+  animation: floatCardGentle2 6s ease-in-out infinite 0.5s;
+}
+
+.animate-float-card-3 {
+  animation: floatCardGentle3 5.5s ease-in-out infinite 1s;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlowSlow 8s ease-in-out infinite;
+}
+
+.animate-pulse-badge {
+  animation: pulseBadgeSubtle 3s ease-in-out infinite;
+}
+
+@keyframes rehvoLogoBreath {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 14px rgba(15, 118, 110, 0.2));
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+    filter: drop-shadow(0 10px 28px rgba(15, 118, 110, 0.45));
+  }
+}
+
+@keyframes rehvoGlowRings {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 0.25;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+}
+
+.animate-logo-breath {
+  animation: rehvoLogoBreath 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-glow-rings {
+  animation: rehvoGlowRings 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* =========================================================================
+   REHVO LOGO TEXT ASSEMBLY ANIMATION (Cinematic 3.6s Loop)
+   Letters assemble from floating positions, snap into place, shine, and hold
+   ========================================================================= */
+
+@keyframes letterAssembleR {
+  0% {
+    opacity: 0;
+    transform: translate(-30px, -20px) scale(0.6) rotate(-12deg);
+    filter: blur(8px);
+  }
+  18%, 82% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: translate(-20px, -10px) scale(0.7) rotate(-8deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes letterAssembleE {
+  0% {
+    opacity: 0;
+    transform: translate(-15px, 24px) scale(0.6) rotate(10deg);
+    filter: blur(8px);
+  }
+  20%, 82% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: translate(-10px, 16px) scale(0.7) rotate(6deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes letterAssembleH {
+  0% {
+    opacity: 0;
+    transform: translate(0, -28px) scale(0.6) rotate(-8deg);
+    filter: blur(8px);
+  }
+  22%, 82% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: translate(0, -18px) scale(0.7) rotate(-5deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes letterAssembleV {
+  0% {
+    opacity: 0;
+    transform: scale(2.4) rotate(15deg);
+    filter: blur(12px) brightness(1.8);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(0.92) rotate(-3deg);
+    filter: blur(0) brightness(1.3);
+  }
+  30%, 82% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0) brightness(1);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: scale(1.6) rotate(10deg);
+    filter: blur(8px);
+  }
+}
+
+@keyframes letterAssembleO {
+  0% {
+    opacity: 0;
+    transform: translate(30px, -20px) scale(0.6) rotate(12deg);
+    filter: blur(8px);
+  }
+  27%, 82% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: translate(20px, -10px) scale(0.7) rotate(8deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes emblemAssemble {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-30deg);
+    filter: blur(10px);
+  }
+  16%, 82% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: blur(0);
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-20deg);
+    filter: blur(6px);
+  }
+}
+
+@keyframes textShimmerSweep {
+  0%, 30% {
+    transform: translateX(-150%) skewX(-20deg);
+    opacity: 0;
+  }
+  42% {
+    opacity: 0.9;
+  }
+  58%, 100% {
+    transform: translateX(250%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taglineReveal {
+  0%, 25% {
+    opacity: 0;
+    transform: translateY(8px);
+    letter-spacing: 0.15em;
+  }
+  40%, 82% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.28em;
+  }
+  92%, 100% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.animate-assemble-r {
+  animation: letterAssembleR 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-assemble-e {
+  animation: letterAssembleE 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-assemble-h {
+  animation: letterAssembleH 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-assemble-v {
+  animation: letterAssembleV 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-assemble-o {
+  animation: letterAssembleO 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-assemble-emblem {
+  animation: emblemAssemble 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+.animate-shimmer-sweep {
+  animation: textShimmerSweep 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.animate-tagline-reveal {
+  animation: taglineReveal 3.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* =========================================================================
+   REHVO OFFICIAL REAL LOGO SPLASH ANIMATION
+   Authentic mobile splash screen: smooth scale-in, spring settle, and breathing pulse
+   ========================================================================= */
+
+@keyframes rehvoRealLogoSplash {
+  0% {
+    opacity: 0;
+    transform: scale(0.78) translateY(10px);
+    filter: blur(8px) drop-shadow(0 2px 8px rgba(15, 118, 110, 0.1));
+  }
+  22% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-2px);
+    filter: blur(0) drop-shadow(0 12px 32px rgba(15, 118, 110, 0.35));
+  }
+  35% {
+    transform: scale(1) translateY(0);
+    filter: blur(0) drop-shadow(0 6px 18px rgba(15, 118, 110, 0.18));
+  }
+  65% {
+    transform: scale(1.04) translateY(-2px);
+    filter: blur(0) drop-shadow(0 10px 28px rgba(15, 118, 110, 0.3));
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    filter: blur(0) drop-shadow(0 6px 18px rgba(15, 118, 110, 0.18));
+  }
+}
+
+.animate-real-logo-splash {
+  animation: rehvoRealLogoSplash 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }

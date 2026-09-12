@@ -38,12 +38,12 @@ export const PopularLocalities: React.FC = () => {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-24 border-b border-stone-200/60">
+    <section className="bg-[#F8FAFC] py-16 sm:py-24 border-b border-stone-200/60">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
         {/* Section Header */}
         <div className="flex items-end justify-between mb-8 sm:mb-10">
           <div className="space-y-1">
-            <span className="text-[11px] font-extrabold text-[#FF5533] uppercase tracking-wider block">
+            <span className="text-[11px] font-extrabold text-[#0F766E] uppercase tracking-wider block">
               EXPLORE
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
@@ -56,7 +56,7 @@ export const PopularLocalities: React.FC = () => {
 
           <Link
             href="/localities"
-            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#FF5533] hover:text-[#EE4422] transition"
+            className="group inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0F766E] hover:text-[#064E3B] transition"
           >
             <span>View all localities</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -70,7 +70,7 @@ export const PopularLocalities: React.FC = () => {
               <Link
                 key={loc.slug}
                 href={`/mumbai/${loc.slug}`}
-                className="group bg-white rounded-2xl p-3 border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300 flex flex-col"
+                className="group bg-white rounded-2xl p-3 border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-[#99F6E4] transition-all duration-300 flex flex-col"
               >
                 {/* Locality Thumbnail */}
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-stone-100 mb-3">
@@ -85,7 +85,7 @@ export const PopularLocalities: React.FC = () => {
 
                 {/* Details */}
                 <div className="space-y-0.5">
-                  <h3 className="text-sm sm:text-base font-extrabold text-stone-900 group-hover:text-[#FF5533] transition leading-tight">
+                  <h3 className="text-sm sm:text-base font-extrabold text-stone-900 group-hover:text-[#0F766E] transition leading-tight">
                     {loc.name}
                   </h3>
                   <p className="text-[11px] text-stone-500 font-medium">
@@ -99,7 +99,7 @@ export const PopularLocalities: React.FC = () => {
           {/* Right Scroll Indicator Pill */}
           <Link
             href="/localities"
-            className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#FF5533] hover:scale-105 transition"
+            className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#0F766E] hover:scale-105 transition"
             aria-label="View more localities"
           >
             <ChevronRight className="w-5 h-5" />

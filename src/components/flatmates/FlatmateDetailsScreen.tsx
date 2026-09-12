@@ -83,17 +83,13 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
           profile.budget_max / 1000
         ).toFixed(0)}K / mo.`,
       });
-    } catch (e) {
-      console.warn('Share error:', e);
+    } catch {
+      // Handled silently
     }
   };
 
   const handleStartChat = async () => {
     if (isStartingChat) return;
-
-    if (__DEV__) {
-      console.log('[REHVO FLATMATE CHAT DEBUG] STEP 1 button_pressed on flatmate profile:', profile.id);
-    }
 
     if (!user?.id) {
       showToast('Please sign in to message this flatmate', 'info');
@@ -109,15 +105,9 @@ export const FlatmateDetailsScreen: React.FC<FlatmateDetailsScreenProps> = ({
     try {
       const convId = await startOrGetFlatmateConversation(profile);
       if (convId) {
-        if (__DEV__) {
-          console.log('[REHVO FLATMATE CHAT DEBUG] STEP 9 navigation_started to route: /(renter)/chat/' + convId);
-        }
         router.push(`/(renter)/chat/${convId}`);
       }
-    } catch (err: any) {
-      if (__DEV__) {
-        console.warn('[REHVO FLATMATE CHAT DEBUG] Error in button handler:', err?.message);
-      }
+    } catch {
       showToast("Unable to start chat. Please try again.", 'error');
     } finally {
       setIsStartingChat(false);

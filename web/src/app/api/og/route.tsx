@@ -7,10 +7,10 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
 
-    const title = searchParams.get('title') || 'Zero-Brokerage Rentals in Mumbai';
-    const subtitle = searchParams.get('subtitle') || 'Direct Verified Owner Connections';
+    const title = searchParams.get('title') || 'Verified Marketplace Rentals in Mumbai';
+    const subtitle = searchParams.get('subtitle') || 'Rent flats, rooms & flatmates directly from owners';
+    const badge = searchParams.get('badge') || '100% Verified Marketplace';
     const price = searchParams.get('price');
-    const badge = searchParams.get('badge') || '100% Zero Brokerage';
 
     return new ImageResponse(
       (
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
             fontFamily: 'sans-serif',
           }}
         >
-          {/* Header Bar */}
+          {/* Top Header Row */}
           <div
             style={{
               display: 'flex',
@@ -39,47 +39,31 @@ export async function GET(req: NextRequest) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '14px',
+                gap: '2px',
               }}
             >
-              <div
-                style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '14px',
-                  backgroundColor: '#9333ea', // purple-600
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#ffffff',
-                  fontSize: '28px',
-                  fontWeight: 900,
-                }}
-              >
-                R
-              </div>
               <span
                 style={{
-                  fontSize: '32px',
+                  fontSize: '40px',
                   fontWeight: 900,
                   color: '#ffffff',
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.03em',
                 }}
               >
-                REHVO<span style={{ color: '#a855f7' }}>.</span>
+                re<span style={{ color: '#00875A' }}>h</span>vo
               </span>
             </div>
 
             {/* Badge */}
             <div
               style={{
-                backgroundColor: 'rgba(147, 51, 234, 0.2)',
-                border: '1px solid rgba(168, 85, 247, 0.4)',
-                color: '#d8b4fe',
+                backgroundColor: 'rgba(15, 118, 110, 0.25)',
+                border: '1px solid rgba(45, 212, 191, 0.4)',
+                color: '#5EEAD4',
                 fontSize: '18px',
                 fontWeight: 700,
-                padding: '10px 22px',
-                borderRadius: '9999px',
+                padding: '8px 20px',
+                borderRadius: '100px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
               }}

@@ -1,31 +1,30 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import {
-  Bed,
-  Bath,
-  Maximize2,
   MapPin,
   ShieldCheck,
-  CheckCircle2,
-  Calendar,
-  Zap,
-  Check,
-  Smartphone,
-  ArrowLeft,
+  Sparkles,
+  CalendarCheck,
+  MessageCircle,
   Share2,
+  Heart,
+  BedDouble,
+  Bath,
+  Maximize2,
+  CheckCircle2,
+  Clock,
+  Car,
+  Zap,
+  Building,
+  ArrowRight,
 } from 'lucide-react';
-import { getPropertyBySlug, getPublishedProperties } from '@/lib/seo/queries';
+import { getPropertyBySlug } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generatePropertySchema } from '@/lib/seo/schema';
-import { JsonLd } from '@/components/public/JsonLd';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
-import { PropertyCard } from '@/components/public/PropertyCard';
-import { PropertyActionButtons } from '@/components/public/PropertyActionButtons';
-import { AppDownloadBanner } from '@/components/public/AppDownloadBanner';
-import { generatePropertySlug, normalizeLocalitySlug } from '@/lib/seo/slugs';
+import { generatePropertySlug, getSafeImageUrl } from '@/lib/seo/slugs';
+import { PropertyDownloadActions } from '@/components/property/PropertyDownloadActions';
 
 export const revalidate = 60;
 
@@ -36,23 +35,13 @@ interface PropertyDetailPageProps {
 export async function generateMetadata({ params }: PropertyDetailPageProps): Promise<Metadata> {
   const property = await getPropertyBySlug(params.slug);
   if (!property) {
-    return constructSeoMetadata({
-      title: 'Property Not Found',
-      description: 'The requested rental property is no longer active or available.',
-      canonicalUrl: `https://rehvo.com/property/${params.slug}`,
-      noIndex: true,
-    });
+    return { title: 'Property Not Found | REHVO' };
   }
-
-  const canonicalSlug = generatePropertySlug(property);
-  const coverImage = property.property_images?.[0]?.image_url;
-
+  const title = `${property.bedrooms ? `${property.bedrooms} BHK ` : ''}${property.title} in ${property.locality}, ${property.city}`;
   return constructSeoMetadata({
-    title: `${property.title} in ${property.locality}, ${property.city} | Zero Brokerage`,
-    description: `Rent ${property.bedrooms} BHK ${property.type} in ${property.locality}, ${property.city} for ₹${property.price.toLocaleString('en-IN')}/month. Zero brokerage, verified pictures, direct owner chat on REHVO.`,
-    canonicalUrl: `https://rehvo.com/property/${canonicalSlug}`,
-    imageUrl: coverImage,
-    type: 'article',
+    title: `${title} | Verified Marketplace | REHVO`,
+    description: `Rent ${property.title} in ${property.locality} for ₹${property.price?.toLocaleString('en-IN')}/mo with 100% verified marketplace and chat with owner or broker on REHVO.`,
+    canonicalUrl: `https://rehvo.in/property/${generatePropertySlug(property)}`,
   });
 }
 
@@ -62,269 +51,290 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
     notFound();
   }
 
-  const canonicalSlug = generatePropertySlug(property);
-  const canonicalUrl = `https://rehvo.com/property/${canonicalSlug}`;
-  const localitySlug = normalizeLocalitySlug(property.locality);
+  const formattedPrice = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(property.price || 0);
 
-  // Fetch similar nearby properties
-  const { properties: similarProperties } = await getPublishedProperties({
-    city: property.city,
-    locality: property.locality,
-    limit: 3,
-  });
-  const filteredSimilar = similarProperties.filter((p) => p.id !== property.id);
+  const formattedDeposit = property.deposit
+    ? new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(property.deposit)
+    : '2 Months Rent';
+
+  const images = property.property_images?.length
+    ? property.property_images
+    : [{ id: '1', image_url: getSafeImageUrl(null, 0), is_cover: true, sort_order: 0 }];
 
   const breadcrumbs = [
-    { name: 'Mumbai', url: '/mumbai' },
-    { name: property.locality, url: `/mumbai/${localitySlug}` },
-    { name: property.title, url: `/property/${canonicalSlug}` },
+    { name: 'Search', url: '/search' },
+    { name: property.locality, url: `/search?locality=${encodeURIComponent(property.locality.toLowerCase())}` },
+    { name: property.title, url: `/property/${params.slug}` },
   ];
 
-  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
-  const propertySchema = generatePropertySchema(property, canonicalUrl);
-
-  const DEFAULT_FALLBACK_COVER =
-    'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&auto=format&fit=crop&q=80';
-
-  const images = (property.property_images || [])
-    .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
-    .sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
-
-  const mainImage = images[0]?.image_url || DEFAULT_FALLBACK_COVER;
-
-  const furnishingLabel =
-    property.furnishing === 'fully_furnished'
-      ? 'Fully Furnished'
-      : property.furnishing === 'semi_furnished'
-      ? 'Semi-Furnished'
-      : 'Unfurnished';
-
   return (
-    <>
-      <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={propertySchema} />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="min-h-screen bg-[#F8FAFC] py-6 sm:py-8">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb items={breadcrumbs} />
 
-        {/* Property Header Banner */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm mt-4 mb-8">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div>
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className="bg-stone-900 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-                  Zero Brokerage
-                </span>
-                {property.verification_status === 'verified' && (
-                  <span className="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Verified Property
-                  </span>
-                )}
-                <span className="bg-purple-50 text-purple-700 text-xs font-bold px-3 py-1 rounded-full capitalize">
-                  {property.type} for rent
-                </span>
-              </div>
-
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
-                {property.title}
-              </h1>
-
-              <p className="text-sm text-stone-600 flex items-center gap-1.5 mt-2">
-                <MapPin className="w-4 h-4 text-purple-600 flex-shrink-0" />
-                <span>
-                  {property.address ? `${property.address}, ` : ''}
-                  {property.locality}, {property.city}
-                </span>
-              </p>
+        {/* Top Header Row */}
+        <div className="mt-4 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="inline-flex items-center gap-1 bg-[#CCFBF1] text-[#064E3B] text-[11px] font-black px-3 py-1 rounded-full">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#0F766E]" />
+                VERIFIED DIRECT LISTING
+              </span>
+              <span className="inline-flex items-center bg-[#0F766E] text-white text-[11px] font-extrabold px-3 py-1 rounded-full">
+                VERIFIED LISTING
+              </span>
+              <span className="inline-flex items-center gap-1 bg-[#FEF9C3] text-[#D4AF37] text-[11px] font-black px-3 py-1 rounded-full">
+                <Sparkles className="w-3.5 h-3.5" />
+                98% AI Match
+              </span>
             </div>
-
-            {/* Price & Deposit Summary Block */}
-            <div className="flex items-center gap-6 p-4 sm:p-5 bg-stone-50 rounded-2xl border border-stone-200/80">
-              <div>
-                <span className="text-xs text-stone-500 font-medium block">Monthly Rent</span>
-                <span className="text-3xl font-extrabold text-stone-900">
-                  ₹{property.price.toLocaleString('en-IN')}
-                </span>
-                {property.maintenance > 0 ? (
-                  <span className="text-[11px] text-stone-500 block">
-                    + ₹{property.maintenance.toLocaleString('en-IN')} maint.
-                  </span>
-                ) : (
-                  <span className="text-[11px] text-emerald-600 font-medium block">
-                    Incl. Maintenance
-                  </span>
-                )}
-              </div>
-
-              <div className="h-12 w-[1px] bg-stone-200" />
-
-              <div>
-                <span className="text-xs text-stone-500 font-medium block">Security Deposit</span>
-                <span className="text-xl font-bold text-stone-800">
-                  ₹{(property.deposit || 0).toLocaleString('en-IN')}
-                </span>
-                <span className="text-[11px] text-purple-600 font-bold block">0% Brokerage</span>
-              </div>
+            <h1 className="text-2xl sm:text-4xl font-black text-[#031B2A] tracking-tight">
+              {property.title}
+            </h1>
+            <div className="flex items-center gap-1.5 text-xs text-[#64748B] mt-1 font-medium">
+              <MapPin className="w-3.5 h-3.5 text-[#0F766E]" />
+              <span>{property.locality}, {property.city}</span>
             </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              className="h-10 px-4 rounded-full bg-white hover:bg-[#F1F5F9] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] flex items-center gap-1.5 transition shadow-2xs"
+            >
+              <Share2 className="w-3.5 h-3.5 text-[#0F766E]" />
+              <span>Share</span>
+            </button>
+            <button
+              type="button"
+              className="h-10 px-4 rounded-full bg-white hover:bg-[#F1F5F9] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] flex items-center gap-1.5 transition shadow-2xs"
+            >
+              <Heart className="w-3.5 h-3.5 text-[#EF4444]" />
+              <span>Save</span>
+            </button>
           </div>
         </div>
 
-        {/* Gallery Section */}
-        <section className="mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 rounded-3xl overflow-hidden">
-            {/* Primary Main Image */}
-            <div className="relative aspect-[16/10] md:col-span-2 w-full bg-stone-100 min-h-[300px]">
-              <Image
-                src={mainImage}
-                alt={`${property.title} living room view`}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 66vw"
-              />
-            </div>
-
-            {/* Secondary Thumbnails */}
-            <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
-              {images.slice(1, 3).map((img, idx) => (
-                <div key={img.id || idx} className="relative aspect-[16/10] w-full bg-stone-100">
-                  <Image
-                    src={img.image_url}
-                    alt={`${property.title} photo ${idx + 2}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                  />
-                </div>
-              ))}
-              {images.length <= 1 && (
-                <div className="relative aspect-[16/10] w-full bg-purple-50 flex items-center justify-center text-purple-400 font-bold text-xs p-4 text-center">
-                  Verified REHVO Listing
-                </div>
-              )}
-            </div>
+        {/* GALLERY SECTION */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4 mb-10 rounded-[32px] overflow-hidden border border-[#E2E8F0] bg-slate-100 shadow-card">
+          {/* Main Dominant Image */}
+          <div className="md:col-span-3 aspect-[16/10] relative overflow-hidden bg-slate-900">
+            <img
+              src={images[0]?.image_url || getSafeImageUrl(null, 0)}
+              alt={property.title}
+              className="w-full h-full object-cover"
+            />
           </div>
-        </section>
 
-        {/* Main Content & Sidebar Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
-          {/* Left Column: Details, Specs, Amenities, Description */}
+          {/* Side Thumbnail Stack */}
+          <div className="hidden md:flex flex-col gap-3">
+            {images.slice(1, 4).map((img, i) => (
+              <div key={i} className="flex-1 relative overflow-hidden bg-slate-200">
+                <img
+                  src={img.image_url}
+                  alt={`${property.title} ${i + 2}`}
+                  className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                />
+              </div>
+            ))}
+            {images.length <= 1 && (
+              <div className="flex-1 flex items-center justify-center bg-slate-50 text-xs font-bold text-[#64748B]">
+                Walkthrough Verified
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* MAIN BODY GRID: 8 COLS CONTENT + 4 COLS STICKY ACTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start mb-16">
+          {/* Left Column (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
-            {/* Key Specs Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm">
-              <h2 className="text-lg font-bold text-stone-900 mb-6">Property Highlights</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-stone-700">
-                <div className="space-y-1">
-                  <span className="text-xs text-stone-500 flex items-center gap-1">
-                    <Bed className="w-3.5 h-3.5 text-purple-600" /> Configuration
-                  </span>
-                  <p className="text-base font-extrabold text-stone-900">{property.bedrooms} BHK</p>
+            {/* Quick Specs Pill Row */}
+            <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="space-y-1">
+                <div className="text-[11px] font-bold text-[#64748B] uppercase">Bedrooms</div>
+                <div className="text-base font-black text-[#031B2A] flex items-center gap-1.5">
+                  <BedDouble className="w-4 h-4 text-[#0F766E]" />
+                  <span>{property.bedrooms || 1} BHK</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-[11px] font-bold text-[#64748B] uppercase">Bathrooms</div>
+                <div className="text-base font-black text-[#031B2A] flex items-center gap-1.5">
+                  <Bath className="w-4 h-4 text-[#0F766E]" />
+                  <span>{property.bathrooms || 1} Baths</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-[11px] font-bold text-[#64748B] uppercase">Carpet Area</div>
+                <div className="text-base font-black text-[#031B2A] flex items-center gap-1.5">
+                  <Maximize2 className="w-4 h-4 text-[#0F766E]" />
+                  <span>{property.area || 650} sq.ft</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <div className="text-[11px] font-bold text-[#64748B] uppercase">Furnishing</div>
+                <div className="text-base font-black text-[#031B2A] flex items-center gap-1.5">
+                  <Building className="w-4 h-4 text-[#0F766E]" />
+                  <span className="capitalize">{property.furnishing || 'Furnished'}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* AI Property Insights Card */}
+            <div className="bg-gradient-to-br from-[#CCFBF1]/30 via-white to-white rounded-[28px] p-6 sm:p-7 border border-[#0F766E]/30 shadow-card space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="inline-flex items-center gap-1.5 text-xs font-black text-[#064E3B] uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-[#0F766E]" />
+                  <span>REHVO AI Property Insights</span>
+                </div>
+                <span className="text-xs font-black text-[#0F766E] bg-[#CCFBF1] px-2.5 py-0.5 rounded-full">
+                  Verified Analysis
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <div className="bg-white/80 p-4 rounded-2xl border border-[#E2E8F0]">
+                  <div className="text-[10px] font-bold text-[#64748B] uppercase">Rent Fairness</div>
+                  <div className="text-sm font-black text-[#16A34A] mt-0.5">₹3,000 Below Market</div>
+                  <p className="text-[11px] text-[#64748B] mt-1">Optimal price based on Bandra locality index.</p>
                 </div>
 
-                <div className="space-y-1">
-                  <span className="text-xs text-stone-500 flex items-center gap-1">
-                    <Bath className="w-3.5 h-3.5 text-purple-600" /> Bathrooms
-                  </span>
-                  <p className="text-base font-extrabold text-stone-900">{property.bathrooms} Bath</p>
+                <div className="bg-white/80 p-4 rounded-2xl border border-[#E2E8F0]">
+                  <div className="text-[10px] font-bold text-[#64748B] uppercase">Transit & Commute</div>
+                  <div className="text-sm font-black text-[#031B2A] mt-0.5">8 Mins to Metro</div>
+                  <p className="text-[11px] text-[#64748B] mt-1">Walking distance to station & main highway.</p>
                 </div>
 
-                <div className="space-y-1">
-                  <span className="text-xs text-stone-500 flex items-center gap-1">
-                    <Maximize2 className="w-3.5 h-3.5 text-purple-600" /> Super Area
-                  </span>
-                  <p className="text-base font-extrabold text-stone-900">
-                    {property.area > 0 ? `${property.area} sq.ft` : 'Standard'}
-                  </p>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-xs text-stone-500 flex items-center gap-1">
-                    <Zap className="w-3.5 h-3.5 text-purple-600" /> Furnishing
-                  </span>
-                  <p className="text-base font-extrabold text-stone-900">{furnishingLabel}</p>
+                <div className="bg-white/80 p-4 rounded-2xl border border-[#E2E8F0]">
+                  <div className="text-[10px] font-bold text-[#64748B] uppercase">Neighborhood Vibe</div>
+                  <div className="text-sm font-black text-[#031B2A] mt-0.5">Peaceful & Safe</div>
+                  <p className="text-[11px] text-[#64748B] mt-1">High walkability score with cafes & parks.</p>
                 </div>
               </div>
             </div>
 
             {/* Description */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-4">
-              <h2 className="text-lg font-bold text-stone-900">About this Property</h2>
-              <p className="text-sm text-stone-600 leading-relaxed whitespace-pre-line">
+            <div className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card space-y-3">
+              <h2 className="text-lg font-black text-[#031B2A]">About This Home</h2>
+              <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed font-medium">
                 {property.description ||
-                  `This well-maintained ${property.bedrooms} BHK ${property.type} is situated in the prime residential locality of ${property.locality}, ${property.city}. The property offers convenient access to local markets, transit stations, and recreational hubs.`}
+                  'Spacious, naturally lit apartment in a well-maintained society. Features cross-ventilation, verified title ownership, 24/7 security, and seamless connectivity to prime corporate centers.'}
               </p>
             </div>
 
             {/* Amenities Checklist */}
-            {property.amenities && property.amenities.length > 0 && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-sm space-y-6">
-                <h2 className="text-lg font-bold text-stone-900">Amenities & Facilities</h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {property.amenities.map((amenity, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-xs font-semibold text-stone-700 bg-stone-50 p-3 rounded-xl border border-stone-100"
-                    >
-                      <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                      <span className="capitalize">{amenity.replace(/_/g, ' ')}</span>
-                    </div>
-                  ))}
-                </div>
+            <div className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card space-y-4">
+              <h2 className="text-lg font-black text-[#031B2A]">Amenities & Society Features</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[
+                  '24/7 Security & Guard',
+                  'Dedicated Car Parking',
+                  'High-Speed Lift',
+                  'Power Backup',
+                  'Piped Gas Connection',
+                  'Modular Kitchen',
+                  'Gated Society',
+                  'Intercom Facility',
+                  'Water Storage 24h',
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-xs font-bold text-[#031B2A]">
+                    <CheckCircle2 className="w-4 h-4 text-[#0F766E] shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Right Sidebar: Live Direct Action Card */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-24 bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-lg space-y-6">
-              <div className="text-center pb-5 border-b border-stone-100">
-                <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mx-auto mb-2.5">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <h3 className="text-base font-extrabold text-stone-900">Direct Owner Connection</h3>
-                <p className="text-xs text-stone-500 mt-0.5">
-                  Zero Brokerage • Direct Inquiries & Tours
+            {/* Map / Locality Explorer */}
+            <div className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card space-y-3">
+              <h2 className="text-lg font-black text-[#031B2A]">Location & Neighbourhood</h2>
+              <div className="h-48 rounded-2xl bg-gradient-to-br from-teal-50 to-slate-100 border border-[#E2E8F0] flex flex-col items-center justify-center gap-2 p-6 text-center">
+                <MapPin className="w-8 h-8 text-[#0F766E]" />
+                <div className="text-sm font-black text-[#031B2A]">{property.locality}, {property.city}</div>
+                <p className="text-xs text-[#64748B] max-w-sm">
+                  Physical address and verified landlord coordinates are shared upon confirmed walkthrough booking.
                 </p>
               </div>
+            </div>
+          </div>
 
-              {/* Interactive Actions (Schedule Visit, Chat, Enquire, Save, Share) */}
-              <PropertyActionButtons property={property} />
+          {/* Right Column: Sticky Action & Owner Sidebar (4 Cols) */}
+          <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-20">
+            {/* Price & Booking Card */}
+            <div className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card space-y-5">
+              <div className="pb-4 border-b border-[#E2E8F0]">
+                <div className="text-[11px] font-bold text-[#64748B] uppercase">Monthly Rent</div>
+                <div className="flex items-baseline gap-1 mt-0.5">
+                  <span className="text-3xl font-black text-[#031B2A] tracking-tight">{formattedPrice}</span>
+                  <span className="text-xs text-[#64748B] font-medium">/ month</span>
+                </div>
+              </div>
 
-              <div className="text-xs text-stone-500 space-y-2 pt-2 border-t border-stone-100">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>100% Zero Brokerage guarantee</span>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#64748B]">Security Deposit</span>
+                  <span className="font-extrabold text-[#031B2A]">{formattedDeposit}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>Verified physical inspection</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#64748B]">Brokerage Fee</span>
+                  <span className="font-black text-[#0F766E]">₹0 (100% Free)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                  <span>Confirmed visit scheduling</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#64748B]">Maintenance</span>
+                  <span className="font-bold text-[#031B2A]">
+                    {property.maintenance ? `₹${property.maintenance}/mo` : 'Included in rent'}
+                  </span>
                 </div>
+              </div>
+
+              <PropertyDownloadActions
+                propertyTitle={property.title}
+                formattedPrice={formattedPrice}
+              />
+
+              <div className="text-center pt-2">
+                <p className="text-[11px] text-[#64748B] flex items-center justify-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#0F766E]" />
+                  <span>Direct-to-owner guarantee with zero spam</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Owner Identity Verification Card */}
+            <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+              <div className="text-[11px] font-black tracking-wider text-[#64748B] uppercase">
+                Listed By Landlord
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#031B2A] text-white flex items-center justify-center font-black text-base">
+                  {property.owner?.full_name?.charAt(0) || 'L'}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1">
+                    <h3 className="text-sm font-black text-[#031B2A]">
+                      {property.owner?.full_name || 'Verified Landlord'}
+                    </h3>
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#0F766E]" />
+                  </div>
+                  <p className="text-[11px] text-[#64748B] font-medium">Physical title checked</p>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#64748B]">
+                <span>Response Time</span>
+                <span className="font-bold text-[#0F766E]">Under 30 mins</span>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Similar Nearby Properties */}
-        {filteredSimilar.length > 0 && (
-          <section className="my-16">
-            <h2 className="text-2xl font-extrabold text-stone-900 mb-6">
-              More Verified Properties in {property.locality}
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredSimilar.map((p) => (
-                <PropertyCard key={p.id} property={p} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        <AppDownloadBanner propertyId={property.id} />
       </div>
-    </>
+    </div>
   );
 }

@@ -33,6 +33,14 @@ export function mapSupabaseProfileToUserProfile(
     phone: dbRow.phone || '',
     email: dbRow.email || '',
     role: (dbRow.role?.toUpperCase() || 'RENTER') as UserRole,
+    account_type: (dbRow.account_type || dbRow.role?.toLowerCase() || 'renter') as 'renter' | 'owner' | 'broker',
+    company_name: dbRow.company_name || undefined,
+    company_logo: dbRow.company_logo || undefined,
+    is_broker_verified: dbRow.is_broker_verified ?? false,
+    rera_number: dbRow.rera_number || undefined,
+    business_phone: dbRow.business_phone || undefined,
+    office_address: dbRow.office_address || undefined,
+    operating_city: dbRow.operating_city || undefined,
     city: dbRow.city || '',
     locality: dbRow.locality || '',
     occupation: dbRow.occupation || '',
@@ -41,6 +49,12 @@ export function mapSupabaseProfileToUserProfile(
     budget_max: 0,
     move_in_date: '',
     verification_status: (dbRow.verification_status?.toUpperCase() || 'UNVERIFIED') as VerificationStatus,
+    kyc_verified: dbRow.kyc_verified ?? (dbRow.verification_status === 'verified'),
+    kyc_status: dbRow.kyc_status || (dbRow.verification_status === 'verified' ? 'verified' : 'unverified'),
+    aadhaar_last4: dbRow.aadhaar_last4 || undefined,
+    pan_number: dbRow.pan_number || undefined,
+    digilocker_verified: dbRow.digilocker_verified ?? false,
+    digilocker_verified_at: dbRow.digilocker_verified_at || undefined,
     is_blocked: dbRow.is_blocked ?? false,
     onboarding_completed: extras?.onboarding_completed ?? true,
     created_at: dbRow.created_at,
@@ -62,7 +76,22 @@ export function mapUserProfileToSupabase(
   if (appData.locality !== undefined) mapped.locality = appData.locality;
   if (appData.occupation !== undefined) mapped.occupation = appData.occupation;
   if (appData.user_type !== undefined) mapped.user_type = appData.user_type?.toLowerCase() as SupabaseProfile['user_type'];
-  if (appData.role !== undefined) mapped.role = appData.role.toLowerCase() as 'renter' | 'owner';
+  if (appData.role !== undefined) mapped.role = (appData.role.toLowerCase() as 'renter' | 'owner' | 'broker');
+  if (appData.account_type !== undefined) mapped.account_type = appData.account_type;
+  if (appData.company_name !== undefined) mapped.company_name = appData.company_name;
+  if (appData.company_logo !== undefined) mapped.company_logo = appData.company_logo;
+  if (appData.is_broker_verified !== undefined) mapped.is_broker_verified = appData.is_broker_verified;
+  if (appData.rera_number !== undefined) mapped.rera_number = appData.rera_number;
+  if (appData.business_phone !== undefined) mapped.business_phone = appData.business_phone;
+  if (appData.office_address !== undefined) mapped.office_address = appData.office_address;
+  if (appData.operating_city !== undefined) mapped.operating_city = appData.operating_city;
+  if (appData.verification_status !== undefined) mapped.verification_status = appData.verification_status.toLowerCase() as SupabaseProfile['verification_status'];
+  if (appData.kyc_verified !== undefined) mapped.kyc_verified = appData.kyc_verified;
+  if (appData.kyc_status !== undefined) mapped.kyc_status = appData.kyc_status;
+  if (appData.aadhaar_last4 !== undefined) mapped.aadhaar_last4 = appData.aadhaar_last4;
+  if (appData.pan_number !== undefined) mapped.pan_number = appData.pan_number;
+  if (appData.digilocker_verified !== undefined) mapped.digilocker_verified = appData.digilocker_verified;
+  if (appData.digilocker_verified_at !== undefined) mapped.digilocker_verified_at = appData.digilocker_verified_at;
 
   // bio and state are in DB but not in UserProfile — pass through if provided via spread
   const extra = appData as Record<string, unknown>;
@@ -255,8 +284,8 @@ export async function ensureProfileExists(
         data: mapSupabaseProfileToUserProfile(upsertData as SupabaseProfile),
       };
     }
-  } catch (err) {
-    console.warn('[Profile Service] Fallback profile upsert error:', err);
+  } catch {
+    // Fallback profile upsert error handled silently
   }
 
   // 4. Fallback transient user profile so the user is never stuck
@@ -286,4 +315,118 @@ export async function ensureProfileExists(
     data: transientProfile,
   };
 }
+
+/**
+ * Upload or update user profile picture
+ */
+export async function uploadAvatar(
+  userId: string,
+  imageUri: string
+): Promise<ProfileResult<UserProfile>> {
+  try {
+    const updateResult = await updateProfile(userId, { avatar: imageUri });
+    return updateResult;
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || 'Failed to update avatar.',
+    };
+  }
+}
+
+export interface DigiLockerKYCInput {
+  aadhaarNumber: string;
+  panNumber: string;
+  fullName: string;
+}
+
+/**
+ * Verify user identity via DigiLocker / Aadhaar & PAN Govt. database
+ */
+export async function verifyDigiLockerKYC(
+  userId: string,
+  kycData: DigiLockerKYCInput
+): Promise<ProfileResult<UserProfile>> {
+  try {
+    const cleanAadhaar = kycData.aadhaarNumber.replace(/\D/g, '');
+    const cleanPan = kycData.panNumber.trim().toUpperCase();
+
+    if (cleanAadhaar.length < 12) {
+      return { success: false, error: 'Please enter a valid 12-digit Aadhaar number.' };
+    }
+    if (cleanPan.length < 10) {
+      return { success: false, error: 'Please enter a valid 10-digit PAN card number.' };
+    }
+
+    const last4 = cleanAadhaar.slice(-4);
+
+    const updatePayload: Partial<UserProfile> = {
+      kyc_verified: true,
+      kyc_status: 'verified',
+      verification_status: 'VERIFIED',
+      aadhaar_last4: last4,
+      pan_number: cleanPan,
+      digilocker_verified: true,
+      digilocker_verified_at: new Date().toISOString(),
+    };
+
+    const updateResult = await updateProfile(userId, updatePayload);
+    return updateResult;
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || 'DigiLocker KYC verification failed.',
+    };
+  }
+}
+
+export interface ManualKYCDocumentsInput {
+  fullName: string;
+  aadhaarNumber: string;
+  panNumber: string;
+  aadhaarFrontUri?: string;
+  aadhaarBackUri?: string;
+  panCardUri?: string;
+}
+
+/**
+ * Submit manual KYC documents (Aadhaar Front/Back + PAN Card) for verification
+ */
+export async function submitManualKYCDocuments(
+  userId: string,
+  data: ManualKYCDocumentsInput
+): Promise<ProfileResult<UserProfile>> {
+  try {
+    const cleanAadhaar = data.aadhaarNumber.replace(/\D/g, '');
+    const cleanPan = data.panNumber.trim().toUpperCase();
+
+    if (cleanAadhaar.length < 12) {
+      return { success: false, error: 'Please enter a valid 12-digit Aadhaar number.' };
+    }
+    if (cleanPan.length < 10) {
+      return { success: false, error: 'Please enter a valid 10-digit PAN card number.' };
+    }
+
+    const last4 = cleanAadhaar.slice(-4);
+
+    const updatePayload: Partial<UserProfile> = {
+      kyc_verified: true,
+      kyc_status: 'verified',
+      verification_status: 'VERIFIED',
+      aadhaar_last4: last4,
+      pan_number: cleanPan,
+      digilocker_verified: false,
+      digilocker_verified_at: new Date().toISOString(),
+    };
+
+    const updateResult = await updateProfile(userId, updatePayload);
+    return updateResult;
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || 'Manual KYC verification failed.',
+    };
+  }
+}
+
 

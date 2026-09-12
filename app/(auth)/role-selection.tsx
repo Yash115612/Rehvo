@@ -1,6 +1,6 @@
 import React from 'react';
-import { OnboardingFlowScreen } from '../../src/components/onboarding/OnboardingFlowScreen';
+import { V4RoleSelectionScreen } from '../../src/components/v4/screens/V4RoleSelectionScreen';
 
 export default function RoleSelectionRoute() {
-  return <OnboardingFlowScreen initialStep="ROLE" />;
+  return <V4RoleSelectionScreen />;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
-import { ProfileHubScreen } from '../../src/components/profile/ProfileHubScreen';
+import { V4ProfileScreen } from '../../src/components/v4/screens/V4ProfileScreen';
 
 export default function RenterProfileRoute() {
-  return <ProfileHubScreen initialRole="RENTER" />;
+  return <V4ProfileScreen />;
 }

@@ -1,5 +1,26 @@
-export type PropertyType = 'flat' | 'room' | 'pg' | 'studio';
-export type FurnishingType = 'fully_furnished' | 'semi_furnished' | 'unfurnished';
+export type PropertyCategory = 'residential' | 'commercial';
+
+export type ResidentialType = 'flat' | 'room' | 'pg' | 'studio';
+
+export type CommercialType =
+  | 'office'
+  | 'shop'
+  | 'showroom'
+  | 'warehouse'
+  | 'commercial_building'
+  | 'coworking'
+  | 'commercial_plot'
+  | 'other_commercial';
+
+export type PropertyType = ResidentialType | CommercialType;
+
+export type FurnishingType =
+  | 'fully_furnished'
+  | 'semi_furnished'
+  | 'unfurnished'
+  | 'bare_shell'
+  | 'warm_shell';
+
 export type PropertyStatus = 'draft' | 'published' | 'paused' | 'removed';
 export type VerificationStatus = 'unverified' | 'pending' | 'verified' | 'rejected';
 
@@ -16,6 +37,7 @@ export interface PropertyImage {
 export interface Property {
   id: string;
   owner_id: string;
+  category?: PropertyCategory;
   type: PropertyType;
   title: string;
   description: string;
@@ -29,7 +51,7 @@ export interface Property {
   address: string;
   latitude: number | null;
   longitude: number | null;
-  bedrooms: string;
+  bedrooms?: string | null;
   bathrooms: number;
   area: number;
   furnishing: FurnishingType;
@@ -45,6 +67,20 @@ export interface Property {
   created_at: string;
   updated_at: string;
   property_images?: PropertyImage[];
+  
+  // Commercial-Specific Attributes
+  commercial_type?: CommercialType | null;
+  floor_number?: string | null;
+  total_floors?: number | null;
+  washrooms?: number | null;
+  parking_spaces?: string | null;
+  power_backup?: boolean | null;
+  lift?: boolean | null;
+  carpet_area?: number | null;
+  possession_status?: string | null;
+  lease_type?: string | null;
+  road_width?: number | null;
+
   owner?: {
     id: string;
     full_name: string;
@@ -84,8 +120,8 @@ export interface FlatmateProfile {
 
 export interface Enquiry {
   id: string;
-  user_id: string;
   property_id: string;
+  user_id: string;
   owner_id: string;
   message: string;
   status: 'pending' | 'replied' | 'scheduled' | 'closed';
@@ -160,18 +196,6 @@ export interface Conversation {
   updated_at: string;
   properties?: Property;
   flatmate_profiles?: FlatmateProfile;
-  participants?: {
-    id: string;
-    user_id: string;
-    unread_count: number;
-    last_read_at?: string | null;
-    profiles?: {
-      id: string;
-      full_name: string;
-      phone?: string;
-      profile_photo?: string;
-    };
-  }[];
   unread_count?: number;
   other_participant?: {
     id: string;
@@ -184,28 +208,28 @@ export interface Conversation {
 export interface Notification {
   id: string;
   user_id: string;
-  type: 'visit' | 'message' | 'application' | 'price' | 'system' | 'verification';
+  type: 'visit' | 'message' | 'verification' | 'application' | 'price' | 'system';
   title: string;
   body: string;
-  data?: Record<string, any>;
+  data?: Record<string, any> | null;
   read_at?: string | null;
   created_at: string;
 }
 
 export interface UserProfile {
   id: string;
-  full_name: string;
-  email?: string;
+  name?: string;
+  full_name?: string;
+  avatar?: string;
+  profile_photo?: string;
   phone?: string;
-  profile_photo?: string | null;
-  city?: string | null;
-  state?: string | null;
-  locality?: string | null;
-  bio?: string | null;
-  occupation?: string | null;
-  user_type?: 'student' | 'working_professional' | 'family' | 'other' | null;
-  role: 'renter' | 'owner';
-  verification_status: VerificationStatus;
+  email?: string;
+  bio?: string;
+  role?: 'RENTER' | 'OWNER' | 'renter' | 'owner';
+  city?: string;
+  locality?: string;
+  occupation?: string;
+  verification_status?: VerificationStatus;
   is_blocked?: boolean;
   created_at?: string;
   updated_at?: string;
@@ -217,6 +241,10 @@ export interface OwnerMetrics {
   pausedListings: number;
   totalViews: number;
   totalEnquiries: number;
+  pendingEnquiries?: number;
   totalVisits: number;
   pendingVisits: number;
+  totalSaves?: number;
+  residentialCount?: number;
+  commercialCount?: number;
 }

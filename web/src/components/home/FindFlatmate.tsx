@@ -50,12 +50,12 @@ export const FindFlatmate: React.FC<FindFlatmateProps> = ({ flatmates }) => {
   ];
 
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-24 border-b border-stone-200/60">
+    <section className="bg-[#F8FAFC] py-16 sm:py-24 border-b border-stone-200/60">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Column (~30% on Desktop / 3.5 Cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <span className="text-[11px] font-extrabold text-[#FF5533] uppercase tracking-wider block">
+            <span className="text-[11px] font-extrabold text-[#0F766E] uppercase tracking-wider block">
               COMMUNITY
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-stone-900 tracking-tight leading-tight">
@@ -71,7 +71,7 @@ export const FindFlatmate: React.FC<FindFlatmateProps> = ({ flatmates }) => {
                 className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-900 font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full border border-stone-200 shadow-sm transition"
               >
                 <span>Browse Flatmates</span>
-                <ArrowRight className="w-4 h-4 text-[#FF5533]" />
+                <ArrowRight className="w-4 h-4 text-[#0F766E]" />
               </Link>
             </div>
           </div>
@@ -82,12 +82,12 @@ export const FindFlatmate: React.FC<FindFlatmateProps> = ({ flatmates }) => {
               {displayFlatmates.map((f) => (
                 <div
                   key={f.id}
-                  className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-orange-200 transition-all duration-300 flex flex-col justify-between text-center relative space-y-3"
+                  className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-sm hover:shadow-xl hover:border-[#99F6E4] transition-all duration-300 flex flex-col justify-between text-center relative space-y-3"
                 >
                   {/* Top Heart Icon */}
                   <button
                     type="button"
-                    className="absolute top-3.5 right-3.5 text-stone-400 hover:text-[#FF5533] p-1"
+                    className="absolute top-3.5 right-3.5 text-stone-400 hover:text-[#0F766E] p-1"
                     aria-label="Save flatmate profile"
                   >
                     <Heart className="w-4 h-4" />
@@ -100,7 +100,7 @@ export const FindFlatmate: React.FC<FindFlatmateProps> = ({ flatmates }) => {
                       alt={f.name}
                       width={64}
                       height={64}
-                      className="w-16 h-16 rounded-full object-cover border-2 border-orange-100 shadow-sm mx-auto"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-[#CCFBF1] shadow-sm mx-auto"
                     />
                   </div>
 
@@ -135,7 +135,7 @@ export const FindFlatmate: React.FC<FindFlatmateProps> = ({ flatmates }) => {
             {/* Scroll Indicator Button */}
             <Link
               href="/flatmates/mumbai"
-              className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#FF5533] hover:scale-105 transition"
+              className="absolute -right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-xl border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#0F766E] hover:scale-105 transition"
               aria-label="View more flatmates"
             >
               <ChevronRight className="w-5 h-5" />

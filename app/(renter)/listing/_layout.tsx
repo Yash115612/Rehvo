@@ -5,7 +5,7 @@ export default function RenterListingLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor: '#F7F5F0' },
+        contentStyle: { backgroundColor: '#FAF8F5' },
       }}
     />
   );

@@ -20,11 +20,11 @@ export const LocalityCard: React.FC<LocalityCardProps> = ({
   return (
     <Link
       href={`/mumbai/${slug}`}
-      className="group bg-white rounded-2xl p-5 border border-stone-200 hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between"
+      className="group bg-white rounded-2xl p-5 border border-stone-200 hover:border-[#99F6E4] hover:shadow-md transition-all flex flex-col justify-between"
     >
       <div>
         <div className="flex items-center justify-between mb-3">
-          <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-xl bg-[#CCFBF1] flex items-center justify-center text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white transition-colors">
             <MapPin className="w-5 h-5" />
           </div>
           {zone && (
@@ -34,7 +34,7 @@ export const LocalityCard: React.FC<LocalityCardProps> = ({
           )}
         </div>
 
-        <h3 className="text-base font-bold text-stone-900 group-hover:text-purple-600 transition mb-1">
+        <h3 className="text-base font-bold text-stone-900 group-hover:text-[#0F766E] transition mb-1">
           {name}
         </h3>
 
@@ -43,7 +43,7 @@ export const LocalityCard: React.FC<LocalityCardProps> = ({
             {count} {count === 1 ? 'verified home' : 'verified homes'} available
           </p>
         ) : (
-          <p className="text-xs text-stone-400">Zero-brokerage rentals</p>
+          <p className="text-xs text-stone-400">Verified rentals</p>
         )}
       </div>
 
@@ -55,7 +55,7 @@ export const LocalityCard: React.FC<LocalityCardProps> = ({
         ) : (
           <span className="text-xs font-semibold text-stone-500">Explore locality</span>
         )}
-        <span className="text-xs font-bold text-purple-600 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+        <span className="text-xs font-bold text-[#0F766E] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
           Browse <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>

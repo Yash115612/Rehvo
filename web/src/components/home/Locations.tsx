@@ -48,14 +48,14 @@ export const Locations: React.FC = () => {
   ];
 
   return (
-    <section className="bg-[#FAF9F6] py-20 sm:py-28 border-b border-stone-200/90">
+    <section className="bg-[#F8FAFC] py-20 sm:py-28 border-b border-stone-200/90">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div className="space-y-1.5 max-w-xl">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-purple-600" />
-              <span className="text-xs font-extrabold text-purple-700 uppercase tracking-widest">
+              <span className="w-2 h-2 rounded-full bg-[#0F766E]" />
+              <span className="text-xs font-extrabold text-[#0F766E] uppercase tracking-widest">
                 Explore
               </span>
             </div>
@@ -69,10 +69,10 @@ export const Locations: React.FC = () => {
 
           <Link
             href="/localities"
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-purple-600 transition flex-shrink-0"
+            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-extrabold text-stone-900 hover:text-[#0F766E] transition flex-shrink-0"
           >
             <span>View all locations</span>
-            <ArrowRight className="w-4 h-4 text-purple-600 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -93,7 +93,7 @@ export const Locations: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/40 to-transparent pointer-events-none" />
 
             <div className="relative z-10 space-y-2 text-white">
-              <span className="bg-purple-600 text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-md inline-block shadow-sm">
+              <span className="bg-[#0F766E] text-white text-[10px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full backdrop-blur-md inline-block shadow-sm">
                 {topLocalities[0].zone}
               </span>
               <h3 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
@@ -108,7 +108,7 @@ export const Locations: React.FC = () => {
                   <span className="text-[10px] text-stone-400 block uppercase">Avg Rent Range</span>
                   <span className="text-white text-sm">{topLocalities[0].rent}</span>
                 </div>
-                <span className="text-purple-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform font-extrabold">
+                <span className="text-[#CCFBF1] flex items-center gap-1 group-hover:translate-x-1 transition-transform font-extrabold">
                   <span>Explore Andheri</span>
                   <ArrowRight className="w-4 h-4" />
                 </span>
@@ -134,7 +134,7 @@ export const Locations: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/30 to-transparent pointer-events-none" />
 
                 <div className="relative z-10 space-y-0.5 text-white">
-                  <span className="text-[9px] font-extrabold uppercase tracking-wider text-purple-300">
+                  <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#CCFBF1]">
                     {loc.zone}
                   </span>
                   <h4 className="text-lg font-extrabold text-white leading-tight">

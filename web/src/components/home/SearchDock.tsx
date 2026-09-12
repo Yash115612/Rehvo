@@ -110,7 +110,7 @@ export const SearchDock: React.FC = () => {
                   : 'text-stone-300 hover:text-white hover:bg-white/10'
               }`}
             >
-              <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-purple-600' : 'text-stone-400'}`} />
+              <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-[#0F766E]' : 'text-stone-400'}`} />
               <span>{tab.label}</span>
             </button>
           );
@@ -138,9 +138,9 @@ export const SearchDock: React.FC = () => {
               }}
               onFocus={() => setLocalityDropdownOpen(true)}
               placeholder="e.g. Bandra West, Andheri, Powai..."
-              className="w-full pl-9 pr-7 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+              className="w-full pl-9 pr-7 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#0F766E] transition"
             />
-            <MapPin className="w-4 h-4 text-purple-600 absolute left-3 top-3" />
+            <MapPin className="w-4 h-4 text-[#0F766E] absolute left-3 top-3" />
             {localityQuery && (
               <button
                 type="button"
@@ -158,7 +158,7 @@ export const SearchDock: React.FC = () => {
           {/* Location Autocomplete Dropdown */}
           {localityDropdownOpen && (
             <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-stone-200 py-2 z-50 max-h-60 overflow-y-auto animate-in fade-in zoom-in-95 duration-150 divide-y divide-stone-50">
-              <div className="px-3 py-1.5 text-[10px] font-extrabold text-purple-600 uppercase tracking-wider">
+              <div className="px-3 py-1.5 text-[10px] font-extrabold text-[#0F766E] uppercase tracking-wider">
                 Popular Mumbai Hubs
               </div>
               {filteredLocalities.map((loc) => (
@@ -166,12 +166,12 @@ export const SearchDock: React.FC = () => {
                   key={loc.slug}
                   type="button"
                   onClick={() => handleSelectLocality(loc.slug, loc.name)}
-                  className="w-full text-left px-3.5 py-2 hover:bg-purple-50 flex items-center justify-between text-xs transition group"
+                  className="w-full text-left px-3.5 py-2 hover:bg-[#CCFBF1] flex items-center justify-between text-xs transition group"
                 >
-                  <span className="font-bold text-stone-800 group-hover:text-purple-700">
+                  <span className="font-bold text-stone-800 group-hover:text-[#0F766E]">
                     {loc.name}
                   </span>
-                  <span className="text-[10px] font-semibold text-stone-400 group-hover:text-purple-500">
+                  <span className="text-[10px] font-semibold text-stone-400 group-hover:text-[#0F766E]">
                     {loc.zone}
                   </span>
                 </button>
@@ -188,7 +188,7 @@ export const SearchDock: React.FC = () => {
           <select
             value={selectedBhk}
             onChange={(e) => setSelectedBhk(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer"
+            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#0F766E] transition cursor-pointer"
           >
             <option value="">Any Format / BHK</option>
             <option value="1">1 BHK Apartment</option>
@@ -208,7 +208,7 @@ export const SearchDock: React.FC = () => {
           <select
             value={selectedBudget}
             onChange={(e) => setSelectedBudget(e.target.value)}
-            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 transition cursor-pointer"
+            className="w-full px-3.5 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#0F766E] transition cursor-pointer"
           >
             <option value="">Any Budget</option>
             <option value="25000">Under ₹25k/mo</option>
@@ -223,7 +223,7 @@ export const SearchDock: React.FC = () => {
         <div className="md:col-span-2">
           <button
             type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 active:scale-98 text-white font-extrabold text-xs py-3 px-4 rounded-2xl shadow-lg shadow-purple-600/30 transition-all duration-200 flex items-center justify-center gap-2 group"
+            className="w-full bg-[#0F766E] hover:bg-[#064E3B] active:scale-98 text-white font-extrabold text-xs py-3 px-4 rounded-2xl shadow-lg shadow-teal-800/20 transition-all duration-200 flex items-center justify-center gap-2 group"
           >
             <Search className="w-4 h-4 group-hover:rotate-12 transition-transform" />
             <span>Search</span>

@@ -361,11 +361,14 @@ export async function toggleUserSuspension(
 export interface AdminPropertyRecord {
   id: string;
   title: string;
-  type: 'FLAT' | 'ROOM' | 'PG' | 'STUDIO';
+  category?: 'RESIDENTIAL' | 'COMMERCIAL';
+  type: string;
+  commercial_type?: string;
   owner_name: string;
   owner_id: string;
   location: string;
   rent: number;
+  area?: number;
   status: 'ACTIVE' | 'DRAFT' | 'PAUSED' | 'RENTED';
   verification_status: 'VERIFIED' | 'PENDING' | 'REJECTED';
   images_count: number;
@@ -374,6 +377,7 @@ export interface AdminPropertyRecord {
 
 export async function getProperties(params?: {
   search?: string;
+  category?: string;
   type?: string;
   status?: string;
   page?: number;
@@ -393,8 +397,12 @@ export async function getProperties(params?: {
       query = query.or(`title.ilike.%${q}%,locality.ilike.%${q}%,city.ilike.%${q}%`);
     }
 
+    if (params?.category && params.category !== 'ALL') {
+      query = query.eq('category', params.category.toLowerCase());
+    }
+
     if (params?.type && params.type !== 'ALL') {
-      query = query.eq('property_type', params.type.toLowerCase());
+      query = query.eq('type', params.type.toLowerCase());
     }
 
     if (params?.status && params.status !== 'ALL') {
@@ -409,12 +417,15 @@ export async function getProperties(params?: {
     const mapped: AdminPropertyRecord[] = (data || []).map((p: any) => ({
       id: p.id,
       title: p.title,
-      type: (p.property_type || 'FLAT').toUpperCase(),
+      category: (p.category || (['office', 'shop', 'showroom', 'warehouse', 'commercial_building', 'coworking', 'commercial_plot', 'other_commercial'].includes(p.type) ? 'commercial' : 'residential')).toUpperCase() as any,
+      type: (p.type || p.property_type || 'FLAT').toUpperCase(),
+      commercial_type: p.commercial_type,
       owner_name: p.owner_profile?.full_name || 'Property Host',
       owner_id: p.owner_id,
       location: `${p.locality}, ${p.city || 'Mumbai'}`,
-      rent: p.rent || 0,
-      status: (p.status || 'ACTIVE').toUpperCase(),
+      rent: p.price || p.rent || 0,
+      area: p.area || 0,
+      status: (p.status || 'ACTIVE').toUpperCase() as any,
       verification_status: (p.verification_status || 'unverified').toUpperCase() === 'VERIFIED' ? 'VERIFIED' : 'PENDING',
       images_count: (p.property_images || []).length,
       created_at: p.created_at,

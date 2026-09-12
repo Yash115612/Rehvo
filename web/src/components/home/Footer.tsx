@@ -10,15 +10,15 @@ export const Footer: React.FC = () => {
           {/* Brand Column (4 cols on desktop) */}
           <div className="col-span-2 md:col-span-4 space-y-4 pr-0 lg:pr-6">
             <Link href="/" className="inline-flex items-center space-x-2.5 group">
-              <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-extrabold text-base shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-[#0F766E] flex items-center justify-center text-white font-extrabold text-base shadow-sm">
                 R
               </div>
               <span className="font-extrabold text-2xl tracking-tight text-white">
-                REHVO<span className="text-purple-400">.</span>
+                REHVO<span className="text-[#0F766E]">.</span>
               </span>
             </Link>
             <p className="text-xs text-stone-400 leading-relaxed font-normal">
-              Mumbai&apos;s zero-brokerage rental & roommate marketplace. Connect directly with verified homeowners, schedule physical walkthroughs, and save 100% on broker commissions.
+              Mumbai&apos;s verified rental & roommate marketplace. Connect directly with verified homeowners, schedule physical walkthroughs, and enjoy transparent pricing.
             </p>
             <div className="text-xs text-stone-400 space-y-1.5 pt-2">
               <p className="flex items-center gap-1.5">
@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
               </p>
               <p className="flex items-center gap-1.5">
                 <span>✉️</span>
-                <span>support@rehvo.com</span>
+                <span>support@rehvo.in</span>
               </p>
             </div>
           </div>
@@ -64,7 +64,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/localities" className="text-purple-400 hover:text-purple-300 font-bold transition">
+                <Link href="/localities" className="text-[#0F766E] hover:text-[#CCFBF1] font-bold transition">
                   Locations →
                 </Link>
               </li>
@@ -161,8 +161,8 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="text-stone-300 hover:text-white transition">
-                  Sign In
+                <Link href="/download" className="text-emerald-400 hover:text-emerald-300 font-bold transition">
+                  Download Mobile App
                 </Link>
               </li>
             </ul>
@@ -171,7 +171,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="mt-14 pt-8 border-t border-stone-900 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 gap-4">
-          <p>© {new Date().getFullYear()} REHVO Real Estate Technologies. 100% Zero-Brokerage Verified Rentals.</p>
+          <p>© {new Date().getFullYear()} REHVO Real Estate Technologies. 100% Verified Verified Rentals.</p>
           <div className="flex items-center space-x-6">
             <Link href="/about" className="hover:text-stone-400 transition">
               Privacy

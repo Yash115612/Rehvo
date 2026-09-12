@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   X,
   Loader2,
-  Sparkles,
   Send,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
@@ -64,16 +63,24 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
   const saved = isSaved(property.id);
 
   const handleSaveToggle = async () => {
-    if (!isAuthenticated) {
-      router.push(`/login?next=/property/${property.id}`);
-      return;
+    try {
+      const stored = JSON.parse(localStorage.getItem('rehvo_saved_properties') || '[]');
+      const isAlready = stored.includes(property.id);
+      const nextStored = isAlready
+        ? stored.filter((id: string) => id !== property.id)
+        : [...stored, property.id];
+      localStorage.setItem('rehvo_saved_properties', JSON.stringify(nextStored));
+      window.dispatchEvent(new Event('rehvo_saved_updated'));
+    } catch {}
+
+    if (isAuthenticated) {
+      await toggleSaveProperty(property.id);
     }
-    await toggleSaveProperty(property.id);
   };
 
   const handleOpenChat = async () => {
     if (!isAuthenticated || !user) {
-      router.push(`/login?next=/property/${property.id}`);
+      router.push('/download');
       return;
     }
 
@@ -96,7 +103,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
   const handleSubmitEnquiry = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAuthenticated || !user) {
-      router.push(`/login?next=/property/${property.id}`);
+      router.push('/download');
       return;
     }
 
@@ -127,7 +134,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
   const handleSubmitVisit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isAuthenticated || !user) {
-      router.push(`/login?next=/property/${property.id}`);
+      router.push('/download');
       return;
     }
 
@@ -163,7 +170,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
         navigator
           .share({
             title: property.title,
-            text: `Zero-Brokerage Rental in ${property.locality}: ${property.title} for ₹${property.price}/mo`,
+            text: `Verified Rental in ${property.locality}: ${property.title} for ₹${property.price}/mo`,
             url: window.location.href,
           })
           .catch(() => {});
@@ -184,12 +191,12 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
           type="button"
           onClick={() => {
             if (!isAuthenticated) {
-              router.push(`/login?next=/property/${property.id}`);
+              router.push('/download');
               return;
             }
             setVisitModalOpen(true);
           }}
-          className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-sm py-3.5 px-4 rounded-2xl shadow-lg transition flex items-center justify-center gap-2"
+          className="w-full bg-[#0F766E] hover:bg-[#064E3B] text-white font-bold text-sm py-3.5 px-4 rounded-2xl shadow-lg shadow-teal-800/20 transition flex items-center justify-center gap-2"
         >
           <Calendar className="w-4 h-4" />
           <span>Schedule Physical Visit</span>
@@ -205,7 +212,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
           {isStartingChat ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-            <MessageSquare className="w-4 h-4 text-purple-400" />
+            <MessageSquare className="w-4 h-4 text-[#0F766E]" />
           )}
           <span>Chat with Owner</span>
         </button>
@@ -215,7 +222,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
           type="button"
           onClick={() => {
             if (!isAuthenticated) {
-              router.push(`/login?next=/property/${property.id}`);
+              router.push('/download');
               return;
             }
             setEnquiryModalOpen(true);
@@ -287,7 +294,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                   <button
                     type="button"
                     onClick={handleOpenChat}
-                    className="bg-purple-600 text-white text-xs font-bold px-5 py-3 rounded-xl"
+                    className="bg-[#0F766E] text-white text-xs font-bold px-5 py-3 rounded-xl"
                   >
                     Open Chat
                   </button>
@@ -296,8 +303,8 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
             ) : (
               <form onSubmit={handleSubmitEnquiry} className="space-y-4">
                 <div>
-                  <span className="text-[10px] font-extrabold text-purple-600 uppercase tracking-wider block">
-                    Zero Brokerage Contact
+                  <span className="text-[10px] font-extrabold text-[#0F766E] uppercase tracking-wider block">
+                    Verified Marketplace Contact
                   </span>
                   <h3 className="text-xl font-bold text-stone-900">Send Direct Enquiry</h3>
                   <p className="text-xs text-stone-500 mt-0.5">
@@ -320,7 +327,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                     value={enquiryMessage}
                     onChange={(e) => setEnquiryMessage(e.target.value)}
                     required
-                    className="w-full px-4 py-3 rounded-2xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-purple-500 text-xs font-medium resize-none text-stone-900"
+                    className="w-full px-4 py-3 rounded-2xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#0F766E] text-xs font-medium resize-none text-stone-900"
                     placeholder="Ask about move-in date, amenities, deposit terms..."
                   />
                 </div>
@@ -333,7 +340,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                   {isSubmittingEnquiry ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
                   ) : (
-                    <Send className="w-4 h-4 text-purple-400" />
+                    <Send className="w-4 h-4 text-[#0F766E]" />
                   )}
                   <span>Submit Enquiry</span>
                 </button>
@@ -380,7 +387,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
             ) : (
               <form onSubmit={handleSubmitVisit} className="space-y-4">
                 <div>
-                  <span className="text-[10px] font-extrabold text-purple-600 uppercase tracking-wider block">
+                  <span className="text-[10px] font-extrabold text-[#0F766E] uppercase tracking-wider block">
                     On-Site Property Tour
                   </span>
                   <h3 className="text-xl font-bold text-stone-900">Schedule a Physical Visit</h3>
@@ -406,7 +413,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                       min={new Date().toISOString().split('T')[0]}
                       onChange={(e) => setVisitDate(e.target.value)}
                       required
-                      className="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-xs font-semibold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-xs font-semibold text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
                     />
                   </div>
 
@@ -417,7 +424,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                     <select
                       value={visitTime}
                       onChange={(e) => setVisitTime(e.target.value)}
-                      className="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-xs font-semibold text-stone-900 focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
+                      className="w-full px-3 py-2.5 rounded-xl border border-stone-200 text-xs font-semibold text-stone-900 focus:outline-none focus:ring-2 focus:ring-[#0F766E] bg-white"
                     >
                       <option value="10:00 AM">10:00 AM (Morning)</option>
                       <option value="11:30 AM">11:30 AM (Morning)</option>
@@ -436,7 +443,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                     rows={2}
                     value={visitNotes}
                     onChange={(e) => setVisitNotes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-purple-500 text-xs text-stone-900 resize-none"
+                    className="w-full px-3 py-2 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-[#0F766E] text-xs text-stone-900 resize-none"
                     placeholder="e.g. Visiting with family, will reach by metro..."
                   />
                 </div>
@@ -444,7 +451,7 @@ export const PropertyActionButtons: React.FC<PropertyActionButtonsProps> = ({ pr
                 <button
                   type="submit"
                   disabled={isSubmittingVisit}
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-3.5 rounded-2xl transition flex items-center justify-center gap-2 shadow-md disabled:opacity-50"
+                  className="w-full bg-[#0F766E] hover:bg-[#064E3B] text-white font-bold text-xs py-3.5 rounded-2xl transition flex items-center justify-center gap-2 shadow-md disabled:opacity-50"
                 >
                   {isSubmittingVisit ? (
                     <Loader2 className="w-4 h-4 animate-spin" />

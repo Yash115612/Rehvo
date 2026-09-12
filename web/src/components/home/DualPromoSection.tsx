@@ -5,7 +5,7 @@ import { ArrowRight, ChevronRight, Smartphone } from 'lucide-react';
 
 export const DualPromoSection: React.FC = () => {
   return (
-    <section className="bg-[#FAF8F5] py-16 sm:py-24 border-b border-stone-200/60">
+    <section className="bg-[#F8FAFC] py-16 sm:py-24 border-b border-stone-200/60">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
           {/* CARD 1: Host CTA Card */}
@@ -22,7 +22,7 @@ export const DualPromoSection: React.FC = () => {
               <div className="pt-2">
                 <Link
                   href="/owner/properties/new"
-                  className="inline-flex items-center gap-2 bg-[#FF5533] hover:bg-[#EE4422] text-white font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-orange-500/25 transition group"
+                  className="inline-flex items-center gap-2 bg-[#0F766E] hover:bg-[#064E3B] text-white font-extrabold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg shadow-teal-800/20 transition group"
                 >
                   <span>List Your Property</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -86,7 +86,7 @@ export const DualPromoSection: React.FC = () => {
               <div className="absolute inset-0 bg-stone-950/20" />
               {/* App UI Overlay Mockup */}
               <div className="absolute top-2 left-2 right-2 bg-white/95 backdrop-blur-md rounded-xl p-2 text-stone-900 text-[9px] font-bold shadow-sm">
-                <div className="flex items-center justify-between text-[#FF5533]">
+                <div className="flex items-center justify-between text-[#0F766E]">
                   <span>REHVO App</span>
                   <span>2.4k listings</span>
                 </div>
@@ -96,7 +96,7 @@ export const DualPromoSection: React.FC = () => {
             {/* Scroll Indicator Button */}
             <button
               type="button"
-              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-lg border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#FF5533]"
+              className="absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-lg border border-stone-200 hidden xl:flex items-center justify-center text-stone-600 hover:text-[#0F766E]"
               aria-label="Next slide"
             >
               <ChevronRight className="w-4 h-4" />

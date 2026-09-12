@@ -29,6 +29,11 @@ export interface SignUpData {
   email: string;
   phone: string;
   password: string;
+  role?: 'renter' | 'owner' | 'broker';
+  city?: string;
+  agencyName?: string;
+  reraNumber?: string;
+  officeAddress?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -43,13 +48,7 @@ export function getUserFriendlyError(error: AuthError | Error | unknown): string
   const code = (error as any)?.code || (error as any)?.error_code || '';
 
   // Safe development logging — never logs secrets, passwords or tokens
-  if (__DEV__) {
-    console.log('[REHVO Auth Diagnostic]', {
-      status,
-      code,
-      message,
-    });
-  }
+
 
   // Network / configuration errors
   if (
@@ -98,55 +97,55 @@ export function getUserFriendlyError(error: AuthError | Error | unknown): string
   if (
     code === 'weak_password' ||
     (message.includes('Password') &&
-      (message.includes('characters') || message.includes('least 6') || message.includes('least 8')))
+      (message.includes('short') || message.includes('least') || message.includes('weak')))
   ) {
-    return 'Password does not meet the requirements. It must be at least 8 characters.';
+    return 'Password must be at least 6 characters long.';
   }
 
   // Rate Limiting
   if (
-    code === 'over_email_send_rate_limit' ||
     code === 'over_request_rate_limit' ||
     message.includes('rate limit') ||
-    status === 429
+    message.includes('Too many requests')
   ) {
-    return 'Too many attempts. Please try again later.';
+    return 'Too many attempts. Please wait a few moments before trying again.';
   }
 
   // Invalid Credentials
   if (
     code === 'invalid_credentials' ||
-    message.includes('Invalid login credentials')
+    message.includes('Invalid login credentials') ||
+    message.includes('invalid_grant')
   ) {
-    return 'Invalid email or password. Please check your credentials and try again.';
+    return 'Incorrect email or password. Please try again.';
   }
 
-  // Malformed Email
-  if (message.includes('invalid') && message.includes('email')) {
-    return 'Please enter a valid email address.';
+  // OTP Expired
+  if (
+    code === 'otp_expired' ||
+    message.includes('Token has expired') ||
+    message.includes('expired')
+  ) {
+    return 'The verification code has expired. Please request a new one.';
   }
 
-  // Phone errors
-  if (message.includes('Phone') || message.includes('phone')) {
-    if (message.includes('not enabled') || message.includes('not supported')) {
-      return 'Phone login is not currently available. Please use email and password.';
-    }
-    return 'Invalid phone number. Please check and try again.';
+  // Invalid OTP
+  if (
+    code === 'bad_code' ||
+    message.includes('Token is invalid') ||
+    message.includes('invalid token')
+  ) {
+    return 'Incorrect verification code. Please check and try again.';
   }
 
-  // OTP errors
-  if (message.includes('OTP') || message.includes('otp') || message.includes('token')) {
-    return 'Invalid verification code. Please check the code and try again.';
-  }
-
-  // Session expired
-  if (message.includes('session') || message.includes('refresh_token')) {
-    return 'Your session has expired. Please sign in again.';
-  }
-
-  // Unclassified 400 errors
-  if (status === 400) {
-    return message || 'Invalid request. Please check your details and try again.';
+  // Phone SMS Provider error
+  if (
+    message.includes('sms') ||
+    message.includes('SMS') ||
+    message.includes('Twilio') ||
+    message.includes('phone')
+  ) {
+    return 'SMS service is temporarily unavailable. Please try signing in with email or contact support.';
   }
 
   // Generic fallback — never expose raw Postgres/JWT error
@@ -165,6 +164,7 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
 
   try {
     const formattedPhone = data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone.replace(/\D/g, '')}`;
+    const userRole = (data.role || 'renter').toLowerCase();
 
     const { data: resData, error } = await supabase.auth.signUp({
       email: data.email.trim(),
@@ -173,20 +173,18 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
         data: {
           full_name: data.name.trim(),
           phone: formattedPhone,
-          role: 'renter',
+          role: userRole,
+          account_type: userRole,
+          city: data.city || 'Mumbai',
+          company_name: data.agencyName || undefined,
+          rera_number: data.reraNumber || undefined,
+          office_address: data.officeAddress || undefined,
           onboarding_completed: false,
         },
       },
     });
 
     if (error) {
-      if (__DEV__) {
-        console.log('[REHVO Auth Diagnostic - signUpWithEmail error]', {
-          status: error.status,
-          code: error.code,
-          message: error.message,
-        });
-      }
       return { success: false, error: getUserFriendlyError(error) };
     }
 
@@ -198,24 +196,12 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
     // When email confirmation is enabled, session will be null until confirmed
     const needsConfirmation = !resData.session;
 
-    if (__DEV__) {
-      console.log('[REHVO Auth Diagnostic - signUpWithEmail success]', {
-        userId: resData.user.id,
-        email: resData.user.email,
-        needsConfirmation,
-        hasSession: Boolean(resData.session),
-      });
-    }
-
     return {
       success: true,
       data: { userId: resData.user.id, email: resData.user.email || data.email },
       requiresEmailConfirmation: needsConfirmation,
     };
   } catch (err) {
-    if (__DEV__) {
-      console.log('[REHVO Auth Diagnostic - signUpWithEmail catch]', err);
-    }
     return { success: false, error: getUserFriendlyError(err) };
   }
 }
@@ -233,13 +219,6 @@ export async function signInWithEmail(email: string, password: string): Promise<
     });
 
     if (error) {
-      if (__DEV__) {
-        console.log('[REHVO Auth Diagnostic - signInWithEmail error]', {
-          status: error.status,
-          code: error.code,
-          message: error.message,
-        });
-      }
       return { success: false, error: getUserFriendlyError(error) };
     }
 
@@ -247,21 +226,11 @@ export async function signInWithEmail(email: string, password: string): Promise<
       return { success: false, error: 'Login failed. Please try again.' };
     }
 
-    if (__DEV__) {
-      console.log('[REHVO Auth Diagnostic - signInWithEmail success]', {
-        userId: data.user.id,
-        email: data.user.email,
-      });
-    }
-
     return {
       success: true,
       data: { userId: data.user.id, email: data.user.email || email },
     };
   } catch (err) {
-    if (__DEV__) {
-      console.log('[REHVO Auth Diagnostic - signInWithEmail catch]', err);
-    }
     return { success: false, error: getUserFriendlyError(err) };
   }
 }
@@ -379,6 +348,114 @@ export async function signInWithGoogle(): Promise<AuthResult<{ userId: string; e
     }
 
     return { success: false, error: 'Google sign-in could not be completed. Please try again.' };
+  } catch (err) {
+    return { success: false, error: getUserFriendlyError(err) };
+  }
+}
+
+/** Sign in with Apple OAuth via Supabase and Expo WebBrowser */
+export async function signInWithApple(): Promise<AuthResult<{ userId: string; email: string }>> {
+  if (!isSupabaseConfigured()) {
+    return { success: false, error: getUserFriendlyError(null) };
+  }
+
+  try {
+    const redirectUrl = makeRedirectUri({
+      scheme: 'rehvo',
+      path: 'auth/callback',
+    });
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'apple',
+      options: {
+        redirectTo: redirectUrl,
+        skipBrowserRedirect: true,
+      },
+    });
+
+    if (error) {
+      return { success: false, error: getUserFriendlyError(error) };
+    }
+
+    if (!data?.url) {
+      return { success: false, error: 'Unable to start Apple sign-in. Please try again.' };
+    }
+
+    const browserResult = await WebBrowser.openAuthSessionAsync(data.url, redirectUrl);
+
+    if (browserResult.type === 'cancel' || browserResult.type === 'dismiss') {
+      return { success: false, error: 'Apple sign-in was cancelled.' };
+    }
+
+    if (browserResult.type === 'success' && browserResult.url) {
+      if (browserResult.url.includes('error=')) {
+        const parsed = QueryParams.getQueryParams(browserResult.url);
+        const errorDesc =
+          parsed.params?.error_description ||
+          parsed.params?.error ||
+          'Apple sign-in failed.';
+        return { success: false, error: getUserFriendlyError(new Error(errorDesc)) };
+      }
+
+      if (browserResult.url.includes('#access_token=') || browserResult.url.includes('&access_token=')) {
+        const fragment = browserResult.url.split('#')[1] || '';
+        const params = new URLSearchParams(fragment);
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+
+        if (accessToken && refreshToken) {
+          const { data: sessionData, error: sessionErr } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+
+          if (sessionErr) {
+            return { success: false, error: getUserFriendlyError(sessionErr) };
+          }
+
+          if (sessionData.user) {
+            return {
+              success: true,
+              data: {
+                userId: sessionData.user.id,
+                email: sessionData.user.email || '',
+              },
+            };
+          }
+        }
+      }
+
+      const parsed = QueryParams.getQueryParams(browserResult.url);
+      const code = parsed.params?.code;
+      if (code) {
+        const { data: sessionData, error: sessionErr } = await supabase.auth.exchangeCodeForSession(code);
+        if (sessionErr) {
+          return { success: false, error: getUserFriendlyError(sessionErr) };
+        }
+        if (sessionData.user) {
+          return {
+            success: true,
+            data: {
+              userId: sessionData.user.id,
+              email: sessionData.user.email || '',
+            },
+          };
+        }
+      }
+
+      const session = await getSession();
+      if (session?.user) {
+        return {
+          success: true,
+          data: {
+            userId: session.user.id,
+            email: session.user.email || '',
+          },
+        };
+      }
+    }
+
+    return { success: false, error: 'Apple sign-in could not be completed. Please try again.' };
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
   }
@@ -514,3 +591,30 @@ export async function deleteAccount(userId: string): Promise<AuthResult> {
     return { success: false, error: getUserFriendlyError(err) };
   }
 }
+
+/** Ensure active Supabase user session with a valid public.profiles record */
+export async function ensureUserSession(): Promise<{ userId: string; name: string } | null> {
+  if (!isSupabaseConfigured()) return null;
+
+  try {
+    const { data: authData } = await supabase.auth.getUser();
+    const currentUserId = authData?.user?.id;
+
+    if (!currentUserId) return null;
+
+    // Check if public.profiles exists
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('id, full_name')
+      .eq('id', currentUserId)
+      .maybeSingle();
+
+    return {
+      userId: currentUserId,
+      name: existingProfile?.full_name || authData.user.user_metadata?.full_name || 'REHVO User',
+    };
+  } catch {
+    return null;
+  }
+}
+

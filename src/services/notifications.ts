@@ -6,7 +6,8 @@ import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import type { NotificationItem, SupabaseNotification, SupabaseUserPushToken } from '../types';
+import type { NotificationItem, SupabaseNotification, SupabaseUserPushToken, NotificationPreferences } from '../types';
+import { ENABLE_IOS_PUSH } from '../config/buildConfig';
 
 // ---------------------------------------------------------------------------
 // Response Envelope
@@ -269,10 +270,258 @@ export async function deleteNotification(
   }
 }
 
+/** Bulk mark notifications as read */
+export async function bulkMarkNotificationsAsRead(
+  notificationIds: string[],
+  userId?: string
+): Promise<NotificationServiceResult<void>> {
+  if (!isSupabaseConfigured() || !notificationIds || notificationIds.length === 0) {
+    return { success: true };
+  }
+
+  try {
+    let currentUserId = userId;
+    if (!currentUserId) {
+      const { data: authData } = await supabase.auth.getUser();
+      currentUserId = authData?.user?.id;
+    }
+    if (!currentUserId) {
+      return { success: false, error: 'User not signed in' };
+    }
+
+    const { error } = await supabase
+      .from('notifications')
+      .update({ read_at: new Date().toISOString() })
+      .in('id', notificationIds)
+      .eq('user_id', currentUserId);
+
+    if (error) {
+      return {
+        success: false,
+        error: getUserFriendlyNotificationError(error, "Couldn't update notifications."),
+      };
+    }
+
+    return { success: true };
+  } catch (err) {
+    return {
+      success: false,
+      error: getUserFriendlyNotificationError(err, "Couldn't update notifications."),
+    };
+  }
+}
+
+/** Bulk delete notifications */
+export async function bulkDeleteNotifications(
+  notificationIds: string[],
+  userId?: string
+): Promise<NotificationServiceResult<void>> {
+  if (!isSupabaseConfigured() || !notificationIds || notificationIds.length === 0) {
+    return { success: true };
+  }
+
+  try {
+    let currentUserId = userId;
+    if (!currentUserId) {
+      const { data: authData } = await supabase.auth.getUser();
+      currentUserId = authData?.user?.id;
+    }
+    if (!currentUserId) {
+      return { success: false, error: 'User not signed in' };
+    }
+
+    const { error } = await supabase
+      .from('notifications')
+      .delete()
+      .in('id', notificationIds)
+      .eq('user_id', currentUserId);
+
+    if (error) {
+      return {
+        success: false,
+        error: getUserFriendlyNotificationError(error, "Couldn't delete notifications."),
+      };
+    }
+
+    return { success: true };
+  } catch (err) {
+    return {
+      success: false,
+      error: getUserFriendlyNotificationError(err, "Couldn't delete notifications."),
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Notification Preferences Management
+// ---------------------------------------------------------------------------
+
+export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
+  chat_enabled: true,
+  property_enabled: true,
+  visit_enabled: true,
+  wallet_enabled: true,
+  rewards_enabled: true,
+  society_enabled: true,
+  marketing_enabled: false,
+  email_enabled: true,
+  sms_enabled: true,
+  quiet_hours_enabled: false,
+  quiet_start: '22:00',
+  quiet_end: '08:00',
+  messages: true,
+  visits: true,
+  property_updates: true,
+  price_changes: true,
+  wallet_rewards: true,
+  flatmates: true,
+  owner_leads: true,
+  rent_due: true,
+  marketing: false,
+  quiet_hours_start: '22:00',
+  quiet_hours_end: '08:00',
+  sound_enabled: true,
+  sound_name: 'default',
+  vibration_enabled: true,
+  lock_screen_previews: true,
+  badge_enabled: true,
+};
+
+/** Get notification preferences for a user */
+export async function getNotificationPreferences(
+  userId?: string
+): Promise<NotificationServiceResult<NotificationPreferences>> {
+  if (!isSupabaseConfigured()) {
+    return { success: true, data: { ...DEFAULT_NOTIFICATION_PREFERENCES } };
+  }
+
+  try {
+    let currentUserId = userId;
+    if (!currentUserId) {
+      const { data: authData } = await supabase.auth.getUser();
+      currentUserId = authData?.user?.id;
+    }
+    if (!currentUserId) {
+      return { success: true, data: { ...DEFAULT_NOTIFICATION_PREFERENCES } };
+    }
+
+    const { data, error } = await supabase
+      .from('notification_preferences')
+      .select('*')
+      .eq('user_id', currentUserId)
+      .maybeSingle();
+
+    if (error) {
+      return {
+        success: false,
+        error: getUserFriendlyNotificationError(error, "Couldn't load preferences."),
+        data: { ...DEFAULT_NOTIFICATION_PREFERENCES },
+      };
+    }
+
+    if (!data) {
+      // Initialize default preferences in DB
+      const initialPrefs = {
+        user_id: currentUserId,
+        ...DEFAULT_NOTIFICATION_PREFERENCES,
+        updated_at: new Date().toISOString(),
+      };
+      await supabase.from('notification_preferences').upsert(initialPrefs, { onConflict: 'user_id' });
+      return { success: true, data: initialPrefs };
+    }
+
+    return {
+      success: true,
+      data: {
+        user_id: data.user_id,
+        messages: data.messages ?? true,
+        visits: data.visits ?? true,
+        property_updates: data.property_updates ?? true,
+        price_changes: data.price_changes ?? true,
+        wallet_rewards: data.wallet_rewards ?? true,
+        flatmates: data.flatmates ?? true,
+        owner_leads: data.owner_leads ?? true,
+        rent_due: data.rent_due ?? true,
+        marketing: data.marketing ?? false,
+        quiet_hours_enabled: data.quiet_hours_enabled ?? false,
+        quiet_hours_start: data.quiet_hours_start || '22:00',
+        quiet_hours_end: data.quiet_hours_end || '08:00',
+        sound_enabled: data.sound_enabled ?? true,
+        sound_name: data.sound_name || 'default',
+        vibration_enabled: data.vibration_enabled ?? true,
+        lock_screen_previews: data.lock_screen_previews ?? true,
+        badge_enabled: data.badge_enabled ?? true,
+        updated_at: data.updated_at,
+      },
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: getUserFriendlyNotificationError(err, "Couldn't load preferences."),
+      data: { ...DEFAULT_NOTIFICATION_PREFERENCES },
+    };
+  }
+}
+
+/** Update notification preferences for current user */
+export async function updateNotificationPreferences(
+  prefs: Partial<NotificationPreferences>,
+  userId?: string
+): Promise<NotificationServiceResult<void>> {
+  if (!isSupabaseConfigured()) {
+    return { success: true };
+  }
+
+  try {
+    let currentUserId = userId;
+    if (!currentUserId) {
+      const { data: authData } = await supabase.auth.getUser();
+      currentUserId = authData?.user?.id;
+    }
+    if (!currentUserId) {
+      return { success: false, error: 'User not signed in' };
+    }
+
+    const { error } = await supabase
+      .from('notification_preferences')
+      .upsert(
+        {
+          user_id: currentUserId,
+          ...prefs,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' }
+      );
+
+    if (error) {
+      return {
+        success: false,
+        error: getUserFriendlyNotificationError(error, "Couldn't save preferences."),
+      };
+    }
+
+    return { success: true };
+  } catch (err) {
+    return {
+      success: false,
+      error: getUserFriendlyNotificationError(err, "Couldn't save preferences."),
+    };
+  }
+}
+
 /** Create an in-app notification event */
 export async function createNotification(params: {
   userId: string;
-  type: 'visit' | 'message' | 'application' | 'price' | 'system' | 'verification';
+  type:
+    | 'visit'
+    | 'message'
+    | 'application'
+    | 'price'
+    | 'system'
+    | 'verification'
+    | 'flatmate_wave'
+    | 'property_saved'
+    | 'enquiry';
   title: string;
   body: string;
   data?: Record<string, any>;
@@ -322,6 +571,7 @@ export async function createNotification(params: {
 export async function getExpoPushToken(): Promise<string | null> {
   try {
     if (Platform.OS === 'web') return null;
+    if (Platform.OS === 'ios' && !ENABLE_IOS_PUSH) return null;
 
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -341,9 +591,7 @@ export async function getExpoPushToken(): Promise<string | null> {
       projectId ? { projectId } : undefined
     );
     return tokenData.data || null;
-  } catch (error) {
-    // Non-blocking warning on simulator / web
-    console.warn('[Push] Error getting push token:', error);
+  } catch {
     return null;
   }
 }
@@ -485,28 +733,48 @@ export function subscribeToNotifications(
     return { unsubscribe: () => {} };
   }
 
-  const channel = supabase
-    .channel(`user_notifications:${userId}`)
-    .on(
-      'postgres_changes',
-      {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'notifications',
-        filter: `user_id=eq.${userId}`,
-      },
-      (payload) => {
-        if (payload.new) {
-          const mapped = mapSupabaseNotificationToApp(payload.new);
-          onNewNotification(mapped);
-        }
+  const topic = `user_notifications:${userId}`;
+
+  // 1. Remove existing channel with the same topic to avoid duplicate / invalid state
+  try {
+    const existingChannels = supabase.getChannels();
+    for (const ch of existingChannels) {
+      if (ch.topic === topic || ch.topic === `realtime:${topic}`) {
+        supabase.removeChannel(ch);
       }
-    )
-    .subscribe();
+    }
+  } catch {
+    // Channel cleanup handled silently
+  }
+
+  // 2. Create channel once
+  const channel = supabase.channel(topic);
+
+  // 3. Register ALL .on("postgres_changes", ...) listeners BEFORE calling .subscribe()
+  channel.on(
+    'postgres_changes',
+    {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'notifications',
+      filter: `user_id=eq.${userId}`,
+    },
+    (payload) => {
+      if (payload.new) {
+        const mapped = mapSupabaseNotificationToApp(payload.new);
+        onNewNotification(mapped);
+      }
+    }
+  );
+
+  // 4. Finally call .subscribe()
+  channel.subscribe();
 
   return {
     unsubscribe: () => {
-      supabase.removeChannel(channel);
+      try {
+        supabase.removeChannel(channel);
+      } catch {}
     },
   };
 }

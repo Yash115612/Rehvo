@@ -1,8 +1,6 @@
 import React from 'react';
-import { RenterHomeScreen } from '../../src/components/home/RenterHomeScreen';
-import { useAppStore } from '../../src/store/useAppStore';
+import { V4PGScreen } from '../../src/components/v4/screens/V4PGScreen';
 
-export default function PGCategoryPage() {
-  const { user } = useAppStore();
-  return <RenterHomeScreen user={user} initialCategory="pg" />;
+export default function PGRoute() {
+  return <V4PGScreen />;
 }

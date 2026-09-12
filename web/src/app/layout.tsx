@@ -1,26 +1,36 @@
 import React from 'react';
-import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
-import { RehvoHeader } from '@/components/home/RehvoHeader';
-import { RehvoFooter } from '@/components/home/RehvoFooter';
-import { AuthProvider } from '@/lib/auth/AuthContext';
+import '@/styles/theme.css';
+import { Navbar } from '@/components/v10/Navbar';
+import { Footer } from '@/components/v10/Footer';
+import { Providers } from '@/components/Providers';
 
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-plus-jakarta',
-  display: 'swap',
-});
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in'),
   title: {
-    default: 'REHVO | Zero-Brokerage Flats & Flatmates in Mumbai',
+    default: 'REHVO — Verified Rental Marketplace in India',
     template: '%s | REHVO',
   },
   description:
-    'Discover verified 1, 2, 3 BHK flats, private rooms, PGs & flatmates for rent in Mumbai with zero brokerage. Direct owner chat and scheduled visits on REHVO.',
+    'Find verified rental homes, PGs, commercial properties, flatmates and trusted brokers with AI-powered search and neighbourhood insights.',
+  icons: {
+    icon: '/icon.png',
+  },
+  openGraph: {
+    title: "REHVO — India's Verified Rental Marketplace",
+    description: 'Discover verified properties from direct homeowners, trusted brokers, and developers with AI-powered search, maps, and instant chat.',
+    url: 'https://rehvo.in',
+    siteName: 'REHVO',
+    locale: 'en_IN',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -29,13 +39,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={plusJakarta.variable}>
-      <body className={`${plusJakarta.className} min-h-screen flex flex-col bg-[#FAF8F5] text-stone-900 selection:bg-orange-500 selection:text-white antialiased`}>
-        <AuthProvider>
-          <RehvoHeader />
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="preload" href="/rehvo-logo.png" as="image" type="image/png" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="font-sans min-h-screen flex flex-col bg-[#F8FAFB] text-[#031B2A] selection:bg-[#0F766E] selection:text-white antialiased overflow-x-hidden">
+        <Providers>
+          <Navbar />
           <main className="flex-1">{children}</main>
-          <RehvoFooter />
-        </AuthProvider>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

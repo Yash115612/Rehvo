@@ -1,8 +1,6 @@
 import React from 'react';
-import { RenterHomeScreen } from '../../src/components/home/RenterHomeScreen';
-import { useAppStore } from '../../src/store/useAppStore';
+import { V4CommercialScreen } from '../../src/components/v4/screens/V4CommercialScreen';
 
-export default function StudiosCategoryPage() {
-  const { user } = useAppStore();
-  return <RenterHomeScreen user={user} initialCategory="studios" />;
+export default function StudiosRoute() {
+  return <V4CommercialScreen />;
 }

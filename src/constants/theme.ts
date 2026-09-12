@@ -1,20 +1,22 @@
+import { V4_COLORS } from '../theme/v4Theme';
+
 export const REHVO_COLORS = {
-  primaryInk: '#17151F',
-  warmIvory: '#F7F5F0',
-  signatureViolet: '#6C4DFF',
-  softViolet: '#EEE9FF',
-  coral: '#FF6B4A',
-  softCoral: '#FFF0EB',
-  successGreen: '#32B768',
-  softGreen: '#EAF8F0',
+  primaryInk: '#0F172A',
+  warmIvory: '#F8FAFC',
+  signatureViolet: V4_COLORS.primary,
+  softViolet: 'rgba(15, 118, 110, 0.08)',
+  coral: V4_COLORS.primary,
+  softCoral: 'rgba(15, 118, 110, 0.08)',
+  successGreen: '#16A34A',
+  softGreen: '#DCFCE7',
   pureWhite: '#FFFFFF',
-  surfaceVariant: '#E4E2DD',
-  outlineVariant: '#C9C5CC',
-  outline: '#79767C',
-  surfaceContainerLow: '#F5F3EE',
-  surfaceContainerHigh: '#EAE8E3',
-  onSurfaceVariant: '#48464B',
-  darkContainer: '#1C1A24',
+  surfaceVariant: '#F1F5F9',
+  outlineVariant: '#E2E8F0',
+  outline: '#CBD5E1',
+  surfaceContainerLow: '#F8FAFC',
+  surfaceContainerHigh: '#E2E8F0',
+  onSurfaceVariant: '#64748B',
+  darkContainer: '#0F172A',
 };
 
 export const MUMBAI_LOCALITIES = [
