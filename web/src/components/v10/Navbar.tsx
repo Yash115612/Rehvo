@@ -91,7 +91,6 @@ export const Navbar: React.FC = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [ctaDropdownOpen, setCtaDropdownOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [localSavedCount, setLocalSavedCount] = useState(0);
 
@@ -115,7 +114,6 @@ export const Navbar: React.FC = () => {
 
   const totalSavedCount = (savedPropertyIds && savedPropertyIds.length > 0) ? savedPropertyIds.length : localSavedCount;
 
-  const ctaRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === '/' || !pathname || pathname === '';
@@ -131,9 +129,6 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (ctaRef.current && !ctaRef.current.contains(e.target as Node)) {
-        setCtaDropdownOpen(false);
-      }
       if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
         setServicesDropdownOpen(false);
       }
@@ -141,11 +136,6 @@ export const Navbar: React.FC = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const handleCtaOption = (path: string) => {
-    setCtaDropdownOpen(false);
-    router.push(path);
-  };
 
   const isNavActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -353,131 +343,6 @@ export const Navbar: React.FC = () => {
             <Smartphone className="w-3.5 h-3.5" />
             <span>Download App</span>
           </Link>
-
-          {/* SINGLE BUTTON TYPE: "Start on REHVO" Popover (Secondary on large screens, compact on mid screens) */}
-          <div className="relative hidden xl:block" ref={ctaRef}>
-            <button
-              type="button"
-              onClick={() => setCtaDropdownOpen((prev) => !prev)}
-              className={`h-10 px-3.5 rounded-full text-xs font-bold flex items-center gap-1.5 group cursor-pointer whitespace-nowrap transition-all ${
-                isScrolled ? 'rehvo-glass-capsule-scrolled text-[#031B2A]' : 'rehvo-glass-capsule text-[#031B2A]'
-              }`}
-            >
-              <span>Explore</span>
-              <ChevronDown className={`w-3 h-3 text-[#64748B] transition-transform duration-200 ${ctaDropdownOpen ? 'rotate-180' : ''}`} />
-            </button>
-
-            {/* Single Button Options Popover Dialog */}
-            {ctaDropdownOpen && (
-              <div className="absolute right-0 top-12 w-80 bg-white rounded-[26px] shadow-2xl border border-stone-200/90 p-3.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="flex items-center justify-between px-2 pb-2.5 border-b border-stone-100">
-                  <div className="flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#0F766E]" />
-                    <span className="font-extrabold text-xs text-[#031B2A] uppercase tracking-wider">
-                      Start on REHVO
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setCtaDropdownOpen(false)}
-                    className="p-1 rounded-full text-[#64748B] hover:text-[#031B2A] hover:bg-stone-100 transition cursor-pointer"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-                <div className="pt-2 space-y-1.5">
-                  {/* Option 1: Residential Property */}
-                  <button
-                    type="button"
-                    onClick={() => handleCtaOption('/list-property')}
-                    className="w-full text-left p-3 rounded-2xl hover:bg-[#CCFBF1]/50 border border-transparent hover:border-[#99F6E4] transition flex items-start gap-3 group cursor-pointer"
-                  >
-                    <div className="p-2 rounded-xl bg-[#CCFBF1] text-[#0F766E] group-hover:bg-[#0F766E] group-hover:text-white transition shrink-0 mt-0.5">
-                      <Home className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-extrabold text-xs text-[#031B2A] group-hover:text-[#0F766E] transition">
-                          List Residential Flat
-                        </span>
-                        <ArrowRight className="w-3 h-3 text-[#64748B] group-hover:text-[#0F766E] group-hover:translate-x-0.5 transition-transform" />
-                      </div>
-                      <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
-                        Flats, rooms, PGs &amp; verified listings
-                      </p>
-                    </div>
-                  </button>
-
-                  {/* Option 2: Commercial Space */}
-                  <button
-                    type="button"
-                    onClick={() => handleCtaOption('/list-property?type=commercial')}
-                    className="w-full text-left p-3 rounded-2xl hover:bg-[#EEF2FF]/60 border border-transparent hover:border-[#C7D2FE] transition flex items-start gap-3 group cursor-pointer"
-                  >
-                    <div className="p-2 rounded-xl bg-[#EEF2FF] text-[#4F46E5] group-hover:bg-[#4F46E5] group-hover:text-white transition shrink-0 mt-0.5">
-                      <Building2 className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-extrabold text-xs text-[#031B2A] group-hover:text-[#4F46E5] transition">
-                          List Commercial Space
-                        </span>
-                        <ArrowRight className="w-3 h-3 text-[#64748B] group-hover:text-[#4F46E5] group-hover:translate-x-0.5 transition-transform" />
-                      </div>
-                      <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
-                        Offices, retail shops &amp; workspaces
-                      </p>
-                    </div>
-                  </button>
-
-                  {/* Option 3: Flatmate Profile */}
-                  <button
-                    type="button"
-                    onClick={() => handleCtaOption('/flatmates')}
-                    className="w-full text-left p-3 rounded-2xl hover:bg-[#DCFCE7]/60 border border-transparent hover:border-[#BBF7D0] transition flex items-start gap-3 group cursor-pointer"
-                  >
-                    <div className="p-2 rounded-xl bg-[#DCFCE7] text-[#16A34A] group-hover:bg-[#16A34A] group-hover:text-white transition shrink-0 mt-0.5">
-                      <Users className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-extrabold text-xs text-[#031B2A] group-hover:text-[#16A34A] transition">
-                          Find Roommates
-                        </span>
-                        <ArrowRight className="w-3 h-3 text-[#64748B] group-hover:text-[#16A34A] group-hover:translate-x-0.5 transition-transform" />
-                      </div>
-                      <p className="text-[11px] text-[#64748B] mt-0.5 leading-snug">
-                        Connect with compatible flatmates
-                      </p>
-                    </div>
-                  </button>
-
-                  {/* Option 4: Download Mobile App */}
-                  <button
-                    type="button"
-                    onClick={() => handleCtaOption('/download')}
-                    className="w-full text-left p-3 rounded-2xl bg-[#F0FDFA] hover:bg-[#CCFBF1]/50 border border-[#99F6E4] transition flex items-start gap-3 group cursor-pointer"
-                  >
-                    <div className="p-2 rounded-xl bg-[#0F766E] text-white transition shrink-0 mt-0.5 shadow-sm shadow-teal-900/20">
-                      <Smartphone className="w-4 h-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="font-extrabold text-xs text-[#0F766E] transition">
-                          Download REHVO App
-                        </span>
-                        <ArrowRight className="w-3 h-3 text-[#0F766E] group-hover:translate-x-0.5 transition-transform" />
-                      </div>
-                      <p className="text-[11px] text-[#0F766E]/80 mt-0.5 leading-snug">
-                        Instant visits, owner &amp; broker chat, transparent pricing
-                      </p>
-                    </div>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Mobile Hamburger Toggle */}
           <button
