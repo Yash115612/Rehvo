@@ -17,17 +17,58 @@ import {
   Users,
   LayoutDashboard,
   Smartphone,
+  Shield,
+  CreditCard,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useHeroTheme } from '@/components/v10/HeroThemeContext';
+
+interface ServiceDropdownItem {
+  label: string;
+  href: string;
+  desc: string;
+  tag?: string;
+  icon: React.ElementType;
+}
+
+const SERVICES_DROPDOWN_ITEMS: ServiceDropdownItem[] = [
+  {
+    label: 'Zero Deposit',
+    href: '/services#zero-deposit',
+    desc: 'Move in with 0 cash deposit guarantee',
+    tag: 'Popular',
+    icon: Shield,
+  },
+  {
+    label: 'Rent Pay',
+    href: '/services#rent-pay',
+    desc: 'Pay rent with credit card & get 1% R-Cash',
+    tag: 'Rewards',
+    icon: CreditCard,
+  },
+  {
+    label: 'KYC Verification',
+    href: '/services#kyc',
+    desc: 'Aadhaar e-sign & digital police intimation',
+    tag: 'Govt Compliant',
+    icon: ShieldCheck,
+  },
+  {
+    label: 'Society Services',
+    href: '/society-services',
+    desc: 'Smart visitor QR passes & maintenance for RWAs',
+    tag: 'For Societies',
+    icon: Building2,
+  },
+];
 
 const NAV_ITEMS = [
   { label: 'Rent', href: '/search', accentColor: '#0F766E' },
   { label: 'PG & Hostel', href: '/pg', accentColor: '#D97706' },
   { label: 'Commercial', href: '/commercial', accentColor: '#2563EB' },
   { label: 'Flatmates', href: '/flatmates', accentColor: '#10B981' },
-  { label: 'Services', href: '/services', accentColor: '#0284C7' },
-  { label: 'Society', href: '/society-services', accentColor: '#7C3AED' },
+  { label: 'Services', href: '/services', accentColor: '#0284C7', isDropdown: true },
   { label: 'AI Concierge', href: '/ai-concierge', accentColor: '#0F766E', isAi: true },
 ];
 
@@ -51,6 +92,7 @@ export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [ctaDropdownOpen, setCtaDropdownOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [localSavedCount, setLocalSavedCount] = useState(0);
 
   useEffect(() => {
@@ -74,6 +116,7 @@ export const Navbar: React.FC = () => {
   const totalSavedCount = (savedPropertyIds && savedPropertyIds.length > 0) ? savedPropertyIds.length : localSavedCount;
 
   const ctaRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === '/' || !pathname || pathname === '';
 
@@ -90,6 +133,9 @@ export const Navbar: React.FC = () => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ctaRef.current && !ctaRef.current.contains(e.target as Node)) {
         setCtaDropdownOpen(false);
+      }
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
+        setServicesDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -153,6 +199,88 @@ export const Navbar: React.FC = () => {
         >
           {NAV_ITEMS.map((item) => {
             const active = isNavActive(item.href);
+
+            if (item.isDropdown) {
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  ref={servicesRef}
+                  onMouseEnter={() => setServicesDropdownOpen(true)}
+                  onMouseLeave={() => setServicesDropdownOpen(false)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setServicesDropdownOpen((prev) => !prev)}
+                    className={`h-10 px-4 rounded-full text-xs flex items-center gap-1.5 whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                      active || servicesDropdownOpen
+                        ? 'rehvo-glass-capsule-active font-black text-[#031B2A]'
+                        : isScrolled
+                        ? 'rehvo-glass-capsule-scrolled font-bold text-[#64748B] hover:text-[#031B2A]'
+                        : 'rehvo-glass-capsule font-bold text-[#64748B] hover:text-[#031B2A]'
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    <ChevronDown
+                      className={`w-3 h-3 transition-transform duration-200 ${
+                        servicesDropdownOpen ? 'rotate-180 text-[#0F766E]' : 'text-[#64748B]'
+                      }`}
+                    />
+                  </button>
+
+                  {servicesDropdownOpen && (
+                    <div className="absolute left-0 top-11 w-80 rounded-[24px] bg-white/95 backdrop-blur-xl border border-[#E2E8F0] shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                      <div className="px-3 py-1.5 border-b border-slate-100 flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B]">
+                          REHVO Services
+                        </span>
+                        <Link
+                          href="/services"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="text-[11px] font-bold text-[#0F766E] hover:underline"
+                        >
+                          View All
+                        </Link>
+                      </div>
+
+                      <div className="py-1.5 space-y-1">
+                        {SERVICES_DROPDOWN_ITEMS.map((service) => {
+                          const Icon = service.icon;
+                          return (
+                            <Link
+                              key={service.label}
+                              href={service.href}
+                              onClick={() => setServicesDropdownOpen(false)}
+                              className="group flex items-start gap-3 p-2.5 rounded-2xl hover:bg-[#F0FDFA] transition-colors"
+                            >
+                              <div className="w-8 h-8 rounded-xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                <Icon className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-xs font-bold text-[#031B2A] group-hover:text-[#0F766E] transition-colors">
+                                    {service.label}
+                                  </span>
+                                  {service.tag && (
+                                    <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                      {service.tag}
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-[11px] text-[#64748B] line-clamp-1">
+                                  {service.desc}
+                                </p>
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <Link
                 key={item.label}
@@ -406,6 +534,52 @@ export const Navbar: React.FC = () => {
 
                 {NAV_ITEMS.map((item) => {
                   const active = isNavActive(item.href);
+
+                  if (item.isDropdown) {
+                    return (
+                      <div key={item.label} className="space-y-1">
+                        <Link
+                          href={item.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`w-full py-3 px-4 rounded-2xl text-sm font-bold flex items-center justify-between transition-all duration-200 ${
+                            active
+                              ? 'rehvo-glass-capsule-active font-black'
+                              : 'rehvo-glass-capsule text-[#031B2A]'
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <span>{item.label}</span>
+                            {active && (
+                              <span
+                                className="w-2 h-2 rounded-full block animate-pulse"
+                                style={{ backgroundColor: item.accentColor }}
+                              />
+                            )}
+                          </span>
+                          <ArrowRight className="w-4 h-4 opacity-50" />
+                        </Link>
+
+                        <div className="pl-3 pr-1 py-1 space-y-1">
+                          {SERVICES_DROPDOWN_ITEMS.map((svc) => (
+                            <Link
+                              key={svc.label}
+                              href={svc.href}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="w-full py-2 px-3 rounded-xl text-xs font-semibold text-[#475569] hover:text-[#0F766E] flex items-center justify-between hover:bg-white/60 transition"
+                            >
+                              <span>{svc.label}</span>
+                              {svc.tag && (
+                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-50 text-teal-700">
+                                  {svc.tag}
+                                </span>
+                              )}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+
                   return (
                     <Link
                       key={item.label}

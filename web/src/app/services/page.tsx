@@ -99,7 +99,133 @@ export default function ServicesPage() {
           </h1>
 
           <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
-            From move-in deep cleaning to insured packing and shifting — book background-verified service professionals with fixed pricing.
+            Move-in essentials, financial freedom, digital tenancy agreements, and premium home maintenance across Mumbai.
+          </p>
+        </div>
+
+        {/* Flagship Fintech & Compliance Solutions */}
+        <div className="mb-16 space-y-6">
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black text-[#031B2A] tracking-tight">
+              REHVO Financial &amp; Rental Ecosystem
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Zero Deposit */}
+            <div
+              id="zero-deposit"
+              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#0F766E]/5 to-[#10B981]/10 border border-[#0F766E]/20 shadow-card flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[11px] font-black uppercase tracking-wider">
+                  <span>Zero Deposit Pass</span>
+                </div>
+                <h3 className="text-lg font-black text-[#031B2A]">Zero Cash Deposit</h3>
+                <p className="text-xs text-[#64748B] leading-relaxed font-medium">
+                  Move into verified rental homes without locking in 6 to 10 months of heavy cash deposit. Low monthly guarantee fee backed by institutional surety.
+                </p>
+                <div className="pt-2 space-y-1 text-xs font-bold text-[#031B2A]">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                    <span>0 upfront security lock-in</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                    <span>Instant eligibility check</span>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6">
+                <Link
+                  href="/download"
+                  className="h-11 w-full rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center justify-center gap-2 transition"
+                >
+                  <span>Apply on Mobile App</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Rent Pay */}
+            <div
+              id="rent-pay"
+              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#0284C7]/5 to-[#38BDF8]/10 border border-[#0284C7]/20 shadow-card flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E0F2FE] text-[#0284C7] text-[11px] font-black uppercase tracking-wider">
+                  <span>1% R-Cash Rewards</span>
+                </div>
+                <h3 className="text-lg font-black text-[#031B2A]">Pay Rent Online</h3>
+                <p className="text-xs text-[#64748B] leading-relaxed font-medium">
+                  Pay your house rent using Credit Cards, UPI, or Net Banking. Enjoy 45-day interest-free credit cycles and earn guaranteed 1% R-Cash on every transfer.
+                </p>
+                <div className="pt-2 space-y-1 text-xs font-bold text-[#031B2A]">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#0284C7]" />
+                    <span>All major credit cards accepted</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#0284C7]" />
+                    <span>Instant landlord bank credit</span>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6">
+                <Link
+                  href="/download"
+                  className="h-11 w-full rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white text-xs font-black flex items-center justify-center gap-2 transition"
+                >
+                  <span>Pay Rent via App</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* KYC Verification */}
+            <div
+              id="kyc"
+              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#8B5CF6]/5 to-[#A78BFA]/10 border border-[#8B5CF6]/20 shadow-card flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3E8FF] text-[#7C3AED] text-[11px] font-black uppercase tracking-wider">
+                  <span>100% Govt Compliant</span>
+                </div>
+                <h3 className="text-lg font-black text-[#031B2A]">KYC &amp; Digital Lease</h3>
+                <p className="text-xs text-[#64748B] leading-relaxed font-medium">
+                  Doorstep Aadhaar e-sign, digital stamp duty, and Mumbai Police tenant intimation. Zero queues, legally enforceable rental contracts in 15 minutes.
+                </p>
+                <div className="pt-2 space-y-1 text-xs font-bold text-[#031B2A]">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#7C3AED]" />
+                    <span>Aadhaar OTP e-signature</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#7C3AED]" />
+                    <span>Digital Police NOC acknowledgment</span>
+                  </div>
+                </div>
+              </div>
+              <div className="pt-6">
+                <Link
+                  href="/contact"
+                  className="h-11 w-full rounded-full bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-xs font-black flex items-center justify-center gap-2 transition"
+                >
+                  <span>Request Digital Agreement</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Section Title for Home Maintenance */}
+        <div className="mb-6">
+          <h2 className="text-xl sm:text-2xl font-black text-[#031B2A] tracking-tight">
+            Move-In &amp; Home Maintenance Catalog
+          </h2>
+          <p className="text-xs sm:text-sm text-[#64748B] font-medium">
+            On-demand verified professionals for deep cleaning, shifting, painting, and repairs.
           </p>
         </div>
 

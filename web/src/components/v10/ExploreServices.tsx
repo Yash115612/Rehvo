@@ -54,7 +54,7 @@ const SERVICES: ServiceItem[] = [
     icon: FileCheck,
     iconColor: '#0F766E',
     iconBg: '#F0FDFA',
-    route: '/society-services',
+    route: '/services',
     popular: true,
   },
   {
@@ -104,7 +104,7 @@ const SERVICES: ServiceItem[] = [
     icon: ShieldCheck,
     iconColor: '#0F766E',
     iconBg: '#F0FDFA',
-    route: '/society-services',
+    route: '/services',
   },
   {
     id: 'move_in',

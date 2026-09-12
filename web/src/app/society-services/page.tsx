@@ -2,58 +2,69 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import {
-  Building,
+  Building2,
   QrCode,
   CreditCard,
   ShieldCheck,
-  Users,
+  Headphones,
   Bell,
-  CheckCircle2,
+  CalendarDays,
   ArrowRight,
+  CheckCircle2,
   Sparkles,
 } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'REHVO Society Services | Smart Gated Community Management',
+  title: 'REHVO Society Services | Smart Society Management for Apartments & RWAs',
   description:
-    'Complete residential society ecosystem: digital visitor QR passes, zero-surcharge maintenance payments, amenity reservations, and guard intercom.',
+    'Smart gated community management ecosystem for residential societies and RWAs in Mumbai: digital visitor QR passes, maintenance payments, clubhouse booking, and guard intercom.',
   canonicalUrl: 'https://rehvo.in/society-services',
 });
 
 const SOCIETY_FEATURES = [
   {
     icon: QrCode,
-    title: 'Digital Visitor Pass',
-    desc: 'Residents pre-approve guests, delivery agents, and maintenance contractors with dynamic QR entry codes sent straight to WhatsApp.',
+    title: 'Digital Visitor Pass (QR visitor entry)',
+    desc: 'Residents pre-approve guests, delivery agents, and service staff with dynamic QR entry passes sent instantly via WhatsApp.',
+    points: ['Instant WhatsApp QR pass', 'Delivery & cab pre-approvals', 'Real-time entry notifications'],
   },
   {
     icon: CreditCard,
-    title: 'Zero-Surcharge Maintenance',
-    desc: 'Pay monthly maintenance dues via UPI, Net Banking, or Credit Cards with instant PDF receipts and auto-reconciliation.',
+    title: 'Maintenance Payments (UPI/Card receipts)',
+    desc: 'Collect monthly society maintenance dues via UPI, cards, or net banking with automated digital receipts and bank reconciliation.',
+    points: ['0% surcharge UPI options', 'Automated instant PDF receipts', 'Defaulter reminders & accounting'],
   },
   {
-    icon: Building,
-    title: 'Club & Amenity Booking',
-    desc: 'Reserve clubhouses, swimming pool slots, squash courts, and party lawns without manual logbooks or scheduling conflicts.',
+    icon: ClubhouseIcon,
+    title: 'Clubhouse & Amenity Booking',
+    desc: 'Reserve clubhouses, swimming pool slots, tennis courts, and banquet halls without manual registers or double-bookings.',
+    points: ['Slot-based live calendar', 'Automated deposit management', 'Rule-based guest quota tracking'],
   },
   {
     icon: ShieldCheck,
-    title: 'Guard Desk & Security',
-    desc: 'Direct audio intercom from society gate to resident mobile phone. Multi-tier verified staff check-in and emergency alarms.',
+    title: 'Guard Desk & Mobile Intercom',
+    desc: 'Direct gate-to-mobile app intercom with verified security staff desk, eliminating costly hardware intercom wiring.',
+    points: ['No wire installation needed', 'Guard-to-resident audio calls', 'Emergency panic siren alert'],
   },
   {
     icon: Bell,
     title: 'Digital Notice Board',
-    desc: 'Official committee announcements, AGM notifications, and emergency water/power updates broadcast instantly to all flat owners.',
+    desc: 'Broadcast official committee notices, AGM agendas, emergency water/power cuts, and society guidelines in seconds.',
+    points: ['Instant push & WhatsApp alerts', 'Read receipts for committee', 'Archive & document repository'],
   },
   {
-    icon: Users,
-    title: 'Resident Helpdesk & Tickets',
-    desc: 'Lodge complaints for common area repairs, lift maintenance, or water leakages with real-time status tracking.',
+    icon: Headphones,
+    title: 'Helpdesk & Complaint Management',
+    desc: 'Centralized ticketing system for common area maintenance, lift issues, plumbing faults, and RWA resolutions.',
+    points: ['Photo & video ticket logging', 'SLA resolution timelines', 'Vendor task assignment'],
   },
 ];
+
+function ClubhouseIcon(props: React.SVGProps<SVGSVGElement>) {
+  return <CalendarDays {...props} />;
+}
 
 export default function SocietyServicesPage() {
   return (
@@ -64,65 +75,80 @@ export default function SocietyServicesPage() {
         {/* Hero Section */}
         <div className="text-center max-w-3xl mx-auto my-12 space-y-4">
           <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-            <Building className="w-4 h-4 text-[#0F766E]" />
-            <span>GATED COMMUNITY ECOSYSTEM</span>
+            <Building2 className="w-4 h-4 text-[#0F766E]" />
+            <span>GATED COMMUNITY &amp; RWA OPERATING SYSTEM</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
-            Smarter, safer, and connected <br />
-            society living.
+            Smart Society Management <br className="hidden sm:inline" />
+            for Apartments &amp; RWAs
           </h1>
 
           <p className="text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto font-medium leading-relaxed">
-            REHVO Society replaces outdated logbooks and chaotic WhatsApp groups with a unified digital dashboard for residents, guards, and managing committees.
+            REHVO Society replaces outdated gate registers and unorganized WhatsApp groups with an integrated operating system for residents, security guards, and managing committees across Mumbai.
           </p>
 
-          <div className="pt-4 flex items-center justify-center gap-3">
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/contact"
-              className="h-12 px-8 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center gap-2 shadow-xs transition"
+              href="/contact?subject=society_demo"
+              className="h-12 px-8 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs sm:text-sm font-black flex items-center gap-2 shadow-xs transition"
             >
-              <span>Schedule Society Demo</span>
+              <span>Book a Free Society Demo</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        {/* 6 Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {SOCIETY_FEATURES.map((feat, idx) => {
             const Icon = feat.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover transition-all duration-300 space-y-3"
+                className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover hover:border-[#0F766E]/30 transition-all duration-300 flex flex-col justify-between space-y-4"
               >
-                <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
-                  <Icon className="w-6 h-6" />
+                <div className="space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-base font-black text-[#031B2A]">{feat.title}</h3>
+                  <p className="text-xs text-[#64748B] leading-relaxed font-medium">{feat.desc}</p>
                 </div>
-                <h3 className="text-base font-black text-[#031B2A]">{feat.title}</h3>
-                <p className="text-xs text-[#64748B] leading-relaxed font-medium">{feat.desc}</p>
+
+                <div className="pt-2 border-t border-slate-100 space-y-1.5">
+                  {feat.points.map((pt, pIdx) => (
+                    <div key={pIdx} className="flex items-center gap-2 text-[11px] text-slate-600 font-semibold">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                      <span>{pt}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           })}
         </div>
 
-        {/* Committee CTA Banner */}
+        {/* Final CTA Banner */}
         <div className="bg-gradient-to-r from-[#0F766E] to-[#064E3B] rounded-[32px] p-8 sm:p-12 text-white shadow-card mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 text-center md:text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#CCFBF1] text-xs font-bold uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Free Society Onboarding</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
-              Are you an RWA or Society Committee Member?
+              Ready to modernize your residential society?
             </h2>
-            <p className="text-xs sm:text-sm text-[#CCFBF1]/80 max-w-xl">
-              Get 6 months free onboarding for your society in Mumbai. Full hardware setup assistance and security guard training included.
+            <p className="text-xs sm:text-sm text-[#CCFBF1]/85 max-w-xl font-medium">
+              We provide complete on-site guard hardware setup, resident onboarding sessions, and committee administrator training across Mumbai.
             </p>
           </div>
 
           <Link
-            href="/contact"
-            className="h-12 px-8 rounded-full bg-white text-[#064E3B] hover:bg-[#CCFBF1] text-xs font-black flex items-center gap-2 shrink-0 transition"
+            href="/contact?subject=society_demo"
+            className="h-12 px-8 rounded-full bg-white text-[#064E3B] hover:bg-[#CCFBF1] text-xs sm:text-sm font-black flex items-center gap-2 shrink-0 transition shadow-md active:scale-95"
           >
-            <span>Request Free RWA Pilot</span>
+            <span>Book a Free Society Demo</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

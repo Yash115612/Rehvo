@@ -16,6 +16,7 @@ import { FeaturedProperties } from '@/components/v10/FeaturedProperties';
 import { FlatmatesSection } from '@/components/v10/FlatmatesSection';
 import { AIConciergeBanner } from '@/components/v10/AIConciergeBanner';
 import { TrendingLocalities } from '@/components/v10/TrendingLocalities';
+import { SocietyPromoSection } from '@/components/v10/SocietyPromoSection';
 import { DownloadAppCTA } from '@/components/v10/DownloadAppCTA';
 
 export const revalidate = 60; // 60s ISR
@@ -76,7 +77,10 @@ export default async function HomePage() {
       {/* 10: TRENDING LOCALITIES IN MUMBAI */}
       <TrendingLocalities />
 
-      {/* 11: DOWNLOAD MOBILE APP CTA */}
+      {/* 11: SMART SOCIETY MANAGEMENT FOR APARTMENTS & RWAS */}
+      <SocietyPromoSection />
+
+      {/* 12: DOWNLOAD MOBILE APP CTA */}
       <DownloadAppCTA />
     </>
   );

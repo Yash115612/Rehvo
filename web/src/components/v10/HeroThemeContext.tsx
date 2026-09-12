@@ -72,7 +72,7 @@ export const HERO_ADS: HeroAdItem[] = [
     pillBg: '#F3E8FF',
     pillColor: '#7C3AED',
     bgGradient: '#F5F3FF', // Soft violet tint
-    route: '/society-services',
+    route: '/services',
   },
   {
     id: 'ad-4',
