@@ -9,8 +9,11 @@ import {
   Users,
   Home,
   X,
+  Navigation,
+  Loader2,
 } from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
+import { detectCurrentBrowserLocation } from '@/services/locationService';
 
 export const SearchDock: React.FC = () => {
   const router = useRouter();
@@ -22,7 +25,21 @@ export const SearchDock: React.FC = () => {
   const [selectedBudget, setSelectedBudget] = useState<string>('');
 
   const [localityDropdownOpen, setLocalityDropdownOpen] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleDetectCurrentLocation = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    setIsLocating(true);
+    const res = await detectCurrentBrowserLocation();
+    setIsLocating(false);
+    if (res.success) {
+      setLocalityQuery(res.locality);
+      setSelectedLocalitySlug(res.locality.toLowerCase().replace(/\s+/g, '-'));
+      setLocalityDropdownOpen(false);
+    }
+  };
 
   const localities = Object.entries(MUMBAI_LOCALITIES).map(([slug, info]) => ({
     slug,
@@ -138,27 +155,72 @@ export const SearchDock: React.FC = () => {
               }}
               onFocus={() => setLocalityDropdownOpen(true)}
               placeholder="e.g. Bandra West, Andheri, Powai..."
-              className="w-full pl-9 pr-7 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#0F766E] transition"
+              className="w-full pl-9 pr-16 py-2.5 bg-stone-50 hover:bg-stone-100/80 focus:bg-white border border-stone-200 rounded-2xl text-xs font-bold text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-[#0F766E] transition"
             />
             <MapPin className="w-4 h-4 text-[#0F766E] absolute left-3 top-3" />
-            {localityQuery && (
+            
+            <div className="absolute right-2.5 top-2.5 flex items-center gap-1">
+              {localityQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLocalityQuery('');
+                    setSelectedLocalitySlug('');
+                  }}
+                  className="p-1 text-stone-400 hover:text-stone-700"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
               <button
                 type="button"
-                onClick={() => {
-                  setLocalityQuery('');
-                  setSelectedLocalitySlug('');
-                }}
-                className="absolute right-2.5 top-3 p-0.5 text-stone-400 hover:text-stone-700"
+                onClick={handleDetectCurrentLocation}
+                disabled={isLocating}
+                title="Use Current Location (GPS)"
+                className="p-1 rounded-md text-[#0F766E] hover:bg-emerald-50 transition cursor-pointer"
               >
-                <X className="w-3.5 h-3.5" />
+                {isLocating ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Navigation className="w-3.5 h-3.5 fill-[#0F766E]" />
+                )}
               </button>
-            )}
+            </div>
           </div>
 
           {/* Location Autocomplete Dropdown */}
           {localityDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-stone-200 py-2 z-50 max-h-60 overflow-y-auto animate-in fade-in zoom-in-95 duration-150 divide-y divide-stone-50">
-              <div className="px-3 py-1.5 text-[10px] font-extrabold text-[#0F766E] uppercase tracking-wider">
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-stone-200 p-2 z-50 max-h-72 overflow-y-auto animate-in fade-in zoom-in-95 duration-150 divide-y divide-stone-50">
+              {/* Use Current Location Option */}
+              <button
+                type="button"
+                onClick={handleDetectCurrentLocation}
+                disabled={isLocating}
+                className="w-full mb-1.5 p-2 rounded-xl bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/70 flex items-center justify-between text-left transition group cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-[#0F766E] text-white flex items-center justify-center shrink-0">
+                    {isLocating ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <Navigation className="w-3 h-3 fill-white" />
+                    )}
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-[#031B2A] flex items-center gap-1">
+                      <span>Use Current Location</span>
+                      <span className="text-[8px] font-black uppercase px-1 py-0.2 bg-[#CCFBF1] text-[#0F766E] rounded">
+                        GPS
+                      </span>
+                    </div>
+                    <div className="text-[9.5px] text-stone-500">
+                      {isLocating ? 'Detecting your area...' : 'Detect area automatically'}
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              <div className="px-2 pt-1.5 pb-1 text-[10px] font-extrabold text-[#0F766E] uppercase tracking-wider">
                 Popular Mumbai Hubs
               </div>
               {filteredLocalities.map((loc) => (
@@ -166,7 +228,7 @@ export const SearchDock: React.FC = () => {
                   key={loc.slug}
                   type="button"
                   onClick={() => handleSelectLocality(loc.slug, loc.name)}
-                  className="w-full text-left px-3.5 py-2 hover:bg-[#CCFBF1] flex items-center justify-between text-xs transition group"
+                  className="w-full text-left px-3 py-1.5 hover:bg-[#CCFBF1] rounded-lg flex items-center justify-between text-xs transition group"
                 >
                   <span className="font-bold text-stone-800 group-hover:text-[#0F766E]">
                     {loc.name}

@@ -13,7 +13,15 @@ import {
   Sparkles,
   Wallet,
   CheckCircle2,
+  Navigation,
+  Loader2,
+  Crosshair,
 } from 'lucide-react';
+import {
+  detectCurrentBrowserLocation,
+  getSavedUserLocality,
+  saveUserLocality,
+} from '@/services/locationService';
 
 import {
   HERO_ADS,
@@ -61,11 +69,25 @@ export const HeroSearch: React.FC = () => {
   } = useHeroTheme();
 
   const [selectedLocality, setSelectedLocality] = useState('Bandra West, Mumbai');
+  const [isGpsActive, setIsGpsActive] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
+  const [locationStatusMessage, setLocationStatusMessage] = useState<string | null>(null);
   const [locationOpen, setLocationOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [localitySearchFilter, setLocalitySearchFilter] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Restore saved locality from localStorage on mount
+  useEffect(() => {
+    const saved = getSavedUserLocality();
+    if (saved) {
+      setSelectedLocality(saved);
+      if (saved.includes('(GPS)')) {
+        setIsGpsActive(true);
+      }
+    }
+  }, []);
 
   // Smooth rotating search placeholder ticker every 3.2s
   useEffect(() => {
@@ -86,6 +108,28 @@ export const HeroSearch: React.FC = () => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
+
+  const handleDetectCurrentLocation = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    setIsLocating(true);
+    setLocationStatusMessage(null);
+
+    const result = await detectCurrentBrowserLocation();
+    setIsLocating(false);
+
+    if (result.success) {
+      const locLabel = `${result.locality}, Mumbai`;
+      setSelectedLocality(locLabel);
+      setIsGpsActive(true);
+      saveUserLocality(locLabel);
+      setLocationStatusMessage(`📍 Located: ${result.locality}`);
+      setLocationOpen(false);
+      setTimeout(() => setLocationStatusMessage(null), 4000);
+    } else {
+      setLocationStatusMessage(result.error || 'Location access denied');
+    }
+  };
 
   const handlePrevAd = useCallback(
     (e?: React.MouseEvent) => {
@@ -109,12 +153,15 @@ export const HeroSearch: React.FC = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (query.trim()) params.set('locality', query.trim());
-    else params.set('locality', selectedLocality.split(',')[0].trim());
+    else params.set('locality', selectedLocality.split(',')[0].replace('(GPS)', '').trim());
     router.push(`/search?${params.toString()}`);
   };
 
   const handleQuickLocality = (loc: string) => {
-    setSelectedLocality(`${loc}, Mumbai`);
+    const locLabel = `${loc}, Mumbai`;
+    setSelectedLocality(locLabel);
+    setIsGpsActive(false);
+    saveUserLocality(locLabel);
     const params = new URLSearchParams();
     params.set('locality', loc);
     router.push(`/search?${params.toString()}`);
@@ -199,62 +246,130 @@ export const HeroSearch: React.FC = () => {
 
           {/* Locality Dropdown Row & Trending Chips (localitySelectorRow) */}
           <div className="max-w-3xl mx-auto flex flex-wrap items-center justify-between gap-2 pt-0.5">
-            {/* Locality Selector Capsule */}
-            <div className="relative" ref={dropdownRef}>
+            {/* Left Location Controls: Locality Selector Capsule + Quick GPS Target */}
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+              {/* Locality Selector Capsule */}
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setLocationOpen((prev) => !prev)}
+                  className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/95 shadow-xs text-xs font-bold text-[#031B2A] hover:bg-white hover:shadow-sm transition cursor-pointer"
+                >
+                  <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                  <MapPin className="w-3.5 h-3.5 text-[#0F766E] stroke-[2.6]" />
+                  <span className="truncate max-w-[140px] sm:max-w-[170px]">{selectedLocality}</span>
+                  <ChevronDown
+                    className={`w-3 h-3 text-[#64748B] transition-transform duration-200 ${
+                      locationOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+
+                {locationOpen && (
+                  <div className="absolute left-0 top-11 w-72 sm:w-80 bg-white rounded-2xl border border-[#E2E8F0] shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                    <div className="flex items-center justify-between px-1 pb-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B]">
+                        Select Location in Mumbai
+                      </span>
+                      {locationStatusMessage && (
+                        <span className="text-[10px] font-bold text-[#0F766E] truncate max-w-[160px]">
+                          {locationStatusMessage}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Prominent GPS Shortcut: Use Current Location */}
+                    <button
+                      type="button"
+                      onClick={handleDetectCurrentLocation}
+                      disabled={isLocating}
+                      className="w-full mb-2.5 p-2.5 rounded-xl bg-gradient-to-r from-emerald-50 via-teal-50/50 to-white hover:from-emerald-100 hover:to-teal-100/70 border border-emerald-200/80 flex items-center justify-between text-left transition group cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-8 h-8 rounded-full bg-[#0F766E] text-white flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                          {isLocating ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Navigation className="w-4 h-4 fill-white" />
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-xs font-black text-[#031B2A] group-hover:text-[#0F766E] transition-colors flex items-center gap-1.5">
+                            <span>Use Current Location</span>
+                            <span className="text-[8px] font-black uppercase px-1.5 py-0.2 bg-[#CCFBF1] text-[#0F766E] rounded-md">
+                              GPS
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-[#64748B] font-medium truncate">
+                            {isLocating
+                              ? 'Detecting your area via GPS...'
+                              : locationStatusMessage || 'Detect automatically via device GPS'}
+                          </p>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-[#0F766E] group-hover:translate-x-0.5 transition-all shrink-0" />
+                    </button>
+
+                    <div className="relative mb-2">
+                      <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5 pointer-events-none" />
+                      <input
+                        type="text"
+                        value={localitySearchFilter}
+                        onChange={(e) => setLocalitySearchFilter(e.target.value)}
+                        placeholder="Filter area (e.g. Bandra, Powai)..."
+                        className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl pl-8 pr-2.5 py-1.5 text-xs text-[#031B2A] font-semibold focus:outline-none focus:border-[#0F766E]"
+                        autoFocus
+                      />
+                    </div>
+
+                    <div className="max-h-52 overflow-y-auto space-y-0.5 no-scrollbar divide-y divide-slate-50">
+                      {filteredLocalities.map((loc) => (
+                        <button
+                          key={loc}
+                          type="button"
+                          onClick={() => {
+                            setSelectedLocality(loc);
+                            setIsGpsActive(false);
+                            saveUserLocality(loc);
+                            setLocationOpen(false);
+                            setLocalitySearchFilter('');
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between hover:bg-[#F1F5F9] transition cursor-pointer ${
+                            selectedLocality === loc ? 'text-[#0F766E] bg-[#CCFBF1]/50' : 'text-[#031B2A]'
+                          }`}
+                        >
+                          <span className="truncate">{loc}</span>
+                          {selectedLocality === loc && (
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Instant 1-Click Current Location GPS Button */}
               <button
                 type="button"
-                onClick={() => setLocationOpen((prev) => !prev)}
-                className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/95 shadow-xs text-xs font-bold text-[#031B2A] hover:bg-white hover:shadow-sm transition cursor-pointer"
+                onClick={handleDetectCurrentLocation}
+                disabled={isLocating}
+                title="Detect Current Location via GPS"
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border shadow-2xs text-xs font-bold transition-all cursor-pointer active:scale-95 ${
+                  isGpsActive
+                    ? 'bg-[#0F766E] text-white border-[#0F766E] hover:bg-[#064E3B]'
+                    : 'bg-white/90 hover:bg-white text-[#0F766E] border-white/95 hover:shadow-xs'
+                }`}
               >
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                <MapPin className="w-3.5 h-3.5 text-[#0F766E] stroke-[2.6]" />
-                <span className="truncate max-w-[160px]">{selectedLocality}</span>
-                <ChevronDown
-                  className={`w-3 h-3 text-[#64748B] transition-transform duration-200 ${
-                    locationOpen ? 'rotate-180' : ''
-                  }`}
-                />
+                {isLocating ? (
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <Navigation className={`w-3.5 h-3.5 ${isGpsActive ? 'fill-white' : 'fill-[#0F766E]'}`} />
+                )}
+                <span className="text-[11px] font-extrabold">
+                  {isLocating ? 'Locating...' : isGpsActive ? 'GPS Active' : 'Current Location'}
+                </span>
               </button>
-
-              {locationOpen && (
-                <div className="absolute left-0 top-11 w-64 bg-white rounded-2xl border border-[#E2E8F0] shadow-xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-                  <div className="text-[10px] font-black uppercase tracking-wider text-[#64748B] px-2.5 pb-2">
-                    Select Locality in Mumbai
-                  </div>
-                  
-                  {/* Filter input */}
-                  <input
-                    type="text"
-                    value={localitySearchFilter}
-                    onChange={(e) => setLocalitySearchFilter(e.target.value)}
-                    placeholder="Filter area..."
-                    className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1.5 text-xs text-[#031B2A] font-semibold mb-2 focus:outline-none focus:border-[#0F766E]"
-                    autoFocus
-                  />
-
-                  <div className="max-h-56 overflow-y-auto space-y-0.5 no-scrollbar">
-                    {filteredLocalities.map((loc) => (
-                      <button
-                        key={loc}
-                        type="button"
-                        onClick={() => {
-                          setSelectedLocality(loc);
-                          setLocationOpen(false);
-                          setLocalitySearchFilter('');
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between hover:bg-[#F1F5F9] transition cursor-pointer ${
-                          selectedLocality === loc ? 'text-[#0F766E] bg-[#CCFBF1]/50' : 'text-[#031B2A]'
-                        }`}
-                      >
-                        <span className="truncate">{loc}</span>
-                        {selectedLocality === loc && (
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Quick Micro Locality Chips */}

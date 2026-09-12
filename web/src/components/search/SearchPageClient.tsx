@@ -25,11 +25,14 @@ import {
   Layers,
   Flame,
   Award,
+  Navigation,
+  Loader2,
 } from 'lucide-react';
 import { PublicProperty } from '@/lib/seo/types';
 import { PropertyCard } from '@/components/v10/PropertyCard';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { VERIFIED_MUMBAI_FALLBACKS } from '@/lib/seo/fallbackProperties';
+import { detectCurrentBrowserLocation } from '@/services/locationService';
 
 interface SearchPageClientProps {
   initialProperties: PublicProperty[];
@@ -119,6 +122,16 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState<boolean>(false);
   const [voiceModalOpen, setVoiceModalOpen] = useState<boolean>(false);
   const [selectedMapPropId, setSelectedMapPropId] = useState<string | null>(null);
+  const [isLocating, setIsLocating] = useState<boolean>(false);
+
+  const handleDetectLocation = async () => {
+    setIsLocating(true);
+    const result = await detectCurrentBrowserLocation();
+    setIsLocating(false);
+    if (result.success) {
+      setSearchQuery(result.locality);
+    }
+  };
 
   // Filter application count
   const activeFiltersCount = useMemo(() => {
@@ -369,6 +382,21 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
                 <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </button>
             )}
+
+            {/* Use Current Location Button */}
+            <button
+              type="button"
+              onClick={handleDetectLocation}
+              disabled={isLocating}
+              title="Use Current Location (GPS)"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-50 hover:bg-[#0F766E] text-[#0F766E] hover:text-white flex items-center justify-center transition shrink-0 cursor-pointer shadow-2xs group"
+            >
+              {isLocating ? (
+                <Loader2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 animate-spin" />
+              ) : (
+                <Navigation className="w-3.5 sm:w-4 h-3.5 sm:h-4 fill-current group-hover:fill-white" />
+              )}
+            </button>
 
             {/* Voice AI Button */}
             <button

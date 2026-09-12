@@ -22,9 +22,16 @@ import {
   CreditCard,
   ShieldCheck,
   PlusCircle,
+  Navigation,
+  Loader2,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useHeroTheme } from '@/components/v10/HeroThemeContext';
+import {
+  detectCurrentBrowserLocation,
+  getSavedUserLocality,
+  saveUserLocality,
+} from '@/services/locationService';
 
 interface ServiceDropdownItem {
   label: string;
@@ -84,6 +91,8 @@ export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [userLocality, setUserLocality] = useState('Bandra West');
+  const [isLocating, setIsLocating] = useState(false);
 
   const servicesRef = useRef<HTMLDivElement>(null);
 
@@ -91,7 +100,22 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     setMounted(true);
+    const saved = getSavedUserLocality();
+    if (saved) {
+      setUserLocality(saved.split(',')[0].replace('(GPS)', '').trim());
+    }
   }, []);
+
+  const handleDetectLocation = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+    setIsLocating(true);
+    const result = await detectCurrentBrowserLocation();
+    setIsLocating(false);
+    if (result.success) {
+      setUserLocality(result.locality);
+    }
+  };
 
   // Listen to scroll to update header elevation
   useEffect(() => {
@@ -285,6 +309,27 @@ export const Navbar: React.FC = () => {
           </nav>
 
           {/* =====================================================================
+              2.5 LOCATION PILL WITH GPS (DESKTOP)
+             ===================================================================== */}
+          <button
+            type="button"
+            onClick={handleDetectLocation}
+            disabled={isLocating}
+            className={`hidden md:flex h-10 px-3.5 rounded-full text-xs font-bold items-center gap-2 cursor-pointer transition-all duration-200 ${
+              isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
+            } ${isLocating ? 'opacity-70 pointer-events-none' : 'hover:border-[#0F766E]/40'}`}
+            title="Detect your current location"
+          >
+            {isLocating ? (
+              <Loader2 className="w-3.5 h-3.5 text-[#0F766E] animate-spin" />
+            ) : (
+              <Navigation className="w-3.5 h-3.5 text-[#0F766E]" />
+            )}
+            <span className="text-[#031B2A] max-w-[100px] truncate">{userLocality}</span>
+            <MapPin className="w-3 h-3 text-[#64748B]" />
+          </button>
+
+          {/* =====================================================================
               3. UTILITY CAPSULES & HAMBURGER
              ===================================================================== */}
           <div className="flex items-center gap-2 pointer-events-auto">
@@ -365,6 +410,36 @@ export const Navbar: React.FC = () => {
                   <X className="w-4 h-4" />
                 </button>
               </div>
+
+              {/* Location Detection Card */}
+              <button
+                type="button"
+                onClick={handleDetectLocation}
+                disabled={isLocating}
+                className="w-full mt-4 py-2.5 px-3.5 rounded-2xl bg-gradient-to-r from-[#F0FDFA] to-[#CCFBF1]/30 border border-[#0F766E]/20 flex items-center gap-3 transition-all active:scale-[0.98] cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-xl bg-[#0F766E] text-white flex items-center justify-center shrink-0">
+                  {isLocating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Navigation className="w-4 h-4" />
+                  )}
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F766E] block">
+                    {isLocating ? 'Detecting...' : 'Your Location'}
+                  </span>
+                  <span className="text-xs font-black text-[#031B2A] block truncate">
+                    {userLocality}
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-white text-[#0F766E] border border-[#0F766E]/20">
+                    GPS
+                  </span>
+                  <MapPin className="w-3.5 h-3.5 text-[#64748B]" />
+                </div>
+              </button>
 
               {/* Navigation Category Cards */}
               <div className="pt-5 space-y-2">
