@@ -1,8 +1,3 @@
-# ==============================================================================
-# REHVO V10.5 — .vercelignore
-# Exclude unnecessary files and folders from Vercel deployment upload
-# ==============================================================================
-
 node_modules
 android
 ios
@@ -13,7 +8,6 @@ admin
 .github
 dist
 build
-web-build
 coverage
 scripts
 supabase
