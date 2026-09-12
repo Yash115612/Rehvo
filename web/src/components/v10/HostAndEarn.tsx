@@ -15,28 +15,61 @@ import {
 
 const LOCALITY_RATES: Record<string, { multiplier: number; yieldPct: string }> = {
   'Bandra West': { multiplier: 1.45, yieldPct: '6.2%' },
-  'Andheri West': { multiplier: 1.0, yieldPct: '5.9%' },
-  'Powai': { multiplier: 1.15, yieldPct: '6.4%' },
   'BKC & Kurla': { multiplier: 1.35, yieldPct: '6.5%' },
+  'Powai': { multiplier: 1.15, yieldPct: '6.4%' },
   'Worli & Lower Parel': { multiplier: 1.5, yieldPct: '6.0%' },
+  'Andheri West': { multiplier: 1.0, yieldPct: '5.9%' },
+  'Juhu & Vile Parle': { multiplier: 1.4, yieldPct: '6.1%' },
+  'Khar West': { multiplier: 1.3, yieldPct: '6.0%' },
   'Thane West': { multiplier: 0.65, yieldPct: '5.6%' },
 };
 
 const BHK_BASE_RATES: Record<string, number> = {
-  '1 BHK': 32000,
+  '1 RK': 22000,
+  '1 BHK': 34000,
   '2 BHK': 58000,
-  '3 BHK': 95000,
-  '4+ BHK': 160000,
+  '3 BHK': 96000,
+  '4+ BHK': 165000,
+};
+
+const FURNISHING_MULTIPLIERS: Record<string, number> = {
+  'Unfurnished': 0.88,
+  'Semi Furnished': 1.0,
+  'Fully Furnished': 1.22,
 };
 
 export const HostAndEarn: React.FC = () => {
   const [selectedBhk, setSelectedBhk] = useState('2 BHK');
   const [selectedLocality, setSelectedLocality] = useState('Bandra West');
+  const [selectedFurnishing, setSelectedFurnishing] = useState('Semi Furnished');
 
   const baseRate = BHK_BASE_RATES[selectedBhk] || 58000;
+  const furnishingMultiplier = FURNISHING_MULTIPLIERS[selectedFurnishing] || 1.0;
   const locData = LOCALITY_RATES[selectedLocality] || { multiplier: 1.45, yieldPct: '6.2%' };
-  const estimatedRent = Math.round(baseRate * locData.multiplier);
+
+  const estimatedRent = Math.round(baseRate * locData.multiplier * furnishingMultiplier);
+  const annualCashflow = estimatedRent * 12;
+  const depositAmount = estimatedRent * 3;
+
   const formattedRent = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(estimatedRent);
+
+  const formattedAnnualCashflow = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(annualCashflow);
+
+  const formattedDeposit = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(depositAmount);
+
+  const formattedSavings = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: 'INR',
     maximumFractionDigits: 0,
@@ -183,7 +216,7 @@ export const HostAndEarn: React.FC = () => {
                   Estimate Your Monthly Rental Income
                 </h3>
                 <p className="text-xs sm:text-sm text-[#64748B] font-medium mt-1 max-w-xl">
-                  Select your apartment configuration and locality to preview estimated monthly cashflow and projected gross yield based on active verified transactions.
+                  Select your apartment configuration, furnishing and locality to preview estimated monthly cashflow and projected gross yield based on active verified transactions.
                 </p>
               </div>
 
@@ -193,7 +226,7 @@ export const HostAndEarn: React.FC = () => {
                   Select Configuration
                 </label>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                  {['1 BHK', '2 BHK', '3 BHK', '4+ BHK'].map((bhk) => (
+                  {['1 RK', '1 BHK', '2 BHK', '3 BHK', '4+ BHK'].map((bhk) => (
                     <button
                       key={bhk}
                       type="button"
@@ -210,10 +243,33 @@ export const HostAndEarn: React.FC = () => {
                 </div>
               </div>
 
+              {/* Furnishing Status Buttons */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-black uppercase text-[#64748B] tracking-wider">
+                  Furnishing Condition
+                </label>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {['Unfurnished', 'Semi Furnished', 'Fully Furnished'].map((furnish) => (
+                    <button
+                      key={furnish}
+                      type="button"
+                      onClick={() => setSelectedFurnishing(furnish)}
+                      className={`px-3 sm:px-4 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${
+                        selectedFurnishing === furnish
+                          ? 'bg-[#064E3B] text-white shadow-xs'
+                          : 'bg-white text-[#475569] border border-[#E2E8F0] hover:border-[#0F766E]'
+                      }`}
+                    >
+                      {furnish}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Locality Selector Chips */}
               <div className="space-y-2">
                 <label className="text-[11px] font-black uppercase text-[#64748B] tracking-wider">
-                  Select Rental Hub
+                  Select Rental Hub in Mumbai
                 </label>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {Object.keys(LOCALITY_RATES).map((loc) => (
@@ -235,7 +291,7 @@ export const HostAndEarn: React.FC = () => {
             </div>
 
             {/* Right Column: Live Calculated Metric Card */}
-            <div className="lg:col-span-5 bg-white rounded-[22px] sm:rounded-[26px] p-4.5 xs:p-6 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-4 sm:space-y-6">
+            <div className="lg:col-span-5 bg-white rounded-[22px] sm:rounded-[26px] p-4.5 xs:p-6 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-4 sm:space-y-5">
               <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#F1F5F9]">
                 <div className="flex items-center gap-2">
                   <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-[#0F766E]" />
@@ -244,30 +300,45 @@ export const HostAndEarn: React.FC = () => {
                   </span>
                 </div>
                 <span className="text-[10px] sm:text-[10.5px] font-black bg-[#CCFBF1] text-[#064E3B] px-2.5 py-0.5 rounded-full">
-                  LIVE ESTIMATE
+                  LIVE VALUATION
                 </span>
               </div>
 
               <div>
                 <div className="text-[11px] sm:text-xs font-bold text-[#64748B]">Estimated Monthly Rent</div>
-                <div className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#0F766E] tracking-tight mt-1">
+                <div className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#0F766E] tracking-tight mt-0.5">
                   {formattedRent}
                   <span className="text-xs text-[#64748B] font-medium ml-1">/ month</span>
                 </div>
                 <div className="text-[11px] sm:text-[11.5px] font-medium text-[#64748B] mt-1">
-                  For {selectedBhk} in {selectedLocality}
+                  For {selectedBhk} &bull; {selectedFurnishing} in {selectedLocality}
                 </div>
               </div>
 
+              {/* 4-Metric Grid */}
               <div className="grid grid-cols-2 gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
                 <div>
-                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Projected Yield</div>
-                  <div className="text-base sm:text-lg font-black text-[#031B2A] mt-0.5">{locData.yieldPct}</div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Annual Cashflow</div>
+                  <div className="text-sm sm:text-base font-black text-[#031B2A] mt-0.5">{formattedAnnualCashflow}</div>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Broker Commission</div>
-                  <div className="text-base sm:text-lg font-black text-[#059669] mt-0.5">₹0 (Zero)</div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#0F766E]">Brokerage Saved</div>
+                  <div className="text-sm sm:text-base font-black text-[#059669] mt-0.5">Save {formattedSavings}</div>
                 </div>
+                <div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Projected Gross Yield</div>
+                  <div className="text-sm sm:text-base font-black text-[#031B2A] mt-0.5">{locData.yieldPct}</div>
+                </div>
+                <div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Est. Security Deposit</div>
+                  <div className="text-sm sm:text-base font-black text-[#031B2A] mt-0.5">{formattedDeposit}</div>
+                </div>
+              </div>
+
+              {/* Quick Trust Highlight */}
+              <div className="flex items-center gap-2 text-xs text-[#064E3B] bg-[#ECFDF5] px-3 py-2 rounded-xl border border-[#A7F3D0]/60 font-semibold">
+                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />
+                <span>Verified tenants ready to move in within 7 days</span>
               </div>
 
               <Link
