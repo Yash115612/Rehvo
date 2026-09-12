@@ -15,6 +15,10 @@ import {
   Apple,
   MessageSquare,
   Lock,
+  Home,
+  Search,
+  Users,
+  User,
 } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
 
@@ -160,16 +164,26 @@ export default function DownloadPage() {
                 {/* Simulated App Header */}
                 <div className="flex items-center justify-between py-2 border-b border-stone-100">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-[#0F766E] text-white flex items-center justify-center font-black text-xs">
+                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#0F766E] to-[#064E3B] text-white flex items-center justify-center font-black text-xs shadow-sm">
                       R
                     </div>
                     <div>
-                      <div className="text-[10px] text-stone-400 uppercase font-semibold">Location</div>
-                      <div className="text-xs font-bold text-stone-900">Bandra West, Mumbai</div>
+                      <div className="flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="text-[9px] text-stone-400 uppercase font-bold tracking-wider">Locality</span>
+                      </div>
+                      <div className="text-xs font-bold text-stone-900">Bandra West ▾</div>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-emerald-50 text-[#0F766E] flex items-center justify-center">
-                    <Bell className="w-3.5 h-3.5" />
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1 bg-amber-50 border border-amber-200/70 px-2 py-0.5 rounded-full">
+                      <Wallet className="w-3 h-3 text-amber-600" />
+                      <span className="text-[10px] font-bold text-amber-800">₹1,500</span>
+                    </div>
+                    <div className="relative w-7 h-7 rounded-full bg-emerald-50 text-[#0F766E] flex items-center justify-center">
+                      <Bell className="w-3.5 h-3.5" />
+                      <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                    </div>
                   </div>
                 </div>
 
@@ -219,24 +233,38 @@ export default function DownloadPage() {
                   </div>
                 </div>
 
-                {/* App Navigation Bar */}
-                <div className="mt-auto -mx-4 bg-white border-t border-stone-100 py-3 px-6 flex items-center justify-between text-stone-400">
+                {/* Authentic REHVO Floating / Bottom Navigation Bar */}
+                <div className="mt-auto -mx-4 bg-white/95 backdrop-blur-md border-t border-stone-100 py-2.5 px-4 flex items-center justify-between text-stone-400">
                   <div className="text-[#0F766E] flex flex-col items-center gap-0.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#0F766E]" />
-                    <span className="text-[9px] font-bold">Explore</span>
+                    <Home className="w-4 h-4 text-[#0F766E]" />
+                    <span className="text-[9px] font-bold">Home</span>
                   </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <MessageSquare className="w-4 h-4" />
-                    <span className="text-[9px]">Chat</span>
+                  <div className="flex flex-col items-center gap-0.5 hover:text-stone-700 transition">
+                    <Search className="w-4 h-4" />
+                    <span className="text-[9px] font-medium">Search</span>
                   </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <Wallet className="w-4 h-4" />
-                    <span className="text-[9px]">Rewards</span>
+                  <div className="flex flex-col items-center gap-0.5 hover:text-stone-700 transition relative">
+                    <div className="relative">
+                      <MessageSquare className="w-4 h-4" />
+                      <span className="absolute -top-1 -right-1.5 w-3 h-3 bg-emerald-600 text-[8px] font-black text-white rounded-full flex items-center justify-center leading-none">
+                        2
+                      </span>
+                    </div>
+                    <span className="text-[9px] font-medium">Chat</span>
                   </div>
-                  <div className="flex flex-col items-center gap-0.5">
-                    <Smartphone className="w-4 h-4" />
-                    <span className="text-[9px]">Passes</span>
+                  <div className="flex flex-col items-center gap-0.5 hover:text-stone-700 transition">
+                    <Users className="w-4 h-4" />
+                    <span className="text-[9px] font-medium">Flatmates</span>
                   </div>
+                  <div className="flex flex-col items-center gap-0.5 hover:text-stone-700 transition">
+                    <User className="w-4 h-4" />
+                    <span className="text-[9px] font-medium">Profile</span>
+                  </div>
+                </div>
+
+                {/* Simulated iOS Home Indicator */}
+                <div className="h-4 -mx-4 bg-white flex items-center justify-center pb-1">
+                  <div className="w-24 h-1 bg-stone-300 rounded-full" />
                 </div>
               </div>
             </div>
