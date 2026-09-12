@@ -50,9 +50,7 @@ export const Navbar: React.FC = () => {
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [locationOpen, setLocationOpen] = useState(false);
   const [ctaDropdownOpen, setCtaDropdownOpen] = useState(false);
-  const [selectedLocality, setSelectedLocality] = useState('Mumbai (All)');
   const [localSavedCount, setLocalSavedCount] = useState(0);
 
   useEffect(() => {
@@ -75,7 +73,6 @@ export const Navbar: React.FC = () => {
 
   const totalSavedCount = (savedPropertyIds && savedPropertyIds.length > 0) ? savedPropertyIds.length : localSavedCount;
 
-  const locationRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === '/' || !pathname || pathname === '';
@@ -91,9 +88,6 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (locationRef.current && !locationRef.current.contains(e.target as Node)) {
-        setLocationOpen(false);
-      }
       if (ctaRef.current && !ctaRef.current.contains(e.target as Node)) {
         setCtaDropdownOpen(false);
       }
@@ -189,53 +183,6 @@ export const Navbar: React.FC = () => {
            ===================================================================== */}
         <div className="flex items-center gap-2 pointer-events-auto">
           
-          {/* Location Selector Capsule */}
-          <div className="relative hidden sm:block" ref={locationRef}>
-            <button
-              type="button"
-              onClick={() => setLocationOpen((prev) => !prev)}
-              aria-label="Select City or Locality"
-              className={`h-10 px-3.5 rounded-full text-xs font-bold text-[#031B2A] flex items-center gap-1.5 cursor-pointer transition-all ${
-                isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5 text-[#0F766E]" />
-              <span className="max-w-[90px] truncate">{selectedLocality}</span>
-              <ChevronDown
-                className={`w-3 h-3 text-[#64748B] transition-transform duration-200 ${
-                  locationOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
-
-            {locationOpen && (
-              <div className="absolute right-0 top-12 w-60 rehvo-glass-capsule-scrolled rounded-[22px] shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-3 py-1.5 border-b border-white/60">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B]">
-                    Select Mumbai Region
-                  </span>
-                </div>
-                <div className="py-1 space-y-0.5 max-h-56 overflow-y-auto no-scrollbar">
-                  {LOCALITIES.map((loc) => (
-                    <button
-                      key={loc}
-                      type="button"
-                      onClick={() => {
-                        setSelectedLocality(loc);
-                        setLocationOpen(false);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between hover:bg-white/80 transition text-[#031B2A] cursor-pointer"
-                    >
-                      <span>{loc}</span>
-                      {selectedLocality === loc && (
-                        <Check className="w-3.5 h-3.5 text-[#0F766E]" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Saved Capsule */}
           <Link

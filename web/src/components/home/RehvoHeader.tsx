@@ -69,13 +69,9 @@ export const RehvoHeader: React.FC = () => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [locationDropdownOpen, setLocationDropdownOpen] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState<string>('Mumbai');
-  const [isDetectingLocation, setIsDetectingLocation] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   const userRef = useRef<HTMLDivElement>(null);
-  const locationRef = useRef<HTMLDivElement>(null);
 
   // Scroll listener for subtle glass enhancement
   useEffect(() => {
@@ -92,32 +88,10 @@ export const RehvoHeader: React.FC = () => {
       if (userRef.current && !userRef.current.contains(e.target as Node)) {
         setUserDropdownOpen(false);
       }
-      if (locationRef.current && !locationRef.current.contains(e.target as Node)) {
-        setLocationDropdownOpen(false);
-      }
     }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-
-  const handleDetectLocation = () => {
-    if (typeof window !== 'undefined' && 'geolocation' in navigator) {
-      setIsDetectingLocation(true);
-      navigator.geolocation.getCurrentPosition(
-        () => {
-          setIsDetectingLocation(false);
-          setCurrentLocation('Mumbai');
-          setLocationDropdownOpen(false);
-        },
-        () => {
-          setIsDetectingLocation(false);
-          setCurrentLocation('Mumbai');
-          setLocationDropdownOpen(false);
-        },
-        { timeout: 5000 }
-      );
-    }
-  };
 
   const isNavActive = (item: NavItem) => {
     if (item.href === '/') {
@@ -185,70 +159,6 @@ export const RehvoHeader: React.FC = () => {
         {/* 3. UTILITY LIQUID-GLASS CAPSULES (Location, Saved, Auth, Primary CTA)     */}
         {/* ========================================================================= */}
         <div className="flex items-center gap-2 pointer-events-auto">
-          {/* Location Liquid-Glass Capsule */}
-          <div className="relative" ref={locationRef}>
-            <button
-              type="button"
-              onClick={() => setLocationDropdownOpen((prev) => !prev)}
-              aria-label="Select City or Locality"
-              className={`h-10 px-3 sm:px-3.5 rounded-full text-xs font-bold text-[#031B2A] flex items-center gap-1.5 cursor-pointer ${
-                isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5 text-[#0F766E]" />
-              <span className="max-w-[70px] sm:max-w-none truncate">{currentLocation}</span>
-              <ChevronDown
-                className={`w-3 h-3 text-[#64748B] transition-transform duration-200 ${
-                  locationDropdownOpen ? 'rotate-180' : ''
-                }`}
-              />
-            </button>
-
-            {/* Location Floating Glass Dropdown */}
-            {locationDropdownOpen && (
-              <div className="absolute right-0 top-12 w-64 rehvo-glass-capsule-scrolled rounded-[22px] shadow-2xl p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="px-3 py-2 border-b border-white/60">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B]">
-                    Select Region
-                  </span>
-                </div>
-
-                <div className="py-1.5 space-y-0.5 max-h-56 overflow-y-auto no-scrollbar">
-                  {SUPPORTED_LOCATIONS.map((loc) => (
-                    <button
-                      key={loc.id}
-                      type="button"
-                      onClick={() => {
-                        setCurrentLocation(loc.label);
-                        setLocationDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between hover:bg-white/80 transition text-[#031B2A]"
-                    >
-                      <div>
-                        <div className="font-bold">{loc.label}</div>
-                        <div className="text-[10px] text-[#64748B]">{loc.sub}</div>
-                      </div>
-                      {currentLocation === loc.label && (
-                        <Check className="w-3.5 h-3.5 text-[#0F766E]" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="pt-2 border-t border-white/60">
-                  <button
-                    type="button"
-                    onClick={handleDetectLocation}
-                    disabled={isDetectingLocation}
-                    className="w-full py-2 px-3 rounded-xl bg-[#CCFBF1] text-[#0F766E] hover:bg-[#99F6E4] text-xs font-bold flex items-center justify-center gap-1.5 transition"
-                  >
-                    <MapPin className="w-3.5 h-3.5" />
-                    <span>{isDetectingLocation ? 'Detecting...' : 'Use Current Location'}</span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
 
           {/* Saved Properties Liquid-Glass Capsule */}
           <Link
