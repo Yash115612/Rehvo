@@ -6,6 +6,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   swcMinify: true,
+  distDir: "dist",
   webpack: (config) => {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),

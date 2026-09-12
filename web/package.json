@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build && (cp -r .next dist || true)",
+    "build": "next build && (cp -r dist .next || true)",
     "start": "next start -p 3001",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "vercel-build": "next build && (cp -r .next dist || true)"
+    "vercel-build": "next build && (cp -r dist .next || true)"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
