@@ -27,6 +27,10 @@ interface V4AppLockGateProps {
 const PIN_LENGTH = 4;
 
 export const V4AppLockGateComponent: React.FC<V4AppLockGateProps> = ({ children }) => {
+  if (Platform.OS === 'web') {
+    return <>{children}</>;
+  }
+
   const insets = useSafeAreaInsets();
   const { user } = useAppStore();
 

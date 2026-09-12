@@ -77,7 +77,11 @@ export async function takePhoto(options?: {
   }
 
   try {
-    const result = await ImagePicker.launchCameraAsync({
+    const pickerFn =
+      Platform.OS === 'web'
+        ? ImagePicker.launchImageLibraryAsync
+        : ImagePicker.launchCameraAsync;
+    const result = await pickerFn({
       mediaTypes: ['images'],
       allowsEditing: options?.allowsEditing ?? false,
       aspect: options?.aspect,
@@ -114,7 +118,11 @@ export async function recordVideo(options?: {
   }
 
   try {
-    const result = await ImagePicker.launchCameraAsync({
+    const pickerFn =
+      Platform.OS === 'web'
+        ? ImagePicker.launchImageLibraryAsync
+        : ImagePicker.launchCameraAsync;
+    const result = await pickerFn({
       mediaTypes: ['videos'],
       videoMaxDuration: options?.maxDurationSeconds || 60,
       quality: 0.8,

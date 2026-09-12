@@ -39,6 +39,7 @@ const CURATED_MUMBAI_PLACES: PlaceSearchResult[] = [
  * 1. Get Live GPS Location
  */
 export async function getCurrentLocation(): Promise<Location.LocationObject | null> {
+  if (Platform.OS === 'web') return null;
   try {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -59,6 +60,7 @@ export async function getCurrentLocation(): Promise<Location.LocationObject | nu
 export async function watchLiveLocation(
   onUpdate: (location: Location.LocationObject) => void
 ): Promise<Location.LocationSubscription | null> {
+  if (Platform.OS === 'web') return null;
   try {
     const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') return null;

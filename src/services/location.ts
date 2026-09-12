@@ -16,6 +16,18 @@ export interface GeoLocationResult {
  * Detect current live GPS location and reverse geocode to a human-readable Mumbai locality.
  */
 export async function getCurrentLiveLocation(): Promise<GeoLocationResult> {
+  if (Platform.OS === 'web') {
+    return {
+      success: true,
+      locality: "Bandra West",
+      suburb: "Bandra West",
+      city: "Mumbai",
+      formattedAddress: "Bandra West, Mumbai",
+      latitude: 19.0596,
+      longitude: 72.8295,
+    };
+  }
+
   try {
     // 1. Request permission
     const { status } = await Location.requestForegroundPermissionsAsync();

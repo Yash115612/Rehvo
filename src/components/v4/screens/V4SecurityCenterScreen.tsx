@@ -947,3 +947,6 @@ const styles = StyleSheet.create({
     color: V4_COLORS.textWhite,
   },
 });
+
+export default V4SecurityCenterScreen;
+

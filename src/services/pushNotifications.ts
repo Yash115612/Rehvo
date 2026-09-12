@@ -19,15 +19,17 @@ const APP_VERSION_STORAGE_KEY = 'rehvo_app_version';
 const BADGE_COUNT_STORAGE_KEY = 'rehvo_app_badge_count';
 
 // Configure foreground presentation behavior
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+if (Platform.OS !== 'web') {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    }),
+  });
+}
 
 /**
  * Configure Android Notification Channels for high deliverability & sound priority

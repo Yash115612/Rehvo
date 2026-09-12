@@ -313,7 +313,7 @@ export const V4HomeScreen: React.FC = () => {
 
   const savedPropertyIdSet = useMemo(() => new Set(savedPropertyIds || []), [savedPropertyIds]);
 
-  const [heroBgColor, setHeroBgColor] = useState('#F6FBFA');
+  const [heroBgColor, setHeroBgColor] = useState('#F8FAFC');
   const [selectedLocality, setSelectedLocality] = useState('Bandra West, Mumbai');
   const [searchQuery, setSearchQuery] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -485,7 +485,7 @@ export const V4HomeScreen: React.FC = () => {
             styles.unifiedHeroHeaderContainer,
             {
               paddingTop: Math.max(insets.top, 14) + 6,
-              backgroundColor: heroBgColor || '#F6FBFA',
+              backgroundColor: heroBgColor || '#F8FAFC',
             },
           ]}
         >
@@ -2931,5 +2931,7 @@ const styles = StyleSheet.create({
     color: '#CCFBF1',
     lineHeight: 15,
   },
-
 });
+
+export default V4HomeScreen;
+

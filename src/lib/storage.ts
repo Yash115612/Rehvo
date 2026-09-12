@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 
@@ -40,6 +41,9 @@ export const clearAll = async (): Promise<void> => {
  * Encrypted Native Storage for Sensitive Credentials / Auth Tokens
  */
 export const getSecureItem = async (key: string): Promise<string | null> => {
+  if (Platform.OS === 'web') {
+    return getItem(key);
+  }
   try {
     return await SecureStore.getItemAsync(key);
   } catch (_e) {
@@ -48,6 +52,9 @@ export const getSecureItem = async (key: string): Promise<string | null> => {
 };
 
 export const setSecureItem = async (key: string, value: string): Promise<void> => {
+  if (Platform.OS === 'web') {
+    return setItem(key, value);
+  }
   try {
     await SecureStore.setItemAsync(key, value);
   } catch (_e) {
@@ -56,6 +63,9 @@ export const setSecureItem = async (key: string, value: string): Promise<void> =
 };
 
 export const removeSecureItem = async (key: string): Promise<void> => {
+  if (Platform.OS === 'web') {
+    return removeItem(key);
+  }
   try {
     await SecureStore.deleteItemAsync(key);
   } catch (_e) {

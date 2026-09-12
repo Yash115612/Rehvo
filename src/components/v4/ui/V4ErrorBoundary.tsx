@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
 import { AlertTriangle, RefreshCw, MessageSquare } from 'lucide-react-native';
 import { V4_COLORS, V4_RADIUS, V4_SHADOWS } from '../../../theme/v4Theme';
 
@@ -22,12 +22,19 @@ export class V4ErrorBoundary extends Component<Props, State> {
     return { hasError: true, error };
   }
 
-  public componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
-    // Silent catch in production without console logs
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error('V4ErrorBoundary caught an error:', error, errorInfo);
+    }
   }
 
   private handleReset = () => {
     this.setState({ hasError: false, error: undefined });
+    const win = (globalThis as any).window;
+    if (win && win.location) {
+      win.location.reload();
+    }
   };
 
   public render() {
@@ -47,6 +54,14 @@ export class V4ErrorBoundary extends Component<Props, State> {
             <Text style={styles.subtitle}>
               REHVO encountered an unexpected render issue. Your personal data and saved homes remain completely safe.
             </Text>
+
+            {process.env.NODE_ENV !== 'production' && this.state.error?.message ? (
+              <View style={styles.devErrorBox}>
+                <Text style={styles.devErrorText}>
+                  {this.state.error.name}: {this.state.error.message}
+                </Text>
+              </View>
+            ) : null}
 
             <View style={styles.actionRow}>
               <Pressable
@@ -125,6 +140,21 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: V4_COLORS.textWhite,
   },
+  devErrorBox: {
+    backgroundColor: '#FEF2F2',
+    borderColor: '#FCA5A5',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 16,
+    width: '100%',
+  },
+  devErrorText: {
+    color: '#991B1B',
+    fontSize: 12,
+    fontFamily: Platform.OS === 'web' ? 'monospace' : undefined,
+  },
 });
+
 
 export default V4ErrorBoundary;

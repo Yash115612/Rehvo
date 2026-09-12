@@ -86,13 +86,19 @@ const V4HeroAdBannerComponent: React.FC<V4HeroAdBannerProps> = ({ onPressAd, onB
   useEffect(() => {
     if (!onBgColorChange) return;
 
-    onBgColorChange(HERO_ADS[activeAdIndex].bgGradient);
+    const ad = HERO_ADS[activeAdIndex] || HERO_ADS[0];
+    if (ad?.bgGradient) {
+      onBgColorChange(ad.bgGradient);
+    }
   }, [activeAdIndex, onBgColorChange]);
 
-  const currentAd = HERO_ADS[activeAdIndex];
+  const currentAd = HERO_ADS[activeAdIndex] || HERO_ADS[0];
 
   const handlePressAd = useCallback(() => {
-    onPressAd?.(HERO_ADS[activeAdIndex].route);
+    const ad = HERO_ADS[activeAdIndex] || HERO_ADS[0];
+    if (ad?.route) {
+      onPressAd?.(ad.route);
+    }
   }, [onPressAd, activeAdIndex]);
 
   const handleSelectSlide = useCallback((idx: number) => {
@@ -200,3 +206,5 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+export default V4HeroAdBanner;

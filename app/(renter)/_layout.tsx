@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Tabs, useRouter, usePathname } from 'expo-router';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import {
   V4FloatingNavBar,
   V4TabType,
@@ -23,7 +23,7 @@ export default function RenterLayout() {
   const [isPostModalVisible, setIsPostModalVisible] = useState(false);
 
   const unreadMessagesCount = useMemo(() => {
-    return (conversations || []).reduce((acc, c) => acc + (c.unread_count || 0), 0);
+    return (conversations || []).reduce((acc, c) => acc + (c?.unread_count || 0), 0);
   }, [conversations]);
 
   const activeTab = useMemo<V4TabType>(() => {
@@ -298,14 +298,16 @@ export default function RenterLayout() {
         onClose={() => setIsPostModalVisible(false)}
       />
 
-      <V4NotificationPermissionModal
-        visible={isNotificationPermissionModalVisible}
-        onAllow={async () => {
-          setNotificationPermissionModalVisible(false);
-          await registerDevicePushToken();
-        }}
-        onDismiss={() => setNotificationPermissionModalVisible(false)}
-      />
+      {Platform.OS !== 'web' && (
+        <V4NotificationPermissionModal
+          visible={isNotificationPermissionModalVisible}
+          onAllow={async () => {
+            setNotificationPermissionModalVisible(false);
+            await registerDevicePushToken();
+          }}
+          onDismiss={() => setNotificationPermissionModalVisible(false)}
+        />
+      )}
     </View>
   );
 }

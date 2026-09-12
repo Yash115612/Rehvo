@@ -702,3 +702,6 @@ const styles = StyleSheet.create({
     color: '#94A3B8',
   },
 });
+
+export default V4VoiceAssistantModal;
+

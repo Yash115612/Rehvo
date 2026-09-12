@@ -157,11 +157,17 @@ export const V4SplashScreen: React.FC = () => {
       ]).start(() => {
         navigateForward();
       });
-    }, 2250);
+    }, Platform.OS === 'web' ? 600 : 2250);
+
+    // Guaranteed fallback timer to ensure web/mobile never hangs on splash
+    const safetyTimer = setTimeout(() => {
+      navigateForward();
+    }, Platform.OS === 'web' ? 900 : 3000);
 
     return () => {
       clearTimeout(morphTimer);
       clearTimeout(exitTimer);
+      clearTimeout(safetyTimer);
     };
   }, []);
 
@@ -351,3 +357,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+export default V4SplashScreen;
+
