@@ -55,7 +55,7 @@ export default function ProfileHubPage() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push('/login?next=/profile');
+      router.push('/download');
     }
   }, [isLoading, isAuthenticated, router]);
 

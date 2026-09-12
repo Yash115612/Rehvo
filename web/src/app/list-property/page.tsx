@@ -76,15 +76,6 @@ export default function ListPropertyPage() {
       return;
     }
 
-    if (!isAuthenticated || !user) {
-      // Save form data to session storage and redirect to login
-      try {
-        sessionStorage.setItem('rehvo_pending_listing', JSON.stringify(formData));
-      } catch {}
-      router.push('/login?next=/list-property');
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -97,7 +88,7 @@ export default function ListPropertyPage() {
       const { data, error } = await supabase
         .from('properties')
         .insert({
-          owner_id: user.id,
+          owner_id: user?.id || null,
           type: formData.propertyType === 'commercial' ? 'flat' : (formData.propertyType || 'flat'),
           title,
           description,
@@ -213,23 +204,6 @@ export default function ListPropertyPage() {
             </p>
           </div>
 
-          {/* Authentication Warning / Notification */}
-          {!authLoading && !isAuthenticated && (
-            <div className="mb-6 p-4 rounded-2xl bg-[#F0FDFA] border border-[#99F6E4] flex items-center justify-between gap-4">
-              <div className="flex items-center gap-2.5 text-xs text-[#064E3B]">
-                <LogIn className="w-4 h-4 text-[#0F766E] shrink-0" />
-                <span>
-                  <strong>Tip:</strong> Sign in to link this property directly to your REHVO dashboard.
-                </span>
-              </div>
-              <Link
-                href="/login?next=/list-property"
-                className="text-xs font-black text-[#0F766E] hover:underline shrink-0"
-              >
-                Sign In &rarr;
-              </Link>
-            </div>
-          )}
 
           {errorMessage && (
             <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
