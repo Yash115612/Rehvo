@@ -10,6 +10,8 @@ const nextConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname, 'src'),
+      '@/lib/supabase/client': path.resolve(__dirname, 'src/lib/supabase/client'),
+      '@/lib/supabase/server': path.resolve(__dirname, 'src/lib/supabase/server'),
     };
     return config;
   },
