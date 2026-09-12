@@ -49,15 +49,15 @@ export const TrustAndRateUs: React.FC = () => {
   const [rated, setRated] = useState(false);
 
   return (
-    <section className="py-8 sm:py-12 bg-white">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+    <section className="py-12 sm:py-12 bg-white">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-6">
         
         {/* ===================================================================
             1. LOVING THE APP EXPERIENCE? RATE US BANNER (EXACT ZOOMCAR MATCH)
             media_1789126375254.jpg
            =================================================================== */}
-        <div className="bg-gradient-to-r from-[#E6FFFA] via-[#F0FDFA] to-[#F5F3FF] rounded-[22px] sm:rounded-[32px] p-4.5 xs:p-6 sm:p-8 border border-[#99F6E4]/50 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">
-          <div className="space-y-2 text-center sm:text-left">
+        <div className="bg-gradient-to-r from-[#E6FFFA] via-[#F0FDFA] to-[#F5F3FF] rounded-[22px] sm:rounded-[32px] p-6 sm:p-8 border border-[#99F6E4]/50 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-6">
+          <div className="space-y-3 text-center sm:text-left">
             <h3 className="text-lg sm:text-2xl font-black text-[#031B2A] tracking-tight">
               Loving the REHVO App experience?
             </h3>
@@ -77,7 +77,7 @@ export const TrustAndRateUs: React.FC = () => {
           </div>
 
           {/* Right Side Stars & Mini Graphic */}
-          <div className="flex flex-col items-center sm:items-end gap-1.5 sm:gap-2 shrink-0">
+          <div className="flex flex-col items-center sm:items-end gap-2.5 sm:gap-2 shrink-0">
             <div className="flex items-center gap-1 text-xl sm:text-2xl text-[#F59E0B] tracking-widest drop-shadow-xs">
               {'⭐⭐⭐⭐⭐'}
             </div>
@@ -92,8 +92,8 @@ export const TrustAndRateUs: React.FC = () => {
             2. 4 TRUST PILLARS CONTAINER (EXACT ZOOMCAR MATCH)
             media_1789126375254.jpg
            =================================================================== */}
-        <div className="bg-[#F8FAFC] rounded-[22px] sm:rounded-[32px] p-4.5 xs:p-6 sm:p-8 border border-[#E2E8F0]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="bg-[#F8FAFC] rounded-[22px] sm:rounded-[32px] p-6 sm:p-8 border border-[#E2E8F0]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {TRUST_PILLARS.map((pillar, idx) => {
               const Icon = pillar.icon;
               return (

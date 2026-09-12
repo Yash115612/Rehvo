@@ -76,8 +76,8 @@ export const HostAndEarn: React.FC = () => {
   }).format(estimatedRent);
 
   return (
-    <section className="py-10 sm:py-16 bg-white">
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+    <section className="py-14 sm:py-16 bg-white">
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-8">
         
         {/* Header Row (Exact match to Zoomcar Host and Earn) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -201,11 +201,11 @@ export const HostAndEarn: React.FC = () => {
         </div>
 
         {/* Interactive Rental Income Estimator (Zoomcar / App Teaser Card) */}
-        <div className="bg-gradient-to-br from-[#F0FDFA] via-white to-[#FAF5FF] rounded-[24px] sm:rounded-[32px] p-4.5 xs:p-6 sm:p-8 lg:p-10 border border-[#0F766E]/20 shadow-card">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
+        <div className="bg-gradient-to-br from-[#F0FDFA] via-white to-[#FAF5FF] rounded-[24px] sm:rounded-[32px] p-5 sm:p-8 lg:p-10 border border-[#0F766E]/20 shadow-card">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-8 items-center">
             
             {/* Left Column: Heading & Selection Controls */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+            <div className="lg:col-span-7 space-y-5 sm:space-y-5">
               <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3 py-1 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider max-w-full truncate">
                 <Sparkles className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
                 <span className="truncate">🏡 Own a Property in Mumbai?</span>
@@ -291,7 +291,7 @@ export const HostAndEarn: React.FC = () => {
             </div>
 
             {/* Right Column: Live Calculated Metric Card */}
-            <div className="lg:col-span-5 bg-white rounded-[22px] sm:rounded-[26px] p-4.5 xs:p-6 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-4 sm:space-y-5">
+            <div className="lg:col-span-5 bg-white rounded-[22px] sm:rounded-[26px] p-5 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-5 sm:space-y-5">
               <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#F1F5F9]">
                 <div className="flex items-center gap-2">
                   <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-[#0F766E]" />
@@ -316,7 +316,7 @@ export const HostAndEarn: React.FC = () => {
               </div>
 
               {/* 4-Metric Grid */}
-              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+              <div className="grid grid-cols-2 gap-3 sm:gap-3 p-3.5 sm:p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
                 <div>
                   <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Annual Cashflow</div>
                   <div className="text-sm sm:text-base font-black text-[#031B2A] mt-0.5">{formattedAnnualCashflow}</div>
