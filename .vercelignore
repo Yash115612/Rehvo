@@ -1,16 +1,16 @@
-node_modules
-android
-ios
-admin
-.expo
-.expo-shared
-.git
-.github
-dist
-build
-coverage
-scripts
-supabase
+/node_modules
+/android
+/ios
+/admin
+/.expo
+/.expo-shared
+/.git
+/.github
+/dist
+/build
+/coverage
+/scripts
+/supabase
 REHVO_*.md
 SUPABASE_*.md
 *.log
@@ -20,3 +20,7 @@ SUPABASE_*.md
 *.pem
 *.p8
 *.mobileprovision
+
+# Never ignore anything inside web
+!web/**
+!web/**/*
