@@ -10,7 +10,6 @@
 /build
 /coverage
 /scripts
-/supabase
 REHVO_*.md
 SUPABASE_*.md
 *.log
