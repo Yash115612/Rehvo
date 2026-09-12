@@ -1,4 +1,4 @@
-import { createPublicClient } from '../supabase/server';
+import { createPublicClient, createServerSupabaseClient } from '@/lib/supabase/server';
 import { extractPropertyIdFromSlug } from './slugs';
 import {
   PublicPropertyImage,
