@@ -21,6 +21,7 @@ import {
   detectCurrentBrowserLocation,
   getSavedUserLocality,
   saveUserLocality,
+  autoDetectOnLoad,
 } from '@/services/locationService';
 
 import {
@@ -78,7 +79,7 @@ export const HeroSearch: React.FC = () => {
   const [localitySearchFilter, setLocalitySearchFilter] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Restore saved locality from localStorage on mount
+  // Restore saved locality or auto-detect on mount
   useEffect(() => {
     const saved = getSavedUserLocality();
     if (saved) {
@@ -86,7 +87,30 @@ export const HeroSearch: React.FC = () => {
       if (saved.includes('(GPS)')) {
         setIsGpsActive(true);
       }
+    } else {
+      // Auto-detect location on first visit
+      setIsLocating(true);
+      autoDetectOnLoad().then((result) => {
+        setIsLocating(false);
+        if (result?.success) {
+          const locLabel = `${result.locality}, Mumbai`;
+          setSelectedLocality(locLabel);
+          setIsGpsActive(true);
+          saveUserLocality(locLabel);
+        }
+      });
     }
+
+    // Listen for locality changes from other components (Navbar, SearchDock, etc.)
+    const handleLocalityChange = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.locality) {
+        setSelectedLocality(detail.locality);
+        setIsGpsActive(detail.locality.includes('(GPS)'));
+      }
+    };
+    window.addEventListener('rehvo-locality-change', handleLocalityChange);
+    return () => window.removeEventListener('rehvo-locality-change', handleLocalityChange);
   }, []);
 
   // Smooth rotating search placeholder ticker every 3.2s

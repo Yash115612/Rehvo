@@ -13,7 +13,7 @@ import {
   Loader2,
 } from 'lucide-react';
 import { MUMBAI_LOCALITIES } from '@/lib/seo/slugs';
-import { detectCurrentBrowserLocation } from '@/services/locationService';
+import { detectCurrentBrowserLocation, getSavedUserLocality } from '@/services/locationService';
 
 export const SearchDock: React.FC = () => {
   const router = useRouter();
@@ -27,6 +27,27 @@ export const SearchDock: React.FC = () => {
   const [localityDropdownOpen, setLocalityDropdownOpen] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Restore saved locality and listen for cross-component locality changes
+  useEffect(() => {
+    const saved = getSavedUserLocality();
+    if (saved) {
+      const name = saved.split(',')[0].replace('(GPS)', '').trim();
+      setLocalityQuery(name);
+      setSelectedLocalitySlug(name.toLowerCase().replace(/\s+/g, '-'));
+    }
+
+    const handleLocalityChange = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.locality) {
+        const name = detail.locality.split(',')[0].replace('(GPS)', '').trim();
+        setLocalityQuery(name);
+        setSelectedLocalitySlug(name.toLowerCase().replace(/\s+/g, '-'));
+      }
+    };
+    window.addEventListener('rehvo-locality-change', handleLocalityChange);
+    return () => window.removeEventListener('rehvo-locality-change', handleLocalityChange);
+  }, []);
 
   const handleDetectCurrentLocation = async (e?: React.MouseEvent) => {
     e?.preventDefault();

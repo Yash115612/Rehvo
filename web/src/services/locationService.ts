@@ -104,8 +104,71 @@ export function saveUserLocality(locality: string): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY, locality);
+    // Broadcast to all listening components
+    window.dispatchEvent(
+      new CustomEvent('rehvo-locality-change', { detail: { locality } })
+    );
   } catch {
     // Ignore storage errors
+  }
+}
+
+/**
+ * Auto-detect location on page load if no saved locality exists.
+ * Uses a flag to prevent multiple simultaneous auto-detections.
+ * Returns the detected locality or null if skipped/failed.
+ */
+let autoDetectInProgress = false;
+let autoDetectDone = false;
+
+export async function autoDetectOnLoad(): Promise<DetectedLocation | null> {
+  if (typeof window === 'undefined') return null;
+
+  // Already auto-detected this session or in progress
+  if (autoDetectDone || autoDetectInProgress) return null;
+
+  // If user already has a saved locality, skip auto-detect
+  const saved = getSavedUserLocality();
+  if (saved) {
+    autoDetectDone = true;
+    return null;
+  }
+
+  autoDetectInProgress = true;
+
+  try {
+    // Check if geolocation permission is already granted (no prompt)
+    if (navigator.permissions) {
+      const permResult = await navigator.permissions.query({ name: 'geolocation' });
+      if (permResult.state === 'granted') {
+        // Permission already granted — detect silently
+        const result = await detectCurrentBrowserLocation();
+        autoDetectDone = true;
+        autoDetectInProgress = false;
+        return result;
+      } else if (permResult.state === 'prompt') {
+        // Permission not yet granted — still auto-detect (browser will show its native prompt)
+        const result = await detectCurrentBrowserLocation();
+        autoDetectDone = true;
+        autoDetectInProgress = false;
+        return result;
+      } else {
+        // Permission denied — skip
+        autoDetectDone = true;
+        autoDetectInProgress = false;
+        return null;
+      }
+    } else {
+      // Permissions API not available — try detecting anyway
+      const result = await detectCurrentBrowserLocation();
+      autoDetectDone = true;
+      autoDetectInProgress = false;
+      return result;
+    }
+  } catch {
+    autoDetectInProgress = false;
+    autoDetectDone = true;
+    return null;
   }
 }
 

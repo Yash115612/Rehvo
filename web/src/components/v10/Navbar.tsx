@@ -31,6 +31,7 @@ import {
   detectCurrentBrowserLocation,
   getSavedUserLocality,
   saveUserLocality,
+  autoDetectOnLoad,
 } from '@/services/locationService';
 
 interface ServiceDropdownItem {
@@ -103,7 +104,26 @@ export const Navbar: React.FC = () => {
     const saved = getSavedUserLocality();
     if (saved) {
       setUserLocality(saved.split(',')[0].replace('(GPS)', '').trim());
+    } else {
+      // Auto-detect location on first visit
+      setIsLocating(true);
+      autoDetectOnLoad().then((result) => {
+        setIsLocating(false);
+        if (result?.success) {
+          setUserLocality(result.locality);
+        }
+      });
     }
+
+    // Listen for locality changes from other components
+    const handleLocalityChange = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail?.locality) {
+        setUserLocality(detail.locality.split(',')[0].replace('(GPS)', '').trim());
+      }
+    };
+    window.addEventListener('rehvo-locality-change', handleLocalityChange);
+    return () => window.removeEventListener('rehvo-locality-change', handleLocalityChange);
   }, []);
 
   const handleDetectLocation = async (e?: React.MouseEvent) => {
