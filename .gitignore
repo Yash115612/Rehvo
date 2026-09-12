@@ -16,6 +16,7 @@ coverage/
 web/.next/
 admin/.next/
 out/
+.vercel/
 
 # Environment Variables & Local Secrets
 .env
