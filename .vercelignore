@@ -1,0 +1,28 @@
+# ==============================================================================
+# REHVO V10.5 — .vercelignore
+# Exclude unnecessary files and folders from Vercel deployment upload
+# ==============================================================================
+
+node_modules
+android
+ios
+admin
+.expo
+.expo-shared
+.git
+.github
+dist
+build
+web-build
+coverage
+scripts
+supabase
+REHVO_*.md
+SUPABASE_*.md
+*.log
+.DS_Store
+*.keystore
+*.jks
+*.pem
+*.p8
+*.mobileprovision
