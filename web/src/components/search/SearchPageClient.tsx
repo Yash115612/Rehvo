@@ -327,11 +327,11 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
 
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mt-2">
             <div>
-              <div className="flex items-center gap-2.5">
-                <h1 className="text-2xl sm:text-3xl font-black text-[#031B2A] tracking-tight">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                <h1 className="text-xl sm:text-3xl font-black text-[#031B2A] tracking-tight">
                   {searchQuery ? `Verified Rentals in ${searchQuery}` : 'All Verified Rentals in Mumbai'}
                 </h1>
-                <span className="bg-[#CCFBF1] text-[#064E3B] text-xs font-black px-3 py-1 rounded-full shadow-2xs">
+                <span className="bg-[#CCFBF1] text-[#064E3B] text-[10px] sm:text-xs font-black px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full shadow-2xs">
                   {filteredProperties.length} Homes Verified
                 </span>
               </div>
@@ -343,20 +343,20 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
         </div>
       </div>
 
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-6">
         
         {/* =====================================================================
             FIX 3: APP STYLE STICKY GLASS SEARCH BAR (LOC, SEARCH, VOICE AI, AI CONCIERGE)
            ===================================================================== */}
-        <div className="sticky top-[68px] sm:top-[74px] z-30 mb-4 transition-all">
-          <div className="bg-white/95 backdrop-blur-md rounded-full pl-4 pr-1.5 py-1.5 border-[1.5px] border-white/95 shadow-[0_4px_24px_rgba(3,27,42,0.08)] hover:shadow-[0_8px_32px_rgba(3,27,42,0.12)] focus-within:border-[#0F766E]/50 focus-within:shadow-[0_8px_32px_rgba(15,118,110,0.18)] transition-all flex items-center gap-2.5">
-            <Search className="w-4 h-4 text-[#0F766E] shrink-0 stroke-[2.4]" />
+        <div className="sticky top-[60px] sm:top-[74px] z-30 mb-4 transition-all">
+          <div className="bg-white/95 backdrop-blur-md rounded-full pl-3 sm:pl-4 pr-1 sm:pr-1.5 py-1 sm:py-1.5 border-[1.5px] border-white/95 shadow-[0_4px_24px_rgba(3,27,42,0.08)] hover:shadow-[0_8px_32px_rgba(3,27,42,0.12)] focus-within:border-[#0F766E]/50 focus-within:shadow-[0_8px_32px_rgba(15,118,110,0.18)] transition-all flex items-center gap-1.5 sm:gap-2.5">
+            <Search className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#0F766E] shrink-0 stroke-[2.4]" />
 
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder='Search locality, landmark or metro station (e.g. Bandra West, Powai, BKC)...'
+              placeholder='Search locality or landmark (e.g. Bandra West, BKC)...'
               className="w-full bg-transparent text-xs sm:text-sm font-bold text-[#031B2A] placeholder:text-[#64748B] focus:outline-none truncate py-1"
             />
 
@@ -364,9 +364,9 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="w-6 h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center shrink-0 cursor-pointer text-xs"
+                className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center shrink-0 cursor-pointer text-xs"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </button>
             )}
 
@@ -375,24 +375,24 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
               type="button"
               onClick={() => setVoiceModalOpen(true)}
               title="Voice AI Search"
-              className="w-9 h-9 rounded-full bg-[#F1F5F9] hover:bg-[#CCFBF1] text-[#031B2A] hover:text-[#0F766E] flex items-center justify-center transition shrink-0 cursor-pointer shadow-2xs"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#F1F5F9] hover:bg-[#CCFBF1] text-[#031B2A] hover:text-[#0F766E] flex items-center justify-center transition shrink-0 cursor-pointer shadow-2xs"
             >
-              <Mic className="w-4 h-4" />
+              <Mic className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
             </button>
 
             {/* AI Concierge Shortcut Button */}
             <Link
               href="/ai-concierge"
               title="AI Property Concierge"
-              className="w-9 h-9 rounded-full bg-[#CCFBF1] hover:bg-[#0F766E] text-[#0F766E] hover:text-white flex items-center justify-center transition shrink-0 cursor-pointer shadow-2xs"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#CCFBF1] hover:bg-[#0F766E] text-[#0F766E] hover:text-white flex items-center justify-center transition shrink-0 cursor-pointer shadow-2xs"
             >
-              <Sparkles className="w-4 h-4" />
+              <Sparkles className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
             </Link>
 
             {/* Emerald Search Button */}
             <button
               type="button"
-              className="h-9 sm:h-10 px-4 sm:px-6 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center gap-1.5 shadow-sm active:scale-95 transition shrink-0 cursor-pointer"
+              className="h-8 sm:h-10 px-3 sm:px-6 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-[11px] sm:text-xs font-black flex items-center gap-1.5 shadow-sm active:scale-95 transition shrink-0 cursor-pointer"
             >
               <span>Search</span>
             </button>
@@ -580,9 +580,9 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
         {/* =====================================================================
             RESULTS TOOLBAR: COUNT, MAP TOGGLE (FIX 9), & SORT DROPDOWN
            ===================================================================== */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pt-2 border-t border-[#E2E8F0]">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-black text-[#031B2A]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 mb-4 sm:mb-6 pt-2 border-t border-[#E2E8F0]">
+          <div className="flex items-center justify-between sm:justify-start gap-2">
+            <span className="text-xs sm:text-sm font-black text-[#031B2A]">
               Showing {filteredProperties.length} Properties
             </span>
             {activeFiltersCount > 0 && (
@@ -597,13 +597,13 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
             )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3 w-full sm:w-auto">
             {/* FIX 9: MAP TOGGLE (LIST VIEW | MAP VIEW SEGMENTED CONTROL) */}
             <div className="inline-flex p-1 rounded-full bg-[#F1F5F9] border border-[#E2E8F0]">
               <button
                 type="button"
                 onClick={() => setViewMode('list')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs transition cursor-pointer ${
+                className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs transition cursor-pointer ${
                   viewMode === 'list'
                     ? 'bg-white text-[#0F766E] font-black shadow-xs'
                     : 'text-[#64748B] hover:text-[#031B2A] font-bold'
@@ -616,7 +616,7 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
               <button
                 type="button"
                 onClick={() => setViewMode('map')}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs transition cursor-pointer ${
+                className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs transition cursor-pointer ${
                   viewMode === 'map'
                     ? 'bg-white text-[#0F766E] font-black shadow-xs'
                     : 'text-[#64748B] hover:text-[#031B2A] font-bold'
@@ -632,14 +632,14 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="h-9 pl-3 pr-8 rounded-full bg-white border border-[#E2E8F0] text-xs font-bold text-[#031B2A] shadow-2xs focus:outline-none focus:border-[#0F766E] cursor-pointer appearance-none"
+                className="h-8 sm:h-9 pl-2.5 sm:pl-3 pr-7 sm:pr-8 rounded-full bg-white border border-[#E2E8F0] text-[11px] sm:text-xs font-bold text-[#031B2A] shadow-2xs focus:outline-none focus:border-[#0F766E] cursor-pointer appearance-none"
               >
                 <option value="newest">Newest Listed</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
                 <option value="ai_match">Highest AI Match</option>
               </select>
-              <ArrowUpDown className="w-3 h-3 text-[#64748B] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ArrowUpDown className="w-3 h-3 text-[#64748B] absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
         </div>

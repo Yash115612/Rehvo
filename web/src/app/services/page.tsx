@@ -87,38 +87,38 @@ export default function ServicesPage() {
         <Breadcrumb items={[{ name: 'Home Services', url: '/services' }]} />
 
         {/* Hero Section */}
-        <div className="text-center max-w-3xl mx-auto my-12 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-            <ShieldCheck className="w-4 h-4 text-[#0F766E]" />
-            <span>VERIFIED SERVICE PARTNER NETWORK</span>
+        <div className="text-center max-w-3xl mx-auto my-8 sm:my-12 space-y-4">
+          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider max-w-full truncate">
+            <ShieldCheck className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#0F766E] shrink-0" />
+            <span className="truncate">VERIFIED SERVICE PARTNER NETWORK</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
             Essential Home Services, <br />
             Delivered with Perfection.
           </h1>
 
-          <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
+          <p className="text-xs sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
             Move-in essentials, financial freedom, digital tenancy agreements, and premium home maintenance across Mumbai.
           </p>
         </div>
 
         {/* Flagship Fintech & Compliance Solutions */}
-        <div className="mb-16 space-y-6">
+        <div className="mb-12 sm:mb-16 space-y-6">
           <div className="flex items-center gap-2">
             <h2 className="text-xl sm:text-2xl font-black text-[#031B2A] tracking-tight">
               REHVO Financial &amp; Rental Ecosystem
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {/* Zero Deposit */}
             <div
               id="zero-deposit"
-              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#0F766E]/5 to-[#10B981]/10 border border-[#0F766E]/20 shadow-card flex flex-col justify-between"
+              className="scroll-mt-24 rounded-[22px] sm:rounded-[28px] p-5 sm:p-7 bg-gradient-to-br from-[#0F766E]/5 to-[#10B981]/10 border border-[#0F766E]/20 shadow-card flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[11px] font-black uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#CCFBF1] text-[#0F766E] text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
                   <span>Zero Deposit Pass</span>
                 </div>
                 <h3 className="text-lg font-black text-[#031B2A]">Zero Cash Deposit</h3>
@@ -150,7 +150,7 @@ export default function ServicesPage() {
             {/* Rent Pay */}
             <div
               id="rent-pay"
-              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#0284C7]/5 to-[#38BDF8]/10 border border-[#0284C7]/20 shadow-card flex flex-col justify-between"
+              className="scroll-mt-24 rounded-[22px] sm:rounded-[28px] p-5 sm:p-7 bg-gradient-to-br from-[#0284C7]/5 to-[#38BDF8]/10 border border-[#0284C7]/20 shadow-card flex flex-col justify-between"
             >
               <div className="space-y-3">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E0F2FE] text-[#0284C7] text-[11px] font-black uppercase tracking-wider">
@@ -185,10 +185,10 @@ export default function ServicesPage() {
             {/* KYC Verification */}
             <div
               id="kyc"
-              className="scroll-mt-24 rounded-[28px] p-6 sm:p-7 bg-gradient-to-br from-[#8B5CF6]/5 to-[#A78BFA]/10 border border-[#8B5CF6]/20 shadow-card flex flex-col justify-between"
+              className="scroll-mt-24 rounded-[22px] sm:rounded-[28px] p-5 sm:p-7 bg-gradient-to-br from-[#8B5CF6]/5 to-[#A78BFA]/10 border border-[#8B5CF6]/20 shadow-card flex flex-col justify-between"
             >
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3E8FF] text-[#7C3AED] text-[11px] font-black uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F3E8FF] text-[#7C3AED] text-[10px] sm:text-[11px] font-black uppercase tracking-wider">
                   <span>100% Govt Compliant</span>
                 </div>
                 <h3 className="text-lg font-black text-[#031B2A]">KYC &amp; Digital Lease</h3>
@@ -230,13 +230,13 @@ export default function ServicesPage() {
         </div>
 
         {/* Catalog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {SERVICE_CATALOG.map((srv, idx) => {
             const Icon = srv.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
+                className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">

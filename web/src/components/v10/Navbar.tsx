@@ -137,14 +137,14 @@ export const Navbar: React.FC = () => {
           : undefined,
       }}
     >
-      <div className="max-w-[1360px] mx-auto px-3 sm:px-6 flex items-center justify-between gap-3 sm:gap-4">
+      <div className="max-w-[1360px] mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* =====================================================================
             1. BRAND LOGO LIQUID-GLASS CAPSULE (EXACT REHVO LOGO)
            ===================================================================== */}
         <Link
           href="/"
-          className={`pointer-events-auto h-11 px-4 rounded-full flex items-center group cursor-pointer transition-all duration-300 ${
+          className={`pointer-events-auto h-10 sm:h-11 px-3 sm:px-4 rounded-full flex items-center shrink-0 group cursor-pointer transition-all duration-300 ${
             isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
           }`}
         >
@@ -154,7 +154,7 @@ export const Navbar: React.FC = () => {
             width={84}
             height={28}
             style={{ maxHeight: '28px', height: '28px', width: 'auto' }}
-            className="h-7 w-auto object-contain max-h-[28px] group-hover:scale-105 transition-transform"
+            className="h-6 sm:h-7 w-auto object-contain max-h-[28px] group-hover:scale-105 transition-transform"
           />
         </Link>
 
@@ -292,7 +292,7 @@ export const Navbar: React.FC = () => {
           {/* App Download Capsule Button */}
           <Link
             href="/download"
-            className="h-10 px-4 sm:px-4.5 rounded-full rehvo-glass-capsule-emerald text-white font-extrabold text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap shadow-lg shadow-teal-900/20 active:scale-95 transition-all duration-200"
+            className="h-9 sm:h-10 px-3 sm:px-4.5 rounded-full rehvo-glass-capsule-emerald text-white font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap shadow-lg shadow-teal-900/20 active:scale-95 transition-all duration-200 shrink-0"
           >
             <Smartphone className="w-3.5 h-3.5" />
             <span>Download App</span>
@@ -303,7 +303,7 @@ export const Navbar: React.FC = () => {
             type="button"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Toggle navigation menu"
-            className={`md:hidden h-10 w-10 rounded-full flex items-center justify-center text-[#031B2A] cursor-pointer transition ${
+            className={`md:hidden h-9 w-9 sm:h-10 sm:w-10 rounded-full flex items-center justify-center text-[#031B2A] cursor-pointer transition shrink-0 ${
               isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
             }`}
           >
@@ -323,7 +323,7 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          <div className="fixed inset-y-0 right-0 w-full max-w-sm rehvo-glass-capsule-scrolled border-l border-white/80 shadow-2xl p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300">
+          <div className="fixed inset-y-0 right-0 w-full max-w-[320px] sm:max-w-sm rehvo-glass-capsule-scrolled border-l border-white/80 shadow-2xl p-5 sm:p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300">
             <div>
               {/* Drawer Top Header */}
               <div className="flex items-center justify-between pb-5 border-b border-white/60">

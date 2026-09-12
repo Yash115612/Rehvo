@@ -152,12 +152,12 @@ export const PGPageClient: React.FC<PGPageClientProps> = ({ initialProperties })
 
           {/* Header Title Block */}
           <div className="text-center max-w-3xl mx-auto space-y-3 pt-2">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#CCFBF1] text-[#064E3B] text-xs font-black uppercase tracking-wider border border-[#99F6E4]/60 shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#0F766E]" />
-              <span>Verified Listing &bull; Direct Wardens &amp; Owners</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#CCFBF1] text-[#064E3B] text-[10px] sm:text-xs font-black uppercase tracking-wider border border-[#99F6E4]/60 shadow-2xs max-w-full truncate">
+              <Sparkles className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
+              <span className="truncate">Verified Listing &bull; Direct Wardens &amp; Owners</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
               Verified PGs &amp; Student Hostels in Mumbai
             </h1>
 
@@ -168,20 +168,20 @@ export const PGPageClient: React.FC<PGPageClientProps> = ({ initialProperties })
 
           {/* Quick Search Bar */}
           <div className="max-w-2xl mx-auto">
-            <div className="relative flex items-center bg-white rounded-full p-1.5 shadow-[0_4px_24px_rgba(3,27,42,0.08)] border border-[#E2E8F0] focus-within:border-[#0F766E] focus-within:shadow-[0_8px_30px_rgba(15,118,110,0.15)] transition-all">
-              <Search className="w-5 h-5 text-[#64748B] ml-3.5 shrink-0" />
+            <div className="relative flex items-center bg-white rounded-full p-1 sm:p-1.5 shadow-[0_4px_24px_rgba(3,27,42,0.08)] border border-[#E2E8F0] focus-within:border-[#0F766E] focus-within:shadow-[0_8px_30px_rgba(15,118,110,0.15)] transition-all">
+              <Search className="w-4 sm:w-5 h-4 sm:h-5 text-[#64748B] ml-3 sm:ml-3.5 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by college (NMIMS, IIT), locality (Andheri, Powai, Bandra)..."
-                className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm font-semibold text-[#031B2A] placeholder:text-[#94A3B8] focus:outline-none"
+                placeholder="Search college, locality or landmark..."
+                className="w-full bg-transparent px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#031B2A] placeholder:text-[#94A3B8] focus:outline-none truncate"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="p-1.5 text-xs text-[#64748B] hover:text-[#031B2A] mr-1"
+                  className="p-1.5 text-xs text-[#64748B] hover:text-[#031B2A] mr-1 shrink-0"
                 >
                   Clear
                 </button>
@@ -190,13 +190,13 @@ export const PGPageClient: React.FC<PGPageClientProps> = ({ initialProperties })
           </div>
 
           {/* Gender Filter Tabs */}
-          <div className="flex items-center justify-center gap-2 flex-wrap pt-2">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap pt-2">
             {GENDER_FILTERS.map((tab) => (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setSelectedGender(tab.id)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   selectedGender === tab.id
                     ? 'bg-[#0F766E] text-white shadow-sm'
                     : 'bg-white text-[#031B2A] border border-[#E2E8F0] hover:bg-[#F1F5F9]'
@@ -212,14 +212,14 @@ export const PGPageClient: React.FC<PGPageClientProps> = ({ initialProperties })
       {/* 02: 4 VALUE PILLARS STRIP */}
       <section className="bg-white border-b border-[#E2E8F0] py-6 sm:py-8">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]/80">
-              <div className="w-10 h-10 rounded-xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 stroke-[2.4]" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+            <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]/80">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.4]" />
               </div>
-              <div>
-                <div className="text-xs font-black text-[#031B2A]">Verified Listing</div>
-                <div className="text-[10px] text-[#64748B] font-semibold">Deal direct with owner</div>
+              <div className="min-w-0">
+                <div className="text-[11px] sm:text-xs font-black text-[#031B2A] truncate">Verified Listing</div>
+                <div className="text-[9px] sm:text-[10px] text-[#64748B] font-semibold truncate">Direct with owner</div>
               </div>
             </div>
 

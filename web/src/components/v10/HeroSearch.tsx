@@ -146,15 +146,15 @@ export const HeroSearch: React.FC = () => {
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4 relative z-10">
           
           {/* Top Search & Action Icons Row (Exact topHeaderRow from Mobile App) */}
-          <div className="max-w-3xl mx-auto flex items-center gap-2.5 sm:gap-3">
+          <div className="max-w-3xl mx-auto flex items-center gap-2 sm:gap-3">
             {/* Search Pill Input (headerSearchPill) */}
             <form
               onSubmit={handleSearch}
-              className="flex-1 bg-white/95 backdrop-blur-md rounded-full pl-4 pr-1.5 py-1.5 border-[1.5px] border-white/95 shadow-[0_4px_20px_rgba(3,27,42,0.08)] hover:shadow-[0_8px_30px_rgba(3,27,42,0.12)] focus-within:shadow-[0_8px_30px_rgba(15,118,110,0.18)] focus-within:border-[#0F766E]/50 transition-all duration-300 flex items-center gap-2.5 sm:gap-3 group"
+              className="flex-1 min-w-0 bg-white/95 backdrop-blur-md rounded-full pl-3 sm:pl-4 pr-1 sm:pr-1.5 py-1 sm:py-1.5 border-[1.5px] border-white/95 shadow-[0_4px_20px_rgba(3,27,42,0.08)] hover:shadow-[0_8px_30px_rgba(3,27,42,0.12)] focus-within:shadow-[0_8px_30px_rgba(15,118,110,0.18)] focus-within:border-[#0F766E]/50 transition-all duration-300 flex items-center gap-2 sm:gap-3 group"
             >
-              <Search className="w-4 h-4 text-[#64748B] group-focus-within:text-[#0F766E] shrink-0 stroke-[2.4] transition-colors" />
+              <Search className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#64748B] group-focus-within:text-[#0F766E] shrink-0 stroke-[2.4] transition-colors ml-0.5" />
               
-              <div className="relative flex-1">
+              <div className="relative flex-1 min-w-0">
                 <input
                   type="text"
                   value={query}
@@ -167,7 +167,7 @@ export const HeroSearch: React.FC = () => {
               {/* Single Search Button */}
               <button
                 type="submit"
-                className="h-10 px-5 sm:px-6 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center gap-1.5 shadow-sm hover:shadow-md active:scale-95 transition-all shrink-0 cursor-pointer"
+                className="h-9 sm:h-10 px-3.5 sm:px-6 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center gap-1.5 shadow-sm hover:shadow-md active:scale-95 transition-all shrink-0 cursor-pointer"
               >
                 <span>Search</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -175,24 +175,24 @@ export const HeroSearch: React.FC = () => {
             </form>
 
             {/* Right Action Icons: AI & Wallet */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               {/* REHVO AI Assistant Icon Button */}
               <Link
                 href="/ai-concierge"
                 title="REHVO AI Concierge"
-                className="w-11 h-11 rounded-full bg-[#CCFBF1] hover:bg-[#0F766E] text-[#0F766E] hover:text-white border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#CCFBF1] hover:bg-[#0F766E] text-[#0F766E] hover:text-white border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 stroke-[2.4]" />
+                <Sparkles className="w-3.5 sm:w-4 h-3.5 sm:h-4 stroke-[2.4]" />
               </Link>
 
               {/* Wallet Hub Icon Button */}
               <Link
                 href="/download"
                 title="Wallet & R-Cash Rewards"
-                className="w-11 h-11 rounded-full bg-white/95 hover:bg-white text-[#0F766E] border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 relative cursor-pointer"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/95 hover:bg-white text-[#0F766E] border-[1.5px] border-white/95 shadow-[0_4px_14px_rgba(3,27,42,0.08)] flex items-center justify-center transition-all hover:scale-105 active:scale-95 relative cursor-pointer"
               >
-                <Wallet className="w-4 h-4 stroke-[2.4]" />
-                <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-[#10B981] ring-2 ring-white" />
+                <Wallet className="w-3.5 sm:w-4 h-3.5 sm:h-4 stroke-[2.4]" />
+                <span className="absolute top-2 sm:top-2.5 right-2 sm:right-2.5 w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#10B981] ring-2 ring-white" />
               </Link>
             </div>
           </div>
@@ -314,22 +314,22 @@ export const HeroSearch: React.FC = () => {
                 </div>
 
                 {/* Massive Stylized Headline */}
-                <div className="text-4xl sm:text-5xl md:text-6xl lg:text-[62px] font-black text-[#031B2A] tracking-tight leading-none my-1">
+                <div className="text-2xl xs:text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-black text-[#031B2A] tracking-tight leading-none my-1 px-2">
                   {currentAd.title}
                 </div>
 
                 {/* Subtitle */}
-                <div className="text-xs sm:text-sm md:text-base font-extrabold text-[#64748B] tracking-[2px] uppercase mt-2 mb-3.5">
+                <div className="text-[11px] xs:text-xs sm:text-sm md:text-base font-extrabold text-[#64748B] tracking-[1.5px] sm:tracking-[2px] uppercase mt-1.5 sm:mt-2 mb-3 sm:mb-3.5 px-2">
                   {currentAd.titleSub}
                 </div>
 
                 {/* Feature Pill */}
                 <div
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold mb-4 shadow-xs transition-colors duration-500 hover:scale-105"
+                  className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold mb-4 shadow-xs transition-colors duration-500 hover:scale-105 max-w-[94vw] truncate"
                   style={{ backgroundColor: currentAd.pillBg, color: currentAd.pillColor }}
                 >
                   <Sparkles className="w-3.5 h-3.5 shrink-0" />
-                  <span>{currentAd.pillText}</span>
+                  <span className="truncate">{currentAd.pillText}</span>
                 </div>
               </div>
 

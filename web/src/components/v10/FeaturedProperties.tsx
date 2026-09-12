@@ -25,12 +25,12 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properti
   }
 
   return (
-    <section className="py-12 sm:py-16 bg-[#F8FAFC]">
+    <section className="py-10 sm:py-16 bg-[#F8FAFC]">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex items-end justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-[11px] font-black tracking-widest text-[#0F766E] uppercase bg-[#CCFBF1] px-3 py-1 rounded-full mb-2">
+            <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-black tracking-widest text-[#0F766E] uppercase bg-[#CCFBF1] px-3 py-1 rounded-full mb-2">
               <Sparkles className="w-3 h-3 text-[#0F766E]" />
               <span>HANDPICKED BY REHVO</span>
             </div>
@@ -42,7 +42,7 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properti
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
             {/* Carousel Controls */}
             <div className="hidden sm:flex items-center gap-2">
               <button
@@ -65,7 +65,7 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properti
 
             <Link
               href="/search"
-              className="text-xs font-bold text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#CCFBF1]/50 hover:bg-[#CCFBF1] transition"
+              className="text-xs font-bold text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#CCFBF1]/50 hover:bg-[#CCFBF1] transition ml-auto sm:ml-0"
             >
               <span>Explore All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -76,12 +76,12 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properti
         {/* Desktop Horizontal Scroll Carousel */}
         <div
           ref={scrollContainerRef}
-          className="flex gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth snap-x snap-mandatory"
+          className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth snap-x snap-mandatory"
         >
           {properties.map((property) => (
             <div
               key={property.id}
-              className="w-[290px] sm:w-[350px] shrink-0 snap-start"
+              className="w-[82vw] max-w-[320px] sm:w-[350px] shrink-0 snap-start"
             >
               <PropertyCard property={property} />
             </div>

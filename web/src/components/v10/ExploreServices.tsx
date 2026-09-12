@@ -147,7 +147,7 @@ export const ExploreServices: React.FC = () => {
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-full bg-[#CCFBF1] text-[#064E3B] text-[10px] font-black uppercase tracking-wider">
@@ -163,12 +163,12 @@ export const ExploreServices: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
               type="button"
               onClick={() => scroll('left')}
               aria-label="Previous services"
-              className="w-9 h-9 rounded-full bg-white hover:bg-slate-50 border border-[#E2E8F0] flex items-center justify-center text-[#031B2A] shadow-2xs transition cursor-pointer"
+              className="w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-white hover:bg-slate-50 border border-[#E2E8F0] flex items-center justify-center text-[#031B2A] shadow-2xs transition cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -176,13 +176,13 @@ export const ExploreServices: React.FC = () => {
               type="button"
               onClick={() => scroll('right')}
               aria-label="Next services"
-              className="w-9 h-9 rounded-full bg-white hover:bg-slate-50 border border-[#E2E8F0] flex items-center justify-center text-[#031B2A] shadow-2xs transition cursor-pointer"
+              className="w-8 sm:w-9 h-8 sm:h-9 rounded-full bg-white hover:bg-slate-50 border border-[#E2E8F0] flex items-center justify-center text-[#031B2A] shadow-2xs transition cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
             <Link
               href="/services"
-              className="hidden sm:inline-flex items-center gap-1.5 ml-2 text-xs font-bold text-[#0F766E] hover:text-[#064E3B] transition"
+              className="inline-flex items-center gap-1.5 ml-2 text-xs font-bold text-[#0F766E] hover:text-[#064E3B] transition"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -193,7 +193,7 @@ export const ExploreServices: React.FC = () => {
         {/* Zoomcar-Inspired Card Track / Grid */}
         <div
           ref={scrollRef}
-          className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth snap-x snap-mandatory"
+          className="flex gap-3.5 sm:gap-5 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth snap-x snap-mandatory"
         >
           {SERVICES.map((srv) => {
             const Icon = srv.icon;
@@ -201,7 +201,7 @@ export const ExploreServices: React.FC = () => {
               <Link
                 key={srv.id}
                 href={srv.route}
-                className="group w-[260px] sm:w-[290px] shrink-0 snap-start bg-white rounded-[26px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
+                className="group w-[80vw] max-w-[280px] sm:w-[290px] shrink-0 snap-start bg-white rounded-[24px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Row: Icon Container + Badge Tag */}

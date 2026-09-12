@@ -63,7 +63,7 @@ export const RentPropertiesGrid: React.FC = () => {
           {/* CARD 1 (TALL LEFT): Dynamic Luxury Property for Rent */}
           <Link
             href="/search?category=residential"
-            className="lg:col-span-7 rounded-[32px] sm:rounded-[36px] p-7 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-700 ease-in-out hover:-translate-y-1 min-h-[380px] sm:min-h-[440px] group cursor-pointer border"
+            className="lg:col-span-7 rounded-[28px] sm:rounded-[36px] p-5 sm:p-9 flex flex-col justify-between relative overflow-hidden transition-all duration-700 ease-in-out hover:-translate-y-1 min-h-[340px] sm:min-h-[440px] group cursor-pointer border"
             style={{
               background: tallCard.gradient,
               borderColor: tallCard.borderColor,
@@ -87,7 +87,7 @@ export const RentPropertiesGrid: React.FC = () => {
 
               {/* Title & Subtitle */}
               <h3
-                className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mt-3 mb-1.5 transition-colors duration-700 ease-in-out"
+                className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mt-3 mb-1.5 transition-colors duration-700 ease-in-out"
                 style={{ color: tallCard.titleColor || '#031B2A' }}
               >
                 Property<br />for Rent
@@ -100,17 +100,17 @@ export const RentPropertiesGrid: React.FC = () => {
               </p>
 
               {/* Centered Large Circular Glowing Icon Badge */}
-              <div className="py-8 sm:py-12 flex items-center justify-center relative">
+              <div className="py-6 sm:py-12 flex items-center justify-center relative">
                 {/* Soft ambient background glow */}
                 <div
-                  className="absolute w-44 h-44 rounded-full blur-2xl pointer-events-none transition-colors duration-700 ease-in-out opacity-40"
+                  className="absolute w-36 h-36 sm:w-44 sm:h-44 rounded-full blur-2xl pointer-events-none transition-colors duration-700 ease-in-out opacity-40"
                   style={{ backgroundColor: tallCard.glowColor }}
                 />
                 
                 {/* Pure White Circular Icon Disc with Subtle Elevation */}
-                <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-white border border-white/90 shadow-[0_10px_32px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-24 h-24 sm:w-36 sm:h-36 rounded-full bg-white border border-white/90 shadow-[0_10px_32px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                   <Building2
-                    className="w-14 h-14 sm:w-18 sm:h-18 stroke-[2.2] transition-colors duration-700 ease-in-out"
+                    className="w-12 h-12 sm:w-18 sm:h-18 stroke-[2.2] transition-colors duration-700 ease-in-out"
                     style={{ color: tallCard.iconColor }}
                   />
                 </div>
@@ -138,7 +138,7 @@ export const RentPropertiesGrid: React.FC = () => {
             {/* CARD 2 (COMPACT TOP): Dynamic PG & Hostel */}
             <Link
               href="/pg"
-              className="flex-1 rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 flex items-center justify-between transition-all duration-700 ease-in-out hover:-translate-y-1 group min-h-[180px] sm:min-h-[205px] border relative overflow-hidden"
+              className="flex-1 rounded-[26px] sm:rounded-[32px] p-5 sm:p-7 flex items-center justify-between transition-all duration-700 ease-in-out hover:-translate-y-1 group min-h-[160px] sm:min-h-[205px] border relative overflow-hidden"
               style={{
                 background: pgCard.gradient,
                 borderColor: pgCard.borderColor,
@@ -159,7 +159,7 @@ export const RentPropertiesGrid: React.FC = () => {
                   {pgCard.tagText}
                 </div>
                 <h3
-                  className="text-2xl sm:text-3xl font-black tracking-tight leading-tight transition-colors duration-700 ease-in-out"
+                  className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight leading-tight transition-colors duration-700 ease-in-out"
                   style={{ color: pgCard.titleColor || '#031B2A' }}
                 >
                   PG &amp;<br />Hostel
@@ -178,9 +178,9 @@ export const RentPropertiesGrid: React.FC = () => {
                   className="absolute -inset-2 rounded-3xl blur-xl pointer-events-none transition-colors duration-700 ease-in-out opacity-40"
                   style={{ backgroundColor: pgCard.glowColor }}
                 />
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[22px] sm:rounded-[26px] bg-white border border-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-16 h-16 sm:w-24 sm:h-24 rounded-[20px] sm:rounded-[26px] bg-white border border-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                   <BedDouble
-                    className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2] transition-colors duration-700 ease-in-out"
+                    className="w-8 h-8 sm:w-12 sm:h-12 stroke-[2.2] transition-colors duration-700 ease-in-out"
                     style={{ color: pgCard.iconColor }}
                   />
                 </div>
@@ -190,7 +190,7 @@ export const RentPropertiesGrid: React.FC = () => {
             {/* CARD 3 (COMPACT BOTTOM): Dynamic Commercial & Office */}
             <Link
               href="/commercial"
-              className="flex-1 rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 flex items-center justify-between transition-all duration-700 ease-in-out hover:-translate-y-1 group min-h-[180px] sm:min-h-[205px] border relative overflow-hidden"
+              className="flex-1 rounded-[26px] sm:rounded-[32px] p-5 sm:p-7 flex items-center justify-between transition-all duration-700 ease-in-out hover:-translate-y-1 group min-h-[160px] sm:min-h-[205px] border relative overflow-hidden"
               style={{
                 background: commercialCard.gradient,
                 borderColor: commercialCard.borderColor,
@@ -211,7 +211,7 @@ export const RentPropertiesGrid: React.FC = () => {
                   {commercialCard.tagText}
                 </div>
                 <h3
-                  className="text-2xl sm:text-3xl font-black tracking-tight leading-tight transition-colors duration-700 ease-in-out"
+                  className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight leading-tight transition-colors duration-700 ease-in-out"
                   style={{ color: commercialCard.titleColor || '#031B2A' }}
                 >
                   Commercial<br />&amp; Office
@@ -230,9 +230,9 @@ export const RentPropertiesGrid: React.FC = () => {
                   className="absolute -inset-2 rounded-3xl blur-xl pointer-events-none transition-colors duration-700 ease-in-out opacity-40"
                   style={{ backgroundColor: commercialCard.glowColor }}
                 />
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-[22px] sm:rounded-[26px] bg-white border border-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-16 h-16 sm:w-24 sm:h-24 rounded-[20px] sm:rounded-[26px] bg-white border border-white/90 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                   <Store
-                    className="w-10 h-10 sm:w-12 sm:h-12 stroke-[2.2] transition-colors duration-700 ease-in-out"
+                    className="w-8 h-8 sm:w-12 sm:h-12 stroke-[2.2] transition-colors duration-700 ease-in-out"
                     style={{ color: commercialCard.iconColor }}
                   />
                 </div>

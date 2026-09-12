@@ -141,12 +141,12 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
 
           {/* Header Title Block */}
           <div className="text-center max-w-3xl mx-auto space-y-3 pt-2">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#EEF2FF] text-[#1D4ED8] text-xs font-black uppercase tracking-wider border border-[#BFDBFE] shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
-              <span>Verified Listing &bull; Direct Corporate Landlords</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#1D4ED8] text-[10px] sm:text-xs font-black uppercase tracking-wider border border-[#BFDBFE] shadow-2xs max-w-full truncate">
+              <Sparkles className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+              <span className="truncate">Verified Listing &bull; Direct Corporate Landlords</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
               Grade-A Commercial Offices &amp; Retail in Mumbai
             </h1>
 
@@ -157,20 +157,20 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
 
           {/* Quick Search Bar */}
           <div className="max-w-2xl mx-auto">
-            <div className="relative flex items-center bg-white rounded-full p-1.5 shadow-[0_4px_24px_rgba(3,27,42,0.08)] border border-[#E2E8F0] focus-within:border-[#2563EB] focus-within:shadow-[0_8px_30px_rgba(37,99,235,0.15)] transition-all">
-              <Search className="w-5 h-5 text-[#64748B] ml-3.5 shrink-0" />
+            <div className="relative flex items-center bg-white rounded-full p-1 sm:p-1.5 shadow-[0_4px_24px_rgba(3,27,42,0.08)] border border-[#E2E8F0] focus-within:border-[#2563EB] focus-within:shadow-[0_8px_30px_rgba(37,99,235,0.15)] transition-all">
+              <Search className="w-4 sm:w-5 h-4 sm:h-5 text-[#64748B] ml-3 sm:ml-3.5 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by business district (BKC, Lower Parel, MIDC, Powai, Bandra)..."
-                className="w-full bg-transparent px-3 py-2 text-xs sm:text-sm font-semibold text-[#031B2A] placeholder:text-[#94A3B8] focus:outline-none"
+                placeholder="Search business district (BKC, Lower Parel, MIDC)..."
+                className="w-full bg-transparent px-2.5 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#031B2A] placeholder:text-[#94A3B8] focus:outline-none truncate"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="p-1.5 text-xs text-[#64748B] hover:text-[#031B2A] mr-1 cursor-pointer"
+                  className="p-1.5 text-xs text-[#64748B] hover:text-[#031B2A] mr-1 cursor-pointer shrink-0"
                 >
                   Clear
                 </button>
@@ -179,7 +179,7 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
           </div>
 
           {/* Category Filter Tabs */}
-          <div className="flex items-center justify-center gap-2 flex-wrap pt-2">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap pt-2">
             {CATEGORY_TABS.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -187,7 +187,7 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
                   key={tab.id}
                   type="button"
                   onClick={() => setSelectedCategory(tab.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all cursor-pointer ${
                     selectedCategory === tab.id
                       ? 'bg-[#031B2A] text-white shadow-sm'
                       : 'bg-white text-[#031B2A] border border-[#E2E8F0] hover:bg-[#F1F5F9]'
@@ -205,14 +205,14 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
       {/* 02: 4 VALUE PILLARS STRIP */}
       <section className="bg-white border-b border-[#E2E8F0] py-6 sm:py-8">
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]/80">
-              <div className="w-10 h-10 rounded-xl bg-[#EEF2FF] text-[#2563EB] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 stroke-[2.4]" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+            <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]/80">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#EEF2FF] text-[#2563EB] flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.4]" />
               </div>
-              <div>
-                <div className="text-xs font-black text-[#031B2A]">Verified Marketplace</div>
-                <div className="text-[10px] text-[#64748B] font-semibold">Save lakhs on lease commission</div>
+              <div className="min-w-0">
+                <div className="text-[11px] sm:text-xs font-black text-[#031B2A] truncate">Verified Marketplace</div>
+                <div className="text-[9px] sm:text-[10px] text-[#64748B] font-semibold truncate">Save lease commission</div>
               </div>
             </div>
 

@@ -135,27 +135,27 @@ export default function ListPropertyPage() {
         <Breadcrumb items={[{ name: 'List Property', url: '/list-property' }]} />
 
         {/* Hero Section */}
-        <div className="text-center max-w-3xl mx-auto my-10 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-            <Building2 className="w-4 h-4 text-[#0F766E]" />
-            <span>FOR PROPERTY OWNERS &amp; LANDLORDS</span>
+        <div className="text-center max-w-3xl mx-auto my-8 sm:my-12 space-y-4">
+          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider max-w-full truncate">
+            <Building2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#0F766E] shrink-0" />
+            <span className="truncate">FOR PROPERTY OWNERS &amp; LANDLORDS</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
             Rent your property faster. <br />
             With 100% verified marketplace.
           </h1>
 
-          <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
+          <p className="text-xs sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
             Connect directly with verified working professionals and families in Mumbai. Free physical verification, free photography, and transparent pricing.
           </p>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
-              <Coins className="w-6 h-6" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
+          <div className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
+              <Coins className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <h3 className="text-base font-black text-[#031B2A]">100% Transparent</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
@@ -163,9 +163,9 @@ export default function ListPropertyPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center">
-              <ShieldCheck className="w-6 h-6" />
+          <div className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <h3 className="text-base font-black text-[#031B2A]">Verified Tenants Only</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
@@ -173,9 +173,9 @@ export default function ListPropertyPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
-              <Sparkles className="w-6 h-6" />
+          <div className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <h3 className="text-base font-black text-[#031B2A]">Free High-Res Photos</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
@@ -183,9 +183,9 @@ export default function ListPropertyPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#F0FDF4] text-[#16A34A] flex items-center justify-center">
-              <CheckCircle2 className="w-6 h-6" />
+          <div className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#F0FDF4] text-[#16A34A] flex items-center justify-center">
+              <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <h3 className="text-base font-black text-[#031B2A]">Digital Lease &amp; NOC</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
@@ -195,10 +195,10 @@ export default function ListPropertyPage() {
         </div>
 
         {/* Form Container */}
-        <div className="max-w-2xl mx-auto bg-white rounded-[32px] p-8 sm:p-12 border border-[#E2E8F0] shadow-card-hover mb-16 relative overflow-hidden">
+        <div className="max-w-2xl mx-auto bg-white rounded-[24px] sm:rounded-[32px] p-5 xs:p-6 sm:p-12 border border-[#E2E8F0] shadow-card-hover mb-12 sm:mb-16 relative overflow-hidden">
           
-          <div className="text-center space-y-1.5 mb-8">
-            <h2 className="text-2xl font-black text-[#031B2A]">List Your Property in 2 Minutes</h2>
+          <div className="text-center space-y-1.5 mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-black text-[#031B2A]">List Your Property in 2 Minutes</h2>
             <p className="text-xs text-[#64748B]">
               Fill in basic details — your listing goes live instantly on REHVO.
             </p>

@@ -7,8 +7,8 @@ import { Instagram, Facebook, Twitter, Linkedin, MapPin, Mail, ShieldCheck } fro
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-[#064E3B] text-white border-t border-[#0F766E]/40">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-10">
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-6 sm:gap-8 lg:gap-10">
           {/* Brand Column (4 Cols on Desktop) */}
           <div className="col-span-2 md:col-span-4 space-y-4 pr-0 lg:pr-8">
             <Link href="/" className="inline-flex items-center space-x-2.5 group">

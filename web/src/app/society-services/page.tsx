@@ -73,25 +73,25 @@ export default function SocietyServicesPage() {
         <Breadcrumb items={[{ name: 'Society Services', url: '/society-services' }]} />
 
         {/* Hero Section */}
-        <div className="text-center max-w-3xl mx-auto my-12 space-y-4">
-          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
-            <Building2 className="w-4 h-4 text-[#0F766E]" />
-            <span>GATED COMMUNITY &amp; RWA OPERATING SYSTEM</span>
+        <div className="text-center max-w-3xl mx-auto my-8 sm:my-12 space-y-4">
+          <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider max-w-full truncate">
+            <Building2 className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#0F766E] shrink-0" />
+            <span className="truncate">GATED COMMUNITY &amp; RWA OPERATING SYSTEM</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
             Smart Society Management <br className="hidden sm:inline" />
             for Apartments &amp; RWAs
           </h1>
 
-          <p className="text-sm sm:text-base text-[#64748B] max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-xs sm:text-base text-[#64748B] max-w-2xl mx-auto font-medium leading-relaxed">
             REHVO Society replaces outdated gate registers and unorganized WhatsApp groups with an integrated operating system for residents, security guards, and managing committees across Mumbai.
           </p>
 
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+          <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
             <Link
               href="/contact?subject=society_demo"
-              className="h-12 px-8 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs sm:text-sm font-black flex items-center gap-2 shadow-xs transition"
+              className="h-11 sm:h-12 px-6 sm:px-8 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-xs transition"
             >
               <span>Book a Free Society Demo</span>
               <ArrowRight className="w-4 h-4" />
@@ -100,19 +100,19 @@ export default function SocietyServicesPage() {
         </div>
 
         {/* 6 Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {SOCIETY_FEATURES.map((feat, idx) => {
             const Icon = feat.icon;
             return (
               <div
                 key={idx}
-                className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover hover:border-[#0F766E]/30 transition-all duration-300 flex flex-col justify-between space-y-4"
+                className="bg-white rounded-[22px] sm:rounded-[28px] p-5 sm:p-7 border border-[#E2E8F0] shadow-card hover:shadow-card-hover hover:border-[#0F766E]/30 transition-all duration-300 flex flex-col justify-between space-y-4"
               >
                 <div className="space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
-                    <Icon className="w-6 h-6" />
+                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <h3 className="text-base font-black text-[#031B2A]">{feat.title}</h3>
+                  <h3 className="text-sm sm:text-base font-black text-[#031B2A]">{feat.title}</h3>
                   <p className="text-xs text-[#64748B] leading-relaxed font-medium">{feat.desc}</p>
                 </div>
 
@@ -130,13 +130,13 @@ export default function SocietyServicesPage() {
         </div>
 
         {/* Final CTA Banner */}
-        <div className="bg-gradient-to-r from-[#0F766E] to-[#064E3B] rounded-[32px] p-8 sm:p-12 text-white shadow-card mb-16 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-gradient-to-r from-[#0F766E] to-[#064E3B] rounded-[24px] sm:rounded-[32px] p-5 xs:p-6 sm:p-12 text-white shadow-card mb-12 sm:mb-16 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5 sm:gap-6">
           <div className="space-y-2 text-center md:text-left">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#CCFBF1] text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#CCFBF1] text-[10px] sm:text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Free Society Onboarding</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+            <h2 className="text-xl sm:text-3xl font-black tracking-tight">
               Ready to modernize your residential society?
             </h2>
             <p className="text-xs sm:text-sm text-[#CCFBF1]/85 max-w-xl font-medium">
@@ -146,7 +146,7 @@ export default function SocietyServicesPage() {
 
           <Link
             href="/contact?subject=society_demo"
-            className="h-12 px-8 rounded-full bg-white text-[#064E3B] hover:bg-[#CCFBF1] text-xs sm:text-sm font-black flex items-center gap-2 shrink-0 transition shadow-md active:scale-95"
+            className="h-11 sm:h-12 px-6 sm:px-8 rounded-full bg-white text-[#064E3B] hover:bg-[#CCFBF1] text-xs sm:text-sm font-black flex items-center justify-center gap-2 shrink-0 transition shadow-md active:scale-95"
           >
             <span>Book a Free Society Demo</span>
             <ArrowRight className="w-4 h-4" />

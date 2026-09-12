@@ -92,7 +92,7 @@ export const FlatmatesSection: React.FC = () => {
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Section Header (Mirrors V4HomeScreen.tsx Find Your Ideal Flatmate) */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-full bg-[#CCFBF1] text-[#064E3B] text-[10px] font-black uppercase tracking-wider">
@@ -110,7 +110,7 @@ export const FlatmatesSection: React.FC = () => {
 
           <Link
             href="/flatmates"
-            className="text-xs sm:text-sm font-black text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 group transition"
+            className="text-xs sm:text-sm font-black text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 group transition w-fit"
           >
             <span>View All Profiles</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -118,13 +118,13 @@ export const FlatmatesSection: React.FC = () => {
         </div>
 
         {/* 4 Seeker Cards Grid (App Visual Language) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {SAMPLE_FLATMATES.map((fm) => {
             const hasWaved = wavedIds.includes(fm.id);
             return (
               <div
                 key={fm.id}
-                className="bg-white rounded-[26px] sm:rounded-[28px] p-5 sm:p-6 border border-[#E2E8F0] hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
+                className="bg-white rounded-[22px] sm:rounded-[28px] p-4.5 xs:p-5 sm:p-6 border border-[#E2E8F0] hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Row: Avatar & Match Badge */}
@@ -212,7 +212,7 @@ export const FlatmatesSection: React.FC = () => {
         </div>
 
         {/* Roommate Matchmaker Banner Card (App Mirror) */}
-        <div className="bg-gradient-to-r from-[#064E3B] via-[#0F766E] to-[#115E59] rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 text-white shadow-card flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-gradient-to-r from-[#064E3B] via-[#0F766E] to-[#115E59] rounded-[24px] sm:rounded-[32px] p-5 xs:p-6 sm:p-8 text-white shadow-card flex flex-col md:flex-row items-stretch md:items-center justify-between gap-5 sm:gap-6">
           <div className="space-y-2 text-center md:text-left">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/15 text-[#CCFBF1] text-xs font-black uppercase tracking-wider backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-[#2DD4BF]" />
@@ -226,17 +226,17 @@ export const FlatmatesSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
             <Link
               href="/flatmates"
-              className="h-11 px-6 rounded-full bg-[#CCFBF1] hover:bg-white text-[#064E3B] text-xs font-black flex items-center gap-2 shadow-md transition"
+              className="h-11 px-6 rounded-full bg-[#CCFBF1] hover:bg-white text-[#064E3B] text-xs font-black flex items-center justify-center gap-2 shadow-md transition"
             >
               <span>Explore Flatmates</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/download"
-              className="h-11 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-black border border-white/25 flex items-center gap-2 transition"
+              className="h-11 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-black border border-white/25 flex items-center justify-center gap-2 transition"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Create Profile</span>

@@ -47,7 +47,7 @@ export const HostAndEarn: React.FC = () => {
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Header Row (Exact match to Zoomcar Host and Earn) */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className="px-2.5 py-0.5 rounded-full bg-[#CCFBF1] text-[#064E3B] text-[10px] font-black uppercase tracking-wider">
@@ -65,7 +65,7 @@ export const HostAndEarn: React.FC = () => {
 
           <Link
             href="/list-property"
-            className="text-xs sm:text-sm font-black text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 group transition"
+            className="text-xs sm:text-sm font-black text-[#0F766E] hover:text-[#064E3B] flex items-center gap-1.5 group transition w-fit"
           >
             <span>Register now</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -73,12 +73,12 @@ export const HostAndEarn: React.FC = () => {
         </div>
 
         {/* 3 Zoomcar-Style Cards (Exact translation of media_1789126375254.jpg) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
           
           {/* Card 1: Earn from your Property */}
           <Link
             href="/list-property"
-            className="group bg-[#E0F7F6]/50 hover:bg-[#E0F7F6] rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 border border-[#99F6E4]/50 hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[260px]"
+            className="group bg-[#E0F7F6]/50 hover:bg-[#E0F7F6] rounded-[24px] sm:rounded-[32px] p-5 sm:p-7 border border-[#99F6E4]/50 hover:border-[#0F766E]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[230px] sm:min-h-[260px]"
           >
             <div>
               <span className="text-[10px] font-black text-[#0F766E] uppercase tracking-wider">
@@ -95,10 +95,10 @@ export const HostAndEarn: React.FC = () => {
             {/* Illustration Area with Rupee Symbol Tag */}
             <div className="flex items-end justify-between pt-6">
               <div className="relative">
-                <div className="w-20 h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Building2 className="w-11 h-11 text-[#0F766E] stroke-[2.2]" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
+                  <Building2 className="w-9 h-9 sm:w-11 sm:h-11 text-[#0F766E] stroke-[2.2]" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-[#10B981] text-white text-xs font-black flex items-center justify-center shadow-md">
+                <div className="absolute -top-2 -right-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#10B981] text-white text-xs font-black flex items-center justify-center shadow-md">
                   ₹
                 </div>
               </div>
@@ -112,7 +112,7 @@ export const HostAndEarn: React.FC = () => {
           {/* Card 2: Hassle-free tenant lease */}
           <Link
             href="/society-services"
-            className="group bg-[#ECFDF5]/60 hover:bg-[#ECFDF5] rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 border border-[#A7F3D0]/60 hover:border-[#10B981]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[260px]"
+            className="group bg-[#ECFDF5]/60 hover:bg-[#ECFDF5] rounded-[24px] sm:rounded-[32px] p-5 sm:p-7 border border-[#A7F3D0]/60 hover:border-[#10B981]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[230px] sm:min-h-[260px]"
           >
             <div>
               <span className="text-[10px] font-black text-[#10B981] uppercase tracking-wider">
@@ -127,8 +127,8 @@ export const HostAndEarn: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-between pt-6">
-              <div className="w-20 h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
-                <FileCheck className="w-11 h-11 text-[#10B981] stroke-[2.2]" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
+                <FileCheck className="w-9 h-9 sm:w-11 sm:h-11 text-[#10B981] stroke-[2.2]" />
               </div>
 
               <span className="text-xs font-extrabold text-[#10B981] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -140,7 +140,7 @@ export const HostAndEarn: React.FC = () => {
           {/* Card 3: Calculate future yield */}
           <Link
             href="/list-property"
-            className="group bg-[#FFFBEB]/70 hover:bg-[#FFFBEB] rounded-[28px] sm:rounded-[32px] p-6 sm:p-7 border border-[#FDE68A]/60 hover:border-[#F59E0B]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[260px]"
+            className="group bg-[#FFFBEB]/70 hover:bg-[#FFFBEB] rounded-[24px] sm:rounded-[32px] p-5 sm:p-7 border border-[#FDE68A]/60 hover:border-[#F59E0B]/40 hover:shadow-card-hover transition-all duration-300 flex flex-col justify-between min-h-[230px] sm:min-h-[260px]"
           >
             <div>
               <span className="text-[10px] font-black text-[#D97706] uppercase tracking-wider">
@@ -155,8 +155,8 @@ export const HostAndEarn: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-between pt-6">
-              <div className="w-20 h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
-                <TrendingUp className="w-11 h-11 text-[#F59E0B] stroke-[2.2]" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 shadow-2xs flex items-center justify-center group-hover:scale-105 transition-transform">
+                <TrendingUp className="w-9 h-9 sm:w-11 sm:h-11 text-[#F59E0B] stroke-[2.2]" />
               </div>
 
               <span className="text-xs font-extrabold text-[#D97706] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
@@ -168,18 +168,18 @@ export const HostAndEarn: React.FC = () => {
         </div>
 
         {/* Interactive Rental Income Estimator (Zoomcar / App Teaser Card) */}
-        <div className="bg-gradient-to-br from-[#F0FDFA] via-white to-[#FAF5FF] rounded-[32px] p-6 sm:p-8 lg:p-10 border border-[#0F766E]/20 shadow-card">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div className="bg-gradient-to-br from-[#F0FDFA] via-white to-[#FAF5FF] rounded-[24px] sm:rounded-[32px] p-4.5 xs:p-6 sm:p-8 lg:p-10 border border-[#0F766E]/20 shadow-card">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-center">
             
             {/* Left Column: Heading & Selection Controls */}
-            <div className="lg:col-span-7 space-y-5">
-              <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5 text-[#0F766E]" />
-                <span>🏡 Own a Property in Mumbai?</span>
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+              <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-3 py-1 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider max-w-full truncate">
+                <Sparkles className="w-3.5 h-3.5 text-[#0F766E] shrink-0" />
+                <span className="truncate">🏡 Own a Property in Mumbai?</span>
               </div>
 
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-[#031B2A] tracking-tight">
+                <h3 className="text-xl sm:text-3xl font-black text-[#031B2A] tracking-tight">
                   Estimate Your Monthly Rental Income
                 </h3>
                 <p className="text-xs sm:text-sm text-[#64748B] font-medium mt-1 max-w-xl">
@@ -192,13 +192,13 @@ export const HostAndEarn: React.FC = () => {
                 <label className="text-[11px] font-black uppercase text-[#64748B] tracking-wider">
                   Select Configuration
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {['1 BHK', '2 BHK', '3 BHK', '4+ BHK'].map((bhk) => (
                     <button
                       key={bhk}
                       type="button"
                       onClick={() => setSelectedBhk(bhk)}
-                      className={`px-4 py-2 rounded-xl text-xs font-black transition cursor-pointer ${
+                      className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition cursor-pointer ${
                         selectedBhk === bhk
                           ? 'bg-[#0F766E] text-white shadow-xs'
                           : 'bg-white text-[#031B2A] border border-[#E2E8F0] hover:border-[#0F766E]'
@@ -215,13 +215,13 @@ export const HostAndEarn: React.FC = () => {
                 <label className="text-[11px] font-black uppercase text-[#64748B] tracking-wider">
                   Select Rental Hub
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {Object.keys(LOCALITY_RATES).map((loc) => (
                     <button
                       key={loc}
                       type="button"
                       onClick={() => setSelectedLocality(loc)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                      className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg text-[11px] sm:text-xs font-bold transition cursor-pointer ${
                         selectedLocality === loc
                           ? 'bg-[#CCFBF1] text-[#064E3B] font-black border border-[#0F766E]'
                           : 'bg-white text-[#64748B] border border-[#E2E8F0] hover:text-[#031B2A]'
@@ -235,44 +235,44 @@ export const HostAndEarn: React.FC = () => {
             </div>
 
             {/* Right Column: Live Calculated Metric Card */}
-            <div className="lg:col-span-5 bg-white rounded-[26px] p-6 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-[#F1F5F9]">
+            <div className="lg:col-span-5 bg-white rounded-[22px] sm:rounded-[26px] p-4.5 xs:p-6 sm:p-7 border border-[#0F766E]/20 shadow-card-hover space-y-4 sm:space-y-6">
+              <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-[#F1F5F9]">
                 <div className="flex items-center gap-2">
-                  <Calculator className="w-5 h-5 text-[#0F766E]" />
-                  <span className="text-xs font-black text-[#031B2A] uppercase tracking-wider">
+                  <Calculator className="w-4 h-4 sm:w-5 sm:h-5 text-[#0F766E]" />
+                  <span className="text-[11px] sm:text-xs font-black text-[#031B2A] uppercase tracking-wider">
                     Calculated Result
                   </span>
                 </div>
-                <span className="text-[10.5px] font-black bg-[#CCFBF1] text-[#064E3B] px-2.5 py-0.5 rounded-full">
+                <span className="text-[10px] sm:text-[10.5px] font-black bg-[#CCFBF1] text-[#064E3B] px-2.5 py-0.5 rounded-full">
                   LIVE ESTIMATE
                 </span>
               </div>
 
               <div>
-                <div className="text-xs font-bold text-[#64748B]">Estimated Monthly Rent</div>
-                <div className="text-3xl sm:text-4xl font-black text-[#0F766E] tracking-tight mt-1">
+                <div className="text-[11px] sm:text-xs font-bold text-[#64748B]">Estimated Monthly Rent</div>
+                <div className="text-2xl xs:text-3xl sm:text-4xl font-black text-[#0F766E] tracking-tight mt-1">
                   {formattedRent}
                   <span className="text-xs text-[#64748B] font-medium ml-1">/ month</span>
                 </div>
-                <div className="text-[11.5px] font-medium text-[#64748B] mt-1">
+                <div className="text-[11px] sm:text-[11.5px] font-medium text-[#64748B] mt-1">
                   For {selectedBhk} in {selectedLocality}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0]">
                 <div>
-                  <div className="text-[10px] font-black uppercase text-[#64748B]">Projected Yield</div>
-                  <div className="text-lg font-black text-[#031B2A] mt-0.5">{locData.yieldPct}</div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Projected Yield</div>
+                  <div className="text-base sm:text-lg font-black text-[#031B2A] mt-0.5">{locData.yieldPct}</div>
                 </div>
                 <div>
-                  <div className="text-[10px] font-black uppercase text-[#64748B]">Broker Commission</div>
-                  <div className="text-lg font-black text-[#059669] mt-0.5">₹0 (Zero)</div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#64748B]">Broker Commission</div>
+                  <div className="text-base sm:text-lg font-black text-[#059669] mt-0.5">₹0 (Zero)</div>
                 </div>
               </div>
 
               <Link
                 href="/list-property"
-                className="w-full h-12 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-md transition"
+                className="w-full h-11 sm:h-12 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-md transition"
               >
                 <span>Post Your Property Free</span>
                 <ArrowRight className="w-4 h-4" />

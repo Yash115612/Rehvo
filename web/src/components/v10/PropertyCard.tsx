@@ -257,23 +257,23 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
       </div>
 
       {/* 2. CARD CONTENT BODY */}
-      <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
-        <Link href={`/property/${slug}`} className="block space-y-2 group/link cursor-pointer">
+      <div className="p-3.5 xs:p-4 sm:p-5 space-y-2.5 sm:space-y-3 flex-1 flex flex-col justify-between">
+        <Link href={`/property/${slug}`} className="block space-y-1.5 sm:space-y-2 group/link cursor-pointer">
           {/* Row A: Price & Deposit Hint */}
           <div className="flex items-baseline justify-between gap-2">
             <div>
-              <span className="text-2xl font-black text-[#031B2A] tracking-tight group-hover/link:text-[#0F766E] transition-colors">
+              <span className="text-xl sm:text-2xl font-black text-[#031B2A] tracking-tight group-hover/link:text-[#0F766E] transition-colors">
                 {formattedPrice}
               </span>
               <span className="text-xs text-[#64748B] font-semibold ml-1">/ mo</span>
             </div>
-            <div className="text-[11px] font-semibold text-[#0F766E] bg-[#CCFBF1] px-2 py-0.5 rounded-md">
+            <div className="text-[10px] sm:text-[11px] font-semibold text-[#0F766E] bg-[#CCFBF1] px-2 py-0.5 rounded-md">
               {depositFormatted}
             </div>
           </div>
 
           {/* Row B: Title */}
-          <h3 className="text-sm sm:text-base font-extrabold text-[#031B2A] line-clamp-1 group-hover/link:text-[#0F766E] transition-colors">
+          <h3 className="text-xs sm:text-base font-extrabold text-[#031B2A] line-clamp-1 group-hover/link:text-[#0F766E] transition-colors">
             {property.title}
           </h3>
 
@@ -287,20 +287,20 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         </Link>
 
         {/* Row D: Specs Chips (Bed, Bath, Area, Furnishing) */}
-        <div className="flex items-center gap-1.5 text-xs font-bold text-[#475569] flex-wrap">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F1F5F9]">
+        <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs font-bold text-[#475569] flex-wrap">
+          <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F1F5F9]">
             <Bed className="w-3 h-3 text-[#0F766E]" />
             <span>{property.bedrooms ? `${property.bedrooms} BHK` : property.type.toUpperCase()}</span>
           </span>
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F1F5F9]">
+          <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F1F5F9]">
             <Bath className="w-3 h-3 text-[#0F766E]" />
             <span>{property.bathrooms || 1} Baths</span>
           </span>
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F1F5F9]">
+          <span className="inline-flex items-center gap-1 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F1F5F9]">
             <Maximize2 className="w-3 h-3 text-[#0F766E]" />
             <span>{property.area} sqft</span>
           </span>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-[#F1F5F9] capitalize text-[11px]">
+          <span className="inline-flex items-center px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg bg-[#F1F5F9] capitalize text-[10px] sm:text-[11px]">
             {furnishingLabel}
           </span>
         </div>
