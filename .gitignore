@@ -13,3 +13,4 @@ coverage/
 expo-env.d.ts
 # @end expo-cli.expo/
 .expo/
+android/app/debug.keystore
