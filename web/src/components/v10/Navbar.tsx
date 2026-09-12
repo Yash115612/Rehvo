@@ -187,7 +187,7 @@ export const Navbar: React.FC = () => {
           isScrolled
             ? 'bg-white/95 backdrop-blur-xl shadow-xs border-b border-stone-200/80 py-2.5'
             : isHomePage
-            ? 'bg-white/85 sm:bg-transparent backdrop-blur-md sm:backdrop-blur-none py-2.5 sm:py-3 border-b border-stone-200/40 sm:border-transparent'
+            ? 'bg-transparent backdrop-blur-none py-2.5 sm:py-3 border-b border-transparent'
             : 'bg-white/95 backdrop-blur-xl py-2.5 sm:py-3.5 border-b border-stone-200/70 shadow-2xs'
         }`}
       >
@@ -367,7 +367,11 @@ export const Navbar: React.FC = () => {
             {/* App Download Capsule Button */}
             <Link
               href="/download"
-              className="h-9 sm:h-10 px-3 sm:px-4.5 rounded-full rehvo-glass-capsule-emerald text-white font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap shadow-lg shadow-teal-900/20 active:scale-95 transition-all duration-200 shrink-0"
+              className={`h-9 sm:h-10 px-3 sm:px-4.5 rounded-full font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap active:scale-95 transition-all duration-200 shrink-0 ${
+                isScrolled || !isHomePage
+                  ? 'rehvo-glass-capsule-emerald text-white shadow-lg shadow-teal-900/20'
+                  : 'bg-[#0F766E]/90 backdrop-blur-md text-white shadow-xl shadow-teal-900/30 border border-white/20'
+              }`}
             >
               <Smartphone className="w-3.5 h-3.5" />
               <span>Download App</span>
@@ -378,7 +382,11 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Toggle navigation menu"
-              className="md:hidden h-9.5 w-9.5 rounded-full bg-white/95 hover:bg-white border border-[#E2E8F0] shadow-xs flex items-center justify-center text-[#031B2A] hover:text-[#0F766E] transition active:scale-95 cursor-pointer shrink-0"
+              className={`md:hidden h-9.5 w-9.5 rounded-full flex items-center justify-center transition active:scale-95 cursor-pointer shrink-0 ${
+                isScrolled || !isHomePage
+                  ? 'bg-white/95 border border-[#E2E8F0] shadow-xs text-[#031B2A] hover:text-[#0F766E] hover:bg-white'
+                  : 'bg-white/60 backdrop-blur-md border border-white/40 shadow-lg text-[#031B2A] hover:bg-white/80'
+              }`}
             >
               <Menu className="w-5 h-5 stroke-[2.2]" />
             </button>
@@ -394,7 +402,7 @@ export const Navbar: React.FC = () => {
         <div className="fixed inset-0 z-[9999] pointer-events-auto">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-[#031B2A]/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-[#031B2A]/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
