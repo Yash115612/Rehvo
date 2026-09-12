@@ -814,6 +814,12 @@ video {
 .top-full {
   top: 100%;
 }
+.-right-16 {
+  right: -4rem;
+}
+.-top-20 {
+  top: -5rem;
+}
 .isolate {
   isolation: isolate;
 }
@@ -1240,6 +1246,9 @@ video {
 .h-px {
   height: 1px;
 }
+.h-64 {
+  height: 16rem;
+}
 .max-h-56 {
   max-height: 14rem;
 }
@@ -1263,6 +1272,9 @@ video {
 }
 .max-h-\[calc\(100vh-160px\)\] {
   max-height: calc(100vh - 160px);
+}
+.max-h-\[90vh\] {
+  max-height: 90vh;
 }
 .min-h-\[180px\] {
   min-height: 180px;
@@ -1465,6 +1477,9 @@ video {
 }
 .w-screen {
   width: 100vw;
+}
+.w-36 {
+  width: 9rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -2710,6 +2725,10 @@ video {
 .bg-white\/95 {
   background-color: rgb(255 255 255 / 0.95);
 }
+.bg-\[\#F0FDF4\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity, 1));
+}
 .bg-\[radial-gradient\(\#CBD5E1_1px\2c transparent_1px\)\] {
   background-image: radial-gradient(#CBD5E1 1px,transparent 1px);
 }
@@ -3459,6 +3478,9 @@ video {
 .pt-\[78px\] {
   padding-top: 78px;
 }
+.pr-10 {
+  padding-right: 2.5rem;
+}
 .text-left {
   text-align: left;
 }
@@ -3915,6 +3937,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity, 1));
 }
+.text-\[\#94A3B8\] {
+  --tw-text-opacity: 1;
+  color: rgb(148 163 184 / var(--tw-text-opacity, 1));
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -4106,6 +4132,10 @@ video {
 }
 .shadow-teal-900\/20 {
   --tw-shadow-color: rgb(19 78 74 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+.shadow-teal-900\/15 {
+  --tw-shadow-color: rgb(19 78 74 / 0.15);
   --tw-shadow: var(--tw-shadow-colored);
 }
 .outline {
@@ -5220,6 +5250,47 @@ input, select, textarea {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.file\:mr-3::file-selector-button {
+  margin-right: 0.75rem;
+}
+
+.file\:rounded-xl::file-selector-button {
+  border-radius: 0.75rem;
+}
+
+.file\:border-0::file-selector-button {
+  border-width: 0px;
+}
+
+.file\:bg-\[\#CCFBF1\]::file-selector-button {
+  --tw-bg-opacity: 1;
+  background-color: rgb(204 251 241 / var(--tw-bg-opacity, 1));
+}
+
+.file\:px-4::file-selector-button {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.file\:py-2::file-selector-button {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.file\:text-xs::file-selector-button {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.file\:font-bold::file-selector-button {
+  font-weight: 700;
+}
+
+.file\:text-\[\#064E3B\]::file-selector-button {
+  --tw-text-opacity: 1;
+  color: rgb(6 78 59 / var(--tw-text-opacity, 1));
+}
+
 .placeholder\:font-medium::-moz-placeholder {
   font-weight: 500;
 }
@@ -5424,6 +5495,11 @@ input, select, textarea {
 
 .hover\:border-white\/90:hover {
   border-color: rgb(255 255 255 / 0.9);
+}
+
+.hover\:border-rose-200:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(254 205 211 / var(--tw-border-opacity, 1));
 }
 
 .hover\:bg-\[\#064E3B\]:hover {
@@ -5660,6 +5736,11 @@ input, select, textarea {
   background-color: rgb(255 255 255 / 0.9);
 }
 
+.hover\:bg-rose-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 241 242 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:text-\[\#031B2A\]:hover {
   --tw-text-opacity: 1;
   color: rgb(3 27 42 / var(--tw-text-opacity, 1));
@@ -5740,6 +5821,11 @@ input, select, textarea {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.hover\:text-rose-600:hover {
+  --tw-text-opacity: 1;
+  color: rgb(225 29 72 / var(--tw-text-opacity, 1));
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }
@@ -5815,6 +5901,11 @@ input, select, textarea {
 .hover\:shadow-teal-800\/20:hover {
   --tw-shadow-color: rgb(17 94 89 / 0.2);
   --tw-shadow: var(--tw-shadow-colored);
+}
+
+.hover\:file\:bg-\[\#99F6E4\]::file-selector-button:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(153 246 228 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:border-\[\#0F766E\]:focus {
@@ -6045,6 +6136,10 @@ input, select, textarea {
 .group:hover .group-hover\:text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:underline {
+  text-decoration-line: underline;
 }
 
 .group:hover .group-hover\:opacity-100 {
@@ -6425,6 +6520,10 @@ input, select, textarea {
 
   .sm\:flex-1 {
     flex: 1 1 0%;
+  }
+
+  .sm\:flex-initial {
+    flex: 0 1 auto;
   }
 
   .sm\:grid-cols-12 {

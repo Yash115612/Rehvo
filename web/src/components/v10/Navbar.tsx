@@ -17,6 +17,7 @@ import {
   Users,
   LayoutDashboard,
   Smartphone,
+  User,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useHeroTheme } from '@/components/v10/HeroThemeContext';
@@ -270,6 +271,20 @@ export const Navbar: React.FC = () => {
             <span>List Property</span>
           </Link>
 
+          {/* Profile / Sign In Capsule */}
+          <Link
+            href={isAuthenticated ? '/profile' : '/login'}
+            aria-label={isAuthenticated ? 'My Profile' : 'Sign In'}
+            className={`h-10 px-3.5 sm:px-4 rounded-full text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all ${
+              isScrolled
+                ? 'rehvo-glass-capsule-scrolled text-[#031B2A]'
+                : 'rehvo-glass-capsule text-[#031B2A] hover:text-[#0F766E]'
+            }`}
+          >
+            <User className="w-3.5 h-3.5 text-[#0F766E]" />
+            <span className="hidden sm:inline">{isAuthenticated ? 'Profile' : 'Sign In'}</span>
+          </Link>
+
           {/* App Download Capsule Button */}
           <Link
             href="/download"
@@ -488,6 +503,14 @@ export const Navbar: React.FC = () => {
 
             {/* Bottom Drawer CTA */}
             <div className="pt-6 mt-6 border-t border-white/60 space-y-2.5">
+              <Link
+                href={isAuthenticated ? '/profile' : '/login'}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-3.5 rounded-2xl bg-white border border-[#E2E8F0] text-[#031B2A] font-extrabold text-xs flex items-center justify-center gap-2 shadow-xs"
+              >
+                <User className="w-4 h-4 text-[#0F766E]" />
+                <span>{isAuthenticated ? 'My Profile' : 'Sign In / Register'}</span>
+              </Link>
               <Link
                 href="/download"
                 onClick={() => setMobileMenuOpen(false)}

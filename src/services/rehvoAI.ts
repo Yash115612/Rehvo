@@ -23,8 +23,6 @@ import { supabase } from '../lib/supabase';
 // REHVO V6.4: AI ASSISTANT CORE OPERATING SYSTEM SERVICE
 // =============================================================================
 
-const OPENAI_API_KEY = process.env.EXPO_PUBLIC_OPENAI_API_KEY || '';
-
 // -----------------------------------------------------------------------------
 // 1. CHAT WITH AI (Streaming Ready, Context Aware, Card Generating)
 // -----------------------------------------------------------------------------
@@ -58,64 +56,51 @@ export const chatWithAI = async ({
   const queryLower = message.toLowerCase().trim();
   const startTime = Date.now();
 
-  // 1. Try real OpenAI completion if key is configured
-  if (OPENAI_API_KEY) {
-    try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: [
-            {
-              role: 'system',
-              content: `You are REHVO AI, an elite Mumbai luxury property concierge and negotiation strategist.
-REHVO guarantees 100% verified homes with verified marketplace.
-User Memory: ${JSON.stringify(userMemory || {})}
-Current Property Context: ${propertyContext ? JSON.stringify({ id: propertyContext.id, title: propertyContext.title, rent: propertyContext.rent, locality: propertyContext.locality }) : 'None'}
-Respond professionally with concise markdown, bullet points, and exact Mumbai context.
-Language mode: ${language === 'hi' ? 'Hindi / Hinglish' : 'English'}.`,
-            },
-            ...history.slice(-6).map((m) => ({
-              role: m.sender === 'user' ? 'user' : 'assistant',
-              content: m.content,
-            })),
-            { role: 'user', content: message },
-          ],
-          temperature: 0.7,
-        }),
-      });
-
-      if (response.ok) {
-        const data = (await response.json()) as any;
-        const content = data.choices?.[0]?.message?.content || '';
-        if (content) {
-          // Token streaming simulation if onToken callback provided
-          if (onToken) {
-            const words = content.split(' ');
-            for (let i = 0; i < words.length; i++) {
-              onToken((i === 0 ? '' : ' ') + words[i]);
+  // 1. Try Supabase Edge Function (/functions/v1/rehvo-ai)
+  try {
+    const { data: edgeData, error: edgeError } = await supabase.functions.invoke('rehvo-ai', {
+      body: {
+        message,
+        conversationId,
+        history: history.slice(-6).map((m) => ({
+          role: m.sender === 'user' ? 'user' : 'assistant',
+          content: m.content,
+        })),
+        propertyContext: propertyContext
+          ? {
+              id: propertyContext.id,
+              title: propertyContext.title,
+              rent: propertyContext.rent,
+              locality: propertyContext.locality,
             }
-          }
+          : null,
+        userMemory: userMemory || null,
+        language,
+      },
+    });
 
-          const aiMessage: AIChatMessage = {
-            id: `msg_${Date.now()}`,
-            conversationId,
-            sender: 'assistant',
-            content,
-            messageType: 'text',
-            createdAt: new Date().toISOString(),
-          };
-
-          return { message: aiMessage };
+    if (!edgeError && edgeData?.content) {
+      const content = edgeData.content;
+      if (onToken) {
+        const words = content.split(' ');
+        for (let i = 0; i < words.length; i++) {
+          onToken((i === 0 ? '' : ' ') + words[i]);
         }
       }
-    } catch {
-      // Fall through to deterministic heuristic engine seamlessly
+
+      const aiMessage: AIChatMessage = {
+        id: `msg_${Date.now()}`,
+        conversationId,
+        sender: 'assistant',
+        content,
+        messageType: 'text',
+        createdAt: new Date().toISOString(),
+      };
+
+      return { message: aiMessage };
     }
+  } catch {
+    // Fall through to deterministic heuristic engine seamlessly
   }
 
   // 2. Intelligent Deterministic Heuristic Engine (100% Offline & Reliable)

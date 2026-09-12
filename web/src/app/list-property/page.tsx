@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   Building2,
   ShieldCheck,
@@ -9,14 +10,28 @@ import {
   Sparkles,
   ArrowRight,
   UploadCloud,
-  FileCheck,
   Coins,
   Send,
+  Loader2,
+  AlertCircle,
+  LogIn,
+  MapPin,
+  Home,
 } from 'lucide-react';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
+import { useAuth } from '@/lib/auth/AuthContext';
+import { createClient } from '@/lib/supabase/client';
 
 export default function ListPropertyPage() {
+  const router = useRouter();
+  const { user, profile, isAuthenticated, isLoading: authLoading, refreshUserData } = useAuth();
+  const [supabase] = useState(() => createClient());
+
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [createdPropertyId, setCreatedPropertyId] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -24,11 +39,103 @@ export default function ListPropertyPage() {
     propertyType: 'flat',
     bedrooms: '2',
     expectedRent: '',
+    address: '',
+    furnishing: 'semi_furnished',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Pre-fill user details if logged in
+  useEffect(() => {
+    if (profile) {
+      setFormData((prev) => ({
+        ...prev,
+        fullName: prev.fullName || profile.full_name || '',
+        phone: prev.phone || profile.phone || '',
+        locality: prev.locality || profile.locality || '',
+      }));
+    }
+  }, [profile]);
+
+  // Restore cached form data if returning from login
+  useEffect(() => {
+    try {
+      const cached = sessionStorage.getItem('rehvo_pending_listing');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        setFormData((prev) => ({ ...prev, ...parsed }));
+        sessionStorage.removeItem('rehvo_pending_listing');
+      }
+    } catch {}
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrorMessage('');
+
+    if (!formData.fullName.trim() || !formData.phone.trim() || !formData.locality.trim() || !formData.expectedRent) {
+      setErrorMessage('Please fill in all required fields.');
+      return;
+    }
+
+    if (!isAuthenticated || !user) {
+      // Save form data to session storage and redirect to login
+      try {
+        sessionStorage.setItem('rehvo_pending_listing', JSON.stringify(formData));
+      } catch {}
+      router.push('/login?next=/list-property');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const rent = Number(formData.expectedRent);
+      const bedroomsCount = formData.bedrooms;
+      const typeLabel = formData.propertyType === 'commercial' ? 'Commercial Space' : 'Apartment';
+      const title = `${bedroomsCount} BHK ${typeLabel} in ${formData.locality.trim()}`;
+      const description = `Verified listing posted on REHVO. Contact owner: ${formData.fullName.trim()} (${formData.phone.trim()}). Located in ${formData.locality.trim()}, Mumbai.`;
+
+      const { data, error } = await supabase
+        .from('properties')
+        .insert({
+          owner_id: user.id,
+          type: formData.propertyType === 'commercial' ? 'flat' : (formData.propertyType || 'flat'),
+          title,
+          description,
+          price: rent,
+          deposit: rent * 2,
+          maintenance: 0,
+          brokerage: 0,
+          city: 'Mumbai',
+          state: 'Maharashtra',
+          locality: formData.locality.trim(),
+          address: formData.address.trim() || formData.locality.trim(),
+          bedrooms: String(bedroomsCount),
+          bathrooms: Number(bedroomsCount) > 2 ? 2 : 1,
+          area: Number(bedroomsCount) * 450,
+          furnishing: formData.furnishing as any,
+          parking: 'Bike & Car',
+          availability: 'Immediate',
+          status: 'published',
+          verification_status: 'unverified',
+        })
+        .select('id')
+        .single();
+
+      if (error) {
+        console.error('[ListProperty] Supabase insert error:', error);
+        setErrorMessage(error.message || 'Failed to submit property. Please try again.');
+        return;
+      }
+
+      setCreatedPropertyId(data?.id || null);
+      setSubmitted(true);
+      await refreshUserData();
+    } catch (err: any) {
+      console.error('[ListProperty] Exception:', err);
+      setErrorMessage('Network error occurred. Please check your connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -37,10 +144,10 @@ export default function ListPropertyPage() {
         <Breadcrumb items={[{ name: 'List Property', url: '/list-property' }]} />
 
         {/* Hero Section */}
-        <div className="text-center max-w-3xl mx-auto my-12 space-y-4">
+        <div className="text-center max-w-3xl mx-auto my-10 space-y-4">
           <div className="inline-flex items-center gap-2 bg-[#CCFBF1] text-[#064E3B] px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider">
             <Building2 className="w-4 h-4 text-[#0F766E]" />
-            <span>FOR PROPERTY OWNERS & LANDLORDS</span>
+            <span>FOR PROPERTY OWNERS &amp; LANDLORDS</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
@@ -49,83 +156,137 @@ export default function ListPropertyPage() {
           </h1>
 
           <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
-            Connect directly with verified working professionals and families in Mumbai. Free physical verification, free photography, and zero commission.
+            Connect directly with verified working professionals and families in Mumbai. Free physical verification, free photography, and transparent pricing.
           </p>
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
             <div className="w-12 h-12 rounded-2xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center">
               <Coins className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-black text-[#031B2A]">100% Verified Marketplace</h3>
+            <h3 className="text-base font-black text-[#031B2A]">100% Transparent</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
-              No upfront fees, no monthly cuts, and zero tenant sourcing commission. Keep 100% of your rental returns.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-black text-[#031B2A]">Free Walkthrough Verification</h3>
-            <p className="text-xs text-[#64748B] leading-relaxed">
-              Our field team conducts physical visits to photograph your flat, inspect title documents, and issue the Verified badge.
-            </p>
-          </div>
-
-          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#DCFCE7] text-[#16A34A] flex items-center justify-center">
-              <CheckCircle2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-black text-[#031B2A]">Pre-Screened Tenants</h3>
-            <p className="text-xs text-[#64748B] leading-relaxed">
-              Every applicant passes corporate employment verification, Aadhaar KYC verification, and background checks.
+              No hidden broker fees or side commissions. You keep your full rental value.
             </p>
           </div>
 
           <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
             <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#4F46E5] flex items-center justify-center">
-              <FileCheck className="w-6 h-6" />
+              <ShieldCheck className="w-6 h-6" />
             </div>
-            <h3 className="text-base font-black text-[#031B2A]">Digital Lease & E-Sign</h3>
+            <h3 className="text-base font-black text-[#031B2A]">Verified Tenants Only</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
-              Automated rental agreement drafts with government e-stamping and biometric doorstep registration.
+              All tenants complete identity verification before scheduling doorstep walkthroughs.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#D97706] flex items-center justify-center">
+              <Sparkles className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-black text-[#031B2A]">Free High-Res Photos</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Our Mumbai field agents visit your property for professional wide-angle photography.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-[28px] p-6 border border-[#E2E8F0] shadow-card space-y-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#F0FDF4] text-[#16A34A] flex items-center justify-center">
+              <CheckCircle2 className="w-6 h-6" />
+            </div>
+            <h3 className="text-base font-black text-[#031B2A]">Digital Lease &amp; NOC</h3>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              Model Tenancy Act 2026 compliant rental agreements with biometric Aadhaar e-signing.
             </p>
           </div>
         </div>
 
-        {/* Quick Property Intake Form */}
-        <div className="max-w-2xl mx-auto bg-white rounded-[32px] p-8 sm:p-12 border border-[#E2E8F0] shadow-card-hover mb-16">
+        {/* Form Container */}
+        <div className="max-w-2xl mx-auto bg-white rounded-[32px] p-8 sm:p-12 border border-[#E2E8F0] shadow-card-hover mb-16 relative overflow-hidden">
+          
           <div className="text-center space-y-1.5 mb-8">
             <h2 className="text-2xl font-black text-[#031B2A]">List Your Property in 2 Minutes</h2>
-            <p className="text-xs text-[#64748B]">Fill in basic details — our Mumbai operations team will confirm your listing within 24 hours.</p>
+            <p className="text-xs text-[#64748B]">
+              Fill in basic details — your listing goes live instantly on REHVO.
+            </p>
           </div>
 
+          {/* Authentication Warning / Notification */}
+          {!authLoading && !isAuthenticated && (
+            <div className="mb-6 p-4 rounded-2xl bg-[#F0FDFA] border border-[#99F6E4] flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2.5 text-xs text-[#064E3B]">
+                <LogIn className="w-4 h-4 text-[#0F766E] shrink-0" />
+                <span>
+                  <strong>Tip:</strong> Sign in to link this property directly to your REHVO dashboard.
+                </span>
+              </div>
+              <Link
+                href="/login?next=/list-property"
+                className="text-xs font-black text-[#0F766E] hover:underline shrink-0"
+              >
+                Sign In &rarr;
+              </Link>
+            </div>
+          )}
+
+          {errorMessage && (
+            <div className="mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
           {submitted ? (
-            <div className="text-center py-10 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center mx-auto">
+            <div className="text-center py-10 space-y-5 animate-in fade-in">
+              <div className="w-16 h-16 rounded-full bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center mx-auto shadow-md">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-black text-[#031B2A]">Property Submission Received!</h3>
-              <p className="text-xs text-[#64748B] max-w-sm mx-auto">
-                Thank you, {formData.fullName || 'Landlord'}. Our Mumbai verification coordinator will call you to arrange free photography and physical walkthrough.
-              </p>
-              <button
-                type="button"
-                onClick={() => setSubmitted(false)}
-                className="text-xs font-bold text-[#0F766E] hover:underline pt-2"
-              >
-                Submit another listing
-              </button>
+              <div className="space-y-1">
+                <h3 className="text-xl font-black text-[#031B2A]">Property Listed Successfully!</h3>
+                <p className="text-xs text-[#64748B] max-w-sm mx-auto">
+                  Thank you, {formData.fullName || 'Landlord'}. Your property in{' '}
+                  <span className="font-bold text-[#031B2A]">{formData.locality}</span> is now recorded in our database.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <Link
+                  href="/profile"
+                  className="h-11 px-6 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center gap-2 shadow-md transition"
+                >
+                  <span>View in My Profile</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSubmitted(false);
+                    setCreatedPropertyId(null);
+                    setFormData({
+                      fullName: profile?.full_name || '',
+                      phone: profile?.phone || '',
+                      locality: '',
+                      propertyType: 'flat',
+                      bedrooms: '2',
+                      expectedRent: '',
+                      address: '',
+                      furnishing: 'semi_furnished',
+                    });
+                  }}
+                  className="h-11 px-6 rounded-full bg-[#F8FAFC] hover:bg-[#F1F5F9] text-[#031B2A] border border-[#E2E8F0] text-xs font-bold transition cursor-pointer"
+                >
+                  List Another Property
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
-                    Your Full Name
+                    Your Full Name *
                   </label>
                   <input
                     type="text"
@@ -139,7 +300,7 @@ export default function ListPropertyPage() {
 
                 <div>
                   <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
-                    Phone Number (WhatsApp)
+                    Phone Number (WhatsApp) *
                   </label>
                   <input
                     type="tel"
@@ -160,10 +321,9 @@ export default function ListPropertyPage() {
                   <select
                     value={formData.propertyType}
                     onChange={(e) => setFormData({ ...formData, propertyType: e.target.value })}
-                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none"
+                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none cursor-pointer"
                   >
                     <option value="flat">Apartment / Flat</option>
-                    <option value="villa">Independent Villa</option>
                     <option value="pg">PG / Co-Living</option>
                     <option value="commercial">Commercial Space</option>
                   </select>
@@ -176,7 +336,7 @@ export default function ListPropertyPage() {
                   <select
                     value={formData.bedrooms}
                     onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
-                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none"
+                    className="w-full h-11 px-3 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none cursor-pointer"
                   >
                     <option value="1">1 BHK</option>
                     <option value="2">2 BHK</option>
@@ -187,7 +347,7 @@ export default function ListPropertyPage() {
 
                 <div>
                   <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
-                    Expected Rent (₹/mo)
+                    Expected Rent (₹/mo) *
                   </label>
                   <input
                     type="number"
@@ -202,14 +362,27 @@ export default function ListPropertyPage() {
 
               <div>
                 <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
-                  Locality & Building Name
+                  Locality / Neighborhood *
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.locality}
                   onChange={(e) => setFormData({ ...formData, locality: e.target.value })}
-                  placeholder="e.g. Bandra West, Pali Hill or Hiranandani Powai"
+                  placeholder="e.g. Bandra West, Pali Hill or Powai"
+                  className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
+                />
+              </div>
+
+              <div>
+                <label className="text-[11px] font-bold text-[#64748B] uppercase block mb-1.5">
+                  Building Name &amp; Full Address
+                </label>
+                <input
+                  type="text"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  placeholder="e.g. Flat 402, Raheja Towers, Hill Road"
                   className="w-full h-11 px-4 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs font-bold text-[#031B2A] focus:outline-none focus:border-[#0F766E]"
                 />
               </div>
@@ -217,15 +390,22 @@ export default function ListPropertyPage() {
               <div className="pt-4">
                 <button
                   type="submit"
-                  className="w-full h-12 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition"
+                  disabled={isSubmitting}
+                  className="w-full h-12 rounded-full bg-[#0F766E] hover:bg-[#064E3B] text-white text-xs font-black flex items-center justify-center gap-2 shadow-md transition disabled:opacity-50 cursor-pointer"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Submit Property for Free Verification</span>
+                  {isSubmitting ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>{isAuthenticated ? 'Publish Property Listing' : 'Continue & Submit Property'}</span>
+                    </>
+                  )}
                 </button>
               </div>
 
               <p className="text-[11px] text-center text-[#64748B] pt-2">
-                By submitting, you agree to REHVO&apos;s Verified Marketplace Policy. No brokerage fee will be charged to you or your tenant.
+                By submitting, you agree to REHVO&apos;s Verified Marketplace Policy. Direct owner and verified broker listings with transparent pricing.
               </p>
             </form>
           )}
