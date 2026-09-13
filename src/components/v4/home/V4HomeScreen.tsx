@@ -445,19 +445,6 @@ export const V4HomeScreen: React.FC = () => {
     sendFlatmateWave(flatmate.id, flatmate.name, flatmate.avatar, flatmate.locality);
   }, [isAuthenticated, router, sendFlatmateWave]);
 
-  // Real Categorized Feeds
-  const zeroBrokerageHomes = useMemo(() => {
-    return (properties || []).filter((p) => p.brokerage === 0).slice(0, 10);
-  }, [properties]);
-
-  const luxuryHomes = useMemo(() => {
-    return (properties || []).filter((p) => (p.rent || 0) >= 75000).slice(0, 10);
-  }, [properties]);
-
-  const affordableHomes = useMemo(() => {
-    return (properties || []).filter((p) => (p.rent || 0) <= 35000).slice(0, 10);
-  }, [properties]);
-
   return (
     <View style={styles.root}>
       <StatusBar barStyle="dark-content" translucent backgroundColor="transparent" />
@@ -1375,33 +1362,7 @@ export const V4HomeScreen: React.FC = () => {
           </View>
         )}
 
-        {luxuryHomes.length > 0 && (
-          <>
-            <V4SectionHeader
-              title="Luxury Residences"
-              subtitle="Premium penthouses, sea-facing suites & private villas"
-              actionText="See All →"
-              onActionPress={() => router.push('/(renter)/search' as any)}
-            />
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.trendingScroll}
-            >
-              {luxuryHomes.map((property) => (
-                <V4PropertyCardSmall
-                  key={`lux-${property.id}`}
-                  property={property}
-                  isSaved={savedPropertyIdSet.has(property.id)}
-                  onToggleSave={toggleSaveProperty}
-                  onSelect={handleSelectProperty}
-                />
-              ))}
-            </ScrollView>
-          </>
-        )}
-
-        {/* 22. 🏡 Weekend Picks & Pocket-Friendly Homes */}
+        {/* 22. 🏡 Weekend Picks */}
         {weekendPicks && weekendPicks.length > 0 && (
           <View style={styles.recommendationSection}>
             <V4SectionHeader
@@ -1429,58 +1390,6 @@ export const V4HomeScreen: React.FC = () => {
               ))}
             </ScrollView>
           </View>
-        )}
-
-        {affordableHomes.length > 0 && (
-          <>
-            <V4SectionHeader
-              title="Pocket-Friendly Homes"
-              subtitle="High quality budget rentals under ₹35,000/mo"
-              actionText="See All →"
-              onActionPress={() => router.push('/(renter)/search' as any)}
-            />
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.trendingScroll}
-            >
-              {affordableHomes.map((property) => (
-                <V4PropertyCardSmall
-                  key={`aff-${property.id}`}
-                  property={property}
-                  isSaved={savedPropertyIdSet.has(property.id)}
-                  onToggleSave={toggleSaveProperty}
-                  onSelect={handleSelectProperty}
-                />
-              ))}
-            </ScrollView>
-          </>
-        )}
-
-        {zeroBrokerageHomes.length > 0 && (
-          <>
-            <V4SectionHeader
-              title="100% Verified Marketplace Homes"
-              subtitle="Direct landlord connect with verified property experts commissions"
-              actionText="See All →"
-              onActionPress={() => router.push('/(renter)/flats' as any)}
-            />
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.trendingScroll}
-            >
-              {zeroBrokerageHomes.map((property) => (
-                <V4PropertyCardSmall
-                  key={`zb-${property.id}`}
-                  property={property}
-                  isSaved={savedPropertyIdSet.has(property.id)}
-                  onToggleSave={toggleSaveProperty}
-                  onSelect={handleSelectProperty}
-                />
-              ))}
-            </ScrollView>
-          </>
         )}
 
         {/* LUXURY SPOTLIGHT */}
