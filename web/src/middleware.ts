@@ -5,7 +5,6 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // 1. Google Search Console HTML File Verification Handler
-  // Matches any /google<token>.html request dynamically
   if (pathname.startsWith('/google') && pathname.endsWith('.html')) {
     const filename = pathname.replace(/^\//, '');
     return new NextResponse(`google-site-verification: ${filename}`, {
@@ -17,22 +16,23 @@ export function middleware(request: NextRequest) {
     });
   }
 
-  // 2. Immediate Bypass for Sitemaps, Robots, Feeds, and Static Data
-  // Prevents CSP or security header mutation on XML/Text/JSON routes
+  // 2. Absolute Bypass for Robots.txt, Sitemaps, and Static Files
+  // Never intercept, redirect, or mutate robots.txt or sitemaps
   if (
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
     pathname.endsWith('.xml') ||
     pathname.endsWith('.txt') ||
     pathname.endsWith('.json') ||
     pathname.startsWith('/sitemap') ||
-    pathname.startsWith('/video-sitemap') ||
-    pathname === '/robots.txt'
+    pathname.startsWith('/video-sitemap')
   ) {
     return NextResponse.next();
   }
 
   const response = NextResponse.next();
 
-  // Strict Enterprise Security Headers for HTML Web Navigation
+  // Strict Enterprise Security Headers for HTML Navigation
   response.headers.set('X-DNS-Prefetch-Control', 'on');
   response.headers.set(
     'Strict-Transport-Security',
@@ -70,12 +70,12 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - static files: favicon, xml, txt, json, images
+     * Match all request paths except:
+     * - api routes
+     * - _next/static, _next/image
+     * - robots.txt, sitemap.xml, favicon.ico
+     * - static files (.xml, .txt, .json, .png, etc.)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:xml|txt|json|png|jpg|jpeg|svg|webp|avif|ico|mp4)).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\.(?:xml|txt|json|png|jpg|jpeg|svg|webp|avif|ico|mp4)).*)',
   ],
 };
