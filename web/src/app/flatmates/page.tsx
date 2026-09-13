@@ -5,6 +5,9 @@ import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { FlatmatesContainer } from '@/components/flatmates/FlatmatesContainer';
 import { FlatmateCardSkeleton } from '@/components/flatmates/FlatmateCardSkeleton';
+import { JsonLd } from '@/components/public/JsonLd';
+import { generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/schema';
+import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 
 export const revalidate = 60;
 
@@ -17,10 +20,17 @@ export const metadata: Metadata = constructSeoMetadata({
 
 export default async function FlatmatesPage() {
   const flatmates = await getPublishedFlatmates('Mumbai');
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Flatmates', url: '/flatmates' },
+  ]);
+  const orgSchema = generateOrganizationSchema();
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-6 sm:py-10">
-      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <JsonLd data={orgSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         <Breadcrumb items={[{ name: 'Flatmates', url: '/flatmates' }]} />
         <Suspense
           fallback={
@@ -33,6 +43,10 @@ export default async function FlatmatesPage() {
         >
           <FlatmatesContainer initialFlatmates={flatmates} />
         </Suspense>
+
+        <div className="pt-8">
+          <InternalLinksGrid currentCity="mumbai" />
+        </div>
       </div>
     </div>
   );

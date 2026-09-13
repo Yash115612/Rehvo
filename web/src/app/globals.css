@@ -843,3 +843,12 @@ input, select, textarea {
 .animate-real-logo-splash {
   animation: rehvoRealLogoSplash 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
+
+/* ══════════════════════════════════════════════════════════
+   SHOWREEL SECTION — Infinite horizontal ticker animation
+   ══════════════════════════════════════════════════════════ */
+@keyframes rehvo-showreel-ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+

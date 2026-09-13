@@ -1,0 +1,23 @@
+{
+  "name": "REHVO — Verified Rental Marketplace",
+  "short_name": "REHVO",
+  "description": "Find verified rental homes, flatmates, PGs, and commercial spaces across India with zero brokerage and AI concierge.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0A09",
+  "theme_color": "#0E8F73",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/rehvo-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/rehvo-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "business", "real estate"]
+}

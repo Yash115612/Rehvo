@@ -7,29 +7,43 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: [
-          '/',
-          '/search',
-          '/property/*',
-          '/flatmates',
-          '/services',
-          '/society-services',
-          '/ai-concierge',
-          '/about',
-          '/careers',
-          '/contact',
-          '/download',
-          '/help',
-          '/privacy',
-          '/terms',
-          '/list-property',
-        ],
+        allow: '/',
         disallow: [
-          '/api/*',
-          '/admin/*',
+          '/admin/',
+          '/admin',
+          '/api/',
+          '/auth/',
+          '/profile/',
+          '/wallet/',
+          '/_next/',
+          '/flatmates/create',
+          '/list-property',
+          '/host-property',
         ],
+      },
+      {
+        userAgent: 'GPTBot',
+        allow: '/',
+        disallow: ['/admin/', '/api/', '/auth/', '/profile/'],
+      },
+      {
+        userAgent: 'ChatGPT-User',
+        allow: '/',
+      },
+      {
+        userAgent: 'Google-Extended',
+        allow: '/',
+      },
+      {
+        userAgent: 'PerplexityBot',
+        allow: '/',
+      },
+      {
+        userAgent: 'ClaudeBot',
+        allow: '/',
       },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
+    host: BASE_URL,
   };
 }

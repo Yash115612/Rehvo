@@ -1,137 +1,152 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { BookOpen, Sparkles, ArrowRight, Clock, MapPin, Users, Building2 } from 'lucide-react';
+import { BookOpen, Sparkles, ArrowRight, Clock, MapPin, Users, Building2, ShieldCheck } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
+import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
+import { BLOG_POSTS } from '@/lib/seo/blogData';
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'Blog & Rental Guides | REHVO Mumbai',
+  title: 'Real Estate Blog & Mumbai Rental Guides | REHVO',
   description:
-    'Expert rental guides, neighborhood insights, and verified rental tips for living in Mumbai. Written by the REHVO editorial team.',
-  canonicalUrl: 'https://rehvo.in/blog',
+    'Expert rental guides, Mumbai locality comparisons, flatmate advice, and tenant legal rights written by REHVO’s research team. Zero brokerage tips and rental yield intelligence.',
+  canonicalUrl: '/blog',
+  keywords: [
+    'mumbai rental blog',
+    'real estate guides mumbai',
+    'tenant rights india',
+    'flatmate tips',
+    'andheri west vs bandra',
+    'rehvo blog',
+  ],
 });
 
-const ARTICLES = [
-  {
-    title: 'How Verified Listing Works: Complete Mumbai Tenant & Owner Guide',
-    snippet:
-      'Eliminate 1 to 2 months of unnecessary hidden fees. How direct peer-to-peer verification and digital rental agreements protect both parties.',
-    category: 'Market Insights',
-    readTime: '4 min read',
-    date: 'Sep 2026',
-    icon: Building2,
-    href: '/search',
-  },
-  {
-    title: 'Top Mumbai Neighborhoods for Young Professionals: BKC, Bandra & Powai',
-    snippet:
-      'Comparing commute times, rental yields, lifestyle amenities, and social hubs across western and eastern suburban corridors.',
-    category: 'Neighborhoods',
-    readTime: '6 min read',
-    date: 'Sep 2026',
-    icon: MapPin,
-    href: '/search?q=Bandra',
-  },
-  {
-    title: 'Flatmate Matching 101: Living Harmoniously in Shared Apartments',
-    snippet:
-      'Sleep schedules, guest policies, chore splits, and dietary choices. Why compatibility vetting matters before signing a co-living lease.',
-    category: 'Flatmates',
-    readTime: '5 min read',
-    date: 'Sep 2026',
-    icon: Users,
-    href: '/flatmates',
-  },
-];
-
 export default function BlogPage() {
+  const posts = Object.values(BLOG_POSTS);
+  const breadcrumbs = [{ name: 'Blog & Editorial', url: '/blog' }];
+
+  const CATEGORIES = [
+    'All Guides',
+    'Rental Tips',
+    'Mumbai Locality Guides',
+    'Flatmate Tips',
+    'PG Guides',
+    'Legal & Leases',
+    'AI Property Search',
+  ];
+
   return (
-    <div className="min-h-screen bg-[#F8FAFB]">
+    <div className="min-h-screen bg-[#F8FAFB] pb-16">
+      {/* Top Breadcrumbs */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <Breadcrumbs items={breadcrumbs} />
+      </div>
+
       {/* Header Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] to-[#031B2A] text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#CCFBF1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#CCFBF1] bg-[#CCFBF1]/15 px-3.5 py-1.5 rounded-full uppercase tracking-wider mb-4 border border-[#CCFBF1]/20">
-            <BookOpen className="w-3.5 h-3.5 text-[#34D399]" />
-            REHVO Guides & Editorial
+      <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-4">
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0E8F73] bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 uppercase tracking-wider">
+            <BookOpen className="w-3.5 h-3.5" />
+            REHVO Research & Editorial Desk
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
-            Mumbai Rental Knowledge Base
-          </h1>
-          <p className="mt-3 text-sm sm:text-base text-emerald-100/80 max-w-xl mx-auto">
-            Practical insights on verified rentals, neighborhood living, tenant rights, and flatmate compatibility.
-          </p>
-        </div>
-      </section>
 
-      {/* Articles Grid */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {ARTICLES.map((article, idx) => {
-            const Icon = article.icon;
-            return (
-              <div
+          <h1 className="text-2xl sm:text-4xl font-black text-[#031B2A] tracking-tight">
+            Mumbai Rental Knowledge & Locality Guides
+          </h1>
+
+          <p className="text-sm sm:text-base text-slate-600 max-w-3xl leading-relaxed">
+            Data-backed analysis of Mumbai rental price trends, neighborhood comparisons, legal tenant rights, and flatmate compatibility frameworks.
+          </p>
+
+          {/* Category Chips */}
+          <div className="flex flex-wrap gap-2 pt-2">
+            {CATEGORIES.map((cat, idx) => (
+              <span
                 key={idx}
-                className="bg-white rounded-[24px] p-6 border border-[#E2E8F0] shadow-xs hover:shadow-md transition flex flex-col justify-between"
+                className={`px-3 py-1 rounded-full text-xs font-bold transition cursor-pointer ${
+                  idx === 0
+                    ? 'bg-[#0E8F73] text-white'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                }`}
               >
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0F766E] bg-[#F0FDFA] px-2.5 py-1 rounded-full border border-[#CCFBF1]">
-                      <Icon className="w-3 h-3" />
-                      {article.category}
-                    </span>
-                    <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {article.readTime}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-[#031B2A] mb-2 leading-snug">
-                    {article.title}
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed mb-6">
-                    {article.snippet}
-                  </p>
+                {cat}
+              </span>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      {/* Article Cards Grid */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <article
+              key={post.slug}
+              className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs hover:border-[#0E8F73] hover:shadow-md transition flex flex-col justify-between group"
+            >
+              <div>
+                <div className="aspect-[16/9] w-full bg-slate-100 relative overflow-hidden">
+                  <img
+                    src={post.coverImage}
+                    alt={post.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  />
+                  <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/80 text-white backdrop-blur-xs">
+                    {post.category}
+                  </span>
                 </div>
 
-                <Link
-                  href={article.href}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F766E] hover:text-[#064E3B] transition pt-4 border-t border-slate-100"
-                >
-                  <span>Explore on REHVO</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            );
-          })}
-        </div>
+                <div className="p-5 space-y-2.5">
+                  <div className="flex items-center gap-2 text-[11px] text-slate-400 font-semibold">
+                    <Clock size={12} />
+                    <span>{post.readTime}</span>
+                    <span>•</span>
+                    <span>{new Date(post.publishDate).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</span>
+                  </div>
 
-        {/* Search CTA Strip */}
-        <div className="bg-gradient-to-r from-[#0F766E] to-[#064E3B] text-white rounded-[28px] p-8 sm:p-12 text-center shadow-lg relative overflow-hidden">
-          <div className="relative z-10 max-w-xl mx-auto space-y-4">
-            <h2 className="text-2xl sm:text-3xl font-black">
-              Ready to find your next home in Mumbai?
-            </h2>
-            <p className="text-xs sm:text-sm text-[#CCFBF1]/90">
-              Browse 100% verified flats and shared rooms with direct owner contact and verified marketplace.
-            </p>
-            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/search"
-                className="inline-flex items-center gap-2 bg-white text-[#0F766E] font-bold py-3.5 px-6 rounded-full text-xs hover:bg-[#CCFBF1] transition shadow-sm"
-              >
-                <span>Browse Rentals</span>
-              </Link>
-              <Link
-                href="/flatmates"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-semibold py-3.5 px-6 rounded-full text-xs transition border border-white/20"
-              >
-                <span>Find Flatmates</span>
-              </Link>
-            </div>
-          </div>
+                  <h2 className="text-base font-extrabold text-[#031B2A] group-hover:text-[#0E8F73] transition line-clamp-2 leading-snug">
+                    <Link href={`/blog/${post.slug}`}>
+                      {post.title}
+                    </Link>
+                  </h2>
+
+                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 pt-0 border-t border-slate-100 mt-3">
+                <div className="flex items-center justify-between pt-3">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={post.author.avatar}
+                      alt={post.author.name}
+                      className="w-6 h-6 rounded-full object-cover"
+                    />
+                    <span className="text-xs font-bold text-slate-700">{post.author.name}</span>
+                  </div>
+
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-xs font-bold text-[#0E8F73] flex items-center gap-1 group-hover:translate-x-0.5 transition"
+                  >
+                    <span>Read Article</span>
+                    <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
+
+      {/* Internal Links Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <InternalLinksGrid currentCity="mumbai" />
+      </div>
     </div>
   );
 }

@@ -15,6 +15,9 @@ import {
 } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
+import { JsonLd } from '@/components/public/JsonLd';
+import { generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema } from '@/lib/seo/schema';
+import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 
 export const metadata: Metadata = constructSeoMetadata({
   title: 'REHVO Society Services | Smart Society Management for Apartments & RWAs',
@@ -22,6 +25,29 @@ export const metadata: Metadata = constructSeoMetadata({
     'Smart gated community management ecosystem for residential societies and RWAs in Mumbai: digital visitor QR passes, maintenance payments, clubhouse booking, and guard intercom.',
   canonicalUrl: 'https://rehvo.in/society-services',
 });
+
+const SOCIETY_FAQS = [
+  {
+    question: 'What is REHVO Society Services?',
+    answer:
+      'REHVO Society Services is a modern gated community operating system for apartment complexes, residential towers, and RWAs. It includes digital visitor QR passes, zero-surcharge maintenance collections, mobile intercom, clubhouse bookings, and digital notice boards.',
+  },
+  {
+    question: 'Does REHVO require wiring or hardware intercom installation?',
+    answer:
+      'No. REHVO operates entirely wirelessly. Security guards use a dedicated tablet or guard mobile app, and residents receive audio notifications directly on their smartphones.',
+  },
+  {
+    question: 'How are society maintenance payments collected and accounted for?',
+    answer:
+      'Residents can pay via UPI, credit/debit cards, or net banking directly through the REHVO app with zero payment gateway friction. Committee treasurers receive automatic reconciliation, defaulter reports, and instant digital GST receipts.',
+  },
+  {
+    question: 'Can residents pre-approve guests and food delivery agents?',
+    answer:
+      'Yes. Residents can create single-use or recurring dynamic QR passes sent instantly via WhatsApp to guests, cabs (Uber/Ola), and food deliveries (Zomato/Swiggy) for seamless gate entry.',
+  },
+];
 
 const SOCIETY_FEATURES = [
   {
@@ -67,8 +93,19 @@ function ClubhouseIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function SocietyServicesPage() {
+  const orgSchema = generateOrganizationSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Society Services', url: '/society-services' },
+  ]);
+  const faqSchema = generateFAQSchema(SOCIETY_FAQS);
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 sm:py-12">
+      <JsonLd data={orgSchema} />
+      <JsonLd data={breadcrumbSchema} />
+      <JsonLd data={faqSchema} />
+
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb items={[{ name: 'Society Services', url: '/society-services' }]} />
 
@@ -152,6 +189,29 @@ export default function SocietyServicesPage() {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
+
+        {/* Society FAQs */}
+        <div className="mb-14 sm:mb-16 bg-white rounded-3xl p-6 sm:p-10 border border-slate-200">
+          <h2 className="text-xl sm:text-2xl font-black text-[#031B2A] mb-6">
+            Frequently Asked Questions about REHVO Society
+          </h2>
+          <div className="space-y-4">
+            {SOCIETY_FAQS.map((faq, idx) => (
+              <details key={idx} className="group border border-slate-200 rounded-2xl p-5 open:bg-slate-50 transition">
+                <summary className="font-bold text-slate-800 cursor-pointer list-none flex items-center justify-between">
+                  <span>{faq.question}</span>
+                  <span className="text-primary group-open:rotate-180 transition-transform">▼</span>
+                </summary>
+                <p className="mt-3 text-sm text-slate-600 leading-relaxed font-normal">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        {/* SEO Cross-Links Mesh */}
+        <InternalLinksGrid currentCity="mumbai" />
       </div>
     </div>
   );

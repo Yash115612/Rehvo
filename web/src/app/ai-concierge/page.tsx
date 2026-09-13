@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
+import { AIConciergeInteractiveClient } from '@/components/ai/AIConciergeInteractiveClient';
 
 export const metadata: Metadata = constructSeoMetadata({
   title: 'REHVO AI Concierge | Intelligent Rental Discovery',
@@ -81,6 +82,9 @@ export default function AIConciergePage() {
             </Link>
           </div>
         </div>
+
+        {/* Live Interactive Bilingual AI Concierge */}
+        <AIConciergeInteractiveClient />
 
         {/* Conversation Preview Deck */}
         <div className="my-10 sm:my-16 space-y-6 max-w-4xl mx-auto">

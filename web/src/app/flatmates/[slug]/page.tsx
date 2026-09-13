@@ -41,6 +41,15 @@ export async function generateMetadata({ params }: FlatmatesDynamicPageProps): P
     });
   }
 
+  if (params.slug === 'female-flatmates-in-mumbai') {
+    return constructSeoMetadata({
+      title: 'Female Flatmates & Roommates in Mumbai | Verified Girls-Only Flats | REHVO',
+      description:
+        'Find verified female flatmates and women-friendly shared apartments in Mumbai. Connect with working professional women and students with verified profiles and zero brokerage.',
+      canonicalUrl: 'https://rehvo.in/flatmates/female-flatmates-in-mumbai',
+    });
+  }
+
   const cityName = unslugify(params.slug);
   return constructSeoMetadata({
     title: `Verified Flatmates & Roommates in ${cityName} | Verified Marketplace | REHVO`,
@@ -229,8 +238,10 @@ export default async function FlatmatesDynamicPage({ params }: FlatmatesDynamicP
   }
 
   // 2. Otherwise render Directory View
-  const cityName = unslugify(params.slug);
-  const flatmates = await getPublishedFlatmates(cityName);
+  const isFemaleIntent = params.slug === 'female-flatmates-in-mumbai';
+  const cityName = isFemaleIntent ? 'Mumbai' : unslugify(params.slug);
+  const rawFlatmates = await getPublishedFlatmates(cityName);
+  const flatmates = isFemaleIntent ? rawFlatmates.filter((f) => f.gender === 'female') : rawFlatmates;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">

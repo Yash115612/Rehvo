@@ -18,6 +18,7 @@ import { AIConciergeBanner } from '@/components/v10/AIConciergeBanner';
 import { TrendingLocalities } from '@/components/v10/TrendingLocalities';
 import { SocietyPromoSection } from '@/components/v10/SocietyPromoSection';
 import { DownloadAppCTA } from '@/components/v10/DownloadAppCTA';
+import { ShowreelSection } from '@/components/v10/ShowreelSection';
 
 export const revalidate = 60; // 60s ISR
 
@@ -64,6 +65,9 @@ export default async function HomePage() {
 
       {/* 06: LOVING REHVO APP? RATE US + 4 TRUST PILLARS */}
       <TrustAndRateUs />
+
+      {/* 06.5: SHOWREEL — Auto-playing infinite video reel */}
+      <ShowreelSection />
 
       {/* 07: FEATURED & HIGH DEMAND HOMES (CAROUSEL) */}
       <FeaturedProperties properties={featuredListings} />

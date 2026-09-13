@@ -2,9 +2,10 @@ import React from 'react';
 import { Metadata } from 'next';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schema';
+import { generateOrganizationSchema, generateItemListSchema, generateBreadcrumbSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 import { CommercialPageClient } from '@/components/commercial/CommercialPageClient';
+import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 
 export const revalidate = 60;
 
@@ -22,16 +23,24 @@ export default async function CommercialPage() {
   });
 
   const orgSchema = generateOrganizationSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Commercial Spaces', url: '/commercial' },
+  ]);
   const itemListSchema = generateItemListSchema(
     properties,
-    'Verified Verified Commercial Offices & Retail in Mumbai — REHVO'
+    'Verified Commercial Offices & Retail in Mumbai — REHVO'
   );
 
   return (
     <>
       <JsonLd data={orgSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={itemListSchema} />
       <CommercialPageClient initialProperties={properties} />
+      <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <InternalLinksGrid currentCity="mumbai" />
+      </div>
     </>
   );
 }

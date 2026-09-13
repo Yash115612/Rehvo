@@ -305,18 +305,29 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
           </span>
         </div>
 
-        {/* Row E: Metro Distance & AI Recommendation Pill */}
-        <div className="space-y-1.5 pt-1 border-t border-[#E2E8F0]">
-          <div className="flex items-center justify-between gap-2 text-[11px]">
-            <div className="inline-flex items-center gap-1 text-[#0F766E] font-bold">
-              <span>🚆</span>
-              <span className="truncate">{metroDistance}</span>
-            </div>
-            <div className="text-[#64748B] font-medium text-[10px]">Zero Broker Fee</div>
+        {/* Row E: Location & Transit Intelligence Badges */}
+        <div className="space-y-2 pt-2 border-t border-[#E2E8F0]">
+          <div className="flex items-center gap-1.5 flex-wrap text-[10px] font-extrabold">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 text-[#0E8F73] border border-emerald-100">
+              <span>🚇</span>
+              <span>{metroDistance}</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-100">
+              <span>🚶</span>
+              <span>94 Walk Score</span>
+            </span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 border border-purple-100">
+              <span>⏱️</span>
+              <span>15m to BKC</span>
+            </span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-[#64748B] truncate">
-            <Sparkles className="w-3 h-3 text-[#D97706] shrink-0" />
-            <span className="truncate">{aiWhy}</span>
+
+          <div className="flex items-center justify-between gap-2 text-[11px]">
+            <div className="flex items-center gap-1.5 text-[#64748B] truncate">
+              <Sparkles className="w-3 h-3 text-[#D97706] shrink-0" />
+              <span className="truncate">{aiWhy}</span>
+            </div>
+            <div className="text-[#0E8F73] font-black text-[10px] shrink-0">Zero Brokerage</div>
           </div>
         </div>
 

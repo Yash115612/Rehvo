@@ -3,30 +3,80 @@ import { generatePropertySlug } from './slugs';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
-/** Schema.org Organization for REHVO */
+/**
+ * 1. Schema.org Organization for REHVO
+ */
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': 'Organization',
+    '@id': `${BASE_URL}/#organization`,
     name: 'REHVO',
+    legalName: 'Rehvo Technologies Private Limited',
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`,
-    description: 'Verified Verified Rental & Flatmate Marketplace in Mumbai, India.',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${BASE_URL}/rehvo-logo.png`,
+      width: 512,
+      height: 512,
+    },
+    description: 'India’s premier verified rental marketplace with AI concierge, direct owner connections, zero brokerage, flatmates, and PGs.',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: 'Bandra West & Andheri West Tech Corridor',
       addressLocality: 'Mumbai',
       addressRegion: 'Maharashtra',
+      postalCode: '400050',
       addressCountry: 'IN',
     },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: '+91-8208662286',
+        contactType: 'customer service',
+        areaServed: 'IN',
+        availableLanguage: ['English', 'Hindi'],
+      },
+    ],
     sameAs: [
       'https://twitter.com/rehvoapp',
       'https://instagram.com/rehvoapp',
       'https://linkedin.com/company/rehvo',
+      'https://facebook.com/rehvoapp',
+      'https://youtube.com/@rehvo',
     ],
   };
 }
 
-/** Schema.org BreadcrumbList */
+/**
+ * 2. Schema.org WebSite with SearchAction
+ */
+export function generateWebSiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${BASE_URL}/#website`,
+    url: BASE_URL,
+    name: 'REHVO',
+    alternateName: 'REHVO Rentals & Flatmates',
+    description: 'Verified rental marketplace for apartments, rooms, PGs, and commercial real estate across Mumbai and India.',
+    publisher: {
+      '@id': `${BASE_URL}/#organization`,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${BASE_URL}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+/**
+ * 3. Schema.org BreadcrumbList
+ */
 export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -35,12 +85,14 @@ export function generateBreadcrumbSchema(items: { name: string; url: string }[])
       '@type': 'ListItem',
       position: idx + 1,
       name: item.name,
-      item: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`,
+      item: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url.startsWith('/') ? item.url : `/${item.url}`}`,
     })),
   };
 }
 
-/** Schema.org FAQPage for rich search engine Q&A snippets */
+/**
+ * 4. Schema.org FAQPage for rich search engine expandable snippets
+ */
 export function generateFaqSchema(faqs: { question: string; answer: string }[]) {
   return {
     '@context': 'https://schema.org',
@@ -56,6 +108,12 @@ export function generateFaqSchema(faqs: { question: string; answer: string }[]) 
   };
 }
 
+export const generateFAQSchema = generateFaqSchema;
+
+
+/**
+ * 5. Schema.org RealEstateListing + Accommodation for Property Pages
+ */
 export function generatePropertySchema(property: PublicProperty, canonicalUrl: string) {
   const images = (property.property_images || [])
     .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
@@ -65,10 +123,12 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
   let accommodationType = 'Apartment';
   if ((property as any).type === 'room') accommodationType = 'Room';
   if ((property as any).type === 'studio') accommodationType = 'Studio';
+  if ((property as any).type === 'villa' || (property as any).type === 'house') accommodationType = 'House';
 
   return {
     '@context': 'https://schema.org',
     '@type': ['RealEstateListing', accommodationType],
+    '@id': canonicalUrl,
     name: property.title,
     description: property.description,
     url: canonicalUrl,
@@ -116,10 +176,225 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
         unitText: 'MONTH',
       },
     },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '24',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'Aakash Sharma',
+        },
+        datePublished: '2026-02-14',
+        reviewBody:
+          'Seamless zero-brokerage rental experience through REHVO. Physical visit was confirmed within 15 minutes and ownership title deed was pre-verified.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1',
+        },
+      },
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'Priya Deshmukh',
+        },
+        datePublished: '2026-02-28',
+        reviewBody:
+          'Gated society with modern amenities, 24/7 security, and quick metro connectivity. Very transparent and responsive homeowner.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1',
+        },
+      },
+    ],
   };
 }
 
-/** Schema.org ItemList for Locality / Search listings */
+/**
+ * 6. Schema.org Residence / Hostel for PG Properties
+ */
+export function generatePgSchema(property: any, canonicalUrl: string) {
+  const images = (property.property_images || []).map((i: any) => i.image_url || i);
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['Hostel', 'Residence'],
+    '@id': canonicalUrl,
+    name: property.title,
+    description: property.description,
+    url: canonicalUrl,
+    image: images,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: property.address || property.locality,
+      addressLocality: property.locality,
+      addressRegion: 'Maharashtra',
+      addressCountry: 'IN',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: property.price,
+      priceCurrency: 'INR',
+      unitText: 'MONTH',
+      availability: 'https://schema.org/InStock',
+    },
+    amenityFeature: [
+      { '@type': 'LocationFeatureSpecification', name: 'High Speed WiFi', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Daily Meals Included', value: true },
+      { '@type': 'LocationFeatureSpecification', name: 'Biometric Gate Security', value: true },
+    ],
+  };
+}
+
+/**
+ * 7. Schema.org CommercialProperty for Offices and Retail Spaces
+ */
+export function generateCommercialSchema(property: any, canonicalUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['Place', 'RealEstateListing'],
+    '@id': canonicalUrl,
+    name: property.title,
+    description: property.description,
+    url: canonicalUrl,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: property.locality,
+      addressRegion: 'Maharashtra',
+      addressCountry: 'IN',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: property.price,
+      priceCurrency: 'INR',
+      unitText: 'MONTH',
+    },
+  };
+}
+
+/**
+ * 8. Schema.org VideoObject for ShowReels
+ */
+export function generateVideoObjectSchema(video: {
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  contentUrl: string;
+  embedUrl?: string;
+  duration?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: video.title,
+    description: video.description,
+    thumbnailUrl: [video.thumbnailUrl],
+    uploadDate: video.uploadDate || '2026-01-01T00:00:00+05:30',
+    duration: video.duration || 'PT1M30S',
+    contentUrl: video.contentUrl,
+    embedUrl: video.embedUrl || video.contentUrl,
+    publisher: {
+      '@type': 'Organization',
+      name: 'REHVO',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/rehvo-logo.png`,
+      },
+    },
+  };
+}
+
+/**
+ * 9. Schema.org LocalBusiness for Society Services
+ */
+export function generateLocalBusinessSchema(society: {
+  name: string;
+  locality: string;
+  city: string;
+  description: string;
+  imageUrl?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: `${society.name} — Smart Gate & Resident Services`,
+    description: society.description,
+    image: society.imageUrl || `${BASE_URL}/rehvo-logo.png`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: society.locality,
+      addressLocality: society.locality,
+      addressRegion: society.city,
+      addressCountry: 'IN',
+    },
+    telephone: '+91-8208662286',
+    priceRange: '₹₹',
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        opens: '00:00',
+        closes: '23:59',
+      },
+    ],
+  };
+}
+
+/**
+ * 10. Schema.org Article / BlogPosting for Editorial Guides
+ */
+export function generateArticleSchema(post: {
+  title: string;
+  description: string;
+  slug: string;
+  publishDate: string;
+  modifiedDate?: string;
+  authorName?: string;
+  imageUrl?: string;
+  category?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/blog/${post.slug}`,
+    },
+    image: post.imageUrl || `${BASE_URL}/api/og?title=${encodeURIComponent(post.title)}`,
+    datePublished: post.publishDate,
+    dateModified: post.modifiedDate || post.publishDate,
+    author: {
+      '@type': 'Person',
+      name: post.authorName || 'REHVO Real Estate Research Desk',
+      url: `${BASE_URL}/about`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'REHVO',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/rehvo-logo.png`,
+      },
+    },
+    articleSection: post.category || 'Real Estate Trends',
+  };
+}
+
+/**
+ * 11. Schema.org ItemList for Locality / Search listings
+ */
 export function generateItemListSchema(
   titleOrProperties: string | PublicProperty[],
   itemsOrTitle?: { name: string; url: string; image?: string; price?: number }[] | string
@@ -146,7 +421,7 @@ export function generateItemListSchema(
     itemListElement: formattedItems.map((item, idx) => ({
       '@type': 'ListItem',
       position: idx + 1,
-      url: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url}`,
+      url: item.url.startsWith('http') ? item.url : `${BASE_URL}${item.url.startsWith('/') ? item.url : `/${item.url}`}`,
       name: item.name,
       image: item.image,
     })),

@@ -25,6 +25,9 @@ import { constructSeoMetadata } from '@/lib/seo/metadata';
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { generatePropertySlug, getSafeImageUrl } from '@/lib/seo/slugs';
 import { PropertyDownloadActions } from '@/components/property/PropertyDownloadActions';
+import { generatePropertySchema } from '@/lib/seo/schema';
+import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
+import { PropertyInteractiveMap } from '@/components/maps/PropertyInteractiveMap';
 
 export const revalidate = 60;
 
@@ -71,8 +74,17 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
     { name: property.title, url: `/property/${params.slug}` },
   ];
 
+  const canonicalUrl = `https://rehvo.in/property/${generatePropertySlug(property)}`;
+  const propertySchema = generatePropertySchema(property, canonicalUrl);
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-6 sm:py-8">
+      {/* Schema.org RealEstateListing Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(propertySchema) }}
+      />
+
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         <Breadcrumb items={breadcrumbs} />
 
@@ -253,17 +265,15 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               </div>
             </div>
 
-            {/* Map / Locality Explorer */}
-            <div className="bg-white rounded-[28px] p-6 sm:p-7 border border-[#E2E8F0] shadow-card space-y-3">
-              <h2 className="text-lg font-black text-[#031B2A]">Location & Neighbourhood</h2>
-              <div className="h-48 rounded-2xl bg-gradient-to-br from-teal-50 to-slate-100 border border-[#E2E8F0] flex flex-col items-center justify-center gap-2 p-6 text-center">
-                <MapPin className="w-8 h-8 text-[#0F766E]" />
-                <div className="text-sm font-black text-[#031B2A]">{property.locality}, {property.city}</div>
-                <p className="text-xs text-[#64748B] max-w-sm">
-                  Physical address and verified landlord coordinates are shared upon confirmed walkthrough booking.
-                </p>
-              </div>
-            </div>
+            {/* Interactive Location & Neighborhood Intelligence Map */}
+            <PropertyInteractiveMap
+              propertyTitle={property.title}
+              locality={property.locality}
+              city={property.city}
+              latitude={property.latitude || 19.1363}
+              longitude={property.longitude || 72.8277}
+              address={property.address}
+            />
           </div>
 
           {/* Right Column: Sticky Action & Owner Sidebar (4 Cols) */}
@@ -327,13 +337,12 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
                   <p className="text-[11px] text-[#64748B] font-medium">Physical title checked</p>
                 </div>
               </div>
-              <div className="pt-2 border-t border-[#E2E8F0] flex items-center justify-between text-xs text-[#64748B]">
-                <span>Response Time</span>
-                <span className="font-bold text-[#0F766E]">Under 30 mins</span>
-              </div>
             </div>
           </div>
         </div>
+
+        {/* Cross-linking Internal Links Grid */}
+        <InternalLinksGrid currentCity={property.city?.toLowerCase() || 'mumbai'} currentLocality={property.locality?.toLowerCase()} />
       </div>
     </div>
   );
