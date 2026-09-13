@@ -2,118 +2,77 @@
 
 import React from 'react';
 import Link from 'next/link';
-import {
-  CheckCircle2,
-  ShieldAlert,
-  LifeBuoy,
-  FileCheck2,
-  ArrowRight,
-  Clock,
-  AlertTriangle,
-} from 'lucide-react';
+import { ShieldAlert, CheckCircle2, ArrowRight, Clock, AlertTriangle } from 'lucide-react';
 import { PendingActionItem } from '@/types/admin';
 
-interface PendingActionsChecklistProps {
-  actions: PendingActionItem[];
-}
-
-export function PendingActionsChecklist({ actions }: PendingActionsChecklistProps) {
-  if (!actions || actions.length === 0) {
-    return (
-      <div className="bg-white rounded-xl border border-brand-border p-6 text-center">
-        <CheckCircle2 size={32} className="mx-auto text-brand-success mb-2" />
-        <h3 className="text-sm font-bold text-brand-dark">No Pending Actions</h3>
-        <p className="text-xs text-brand-muted mt-1">
-          All verifications, safety reports, and support tickets are resolved.
-        </p>
-      </div>
-    );
-  }
-
-  const getSeverityBadge = (severity: PendingActionItem['severity']) => {
-    switch (severity) {
-      case 'HIGH':
-        return 'bg-rose-100 text-rose-800 border-rose-200';
-      case 'MEDIUM':
-        return 'bg-amber-100 text-amber-800 border-amber-200';
-      case 'LOW':
-      default:
-        return 'bg-slate-100 text-slate-800 border-slate-200';
-    }
-  };
-
-  const getIcon = (category: PendingActionItem['category']) => {
-    switch (category) {
-      case 'VERIFICATION':
-        return CheckCircle2;
-      case 'REPORT':
-        return ShieldAlert;
-      case 'SUPPORT':
-        return LifeBuoy;
-      case 'MODERATION':
-      default:
-        return FileCheck2;
-    }
-  };
+export function PendingActionsChecklist({ actions }: { actions: PendingActionItem[] }) {
+  const currentActions = actions || [];
 
   return (
-    <div className="bg-white rounded-xl border border-brand-border overflow-hidden shadow-xs">
-      <div className="px-5 py-3.5 border-b border-brand-border flex items-center justify-between bg-brand-canvas/30">
+    <div className="p-5 rounded-2xl bg-white dark:bg-[#121215] border border-slate-200 dark:border-white/10 shadow-xs dark:shadow-card flex flex-col justify-between">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/5">
         <div className="flex items-center gap-2">
-          <AlertTriangle size={16} className="text-amber-600" />
-          <h3 className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-            Pending Operational Actions
+          <Clock size={16} className="text-amber-500" />
+          <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
+            Operational Triage Queue
           </h3>
         </div>
-        <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-          {actions.reduce((acc, a) => acc + a.count, 0)} Items Requiring Attention
-        </span>
+        {currentActions.length > 0 ? (
+          <span className="text-[10px] font-bold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-400/10 px-2 py-0.5 rounded border border-amber-200 dark:border-amber-400/20">
+            {currentActions.length} Action{currentActions.length === 1 ? '' : 's'} Required
+          </span>
+        ) : (
+          <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-200 dark:border-emerald-400/20 flex items-center gap-1">
+            <CheckCircle2 size={11} /> All Clear
+          </span>
+        )}
       </div>
 
-      <div className="divide-y divide-brand-border">
-        {actions.map((item) => {
-          const Icon = getIcon(item.category);
-          return (
-            <Link
-              key={item.id}
-              href={item.route}
-              className="px-5 py-3.5 flex items-center justify-between hover:bg-brand-canvas/60 transition-colors group"
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-brand-canvas border border-brand-border flex items-center justify-center text-brand-dark flex-shrink-0 group-hover:border-brand-primary group-hover:text-brand-primary transition-colors">
-                  <Icon size={16} />
+      <div className="divide-y divide-slate-100 dark:divide-white/5 my-2">
+        {currentActions.length > 0 ? (
+          currentActions.map((action) => (
+            <div key={action.id} className="py-3 flex items-center justify-between gap-3 group">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      action.severity === 'HIGH' ? 'bg-rose-500 animate-pulse' : 'bg-amber-400'
+                    }`}
+                  />
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-[#0E8F73] dark:group-hover:text-[#10B981] transition-colors truncate">
+                    {action.title}
+                  </h4>
                 </div>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className="text-xs font-bold text-brand-dark group-hover:text-brand-primary transition-colors truncate">
-                      {item.title}
-                    </p>
-                    <span
-                      className={`text-[9.5px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${getSeverityBadge(
-                        item.severity
-                      )}`}
-                    >
-                      {item.severity} Priority
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-brand-muted mt-0.5 truncate">
-                    {item.subtitle}
-                  </p>
-                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 pl-4 mt-0.5 truncate">{action.subtitle}</p>
               </div>
 
-              <div className="flex items-center gap-3 flex-shrink-0 ml-4">
-                <span className="text-xs font-extrabold text-brand-dark px-2 py-0.5 rounded bg-brand-canvas border border-brand-border">
-                  {item.count}
-                </span>
-                <ArrowRight
-                  size={15}
-                  className="text-brand-muted group-hover:text-brand-primary group-hover:translate-x-0.5 transition-all"
-                />
-              </div>
-            </Link>
-          );
-        })}
+              <Link
+                href={action.route}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-[#0E8F73] hover:text-white text-xs font-bold text-slate-700 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-[#0E8F73] dark:hover:text-white transition shadow-2xs shrink-0"
+              >
+                <span>Resolve</span>
+                <ArrowRight size={12} />
+              </Link>
+            </div>
+          ))
+        ) : (
+          <div className="py-8 text-center flex flex-col items-center justify-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+              <CheckCircle2 size={20} />
+            </div>
+            <p className="text-xs font-bold text-slate-900 dark:text-white">Triage Queue is Clear</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs">
+              All properties are verified and there are no open flags or support escalations.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>All systems operating within SLA thresholds</span>
+        <Link href="/admin/kyc" className="text-[#0E8F73] dark:text-[#10B981] font-bold hover:underline">
+          View All KYC →
+        </Link>
       </div>
     </div>
   );

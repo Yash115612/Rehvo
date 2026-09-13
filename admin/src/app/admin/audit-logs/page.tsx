@@ -6,7 +6,7 @@ import { ScrollText, Search, Shield, Filter, Terminal, Loader2 } from 'lucide-re
 import { formatDate } from '@/lib/utils';
 import { ADMIN_ROLE_LABELS, ADMIN_ROLE_COLORS } from '@/lib/auth/admin-auth';
 import { getAuditLogs } from '@/lib/supabase/admin-service';
-import { AdminAuditLog } from '@/types/admin';
+import { AdminAuditLog, AdminRole } from '@/types/admin';
 
 export default function AdminAuditLogsPage() {
   const [logs, setLogs] = useState<AdminAuditLog[]>([]);
@@ -95,7 +95,7 @@ export default function AdminAuditLogsPage() {
               </thead>
               <tbody>
                 {filtered.map((log) => {
-                  const style = ADMIN_ROLE_COLORS[log.admin_role] || ADMIN_ROLE_COLORS.OPERATIONS;
+                  const style = ADMIN_ROLE_COLORS[log.admin_role as AdminRole] || ADMIN_ROLE_COLORS.OPERATIONS_MANAGER;
                   return (
                     <tr key={log.id}>
                       <td>

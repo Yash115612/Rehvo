@@ -2,12 +2,22 @@ import { NextResponse } from 'next/server';
 import { getPublishedFlatmates } from '@/lib/seo/queries';
 import { CITIES_DATA } from '@/lib/seo/localityData';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
+
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 export async function GET() {
-  const flatmates = await getPublishedFlatmates('all');
+  let flatmates: any[] = [];
+  try {
+    const data = await getPublishedFlatmates('all');
+    flatmates = Array.isArray(data) ? data : [];
+  } catch (err) {
+    flatmates = [];
+  }
+
   const now = new Date().toISOString().split('T')[0];
-  const cities = Object.keys(CITIES_DATA);
+  const cities = Object.keys(CITIES_DATA || {});
 
   const cityUrls = cities.map(
     (c) => `  <url>
@@ -43,7 +53,8 @@ ${profileUrls.join('\n')}
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'X-Robots-Tag': 'all',
     },
   });
 }

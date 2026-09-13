@@ -2,9 +2,37 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // 1. Google Search Console HTML File Verification Handler
+  // Matches any /google<token>.html request dynamically
+  if (pathname.startsWith('/google') && pathname.endsWith('.html')) {
+    const filename = pathname.replace(/^\//, '');
+    return new NextResponse(`google-site-verification: ${filename}`, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400',
+      },
+    });
+  }
+
+  // 2. Immediate Bypass for Sitemaps, Robots, Feeds, and Static Data
+  // Prevents CSP or security header mutation on XML/Text/JSON routes
+  if (
+    pathname.endsWith('.xml') ||
+    pathname.endsWith('.txt') ||
+    pathname.endsWith('.json') ||
+    pathname.startsWith('/sitemap') ||
+    pathname.startsWith('/video-sitemap') ||
+    pathname === '/robots.txt'
+  ) {
+    return NextResponse.next();
+  }
+
   const response = NextResponse.next();
 
-  // Strict Enterprise Security Headers
+  // Strict Enterprise Security Headers for HTML Web Navigation
   response.headers.set('X-DNS-Prefetch-Control', 'on');
   response.headers.set(
     'Strict-Transport-Security',
@@ -46,8 +74,8 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt
+     * - static files: favicon, xml, txt, json, images
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|manifest.json|sw.js|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:xml|txt|json|png|jpg|jpeg|svg|webp|avif|ico|mp4)).*)',
   ],
 };

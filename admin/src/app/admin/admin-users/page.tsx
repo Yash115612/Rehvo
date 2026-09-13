@@ -16,7 +16,7 @@ export default function AdminUsersDirectoryPage() {
   const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteName, setInviteName] = useState('');
-  const [inviteRole, setInviteRole] = useState<AdminRole>('OPERATIONS');
+  const [inviteRole, setInviteRole] = useState<AdminRole>('OPERATIONS_MANAGER');
   const [adminList, setAdminList] = useState<AdminUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -194,7 +194,7 @@ export default function AdminUsersDirectoryPage() {
               </thead>
               <tbody>
                 {adminList.map((adm) => {
-                  const style = ADMIN_ROLE_COLORS[adm.role] || ADMIN_ROLE_COLORS.OPERATIONS;
+                  const style = ADMIN_ROLE_COLORS[adm.role] || ADMIN_ROLE_COLORS.OPERATIONS_MANAGER;
                   return (
                     <tr key={adm.id}>
                       <td>

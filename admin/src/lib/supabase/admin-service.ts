@@ -13,6 +13,8 @@ import {
 } from '@/types/admin';
 import { MOCK_ADMIN_USER } from '../auth/admin-auth';
 
+export type { OverviewMetrics };
+
 const supabase = createClient();
 
 // ---------------------------------------------------------------------------
@@ -58,87 +60,126 @@ export async function getOverviewMetrics(): Promise<OverviewMetrics> {
       usersRes,
       propsRes,
       activePropsRes,
+      pendingPropsRes,
       flatmatesRes,
       verifsRes,
       reportsRes,
       supportRes,
       enquiriesRes,
       visitsRes,
+      pgPropsRes,
+      commPropsRes,
+      propertiesDataRes,
     ] = await Promise.all([
       supabase.from('profiles').select('id', { count: 'exact', head: true }),
       supabase.from('properties').select('id', { count: 'exact', head: true }),
-      supabase.from('properties').select('id', { count: 'exact', head: true }).eq('status', 'active'),
+      supabase.from('properties').select('id', { count: 'exact', head: true }).in('status', ['active', 'published']),
+      supabase.from('properties').select('id', { count: 'exact', head: true }).or('verification_status.eq.unverified,verification_status.is.null,status.eq.pending'),
       supabase.from('flatmate_profiles').select('id', { count: 'exact', head: true }),
       supabase.from('verification_requests').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
       supabase.from('safety_reports').select('id', { count: 'exact', head: true }).in('status', ['pending', 'under_review']),
       supabase.from('support_tickets').select('id', { count: 'exact', head: true }).in('status', ['pending', 'in_progress']),
       supabase.from('enquiries').select('id', { count: 'exact', head: true }),
       supabase.from('visits').select('id', { count: 'exact', head: true }),
+      supabase.from('properties').select('id', { count: 'exact', head: true }).in('type', ['pg', 'room', 'hostel']),
+      supabase.from('properties').select('id', { count: 'exact', head: true }).or('category.eq.commercial,type.in.(office,retail,warehouse,commercial,coworking,showroom)'),
+      supabase.from('properties').select('id, price, rent, owner_id'),
     ]);
 
-    const totalUsers = usersRes.count || 0;
-    const activeUsers = totalUsers; // In active deployment, registered profiles
-    const totalProperties = propsRes.count || 0;
-    const activeProperties = activePropsRes.count || 0;
-    const totalFlatmateProfiles = flatmatesRes.count || 0;
-    const pendingVerifications = verifsRes.count || 0;
-    const openReports = reportsRes.count || 0;
-    const openSupportTickets = supportRes.count || 0;
-    const totalEnquiries = enquiriesRes.count || 0;
-    const scheduledVisits = visitsRes.count || 0;
+    const totalUsers = usersRes.count ?? 0;
+    const activeUsers = totalUsers;
+    const totalProperties = propsRes.count ?? 0;
+    const activeProperties = activePropsRes.count ?? totalProperties;
+    const pendingProperties = pendingPropsRes.count ?? 0;
+    const totalFlatmateProfiles = flatmatesRes.count ?? 0;
+    const pendingVerifications = (verifsRes.count ?? 0) + pendingProperties;
+    const openReports = reportsRes.count ?? 0;
+    const openSupportTickets = supportRes.count ?? 0;
+    const totalEnquiries = enquiriesRes.count ?? 0;
+    const scheduledVisits = visitsRes.count ?? 0;
+    const totalPgListings = pgPropsRes.count ?? 0;
+    const totalCommercialListings = commPropsRes.count ?? 0;
+    const totalShowreels = 0;
+
+    // Calculate real unique owners and real monthly inventory value from properties
+    const propsList = propertiesDataRes.data || [];
+    const uniqueOwnerIds = new Set(propsList.map((p) => p.owner_id).filter(Boolean));
+    const totalOwners = uniqueOwnerIds.size;
+
+    const monthlyInventoryRevenue = propsList.reduce((acc, p) => {
+      const val = Number(p.price || p.rent || 0);
+      return acc + (isNaN(val) ? 0 : val);
+    }, 0);
+
+    const revenueToday = 0;
+    const revenueMonth = monthlyInventoryRevenue;
 
     return {
       totalUsers,
-      activeUsers,
-      totalProperties,
+      totalOwners,
       activeProperties,
+      pendingProperties,
       totalFlatmateProfiles,
+      totalPgListings,
+      totalCommercialListings,
+      totalShowreels,
+      revenueToday,
+      revenueMonth,
       pendingVerifications,
-      openReports,
       openSupportTickets,
       totalEnquiries,
       scheduledVisits,
+      activeUsers,
+      totalProperties,
+      openReports,
     };
   } catch (err) {
     console.warn('[Admin Service] getOverviewMetrics error:', err);
     return {
       totalUsers: 0,
-      activeUsers: 0,
-      totalProperties: 0,
+      totalOwners: 0,
       activeProperties: 0,
+      pendingProperties: 0,
       totalFlatmateProfiles: 0,
+      totalPgListings: 0,
+      totalCommercialListings: 0,
+      totalShowreels: 0,
+      revenueToday: 0,
+      revenueMonth: 0,
       pendingVerifications: 0,
-      openReports: 0,
       openSupportTickets: 0,
       totalEnquiries: 0,
       scheduledVisits: 0,
+      activeUsers: 0,
+      totalProperties: 0,
+      openReports: 0,
     };
   }
 }
 
 export async function getRecentActivities(): Promise<RecentActivityItem[]> {
   try {
-    const [auditRes, propsRes, visitsRes, reportsRes] = await Promise.all([
+    const [auditRes, propsRes, profilesRes, visitsRes] = await Promise.all([
       supabase
         .from('admin_audit_logs')
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(5),
+        .limit(6),
       supabase
         .from('properties')
-        .select('id, title, locality, city, rent, created_at, owner_profile:profiles!properties_owner_id_fkey(full_name)')
+        .select('id, title, locality, city, price, rent, created_at, owner_profile:profiles!properties_owner_id_fkey(full_name)')
         .order('created_at', { ascending: false })
-        .limit(3),
+        .limit(6),
+      supabase
+        .from('profiles')
+        .select('id, full_name, email, phone, role, created_at')
+        .order('created_at', { ascending: false })
+        .limit(6),
       supabase
         .from('visits')
         .select('id, scheduled_date, scheduled_time, created_at, properties(title), renter:profiles!visits_user_id_fkey(full_name)')
         .order('created_at', { ascending: false })
-        .limit(3),
-      supabase
-        .from('safety_reports')
-        .select('id, reason, created_at, reporter:profiles!safety_reports_reporter_id_fkey(full_name)')
-        .order('created_at', { ascending: false })
-        .limit(3),
+        .limit(4),
     ]);
 
     const items: RecentActivityItem[] = [];
@@ -148,7 +189,7 @@ export async function getRecentActivities(): Promise<RecentActivityItem[]> {
         id: log.id,
         type: 'PROPERTY_PUBLISHED',
         title: `Admin Action: ${log.action}`,
-        description: `Executed by ${log.admin_email} on ${log.target_type} #${log.target_id.slice(0, 8)}`,
+        description: `Executed by ${log.admin_email} on ${log.target_type} #${String(log.target_id).slice(0, 8)}`,
         timestamp: log.created_at,
         entityId: log.target_id,
         entityType: log.target_type.toUpperCase(),
@@ -157,11 +198,12 @@ export async function getRecentActivities(): Promise<RecentActivityItem[]> {
     });
 
     (propsRes.data || []).forEach((p: any) => {
+      const cost = p.price || p.rent || 0;
       items.push({
         id: `prop_${p.id}`,
         type: 'PROPERTY_PUBLISHED',
-        title: `New Listing: ${p.title}`,
-        description: `Listed in ${p.locality}, ${p.city || 'Mumbai'} • ₹${p.rent?.toLocaleString('en-IN')}/mo`,
+        title: `Property Listed: ${p.title}`,
+        description: `In ${p.locality || 'Mumbai'}${p.city ? `, ${p.city}` : ''} • ₹${Number(cost).toLocaleString('en-IN')}/mo`,
         timestamp: p.created_at,
         entityId: p.id,
         entityType: 'PROPERTY',
@@ -169,29 +211,29 @@ export async function getRecentActivities(): Promise<RecentActivityItem[]> {
       });
     });
 
-    (visitsRes.data || []).forEach((v: any) => {
+    (profilesRes.data || []).forEach((u: any) => {
       items.push({
-        id: `vis_${v.id}`,
-        type: 'VISIT_BOOKED',
-        title: `Visit Scheduled: ${v.properties?.title || 'Property Tour'}`,
-        description: `Renter ${v.renter?.full_name || 'User'} scheduled for ${v.scheduled_date} at ${v.scheduled_time}`,
-        timestamp: v.created_at,
-        entityId: v.id,
-        entityType: 'VISIT',
+        id: `user_${u.id}`,
+        type: 'USER_REGISTERED',
+        title: `New User: ${u.full_name || 'Member'}`,
+        description: `Registered as ${u.role || 'Renter'} • ${u.email || u.phone || 'Verified'}`,
+        timestamp: u.created_at,
+        entityId: u.id,
+        entityType: 'USER',
         status: 'INFO',
       });
     });
 
-    (reportsRes.data || []).forEach((r: any) => {
+    (visitsRes.data || []).forEach((v: any) => {
       items.push({
-        id: `rep_${r.id}`,
-        type: 'REPORT_FILED',
-        title: `Safety Report: ${r.reason}`,
-        description: `Filed by ${r.reporter?.full_name || 'Renter'} for review`,
-        timestamp: r.created_at,
-        entityId: r.id,
-        entityType: 'REPORT',
-        status: 'DANGER',
+        id: `vis_${v.id}`,
+        type: 'VISIT_BOOKED',
+        title: `Tour Scheduled: ${v.properties?.title || 'Property Tour'}`,
+        description: `Renter ${v.renter?.full_name || 'User'} on ${v.scheduled_date} at ${v.scheduled_time}`,
+        timestamp: v.created_at,
+        entityId: v.id,
+        entityType: 'VISIT',
+        status: 'INFO',
       });
     });
 
@@ -206,27 +248,28 @@ export async function getRecentActivities(): Promise<RecentActivityItem[]> {
 
 export async function getPendingActions(): Promise<PendingActionItem[]> {
   try {
-    const [verifsRes, reportsRes, supportRes] = await Promise.all([
+    const [unverifiedPropsRes, verifsRes, reportsRes, supportRes] = await Promise.all([
+      supabase.from('properties').select('id, title, locality', { count: 'exact' }).or('verification_status.eq.unverified,verification_status.is.null'),
       supabase.from('verification_requests').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
       supabase.from('safety_reports').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
       supabase.from('support_tickets').select('id', { count: 'exact', head: true }).eq('status', 'pending'),
     ]);
 
-    const verifCount = verifsRes.count || 0;
-    const reportCount = reportsRes.count || 0;
-    const supportCount = supportRes.count || 0;
+    const unverifiedCount = (unverifiedPropsRes.count ?? 0) + (verifsRes.count ?? 0);
+    const reportCount = reportsRes.count ?? 0;
+    const supportCount = supportRes.count ?? 0;
 
     const actions: PendingActionItem[] = [];
 
-    if (verifCount > 0) {
+    if (unverifiedCount > 0) {
       actions.push({
         id: 'act_verif',
         category: 'VERIFICATION',
-        title: `${verifCount} Properties / KYC Awaiting Verification`,
-        subtitle: 'Ownership deeds and identification documents submitted for review',
-        count: verifCount,
+        title: `${unverifiedCount} Properties / Host KYC Pending Verification`,
+        subtitle: 'Review ownership deeds, listings, and identity credentials for approval',
+        count: unverifiedCount,
         severity: 'HIGH',
-        route: '/admin/verification',
+        route: '/admin/kyc',
       });
     }
 
@@ -238,7 +281,7 @@ export async function getPendingActions(): Promise<PendingActionItem[]> {
         subtitle: 'User submitted listing discrepancy or safety flag',
         count: reportCount,
         severity: 'MEDIUM',
-        route: '/admin/reports',
+        route: '/admin/support?tab=complaints',
       });
     }
 
@@ -367,6 +410,7 @@ export interface AdminPropertyRecord {
   owner_name: string;
   owner_id: string;
   location: string;
+  city?: string;
   rent: number;
   area?: number;
   status: 'ACTIVE' | 'DRAFT' | 'PAUSED' | 'RENTED';
@@ -423,6 +467,7 @@ export async function getProperties(params?: {
       owner_name: p.owner_profile?.full_name || 'Property Host',
       owner_id: p.owner_id,
       location: `${p.locality}, ${p.city || 'Mumbai'}`,
+      city: p.city || 'Mumbai',
       rent: p.price || p.rent || 0,
       area: p.area || 0,
       status: (p.status || 'ACTIVE').toUpperCase() as any,
@@ -683,15 +728,13 @@ export async function getVisits(): Promise<any[]> {
   try {
     const { data, error } = await supabase
       .from('visits')
-      .select(`
-        *,
-        properties (id, title, locality, city),
-        renter:profiles!visits_user_id_fkey (full_name, phone),
-        owner:profiles!visits_owner_id_fkey (full_name, phone)
-      `)
+      .select('*')
       .order('scheduled_date', { ascending: false });
 
-    if (error) throw error;
+    if (error) {
+      const { data: vb } = await supabase.from('visit_bookings').select('*');
+      return vb || [];
+    }
     return data || [];
   } catch (err) {
     console.warn('[Admin Service] getVisits error:', err);
@@ -760,13 +803,10 @@ export async function getSupportTickets(): Promise<any[]> {
   try {
     const { data, error } = await supabase
       .from('support_tickets')
-      .select(`
-        *,
-        user_profile:profiles!support_tickets_user_id_fkey (full_name, phone, email)
-      `)
+      .select('*')
       .order('created_at', { ascending: false });
 
-    if (error) throw error;
+    if (error) return [];
     return data || [];
   } catch (err) {
     console.warn('[Admin Service] getSupportTickets error:', err);
@@ -830,24 +870,61 @@ export async function getAdminUsers(): Promise<AdminUser[]> {
       .order('created_at', { ascending: false });
 
     if (error || !data || data.length === 0) {
-      return [MOCK_ADMIN_USER];
+      return [{
+        id: 'admin_usr_01',
+        user_id: '7ce151b0',
+        employee_id: 'RHV-001',
+        email: 'yxxhpatel@gmail.com',
+        full_name: 'Yash Patel (Super Admin)',
+        role: 'SUPER_ADMIN',
+        status: 'ACTIVE',
+        department: 'Executive Leadership',
+        city: 'Mumbai',
+        phone: '+91 8208662286',
+        joining_date: '2024-01-01',
+        is_online: true,
+        avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+        created_at: '2024-01-01T00:00:00Z',
+        updated_at: new Date().toISOString(),
+      }];
     }
 
     return data.map((u: any) => ({
       id: u.id,
       user_id: u.user_id || u.id,
+      employee_id: u.employee_id || `RHV-${u.id.slice(0, 4)}`,
       email: u.email,
       full_name: u.full_name,
       role: (u.role || 'OPERATIONS').toUpperCase() as any,
       status: (u.status || 'ACTIVE').toUpperCase() as any,
+      department: u.department || 'Operations',
+      city: u.city || 'Mumbai',
+      phone: u.phone || '—',
+      joining_date: u.joining_date || '2024-01-01',
+      is_online: true,
       avatar_url: u.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-      last_sign_in_at: u.last_sign_in_at,
       created_at: u.created_at,
       updated_at: u.updated_at,
     }));
   } catch (err) {
     console.warn('[Admin Service] getAdminUsers error:', err);
-    return [MOCK_ADMIN_USER];
+    return [{
+      id: 'admin_usr_01',
+      user_id: '7ce151b0',
+      employee_id: 'RHV-001',
+      email: 'yxxhpatel@gmail.com',
+      full_name: 'Yash Patel (Super Admin)',
+      role: 'SUPER_ADMIN',
+      status: 'ACTIVE',
+      department: 'Executive Leadership',
+      city: 'Mumbai',
+      phone: '+91 8208662286',
+      joining_date: '2024-01-01',
+      is_online: true,
+      avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+      created_at: '2024-01-01T00:00:00Z',
+      updated_at: new Date().toISOString(),
+    }];
   }
 }
 
@@ -930,3 +1007,234 @@ export async function saveSystemSetting(
     return { success: false, error: err.message || "Couldn't save system setting." };
   }
 }
+
+// ---------------------------------------------------------------------------
+// 12. Real CRM Data Helpers (Owners, Renters, KYC, Commercial, PGs)
+// ---------------------------------------------------------------------------
+
+export interface RealOwnerRecord {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  properties_count: number;
+  total_revenue: number;
+  wallet_balance: number;
+  kyc_status: 'VERIFIED' | 'PENDING' | 'REJECTED';
+  status: 'ACTIVE' | 'SUSPENDED' | 'BANNED';
+  subscription: 'PRO_LANDLORD' | 'FREE' | 'ENTERPRISE';
+  joined_at: string;
+}
+
+export async function getRealOwners(): Promise<RealOwnerRecord[]> {
+  try {
+    const [profilesRes, propertiesRes] = await Promise.all([
+      supabase.from('profiles').select('*'),
+      supabase.from('properties').select('id, owner_id, price, rent, verification_status'),
+    ]);
+
+    const profiles = profilesRes.data || [];
+    const properties = propertiesRes.data || [];
+
+    // Map properties by owner_id
+    const propsByOwner: Record<string, any[]> = {};
+    properties.forEach((p) => {
+      if (p.owner_id) {
+        if (!propsByOwner[p.owner_id]) propsByOwner[p.owner_id] = [];
+        propsByOwner[p.owner_id].push(p);
+      }
+    });
+
+    // An owner is anyone with role === 'owner' OR anyone who has posted at least 1 property
+    const ownerProfiles = profiles.filter(
+      (u) => u.role === 'owner' || (propsByOwner[u.id] && propsByOwner[u.id].length > 0)
+    );
+
+    return ownerProfiles.map((u) => {
+      const ownedProps = propsByOwner[u.id] || [];
+      const totalRev = ownedProps.reduce((sum, p) => sum + (Number(p.price || p.rent || 0)), 0);
+      const isVerified = (u.verification_status || 'unverified').toLowerCase() === 'verified';
+      const isRejected = (u.verification_status || '').toLowerCase() === 'rejected';
+
+      return {
+        id: u.id,
+        name: u.full_name || 'Property Host',
+        email: u.email || `${u.phone || u.id.slice(0, 8)}@rehvo.user`,
+        phone: u.phone || '+91 Not Provided',
+        city: u.city || 'Mumbai',
+        properties_count: ownedProps.length,
+        total_revenue: totalRev,
+        wallet_balance: 0,
+        kyc_status: isVerified ? 'VERIFIED' : isRejected ? 'REJECTED' : 'PENDING',
+        status: u.is_blocked ? 'SUSPENDED' : 'ACTIVE',
+        subscription: ownedProps.length > 2 ? 'ENTERPRISE' : ownedProps.length > 0 ? 'PRO_LANDLORD' : 'FREE',
+        joined_at: u.created_at || new Date().toISOString(),
+      };
+    });
+  } catch (err) {
+    console.warn('[Admin Service] getRealOwners error:', err);
+    return [];
+  }
+}
+
+export interface RealRenterRecord {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  city: string;
+  saved_homes_count: number;
+  ai_searches_count: number;
+  visits_count: number;
+  wallet_rcash: number;
+  referral_rewards: number;
+  status: 'ACTIVE' | 'SUSPENDED' | 'BANNED';
+  joined_at: string;
+}
+
+export async function getRealRenters(): Promise<RealRenterRecord[]> {
+  try {
+    const [profilesRes, visitsRes] = await Promise.all([
+      supabase.from('profiles').select('*'),
+      supabase.from('visits').select('id, user_id'),
+    ]);
+
+    const profiles = profilesRes.data || [];
+    const visits = visitsRes.data || [];
+
+    const visitsByUser: Record<string, number> = {};
+    visits.forEach((v) => {
+      if (v.user_id) {
+        visitsByUser[v.user_id] = (visitsByUser[v.user_id] || 0) + 1;
+      }
+    });
+
+    return profiles.map((u) => ({
+      id: u.id,
+      name: u.full_name || 'Registered User',
+      email: u.email || `${u.phone || u.id.slice(0, 8)}@rehvo.user`,
+      phone: u.phone || '+91 Not Provided',
+      city: u.city || 'Mumbai',
+      saved_homes_count: 0,
+      ai_searches_count: 0,
+      visits_count: visitsByUser[u.id] || 0,
+      wallet_rcash: 0,
+      referral_rewards: 0,
+      status: u.is_blocked ? 'SUSPENDED' : 'ACTIVE',
+      joined_at: u.created_at || new Date().toISOString(),
+    }));
+  } catch (err) {
+    console.warn('[Admin Service] getRealRenters error:', err);
+    return [];
+  }
+}
+
+export interface RealKycDocRecord {
+  id: string;
+  target_id: string;
+  target_name: string;
+  document_type: 'PROPERTY_TITLE_DEED' | 'ELECTRICITY_BILL' | 'AADHAAR_CARD' | 'PAN_CARD' | 'SELFIE';
+  submitted_by: string;
+  owner_phone: string;
+  document_url: string;
+  submitted_at: string;
+  status: 'PENDING' | 'VERIFIED' | 'REJECTED';
+  rejection_reason?: string;
+}
+
+export async function getRealKycDocuments(): Promise<RealKycDocRecord[]> {
+  try {
+    const [propsRes, verifsRes] = await Promise.all([
+      supabase
+        .from('properties')
+        .select(`
+          id, title, locality, city, verification_status, created_at,
+          property_images (image_url),
+          owner_profile:profiles!properties_owner_id_fkey(id, full_name, phone, email)
+        `)
+        .order('created_at', { ascending: false }),
+      supabase
+        .from('verification_requests')
+        .select(`
+          *,
+          user_profile:profiles!verification_requests_user_id_fkey(full_name, phone),
+          property_data:properties!verification_requests_property_id_fkey(title)
+        `),
+    ]);
+
+    const items: RealKycDocRecord[] = [];
+
+    // Map unverified or listed properties as verification targets
+    (propsRes.data || []).forEach((p: any) => {
+      const vStatus = (p.verification_status || 'unverified').toLowerCase();
+      const status: 'PENDING' | 'VERIFIED' | 'REJECTED' =
+        vStatus === 'verified' ? 'VERIFIED' : vStatus === 'rejected' ? 'REJECTED' : 'PENDING';
+
+      const firstImage = p.property_images?.[0]?.image_url || 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=1200&auto=format&fit=crop&q=80';
+
+      items.push({
+        id: `prop_doc_${p.id}`,
+        target_id: p.id,
+        target_name: `${p.title} (${p.locality || 'Mumbai'})`,
+        document_type: 'PROPERTY_TITLE_DEED',
+        submitted_by: p.owner_profile?.full_name || 'Property Owner',
+        owner_phone: p.owner_profile?.phone || 'N/A',
+        document_url: firstImage,
+        submitted_at: p.created_at || new Date().toISOString(),
+        status,
+      });
+    });
+
+    // Also include any verification_requests table rows
+    (verifsRes.data || []).forEach((v: any) => {
+      items.push({
+        id: v.id,
+        target_id: v.property_id || v.user_id,
+        target_name: v.property_data?.title || v.user_profile?.full_name || 'Verification Document',
+        document_type: (v.document_type || 'PROPERTY_TITLE_DEED').toUpperCase(),
+        submitted_by: v.user_profile?.full_name || 'User',
+        owner_phone: v.user_profile?.phone || 'N/A',
+        document_url: v.document_url || 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&auto=format&fit=crop&q=80',
+        submitted_at: v.created_at || new Date().toISOString(),
+        status: (v.status || 'PENDING').toUpperCase() as any,
+        rejection_reason: v.rejection_reason || undefined,
+      });
+    });
+
+    return items;
+  } catch (err) {
+    console.warn('[Admin Service] getRealKycDocuments error:', err);
+    return [];
+  }
+}
+
+export async function updatePropertyKycStatus(
+  propertyId: string,
+  status: 'VERIFIED' | 'REJECTED',
+  reason?: string
+): Promise<{ success: boolean; error?: string }> {
+  try {
+    const realPropId = propertyId.startsWith('prop_doc_') ? propertyId.replace('prop_doc_', '') : propertyId;
+    const nextStatus = status === 'VERIFIED' ? 'verified' : 'rejected';
+
+    const { error } = await supabase
+      .from('properties')
+      .update({ verification_status: nextStatus })
+      .eq('id', realPropId);
+
+    if (error) throw error;
+
+    await logAdminAction({
+      action: `PROPERTY_KYC_${status}`,
+      targetType: 'property',
+      targetId: realPropId,
+      metadata: { status: nextStatus, reason: reason || 'Admin review' },
+    });
+
+    return { success: true };
+  } catch (err: any) {
+    return { success: false, error: err.message || "Couldn't update KYC status." };
+  }
+}
+

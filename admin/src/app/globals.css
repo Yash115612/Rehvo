@@ -1,60 +1,286 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+ * REHVO Multi-Theme System: Light (Default) & Dark
+ * --------------------------------------------------------------------------- */
+
 :root {
-  --background: #F8F7F4;
-  --foreground: #171522;
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --sidebar-bg: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --card-subtle: #F1F5F9;
+  --border-subtle: #E2E8F0;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+}
+
+.dark {
+  --background: #050505;
+  --foreground: #FFFFFF;
+  --sidebar-bg: #0A0A0C;
+  --card-bg: #121215;
+  --card-subtle: #16161A;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --text-main: #FFFFFF;
+  --text-muted: #94A3B8;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Information-Dense Scrollbar Styling */
-::-webkit-scrollbar {
+/* ===========================================================================
+ * LIGHT THEME STYLES (Default / html:not(.dark) / html.light)
+ * Clean, crisp, high-contrast Stripe/Linear dashboard aesthetic
+ * =========================================================================== */
+
+html:not(.dark) body {
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* Base Canvas & Surface Backgrounds */
+html:not(.dark) .bg-\[\#050505\],
+html:not(.dark) .bg-\[\#0A0A0C\],
+html:not(.dark) .bg-\[\#0A0A0D\] {
+  background-color: #F8FAFC !important;
+}
+
+/* Card Surfaces */
+html:not(.dark) .bg-\[\#0D0D11\],
+html:not(.dark) .bg-\[\#121215\] {
+  background-color: #FFFFFF !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+  border-color: #E2E8F0 !important;
+}
+
+/* Subtle Secondary Cards & Containers */
+html:not(.dark) .bg-\[\#16161A\],
+html:not(.dark) .bg-\[\#141418\],
+html:not(.dark) .bg-\[\#1A1A20\] {
+  background-color: #F8FAFC !important;
+  border-color: #E2E8F0 !important;
+}
+
+html:not(.dark) .bg-\[\#0E0E11\] {
+  background-color: #F8FAFC !important;
+}
+
+/* Sidebar & Header in Light Mode */
+html:not(.dark) aside.bg-\[\#0A0A0C\] {
+  background-color: #FFFFFF !important;
+  border-right-color: #E2E8F0 !important;
+}
+
+html:not(.dark) header.bg-\[\#050505\]\/85 {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-bottom-color: #E2E8F0 !important;
+}
+
+/* Borders & Dividers in Light Mode */
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-white\/10,
+html:not(.dark) .border-white\/15,
+html:not(.dark) .border-white\/20 {
+  border-color: #E2E8F0 !important;
+}
+
+html:not(.dark) .divide-white\/5 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-white\/10 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #E2E8F0 !important;
+}
+
+/* Transparent Fills & Hover States in Light Mode */
+html:not(.dark) .bg-white\/5 {
+  background-color: #F1F5F9 !important;
+}
+
+html:not(.dark) .bg-white\/10 {
+  background-color: #E2E8F0 !important;
+}
+
+html:not(.dark) .hover\:bg-white\/5:hover {
+  background-color: #F1F5F9 !important;
+}
+
+html:not(.dark) .hover\:bg-white\/10:hover {
+  background-color: #E2E8F0 !important;
+}
+
+/* Typography Overrides for Light Mode */
+html:not(.dark) .text-white:not(button):not(button *):not([class*="bg-emerald"]):not([class*="from-"]):not([class*="bg-gradient"]):not([class*="bg-rose"]):not([class*="bg-blue"]):not([class*="bg-purple"]):not(.keep-white) {
+  color: #0F172A !important;
+}
+
+/* Safe protection for buttons and badges: keep text crisp white */
+html:not(.dark) button.text-white,
+html:not(.dark) button .text-white,
+html:not(.dark) [class*="bg-emerald"] .text-white,
+html:not(.dark) [class*="bg-emerald"].text-white,
+html:not(.dark) [class*="from-emerald"] .text-white,
+html:not(.dark) [class*="from-emerald"].text-white,
+html:not(.dark) [class*="bg-rose"] .text-white,
+html:not(.dark) [class*="bg-rose"].text-white,
+html:not(.dark) [class*="bg-blue"] .text-white,
+html:not(.dark) [class*="bg-blue"].text-white,
+html:not(.dark) [class*="bg-purple"] .text-white,
+html:not(.dark) [class*="bg-purple"].text-white,
+html:not(.dark) .keep-white {
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200,
+html:not(.dark) .text-slate-300,
+html:not(.dark) .text-neutral-100,
+html:not(.dark) .text-neutral-200,
+html:not(.dark) .text-neutral-300 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-neutral-400 {
+  color: #64748B !important;
+}
+
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-neutral-500 {
+  color: #64748B !important;
+}
+
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-neutral-600 {
+  color: #94A3B8 !important;
+}
+
+/* Form Inputs & Selects in Light Mode */
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]),
+html:not(.dark) textarea,
+html:not(.dark) select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) input:focus,
+html:not(.dark) textarea:focus,
+html:not(.dark) select:focus {
+  border-color: #0E8F73 !important;
+  box-shadow: 0 0 0 2px rgba(14, 143, 115, 0.15) !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* Data Tables in Light Mode */
+html:not(.dark) .table-dense th {
+  padding: 0.65rem 1rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475569 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  background-color: #F8FAFC !important;
+}
+
+html:not(.dark) .table-dense td {
+  padding: 0.75rem 1rem;
+  font-size: 0.8125rem;
+  border-bottom: 1px solid #F1F5F9 !important;
+  color: #1E293B !important;
+}
+
+html:not(.dark) .table-dense tr:hover td {
+  background-color: #F8FAFC !important;
+}
+
+/* Light Mode Scrollbars */
+html:not(.dark) ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #F1F5F9;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #E8E5EC;
-  border-radius: 4px;
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #D3C9FF;
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #0E8F73;
 }
 
-/* Custom Table Utilities */
-.table-dense th {
-  padding: 0.625rem 1rem;
-  font-size: 0.75rem;
+
+/* ===========================================================================
+ * DARK THEME STYLES (When html.dark is active)
+ * =========================================================================== */
+
+html.dark body {
+  background-color: #050505;
+  color: #FFFFFF;
+}
+
+html.dark ::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0A0A0C;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #0E8F73;
+}
+
+html.dark .table-dense th {
+  padding: 0.65rem 1rem;
+  font-size: 0.6875rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #777482;
-  border-bottom: 1px solid #E8E5EC;
-  background-color: #FAF9F6;
+  letter-spacing: 0.06em;
+  color: #94A3B8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #0E0E11;
 }
 
-.table-dense td {
+html.dark .table-dense td {
   padding: 0.75rem 1rem;
   font-size: 0.8125rem;
-  border-bottom: 1px solid #F3F0EA;
-  color: #171522;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #F1F5F9;
 }
 
-.table-dense tr:hover td {
-  background-color: #FDFCFB;
+html.dark .table-dense tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Glassmorphic & Glow utilities */
+.glass-panel {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.emerald-glow {
+  box-shadow: 0 0 25px -5px rgba(14, 143, 115, 0.25);
 }

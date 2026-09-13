@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import { BLOG_POSTS } from '@/lib/seo/blogData';
+import { REHVO_STORIES } from '@/lib/seo/storiesData';
+import { MARKET_REPORTS } from '@/lib/seo/marketReportsData';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 export async function GET() {
-  const pages = [
+  const pages: { url: string; priority: string; changefreq: string; lastmod?: string }[] = [
     { url: `${BASE_URL}`, priority: '1.0', changefreq: 'daily' },
     { url: `${BASE_URL}/rent`, priority: '0.95', changefreq: 'daily' },
     { url: `${BASE_URL}/search`, priority: '0.95', changefreq: 'daily' },
@@ -15,6 +20,8 @@ export async function GET() {
     { url: `${BASE_URL}/showreels`, priority: '0.85', changefreq: 'weekly' },
     { url: `${BASE_URL}/ai-concierge`, priority: '0.8', changefreq: 'weekly' },
     { url: `${BASE_URL}/zero-brokerage`, priority: '0.8', changefreq: 'weekly' },
+    { url: `${BASE_URL}/reports`, priority: '0.85', changefreq: 'weekly' },
+    { url: `${BASE_URL}/stories`, priority: '0.85', changefreq: 'weekly' },
     { url: `${BASE_URL}/safety`, priority: '0.7', changefreq: 'monthly' },
     { url: `${BASE_URL}/download`, priority: '0.8', changefreq: 'monthly' },
     { url: `${BASE_URL}/about`, priority: '0.6', changefreq: 'monthly' },
@@ -22,11 +29,32 @@ export async function GET() {
     { url: `${BASE_URL}/blog`, priority: '0.85', changefreq: 'daily' },
   ];
 
-  Object.keys(BLOG_POSTS).forEach((slug) => {
+  // Blog posts
+  Object.keys(BLOG_POSTS || {}).forEach((slug) => {
     pages.push({
       url: `${BASE_URL}/blog/${slug}`,
       priority: '0.8',
       changefreq: 'weekly',
+      lastmod: BLOG_POSTS[slug].modifiedDate || BLOG_POSTS[slug].publishDate,
+    });
+  });
+
+  // Web Stories
+  Object.keys(REHVO_STORIES || {}).forEach((slug) => {
+    pages.push({
+      url: `${BASE_URL}/stories/${slug}`,
+      priority: '0.8',
+      changefreq: 'weekly',
+    });
+  });
+
+  // Research & Market Reports
+  Object.keys(MARKET_REPORTS || {}).forEach((slug) => {
+    pages.push({
+      url: `${BASE_URL}/reports/${slug}`,
+      priority: '0.85',
+      changefreq: 'monthly',
+      lastmod: MARKET_REPORTS[slug].publishDate,
     });
   });
 
@@ -38,7 +66,7 @@ ${pages
   .map(
     (p) => `  <url>
     <loc>${p.url}</loc>
-    <lastmod>${now}</lastmod>
+    <lastmod>${p.lastmod || now}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
   </url>`
@@ -50,7 +78,8 @@ ${pages
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=43200',
+      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
+      'X-Robots-Tag': 'all',
     },
   });
 }

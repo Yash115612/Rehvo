@@ -1,87 +1,85 @@
 'use client';
 
 import React from 'react';
-import {
-  Building2,
-  Users,
-  ShieldAlert,
-  CheckCircle2,
-  CalendarCheck,
-  ArrowUpRight,
-  Activity,
-} from 'lucide-react';
+import { Activity, Building2, User, ShieldCheck, CreditCard, Video, CalendarCheck } from 'lucide-react';
 import { RecentActivityItem } from '@/types/admin';
-import { formatRelativeTime } from '@/lib/utils';
 import Link from 'next/link';
 
-interface RecentActivityFeedProps {
-  activities: RecentActivityItem[];
-}
+export function RecentActivityFeed({ activities }: { activities: RecentActivityItem[] }) {
+  const currentActivities = activities || [];
 
-export function RecentActivityFeed({ activities }: RecentActivityFeedProps) {
-  const getIcon = (type: RecentActivityItem['type']) => {
+  const getIcon = (type: string) => {
     switch (type) {
+      case 'PAYMENT_RECEIVED':
+        return CreditCard;
       case 'PROPERTY_PUBLISHED':
-        return { icon: Building2, color: 'text-indigo-600 bg-indigo-50 border-indigo-100' };
+        return Building2;
       case 'USER_REGISTERED':
-        return { icon: Users, color: 'text-blue-600 bg-blue-50 border-blue-100' };
-      case 'REPORT_FILED':
-        return { icon: ShieldAlert, color: 'text-rose-600 bg-rose-50 border-rose-100' };
-      case 'VERIFICATION_REQUESTED':
-        return { icon: CheckCircle2, color: 'text-emerald-600 bg-emerald-50 border-emerald-100' };
+        return User;
       case 'VISIT_BOOKED':
+        return CalendarCheck;
+      case 'SHOWREEL_UPLOADED':
+        return Video;
+      case 'REPORT_FILED':
+        return ShieldCheck;
       default:
-        return { icon: CalendarCheck, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' };
+        return Activity;
     }
   };
 
   return (
-    <div className="bg-white rounded-xl border border-brand-border overflow-hidden shadow-xs">
-      <div className="px-5 py-3.5 border-b border-brand-border flex items-center justify-between bg-brand-canvas/30">
+    <div className="p-5 rounded-2xl bg-white dark:bg-[#121215] border border-slate-200 dark:border-white/10 shadow-xs dark:shadow-card flex flex-col justify-between">
+      <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-white/5">
         <div className="flex items-center gap-2">
-          <Activity size={16} className="text-brand-primary" />
-          <h3 className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-            Recent System Activity
+          <Activity size={16} className="text-[#0E8F73] dark:text-[#10B981]" />
+          <h3 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
+            Live Platform Activity Stream
           </h3>
         </div>
-        <Link
-          href="/admin/audit-logs"
-          className="text-xs font-bold text-brand-primary hover:underline"
-        >
-          View Full Audit Log →
-        </Link>
+        <span className="text-[10px] font-bold text-emerald-800 dark:text-[#10B981] bg-emerald-50 dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-emerald-200 dark:border-[#10B981]/30">
+          Realtime Feed
+        </span>
       </div>
 
-      <div className="divide-y divide-brand-border/70 max-h-[380px] overflow-y-auto">
-        {activities.map((item) => {
-          const { icon: Icon, color } = getIcon(item.type);
-          return (
-            <div
-              key={item.id}
-              className="p-4 flex items-start gap-3 hover:bg-brand-canvas/40 transition-colors"
-            >
-              <div
-                className={`w-7 h-7 rounded-lg flex items-center justify-center border ${color} flex-shrink-0 mt-0.5`}
-              >
-                <Icon size={14} />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="text-xs font-bold text-brand-dark truncate">
-                    {item.title}
-                  </p>
-                  <span className="text-[10.5px] text-brand-muted flex-shrink-0 font-medium">
-                    {formatRelativeTime(item.timestamp)}
-                  </span>
+      <div className="divide-y divide-slate-100 dark:divide-white/5 my-2">
+        {currentActivities.length > 0 ? (
+          currentActivities.map((act) => {
+            const Icon = getIcon(act.type);
+            return (
+              <div key={act.id} className="py-2.5 flex items-start gap-3">
+                <div className="w-8 h-8 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center shrink-0 text-[#0E8F73] dark:text-[#10B981] mt-0.5">
+                  <Icon size={14} />
                 </div>
-                <p className="text-[11.5px] text-brand-muted mt-0.5 line-clamp-1">
-                  {item.description}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{act.title}</p>
+                    <span className="text-[10px] text-slate-400 shrink-0 font-mono">
+                      {new Date(act.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">{act.description}</p>
+                </div>
               </div>
+            );
+          })
+        ) : (
+          <div className="py-8 text-center flex flex-col items-center justify-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/5 text-slate-400 flex items-center justify-center">
+              <Activity size={20} />
             </div>
-          );
-        })}
+            <p className="text-xs font-bold text-slate-900 dark:text-white">No Recent Events</p>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs">
+              Platform activities and listing actions will appear live as events occur.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <div className="pt-3 border-t border-slate-200 dark:border-white/5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>Immutable staff trace recorded in PostgreSQL</span>
+        <Link href="/admin/activity-logs" className="text-[#0E8F73] dark:text-[#10B981] font-bold hover:underline">
+          View Audit Logs →
+        </Link>
       </div>
     </div>
   );

@@ -1,150 +1,234 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import {
   Search,
   Bell,
-  Plus,
+  Command,
+  Menu,
   ShieldCheck,
+  LogOut,
   ExternalLink,
-  Check,
-  AlertCircle,
-  Database,
+  ChevronDown,
+  User,
+  Sparkles,
+  CheckCircle2,
+  AlertTriangle,
 } from 'lucide-react';
-import { getPendingActions } from '@/lib/supabase/admin-service';
-import { PendingActionItem } from '@/types/admin';
+import { StaffStatusPill } from './StaffStatusPill';
+import { CommandPalette } from './CommandPalette';
+import { ThemeToggle } from './ThemeToggle';
+import { getActiveAdminUser } from '@/lib/auth/admin-auth';
 
-interface AdminHeaderProps {
-  title?: string;
-  subtitle?: string;
-}
-
-export function AdminHeader({ title, subtitle }: AdminHeaderProps) {
+export function AdminHeader({ onMobileMenuToggle }: { onMobileMenuToggle?: () => void }) {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [pendingActions, setPendingActions] = useState<PendingActionItem[]>([]);
+  const pathname = usePathname();
+  const [commandOpen, setCommandOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
+  const currentUser = getActiveAdminUser();
 
+  // Keyboard shortcut listener for Cmd+K / Ctrl+K
   useEffect(() => {
-    getPendingActions().then((actions) => setPendingActions(actions));
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-    router.push(`/admin/users?q=${encodeURIComponent(searchQuery.trim())}`);
+  const getBreadcrumb = () => {
+    if (pathname === '/admin') return 'Overview Dashboard';
+    const parts = pathname.replace('/admin/', '').split('/');
+    return parts.map((p) => p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, ' ')).join(' / ');
   };
 
-  const totalPending = pendingActions.reduce((acc, a) => acc + a.count, 0);
-
   return (
-    <header className="h-16 bg-white border-b border-brand-border px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-      {/* Left: Dynamic Title or Quick Search */}
-      <div className="flex items-center gap-4 flex-1 max-w-xl">
-        <form onSubmit={handleSearchSubmit} className="relative w-full max-w-md">
-          <Search
-            size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-muted"
-          />
-          <input
-            type="text"
-            placeholder="Search users, listings, reports, or logs... (Enter to search)"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-brand-canvas pl-9 pr-12 py-1.5 rounded-lg border border-brand-border text-[13px] text-brand-dark placeholder:text-brand-muted/70 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary transition-all"
-          />
-          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-brand-muted bg-white border border-brand-border px-1.5 py-0.5 rounded shadow-2xs">
-            ↵
-          </kbd>
-        </form>
-      </div>
-
-      {/* Right: Operational Controls */}
-      <div className="flex items-center gap-3">
-        {/* Supabase Status Indicator */}
-        <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-success-light border border-brand-success/30 text-brand-success text-[11.5px] font-semibold">
-          <span className="w-2 h-2 rounded-full bg-brand-success animate-pulse" />
-          <Database size={12} className="text-brand-success" />
-          <span>Supabase Live</span>
-        </div>
-
-        {/* Quick Action Button */}
-        <Link
-          href="/admin/verification"
-          className="flex items-center gap-1.5 bg-brand-dark hover:bg-brand-primary text-white text-[12.5px] font-semibold px-3 py-1.5 rounded-lg shadow-xs transition-colors"
-        >
-          <Plus size={15} strokeWidth={2.5} />
-          <span>Quick Action</span>
-        </Link>
-
-        {/* Notifications Popover Trigger */}
-        <div className="relative">
+    <>
+      <header className="sticky top-0 z-30 h-16 w-full bg-[#050505]/85 backdrop-blur-xl border-b border-white/10 px-4 sm:px-6 flex items-center justify-between gap-4">
+        {/* Left: Mobile Toggle & Breadcrumb */}
+        <div className="flex items-center gap-3 min-w-0">
           <button
-            onClick={() => setNotificationsOpen(!notificationsOpen)}
-            className="relative p-2 rounded-lg text-brand-muted hover:text-brand-dark hover:bg-brand-canvas transition-colors border border-transparent hover:border-brand-border"
-            aria-label="Admin Notifications"
+            onClick={onMobileMenuToggle}
+            className="lg:hidden p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition"
+            aria-label="Toggle menu"
           >
-            <Bell size={18} />
-            {totalPending > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand-primary rounded-full ring-2 ring-white" />
-            )}
+            <Menu size={20} />
           </button>
 
-          {notificationsOpen && (
-            <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-popover border border-brand-border py-2 z-50 animate-in fade-in-50 zoom-in-95">
-              <div className="px-4 py-2 border-b border-brand-border flex items-center justify-between">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-dark">
-                  Alerts & Tasks
-                </h4>
-                <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-brand-primary-light text-brand-primary">
-                  {totalPending} Pending
-                </span>
-              </div>
-              <div className="divide-y divide-brand-border/60 max-h-72 overflow-y-auto">
-                {pendingActions.length === 0 ? (
-                  <div className="p-4 text-center text-xs text-brand-muted">
-                    No pending operational alerts
-                  </div>
-                ) : (
-                  pendingActions.map((action) => (
-                    <Link
-                      key={action.id}
-                      href={action.route}
-                      onClick={() => setNotificationsOpen(false)}
-                      className="p-3 hover:bg-brand-canvas/60 cursor-pointer transition-colors block"
-                    >
-                      <p className="text-xs font-semibold text-brand-dark">{action.title}</p>
-                      <p className="text-[11px] text-brand-muted mt-0.5">{action.subtitle}</p>
-                    </Link>
-                  ))
-                )}
-              </div>
-              <div className="p-2 border-t border-brand-border text-center">
-                <Link
-                  href="/admin/notifications"
-                  onClick={() => setNotificationsOpen(false)}
-                  className="text-xs font-bold text-brand-primary hover:underline"
-                >
-                  View All Notifications →
-                </Link>
-              </div>
-            </div>
-          )}
+          <div className="hidden sm:flex items-center gap-2">
+            <span className="text-[11px] font-black uppercase tracking-wider text-[#10B981] bg-[#10B981]/10 px-2 py-0.5 rounded border border-[#10B981]/20">
+              REHVO V10
+            </span>
+            <span className="text-slate-600">/</span>
+            <span className="text-xs font-bold text-slate-300 truncate max-w-xs">{getBreadcrumb()}</span>
+          </div>
         </div>
 
-        {/* Mobile View Mobile App Shortcut */}
-        <a
-          href="https://rehvo.com"
-          target="_blank"
-          rel="noreferrer"
-          className="hidden sm:flex items-center gap-1 text-[12px] font-semibold text-brand-muted hover:text-brand-dark px-2.5 py-1.5 rounded-lg border border-brand-border hover:bg-brand-canvas transition-colors"
+        {/* Center: Global Search Pill */}
+        <button
+          type="button"
+          onClick={() => setCommandOpen(true)}
+          className="flex-1 max-w-md hidden md:flex items-center justify-between px-3.5 py-1.5 rounded-xl bg-[#121215] border border-white/10 text-xs text-slate-400 hover:border-[#10B981]/40 hover:text-slate-200 transition shadow-xs group"
         >
-          <span>App</span>
-          <ExternalLink size={13} />
-        </a>
-      </div>
-    </header>
+          <div className="flex items-center gap-2.5 min-w-0">
+            <Search size={14} className="text-slate-500 group-hover:text-[#10B981] transition" />
+            <span className="truncate">Search properties, owners, renters, tickets, showreels...</span>
+          </div>
+          <kbd className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-slate-400">
+            ⌘K
+          </kbd>
+        </button>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Theme Switcher (Light / Dark) */}
+          <ThemeToggle />
+
+          {/* Live Staff Online Status & Role Switcher */}
+          <StaffStatusPill />
+
+          {/* Notifications Bell */}
+          <div className="relative">
+            <button
+              onClick={() => setNotifDropdownOpen(!notifDropdownOpen)}
+              className="relative p-2 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:text-white hover:bg-white/10 transition"
+              aria-label="Notifications"
+            >
+              <Bell size={16} />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#10B981]" />
+            </button>
+
+            {notifDropdownOpen && (
+              <div className="absolute right-0 top-12 w-80 bg-[#0F0F12] border border-white/10 rounded-2xl shadow-2xl p-3 z-50 animate-in fade-in zoom-in-95 duration-150 text-white">
+                <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                  <span className="text-xs font-bold text-white">Notifications</span>
+                  <span className="text-[10px] font-bold text-[#10B981] bg-[#10B981]/10 px-2 py-0.5 rounded">3 New</span>
+                </div>
+                <div className="divide-y divide-white/5 max-h-64 overflow-y-auto">
+                  <div className="py-2.5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-400 mt-1 shrink-0" />
+                    <div>
+                      <p className="text-xs font-bold text-white">14 Title Deeds Pending Review</p>
+                      <p className="text-[11px] text-slate-400">Bandra & Worli residential listings require KYC approval.</p>
+                      <span className="text-[10px] text-slate-500">12m ago</span>
+                    </div>
+                  </div>
+                  <div className="py-2.5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1 shrink-0" />
+                    <div>
+                      <p className="text-xs font-bold text-white">New Owner Onboarded</p>
+                      <p className="text-[11px] text-slate-400">Aditya Birla listed 2 apartments in BKC.</p>
+                      <span className="text-[10px] text-slate-500">35m ago</span>
+                    </div>
+                  </div>
+                  <div className="py-2.5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-rose-400 mt-1 shrink-0" />
+                    <div>
+                      <p className="text-xs font-bold text-white">Flagged Safety Report</p>
+                      <p className="text-[11px] text-slate-400">Reported duplicate listing in Powai.</p>
+                      <span className="text-[10px] text-slate-500">1h ago</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-white/10 text-center">
+                  <Link
+                    href="/admin/activity-logs"
+                    onClick={() => setNotifDropdownOpen(false)}
+                    className="text-[11px] font-bold text-[#10B981] hover:underline"
+                  >
+                    View Complete Audit Trail →
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* User Profile Dropdown */}
+          <div className="relative">
+            <button
+              onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+              className="flex items-center gap-2 p-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 transition"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={currentUser.avatar_url}
+                alt={currentUser.full_name}
+                className="w-7 h-7 rounded-lg object-cover ring-1 ring-[#10B981]/50"
+              />
+              <span className="hidden xl:inline-block text-xs font-bold text-white max-w-[100px] truncate">
+                {currentUser.full_name.split(' ')[0]}
+              </span>
+              <ChevronDown size={13} className="text-slate-400 hidden xl:inline-block" />
+            </button>
+
+            {userDropdownOpen && (
+              <div className="absolute right-0 top-12 w-64 bg-[#0F0F12] border border-white/10 rounded-2xl shadow-2xl p-2.5 z-50 animate-in fade-in zoom-in-95 duration-150 text-white">
+                <div className="px-3 py-2 border-b border-white/10 mb-1">
+                  <p className="text-xs font-bold text-white truncate">{currentUser.full_name}</p>
+                  <p className="text-[11px] text-slate-400 font-mono truncate">{currentUser.email}</p>
+                  <p className="text-[10px] text-[#10B981] font-extrabold mt-1">
+                    {currentUser.employee_id} • {currentUser.department}
+                  </p>
+                </div>
+
+                <div className="space-y-0.5">
+                  <Link
+                    href="/admin/staff"
+                    onClick={() => setUserDropdownOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-white/5 transition"
+                  >
+                    <User size={14} className="text-slate-400" />
+                    <span>Staff Directory & Profile</span>
+                  </Link>
+                  <Link
+                    href="/admin/settings"
+                    onClick={() => setUserDropdownOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-white/5 transition"
+                  >
+                    <ShieldCheck size={14} className="text-slate-400" />
+                    <span>Platform Settings</span>
+                  </Link>
+                  <a
+                    href="https://www.rehvo.in"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-xs text-slate-300 hover:text-white hover:bg-white/5 transition"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Sparkles size={14} className="text-[#10B981]" />
+                      <span>Live Website</span>
+                    </div>
+                    <ExternalLink size={12} className="text-slate-500" />
+                  </a>
+                </div>
+
+                <div className="pt-1.5 mt-1.5 border-t border-white/10">
+                  <button
+                    onClick={() => {
+                      setUserDropdownOpen(false);
+                      router.push('/login');
+                    }}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs text-rose-400 hover:bg-rose-500/10 transition font-bold"
+                  >
+                    <LogOut size={14} />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </header>
+
+      {/* Global Command Palette Omnibox */}
+      <CommandPalette isOpen={commandOpen} onClose={() => setCommandOpen(false)} />
+    </>
   );
 }
