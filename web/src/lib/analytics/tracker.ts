@@ -1,9 +1,25 @@
 // REHVO Production Analytics & Event Dispatcher
 // Integrated with Google Analytics 4, Microsoft Clarity, and custom backend event bus
 
+import {
+  trackEvent as trackGAEvent,
+  trackPropertyView as trackGAPropertyView,
+  trackSearchPerformed,
+  trackShowreelPlay,
+  trackDownloadApp,
+  trackContactOwner as trackGAContactOwner,
+  trackScheduleVisit,
+  trackFavoriteProperty,
+  trackShareProperty,
+  trackPageView,
+  BasePropertyAnalyticsParams,
+} from '../analytics';
+
+export * from '../analytics';
+
 declare global {
   interface Window {
-    dataLayer?: any[];
+    dataLayer?: Object[];
     gtag?: (...args: any[]) => void;
     clarity?: (...args: any[]) => void;
   }
@@ -20,9 +36,7 @@ export function trackEvent(eventName: string, params?: AnalyticsEventParams) {
   if (typeof window === 'undefined') return;
 
   try {
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, params || {});
-    }
+    trackGAEvent(eventName, params || {});
 
     if (typeof window.clarity === 'function') {
       window.clarity('event', eventName);
@@ -33,24 +47,34 @@ export function trackEvent(eventName: string, params?: AnalyticsEventParams) {
 }
 
 /**
- * Track property view
+ * Track property view (supports both legacy object and new BasePropertyAnalyticsParams)
  */
 export function trackPropertyView(property: {
-  id: string | number;
-  title: string;
+  id?: string | number;
+  propertyId?: string | number;
+  title?: string;
   price?: number | string;
+  rent?: number | string;
   locality?: string;
   city?: string;
   propertyType?: string;
+  listingType?: string;
+  bhk?: string | number;
+  [key: string]: any;
 }) {
-  trackEvent('view_item', {
-    item_id: String(property.id),
-    item_name: property.title,
-    item_category: property.propertyType || 'rental_flat',
-    item_location_id: property.locality,
-    city: property.city || 'Mumbai',
-    price: typeof property.price === 'number' ? property.price : undefined,
-    currency: 'INR',
+  const pId = property.propertyId || property.id;
+  const pRent = property.rent !== undefined ? property.rent : property.price;
+  const pType = property.listingType || property.propertyType || 'rental_flat';
+
+  trackGAPropertyView({
+    propertyId: pId,
+    locality: property.locality,
+    city: property.city,
+    bhk: property.bhk,
+    rent: pRent,
+    listingType: pType,
+    title: property.title,
+    ...property,
   });
 }
 
@@ -59,27 +83,47 @@ export function trackPropertyView(property: {
  */
 export function trackVisitBooking(data: {
   propertyId: string | number;
-  title: string;
+  title?: string;
   visitType: 'physical' | 'video_walkthrough';
   preferredDate?: string;
   preferredSlot?: string;
+  locality?: string;
+  city?: string;
+  bhk?: string | number;
+  rent?: number | string;
+  listingType?: string;
 }) {
-  trackEvent('schedule_visit', {
-    item_id: String(data.propertyId),
-    item_name: data.title,
-    visit_type: data.visitType,
-    preferred_date: data.preferredDate,
-    preferred_slot: data.preferredSlot,
+  trackScheduleVisit({
+    propertyId: data.propertyId,
+    visitType: data.visitType,
+    date: data.preferredDate,
+    timeSlot: data.preferredSlot,
+    locality: data.locality,
+    city: data.city,
+    bhk: data.bhk,
+    rent: data.rent,
+    listingType: data.listingType,
+    title: data.title,
   });
 }
 
 /**
  * Track contact owner / inquiry initiated
  */
-export function trackContactOwner(propertyId: string | number, channel: 'whatsapp' | 'call' | 'chat') {
-  trackEvent('contact_owner', {
-    item_id: String(propertyId),
-    contact_channel: channel,
+export function trackContactOwner(
+  propertyId: string | number,
+  channel: 'whatsapp' | 'call' | 'chat',
+  extra?: Partial<BasePropertyAnalyticsParams>
+) {
+  trackGAContactOwner({
+    propertyId,
+    method: channel,
+    locality: extra?.locality,
+    city: extra?.city,
+    bhk: extra?.bhk,
+    rent: extra?.rent,
+    listingType: extra?.listingType,
+    ...extra,
   });
 }
 
@@ -87,9 +131,14 @@ export function trackContactOwner(propertyId: string | number, channel: 'whatsap
  * Track user search queries and filters
  */
 export function trackSearch(query: string, resultsCount?: number, filters?: Record<string, any>) {
-  trackEvent('search', {
-    search_term: query,
-    results_count: resultsCount,
+  trackSearchPerformed({
+    searchTerm: query,
+    resultsCount,
+    locality: filters?.locality,
+    city: filters?.city,
+    bhk: filters?.bhk,
+    rent: filters?.rent || filters?.maxPrice,
+    listingType: filters?.listingType || filters?.type,
     ...filters,
   });
 }
@@ -108,9 +157,9 @@ export function trackAiSearch(prompt: string, category?: string) {
  * Track ShowReel vertical video interactions
  */
 export function trackShowReelWatch(reelId: string | number, propertyId?: string | number, durationSec?: number) {
-  trackEvent('showreel_watch', {
-    reel_id: String(reelId),
-    property_id: propertyId ? String(propertyId) : undefined,
-    watch_duration: durationSec,
+  trackShowreelPlay({
+    showreelId: reelId,
+    propertyId,
+    duration: durationSec,
   });
 }

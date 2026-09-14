@@ -106,6 +106,8 @@ export const metadata: Metadata = {
 };
 
 import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalyticsRouteTracker } from '@/components/analytics/GoogleAnalyticsRouteTracker';
 
 export default function RootLayout({
   children,
@@ -116,6 +118,8 @@ export default function RootLayout({
   const websiteSchema = generateWebSiteSchema();
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+
+  const isProduction = process.env.NODE_ENV === 'production';
 
   return (
     <html lang="en">
@@ -141,22 +145,10 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans min-h-screen flex flex-col bg-[#F8FAFB] text-[#031B2A] selection:bg-[#0F766E] selection:text-white antialiased overflow-x-clip">
-        {gaId && (
+        {isProduction && gaId && (
           <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaId}', {
-                  page_path: window.location.pathname,
-                });
-              `}
-            </Script>
+            <GoogleAnalytics gaId={gaId} />
+            <GoogleAnalyticsRouteTracker />
           </>
         )}
 
