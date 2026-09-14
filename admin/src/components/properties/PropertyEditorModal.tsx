@@ -248,7 +248,7 @@ export function PropertyEditorModal({
               type="url"
               value={showreelUrl}
               onChange={(e) => setShowreelUrl(e.target.value)}
-              placeholder="https://assets.mixkit.co/videos/preview/apartment-tour.mp4"
+              placeholder="/videos/apartment-tour.mp4"
               className="w-full bg-[#16161A] px-3.5 py-2 rounded-xl border border-white/10 text-xs font-mono text-white placeholder-slate-600 focus:outline-none focus:border-[#10B981]"
             />
           </div>

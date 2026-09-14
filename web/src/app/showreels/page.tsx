@@ -54,7 +54,7 @@ const SHOWREELS_DATA = [
     duration: 'PT1M15S',
     uploadDate: '2026-02-15T10:00:00+05:30',
     thumbnailUrl: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-interior-design-41716-large.mp4',
+    videoUrl: '/videos/modern-apartment-interior.mp4',
     description: 'High-definition video tour of fully-furnished 2 BHK apartment on Carter Road, Bandra West. Modern modular kitchen, sea-facing balcony, and Italian marble flooring.',
   },
   {
@@ -71,7 +71,7 @@ const SHOWREELS_DATA = [
     duration: 'PT1M45S',
     uploadDate: '2026-02-20T14:30:00+05:30',
     thumbnailUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-living-room-of-a-modern-apartment-41718-large.mp4',
+    videoUrl: '/videos/modern-apartment-living-room.mp4',
     description: 'Walkthrough of neoclassical 3 BHK flat overlooking Powai Lake. Gated township amenities, dedicated clubhouse, and private basement parking.',
   },
   {
@@ -88,7 +88,7 @@ const SHOWREELS_DATA = [
     duration: 'PT0M50S',
     uploadDate: '2026-03-01T09:15:00+05:30',
     thumbnailUrl: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&auto=format&fit=crop&q=80',
-    videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-living-room-with-a-modern-kitchen-41720-large.mp4',
+    videoUrl: '/videos/modern-kitchen-living-room.mp4',
     description: 'Walkthrough of a bright modern studio apartment 2 minutes from Metro Line 2A station. Fully furnished with high-speed WiFi and biometric security.',
   },
 ];

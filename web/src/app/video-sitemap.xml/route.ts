@@ -8,7 +8,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 const VIDEOS = [
   {
     loc: `${BASE_URL}/showreels`,
-    videoLoc: 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-interior-design-41716-large.mp4',
+    videoLoc: `${BASE_URL}/videos/modern-apartment-interior.mp4`,
     thumbnailLoc: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&auto=format&fit=crop&q=80',
     title: 'Modern 2 BHK Sea-Facing Walkthrough in Bandra West | REHVO',
     description: 'High-definition video tour of fully-furnished 2 BHK apartment on Carter Road, Bandra West.',
@@ -17,7 +17,7 @@ const VIDEOS = [
   },
   {
     loc: `${BASE_URL}/showreels`,
-    videoLoc: 'https://assets.mixkit.co/videos/preview/mixkit-living-room-of-a-modern-apartment-41718-large.mp4',
+    videoLoc: `${BASE_URL}/videos/modern-apartment-living-room.mp4`,
     thumbnailLoc: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80',
     title: 'Luxury 3 BHK Lake-View Apartment in Hiranandani Powai | REHVO',
     description: 'Walkthrough of neoclassical 3 BHK flat overlooking Powai Lake in Mumbai.',
@@ -26,7 +26,7 @@ const VIDEOS = [
   },
   {
     loc: `${BASE_URL}/showreels`,
-    videoLoc: 'https://assets.mixkit.co/videos/preview/mixkit-living-room-with-a-modern-kitchen-41720-large.mp4',
+    videoLoc: `${BASE_URL}/videos/modern-kitchen-living-room.mp4`,
     thumbnailLoc: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&auto=format&fit=crop&q=80',
     title: 'Compact Furnished Studio Near DN Nagar Metro, Andheri West | REHVO',
     description: 'Walkthrough of a bright modern studio apartment 2 minutes from Metro Line 2A station.',

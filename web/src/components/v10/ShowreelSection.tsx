@@ -30,7 +30,7 @@ interface ShowreelClip {
 const CLIPS: ShowreelClip[] = [
   {
     id: 'verified-homes',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-apartment-building-in-the-city-4145-large.mp4',
+    src: '/videos/verified-homes.mp4',
     poster: '',
     label: 'Verified Homes',
     tag: 'RESIDENTIAL',
@@ -42,7 +42,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'pg-rooms',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-man-under-multicolored-lights-1237-large.mp4',
+    src: '/videos/pg-rooms.mp4',
     poster: '',
     label: 'PG & Rooms',
     tag: 'PG STAYS',
@@ -54,7 +54,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'flatmates',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-friends-having-fun-in-a-city-4336-large.mp4',
+    src: '/videos/flatmates.mp4',
     poster: '',
     label: 'Find Flatmates',
     tag: 'VIBEMATCH OS',
@@ -66,7 +66,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'commercial',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-modern-office-building-1065-large.mp4',
+    src: '/videos/commercial.mp4',
     poster: '',
     label: 'Commercial Spaces',
     tag: 'COMMERCIAL',
@@ -78,7 +78,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'ai-concierge',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-man-using-a-tablet-4885-large.mp4',
+    src: '/videos/ai-concierge.mp4',
     poster: '',
     label: 'AI Concierge',
     tag: 'AI-POWERED',
@@ -90,7 +90,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'society',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-residential-building-in-a-sunny-day-42892-large.mp4',
+    src: '/videos/society.mp4',
     poster: '',
     label: 'Society Management',
     tag: 'SMART SOCIETY',
@@ -102,7 +102,7 @@ const CLIPS: ShowreelClip[] = [
   },
   {
     id: 'rent-pay',
-    src: 'https://assets.mixkit.co/videos/preview/mixkit-person-paying-with-phone-4851-large.mp4',
+    src: '/videos/rent-pay.mp4',
     poster: '',
     label: 'Pay Rent Online',
     tag: '1% R-CASH',
