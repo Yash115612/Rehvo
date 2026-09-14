@@ -47,15 +47,17 @@ export function middleware(request: NextRequest) {
     'camera=(), microphone=(), geolocation=(self), payment=(self)'
   );
 
-  // Content Security Policy for Production Real Estate Web Application
+  // Content Security Policy for Production Real Estate Web Application (GA4 + Microsoft Clarity)
   const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.clarity.ms https://maps.googleapis.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://scripts.clarity.ms https://www.clarity.ms https://maps.googleapis.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    img-src 'self' blob: data: https: https://images.unsplash.com https://*.supabase.co https://maps.gstatic.com https://maps.googleapis.com;
+    img-src 'self' blob: data: https: https://images.unsplash.com https://*.supabase.co https://maps.gstatic.com https://maps.googleapis.com https://www.google-analytics.com https://www.googletagmanager.com https://*.clarity.ms https://c.clarity.ms;
     font-src 'self' https://fonts.gstatic.com data:;
-    frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube-nocookie.com;
-    connect-src 'self' https: https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.clarity.ms;
+    connect-src 'self' https: https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://*.clarity.ms https://c.clarity.ms;
+    media-src 'self' blob: data: https: https://*.supabase.co https://*.clarity.ms;
+    frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube-nocookie.com https://*.clarity.ms;
+    worker-src 'self' blob:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
