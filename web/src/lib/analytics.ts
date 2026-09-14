@@ -1,5 +1,6 @@
-// REHVO V13.2 Google Analytics 4 (GA4) Production Integration
-// Measurement ID: G-TN238M20RT (or process.env.NEXT_PUBLIC_GA_ID)
+// REHVO V13.3 Production Analytics (Google Analytics 4 + Microsoft Clarity)
+// GA4 Measurement ID: G-TN238M20RT (or process.env.NEXT_PUBLIC_GA_ID)
+// Clarity Project ID: yi2c5nllws (or process.env.NEXT_PUBLIC_CLARITY_ID)
 // Global Event Dispatcher & Reusable Event Helpers
 
 import { sendGAEvent } from '@next/third-parties/google';
@@ -8,10 +9,12 @@ declare global {
   interface Window {
     dataLayer?: Object[];
     gtag?: (...args: any[]) => void;
+    clarity?: (...args: any[]) => void;
   }
 }
 
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-TN238M20RT';
+export const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_ID || 'yi2c5nllws';
 
 export interface BasePropertyAnalyticsParams {
   propertyId?: string | number;
@@ -25,7 +28,7 @@ export interface BasePropertyAnalyticsParams {
 }
 
 /**
- * Normalizes all event parameters according to REHVO V13.2 specification:
+ * Normalizes all event parameters according to REHVO V13 specification:
  * - propertyId
  * - city
  * - locality
@@ -55,7 +58,36 @@ export function buildStandardPayload(params: BasePropertyAnalyticsParams = {}): 
 }
 
 /**
- * Generic event tracker that safely dispatches to gtag, dataLayer, and @next/third-parties
+ * Track Microsoft Clarity custom events and custom dimensions/tags
+ * Safely fails gracefully if Clarity ID is missing or script is not loaded
+ */
+export function trackClarityEvent(name: string, payload?: Record<string, any>) {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const clarity = window.clarity;
+    if (typeof clarity === 'function') {
+      // 1. Dispatch custom event to Microsoft Clarity
+      clarity('event', name);
+
+      // 2. Set key-value tags in Clarity for recording filtering and session segmentation
+      if (payload && typeof payload === 'object') {
+        Object.entries(payload).forEach(([key, val]) => {
+          if (val !== undefined && val !== null && typeof val !== 'object') {
+            clarity('set', `${name}_${key}`, String(val));
+          }
+        });
+      }
+    }
+  } catch (err) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.debug(`[Clarity Track Error] ${name}:`, err);
+    }
+  }
+}
+
+/**
+ * Generic event tracker that safely dispatches to gtag, dataLayer, Clarity, and @next/third-parties
  */
 export function trackEvent(eventName: string, params: Record<string, any> = {}) {
   if (typeof window === 'undefined') return;
@@ -74,62 +106,76 @@ export function trackEvent(eventName: string, params: Record<string, any> = {}) 
     } catch {
       // Ignore if not yet initialized
     }
+
+    // 3. Dispatch via Microsoft Clarity
+    trackClarityEvent(eventName, params);
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') {
-      console.debug(`[GA4 Track Error] ${eventName}:`, err);
+      console.debug(`[Track Error] ${eventName}:`, err);
     }
   }
 }
 
 /**
- * Track page view on route changes (supports GA4 Realtime and DebugView)
+ * Track page view on route changes (supports GA4 Realtime, DebugView, and Microsoft Clarity)
  */
 export function trackPageView(url: string, title?: string) {
   if (typeof window === 'undefined') return;
 
   const gaId = GA_MEASUREMENT_ID;
-  if (!gaId) return;
 
   try {
     const pageTitle = title || (typeof document !== 'undefined' ? document.title : '');
     const pageLocation = typeof window !== 'undefined' ? window.location.href : url;
 
-    if (typeof window.gtag === 'function') {
-      window.gtag('config', gaId, {
-        page_path: url,
-        page_location: pageLocation,
-        page_title: pageTitle,
-      });
-      window.gtag('event', 'page_view', {
-        page_path: url,
-        page_location: pageLocation,
-        page_title: pageTitle,
-      });
-    } else if (window.dataLayer && Array.isArray(window.dataLayer)) {
-      window.dataLayer.push({
-        event: 'page_view',
-        page_path: url,
-        page_location: pageLocation,
-        page_title: pageTitle,
-      });
+    // GA4 config + page_view event
+    if (gaId) {
+      if (typeof window.gtag === 'function') {
+        window.gtag('config', gaId, {
+          page_path: url,
+          page_location: pageLocation,
+          page_title: pageTitle,
+        });
+        window.gtag('event', 'page_view', {
+          page_path: url,
+          page_location: pageLocation,
+          page_title: pageTitle,
+        });
+      } else if (window.dataLayer && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({
+          event: 'page_view',
+          page_path: url,
+          page_location: pageLocation,
+          page_title: pageTitle,
+        });
+      }
+
+      try {
+        sendGAEvent('event', 'page_view', {
+          page_path: url,
+          page_location: pageLocation,
+          page_title: pageTitle,
+        });
+      } catch {
+        // Ignore if not yet initialized
+      }
     }
 
-    try {
-      sendGAEvent('event', 'page_view', {
-        page_path: url,
-        page_location: pageLocation,
-        page_title: pageTitle,
-      });
-    } catch {
-      // Ignore if not yet initialized
+    // Microsoft Clarity SPA Route update
+    const clarity = window.clarity;
+    if (typeof clarity === 'function') {
+      try {
+        clarity('set', 'page_path', url);
+        clarity('event', 'page_view');
+      } catch {}
     }
   } catch (err) {
-    console.debug('[GA4 PageView Error]:', err);
+    console.debug('[PageView Error]:', err);
   }
 }
 
 /**
- * 1. Track property_view
+ * 1. Track property_view (Connected to GA4 & Microsoft Clarity)
  */
 export function trackPropertyView(params: BasePropertyAnalyticsParams = {}) {
   const payload = buildStandardPayload(params);
@@ -137,7 +183,10 @@ export function trackPropertyView(params: BasePropertyAnalyticsParams = {}) {
   // Dispatch custom REHVO event
   trackEvent('property_view', payload);
 
-  // Also dispatch standard GA4 Ecommerce view_item
+  // Microsoft Clarity custom event
+  trackClarityEvent('property_view', payload);
+
+  // GA4 Ecommerce view_item
   trackEvent('view_item', {
     item_id: payload.propertyId,
     item_name: params.title || `Property ${payload.propertyId || ''}`,
@@ -151,7 +200,7 @@ export function trackPropertyView(params: BasePropertyAnalyticsParams = {}) {
 }
 
 /**
- * 2. Track search_performed
+ * 2. Track search_performed (Connected to GA4 & Microsoft Clarity)
  */
 export function trackSearchPerformed(
   params: {
@@ -166,6 +215,8 @@ export function trackSearchPerformed(
   });
 
   trackEvent('search_performed', payload);
+  trackClarityEvent('search_performed', payload);
+
   trackEvent('search', {
     search_term: params.searchTerm || params.locality || 'all',
     results_count: params.resultsCount,
@@ -174,7 +225,7 @@ export function trackSearchPerformed(
 }
 
 /**
- * 3. Track showreel_play
+ * 3. Track showreel_play (Connected to GA4 & Microsoft Clarity)
  */
 export function trackShowreelPlay(
   params: {
@@ -189,6 +240,7 @@ export function trackShowreelPlay(
   });
 
   trackEvent('showreel_play', payload);
+  trackClarityEvent('showreel_play', payload);
 }
 
 /**
@@ -207,10 +259,11 @@ export function trackDownloadApp(
   });
 
   trackEvent('download_app', payload);
+  trackClarityEvent('download_app', payload);
 }
 
 /**
- * 5. Track contact_owner
+ * 5. Track contact_owner (Connected to GA4 & Microsoft Clarity)
  */
 export function trackContactOwner(
   params: {
@@ -223,10 +276,11 @@ export function trackContactOwner(
   });
 
   trackEvent('contact_owner', payload);
+  trackClarityEvent('contact_owner', payload);
 }
 
 /**
- * 6. Track schedule_visit
+ * 6. Track schedule_visit (Connected to GA4 & Microsoft Clarity)
  */
 export function trackScheduleVisit(
   params: {
@@ -243,18 +297,20 @@ export function trackScheduleVisit(
   });
 
   trackEvent('schedule_visit', payload);
+  trackClarityEvent('schedule_visit', payload);
 }
 
 /**
- * 7. Track favorite_property
+ * 7. Track favorite_property (Connected to GA4 & Microsoft Clarity)
  */
 export function trackFavoriteProperty(params: BasePropertyAnalyticsParams = {}) {
   const payload = buildStandardPayload(params);
   trackEvent('favorite_property', payload);
+  trackClarityEvent('favorite_property', payload);
 }
 
 /**
- * 8. Track share_property
+ * 8. Track share_property (Connected to GA4 & Microsoft Clarity)
  */
 export function trackShareProperty(
   params: {
@@ -267,10 +323,30 @@ export function trackShareProperty(
   });
 
   trackEvent('share_property', payload);
+  trackClarityEvent('share_property', payload);
 }
 
 /**
- * 9. Track login
+ * 9. Track submit_listing (Connected to GA4 & Microsoft Clarity)
+ */
+export function trackSubmitListing(
+  params: {
+    status?: 'draft' | 'completed' | 'in_review';
+    propertyCategory?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
+    listing_status: params.status || 'completed',
+    property_category: params.propertyCategory || 'flat',
+    ...params,
+  });
+
+  trackEvent('submit_listing', payload);
+  trackClarityEvent('submit_listing', payload);
+}
+
+/**
+ * 10. Track login
  */
 export function trackLogin(
   params: {
@@ -285,10 +361,11 @@ export function trackLogin(
   });
 
   trackEvent('login', payload);
+  trackClarityEvent('login', payload);
 }
 
 /**
- * 10. Track signup
+ * 11. Track signup
  */
 export function trackSignup(
   params: {
@@ -305,22 +382,5 @@ export function trackSignup(
   });
 
   trackEvent('signup', payload);
-}
-
-/**
- * 11. Track submit_listing
- */
-export function trackSubmitListing(
-  params: {
-    status?: 'draft' | 'completed' | 'in_review';
-    propertyCategory?: string;
-  } & BasePropertyAnalyticsParams = {}
-) {
-  const payload = buildStandardPayload({
-    listing_status: params.status || 'completed',
-    property_category: params.propertyCategory || 'flat',
-    ...params,
-  });
-
-  trackEvent('submit_listing', payload);
+  trackClarityEvent('signup', payload);
 }

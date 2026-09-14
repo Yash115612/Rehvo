@@ -4,13 +4,12 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect, Suspense } from 'react';
 import { trackPageView } from '@/lib/analytics';
 
-function GoogleAnalyticsTracker() {
+function AnalyticsRouteWatcher() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
     if (process.env.NODE_ENV !== 'production') return;
-    if (!process.env.NEXT_PUBLIC_GA_ID) return;
 
     const queryString = searchParams?.toString();
     const url = queryString ? `${pathname}?${queryString}` : pathname;
@@ -23,7 +22,9 @@ function GoogleAnalyticsTracker() {
 export function GoogleAnalyticsRouteTracker() {
   return (
     <Suspense fallback={null}>
-      <GoogleAnalyticsTracker />
+      <AnalyticsRouteWatcher />
     </Suspense>
   );
 }
+
+export const AnalyticsRouteTracker = GoogleAnalyticsRouteTracker;

@@ -117,7 +117,7 @@ export default function RootLayout({
   const orgSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
   const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-TN238M20RT';
-  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID || 'yi2c5nllws';
 
   const isProduction = process.env.NODE_ENV === 'production';
 
@@ -152,7 +152,7 @@ export default function RootLayout({
           </>
         )}
 
-        {clarityId && (
+        {isProduction && clarityId && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`
               (function(c,l,a,r,i,t,y){
