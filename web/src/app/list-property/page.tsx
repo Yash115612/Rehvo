@@ -21,6 +21,7 @@ import {
 import { Breadcrumb } from '@/components/public/Breadcrumb';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { createClient } from '@/lib/supabase/client';
+import { trackSubmitListing } from '@/lib/analytics';
 
 export default function ListPropertyPage() {
   const router = useRouter();
@@ -120,6 +121,19 @@ export default function ListPropertyPage() {
 
       setCreatedPropertyId(data?.id || null);
       setSubmitted(true);
+
+      trackSubmitListing({
+        propertyId: data?.id,
+        city: 'Mumbai',
+        locality: formData.locality.trim(),
+        bhk: String(bedroomsCount),
+        rent: formData.expectedRent ? Number(formData.expectedRent) : undefined,
+        listingType: 'rent',
+        sourcePage: '/list-property',
+        status: 'completed',
+        propertyCategory: formData.propertyType,
+      });
+
       await refreshUserData();
     } catch (err: any) {
       console.error('[ListProperty] Exception:', err);

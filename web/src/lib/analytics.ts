@@ -1,5 +1,6 @@
-// REHVO Google Analytics 4 (GA4) Dispatcher & Event Helpers
-// Exposes type-safe event tracking functions according to REHVO V13 specifications
+// REHVO V13.2 Google Analytics 4 (GA4) Production Integration
+// Measurement ID: G-TN238M20RT (or process.env.NEXT_PUBLIC_GA_ID)
+// Global Event Dispatcher & Reusable Event Helpers
 
 import { sendGAEvent } from '@next/third-parties/google';
 
@@ -10,14 +11,47 @@ declare global {
   }
 }
 
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-TN238M20RT';
+
 export interface BasePropertyAnalyticsParams {
   propertyId?: string | number;
-  locality?: string;
   city?: string;
-  bhk?: string | number;
-  rent?: number | string;
+  locality?: string;
   listingType?: string;
+  rent?: number | string;
+  bhk?: string | number;
+  sourcePage?: string;
   [key: string]: any;
+}
+
+/**
+ * Normalizes all event parameters according to REHVO V13.2 specification:
+ * - propertyId
+ * - city
+ * - locality
+ * - listingType
+ * - rent
+ * - bhk
+ * - sourcePage
+ */
+export function buildStandardPayload(params: BasePropertyAnalyticsParams = {}): Record<string, any> {
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+
+  return {
+    propertyId: params.propertyId !== undefined ? String(params.propertyId) : undefined,
+    city: params.city || 'Mumbai',
+    locality: params.locality || 'Mumbai',
+    listingType: params.listingType || 'rent',
+    rent:
+      params.rent !== undefined
+        ? typeof params.rent === 'number'
+          ? params.rent
+          : Number(params.rent) || params.rent
+        : undefined,
+    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
+    sourcePage: params.sourcePage || currentPath,
+    ...params,
+  };
 }
 
 /**
@@ -38,7 +72,7 @@ export function trackEvent(eventName: string, params: Record<string, any> = {}) 
     try {
       sendGAEvent('event', eventName, params);
     } catch {
-      // Ignore if not initialized
+      // Ignore if not yet initialized
     }
   } catch (err) {
     if (process.env.NODE_ENV !== 'production') {
@@ -48,33 +82,34 @@ export function trackEvent(eventName: string, params: Record<string, any> = {}) 
 }
 
 /**
- * Track page view on route changes
+ * Track page view on route changes (supports GA4 Realtime and DebugView)
  */
 export function trackPageView(url: string, title?: string) {
   if (typeof window === 'undefined') return;
 
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gaId = GA_MEASUREMENT_ID;
   if (!gaId) return;
 
   try {
     const pageTitle = title || (typeof document !== 'undefined' ? document.title : '');
+    const pageLocation = typeof window !== 'undefined' ? window.location.href : url;
 
     if (typeof window.gtag === 'function') {
       window.gtag('config', gaId, {
         page_path: url,
-        page_location: window.location.href,
+        page_location: pageLocation,
         page_title: pageTitle,
       });
       window.gtag('event', 'page_view', {
         page_path: url,
-        page_location: window.location.href,
+        page_location: pageLocation,
         page_title: pageTitle,
       });
     } else if (window.dataLayer && Array.isArray(window.dataLayer)) {
       window.dataLayer.push({
         event: 'page_view',
         page_path: url,
-        page_location: window.location.href,
+        page_location: pageLocation,
         page_title: pageTitle,
       });
     }
@@ -82,7 +117,7 @@ export function trackPageView(url: string, title?: string) {
     try {
       sendGAEvent('event', 'page_view', {
         page_path: url,
-        page_location: typeof window !== 'undefined' ? window.location.href : url,
+        page_location: pageLocation,
         page_title: pageTitle,
       });
     } catch {
@@ -96,16 +131,8 @@ export function trackPageView(url: string, title?: string) {
 /**
  * 1. Track property_view
  */
-export function trackPropertyView(params: BasePropertyAnalyticsParams) {
-  const payload = {
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality || 'Unknown Locality',
-    city: params.city || 'Mumbai',
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: typeof params.rent === 'number' ? params.rent : Number(params.rent) || undefined,
-    listingType: params.listingType || 'rent',
-    ...params,
-  };
+export function trackPropertyView(params: BasePropertyAnalyticsParams = {}) {
+  const payload = buildStandardPayload(params);
 
   // Dispatch custom REHVO event
   trackEvent('property_view', payload);
@@ -113,59 +140,53 @@ export function trackPropertyView(params: BasePropertyAnalyticsParams) {
   // Also dispatch standard GA4 Ecommerce view_item
   trackEvent('view_item', {
     item_id: payload.propertyId,
-    item_name: params.title || `Property ${payload.propertyId}`,
+    item_name: params.title || `Property ${payload.propertyId || ''}`,
     item_category: payload.listingType,
     item_location_id: payload.locality,
     city: payload.city,
     price: payload.rent,
     currency: 'INR',
+    source_page: payload.sourcePage,
   });
 }
 
 /**
  * 2. Track search_performed
  */
-export function trackSearchPerformed(params: {
-  searchTerm?: string;
-  resultsCount?: number;
-} & BasePropertyAnalyticsParams) {
-  const payload = {
+export function trackSearchPerformed(
+  params: {
+    searchTerm?: string;
+    resultsCount?: number;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
     search_term: params.searchTerm,
     results_count: params.resultsCount,
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('search_performed', payload);
   trackEvent('search', {
     search_term: params.searchTerm || params.locality || 'all',
     results_count: params.resultsCount,
+    source_page: payload.sourcePage,
   });
 }
 
 /**
  * 3. Track showreel_play
  */
-export function trackShowreelPlay(params: {
-  showreelId?: string | number;
-  duration?: number;
-} & BasePropertyAnalyticsParams) {
-  const payload = {
+export function trackShowreelPlay(
+  params: {
+    showreelId?: string | number;
+    duration?: number;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
     showreel_id: params.showreelId ? String(params.showreelId) : undefined,
     duration: params.duration,
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('showreel_play', payload);
 }
@@ -173,21 +194,17 @@ export function trackShowreelPlay(params: {
 /**
  * 4. Track download_app
  */
-export function trackDownloadApp(params: {
-  source?: string;
-  platform?: 'ios' | 'android' | 'web';
-} & BasePropertyAnalyticsParams = {}) {
-  const payload = {
-    source: params.source || 'website_cta',
+export function trackDownloadApp(
+  params: {
+    source?: string;
+    platform?: 'ios' | 'android' | 'web';
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
+    download_source: params.source || 'website_cta',
     platform: params.platform || 'web',
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('download_app', payload);
 }
@@ -195,19 +212,15 @@ export function trackDownloadApp(params: {
 /**
  * 5. Track contact_owner
  */
-export function trackContactOwner(params: {
-  method?: 'whatsapp' | 'call' | 'chat';
-} & BasePropertyAnalyticsParams) {
-  const payload = {
+export function trackContactOwner(
+  params: {
+    method?: 'whatsapp' | 'call' | 'chat';
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
     contact_method: params.method || 'whatsapp',
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('contact_owner', payload);
 }
@@ -215,23 +228,19 @@ export function trackContactOwner(params: {
 /**
  * 6. Track schedule_visit
  */
-export function trackScheduleVisit(params: {
-  visitType?: 'physical' | 'video_walkthrough';
-  date?: string;
-  timeSlot?: string;
-} & BasePropertyAnalyticsParams) {
-  const payload = {
+export function trackScheduleVisit(
+  params: {
+    visitType?: 'physical' | 'video_walkthrough';
+    date?: string;
+    timeSlot?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
     visit_type: params.visitType || 'physical',
     preferred_date: params.date,
     preferred_slot: params.timeSlot,
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('schedule_visit', payload);
 }
@@ -239,36 +248,79 @@ export function trackScheduleVisit(params: {
 /**
  * 7. Track favorite_property
  */
-export function trackFavoriteProperty(params: BasePropertyAnalyticsParams) {
-  const payload = {
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
-    ...params,
-  };
-
+export function trackFavoriteProperty(params: BasePropertyAnalyticsParams = {}) {
+  const payload = buildStandardPayload(params);
   trackEvent('favorite_property', payload);
 }
 
 /**
  * 8. Track share_property
  */
-export function trackShareProperty(params: {
-  platform?: string;
-} & BasePropertyAnalyticsParams) {
-  const payload = {
+export function trackShareProperty(
+  params: {
+    platform?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
     share_platform: params.platform || 'clipboard',
-    propertyId: params.propertyId ? String(params.propertyId) : undefined,
-    locality: params.locality,
-    city: params.city,
-    bhk: params.bhk !== undefined ? String(params.bhk) : undefined,
-    rent: params.rent,
-    listingType: params.listingType,
     ...params,
-  };
+  });
 
   trackEvent('share_property', payload);
+}
+
+/**
+ * 9. Track login
+ */
+export function trackLogin(
+  params: {
+    method?: 'otp' | 'google' | 'phone' | 'email' | string;
+    userId?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
+    method: params.method || 'otp',
+    user_id: params.userId,
+    ...params,
+  });
+
+  trackEvent('login', payload);
+}
+
+/**
+ * 10. Track signup
+ */
+export function trackSignup(
+  params: {
+    method?: 'otp' | 'google' | 'phone' | 'email' | string;
+    userRole?: 'tenant' | 'owner' | 'flatmate' | 'broker' | string;
+    userId?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
+    method: params.method || 'otp',
+    user_role: params.userRole || 'tenant',
+    user_id: params.userId,
+    ...params,
+  });
+
+  trackEvent('signup', payload);
+}
+
+/**
+ * 11. Track submit_listing
+ */
+export function trackSubmitListing(
+  params: {
+    status?: 'draft' | 'completed' | 'in_review';
+    propertyCategory?: string;
+  } & BasePropertyAnalyticsParams = {}
+) {
+  const payload = buildStandardPayload({
+    listing_status: params.status || 'completed',
+    property_category: params.propertyCategory || 'flat',
+    ...params,
+  });
+
+  trackEvent('submit_listing', payload);
 }

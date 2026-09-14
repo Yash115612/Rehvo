@@ -116,7 +116,7 @@ export default function RootLayout({
 }) {
   const orgSchema = generateOrganizationSchema();
   const websiteSchema = generateWebSiteSchema();
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || 'G-TN238M20RT';
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
 
   const isProduction = process.env.NODE_ENV === 'production';

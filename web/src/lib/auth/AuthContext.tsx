@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { User, Session } from '@supabase/supabase-js';
 import { createClient } from '@/lib/supabase/client';
 import { UserProfile } from '@/lib/types';
+import { trackLogin } from '@/lib/analytics';
 
 interface AuthContextType {
   user: User | null;
@@ -129,6 +130,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(newSession?.user ?? null);
 
       if (newSession?.user) {
+        if (event === 'SIGNED_IN') {
+          trackLogin({
+            userId: newSession.user.id,
+            method: newSession.user.app_metadata?.provider || 'phone',
+            sourcePage: typeof window !== 'undefined' ? window.location.pathname : '/',
+          });
+        }
         await fetchUserData(newSession.user.id);
       } else {
         setProfile(null);
