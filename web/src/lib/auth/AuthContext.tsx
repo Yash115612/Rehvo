@@ -1,8 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase/client';
+import { supabase } from '@/lib/supabase/client';
 import { UserProfile } from '@/lib/types';
 import { trackLogin } from '@/lib/analytics';
 
@@ -27,7 +27,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [supabase] = useState(() => createClient());
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -37,6 +36,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [hasPublishedProperty, setHasPublishedProperty] = useState(false);
   const [hasFlatmateProfile, setHasFlatmateProfile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  const authListenerRef = useRef<{ unsubscribe: () => void } | null>(null);
 
   // Fetch Profile, Saved Properties, Unread counts, and Capabilities
   const fetchUserData = useCallback(
@@ -86,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.warn('[AuthContext] Error fetching user data:', err);
       }
     },
-    [supabase]
+    []
   );
 
   useEffect(() => {
@@ -121,6 +122,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     initAuth();
 
+    // Prevent multiple concurrent auth listeners
+    if (authListenerRef.current) {
+      authListenerRef.current.unsubscribe();
+      authListenerRef.current = null;
+    }
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, newSession) => {
@@ -149,11 +156,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     });
 
+    authListenerRef.current = subscription;
+
     return () => {
       mounted = false;
-      subscription.unsubscribe();
+      if (authListenerRef.current) {
+        authListenerRef.current.unsubscribe();
+        authListenerRef.current = null;
+      }
     };
-  }, [supabase, fetchUserData]);
+  }, [fetchUserData]);
 
   const refreshProfile = async () => {
     if (user) {
