@@ -61,7 +61,10 @@ const FOOTER_LINKS = [
     icon: Building2,
     links: [
       { label: 'About REHVO', href: '/about' },
+      { label: 'Instagram (@rehvo.in)', href: 'https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA==', isExternal: true },
       { label: 'Blog', href: '/blog' },
+      { label: 'Market Reports', href: '/reports' },
+      { label: 'Stories', href: '/stories' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact Us', href: '/contact' },
       { label: 'Safety', href: '/safety' },
@@ -221,29 +224,74 @@ export const Footer: React.FC = () => {
                 </p>
               </div>
 
-              {/* Social Icons */}
-              <div className="flex items-center gap-2.5 pt-1">
-                {[
-                  { Icon: Instagram, label: 'Instagram', href: '#' },
-                  { Icon: Linkedin, label: 'LinkedIn', href: '#' },
-                ].map(({ Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center transition-all"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </a>
-                ))}
-                {/* X / Twitter */}
+              {/* Follow REHVO Section */}
+              <div className="pt-2 space-y-3">
+                <div className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
+                  <span>Follow REHVO</span>
+                  <span className="text-[10px] text-[#F97316] font-extrabold bg-[#F97316]/10 px-2 py-0.5 rounded-full border border-[#F97316]/20">
+                    Official
+                  </span>
+                </div>
+
+                {/* Featured Instagram Box */}
                 <a
-                  href="#"
-                  aria-label="X (Twitter)"
-                  className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center transition-all"
+                  href="https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Follow REHVO on Instagram"
+                  title="Follow REHVO on Instagram"
+                  className="flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-[#F97316]/10 border border-white/10 hover:border-[#F97316]/40 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:ring-offset-2 focus:ring-offset-[#031B2A]"
                 >
-                  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#FF543E] via-[#FF0077] to-[#833AB4] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
+                      <Instagram className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-xs font-black text-white group-hover:text-[#F97316] transition-colors flex items-center gap-1">
+                        <span>Instagram</span>
+                        <span className="text-[9px] text-[#2DD4BF] font-extrabold">● LIVE</span>
+                      </div>
+                      <div className="text-[11px] text-white/50 group-hover:text-white/80 transition-colors font-semibold">
+                        @rehvo.in
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#F97316] group-hover:translate-x-0.5 transition-all shrink-0" />
                 </a>
+
+                {/* Social Icons Row */}
+                <div className="flex items-center gap-2 pt-0.5">
+                  <a
+                    href="https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Follow REHVO on Instagram"
+                    title="Follow REHVO on Instagram"
+                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#F97316] border border-white/10 hover:border-[#F97316] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#F97316]"
+                  >
+                    <Instagram className="w-4 h-4" />
+                  </a>
+                  <a
+                    href="https://linkedin.com/company/rehvo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Follow REHVO on LinkedIn"
+                    title="Follow REHVO on LinkedIn"
+                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                  </a>
+                  <a
+                    href="https://twitter.com/rehvoapp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Follow REHVO on X (Twitter)"
+                    title="Follow REHVO on X (Twitter)"
+                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -258,12 +306,25 @@ export const Footer: React.FC = () => {
                   <ul className="space-y-2.5">
                     {col.links.map((link) => (
                       <li key={link.label}>
-                        <Link
-                          href={link.href}
-                          className="text-[13px] text-white/50 hover:text-[#2DD4BF] font-medium transition-colors duration-150 block leading-snug"
-                        >
-                          {link.label}
-                        </Link>
+                        {(link as any).isExternal ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Visit ${link.label}`}
+                            title={`Visit ${link.label}`}
+                            className="text-[13px] text-white/50 hover:text-[#F97316] font-medium transition-colors duration-150 block leading-snug"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className="text-[13px] text-white/50 hover:text-[#2DD4BF] font-medium transition-colors duration-150 block leading-snug"
+                          >
+                            {link.label}
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

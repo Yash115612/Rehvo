@@ -51,6 +51,56 @@ const nextConfig = {
         destination: 'https://rehvo.in/:path*',
         permanent: true,
       },
+      {
+        source: '/zero-brokerage',
+        destination: '/search',
+        permanent: true,
+      },
+      {
+        source: '/host-property',
+        destination: '/list-property',
+        permanent: true,
+      },
+      {
+        source: '/hostel',
+        destination: '/pg',
+        permanent: true,
+      },
+      {
+        source: '/rooms',
+        destination: '/search?type=room',
+        permanent: true,
+      },
+      {
+        source: '/pg-rooms',
+        destination: '/search?type=pg',
+        permanent: true,
+      },
+      {
+        source: '/owners',
+        destination: '/list-property',
+        permanent: true,
+      },
+      {
+        source: '/society',
+        destination: '/society-services',
+        permanent: true,
+      },
+      {
+        source: '/localities',
+        destination: '/search',
+        permanent: true,
+      },
+      {
+        source: '/wallet',
+        destination: '/download',
+        permanent: true,
+      },
+      {
+        source: '/rewards',
+        destination: '/download',
+        permanent: true,
+      },
     ];
   },
   async headers() {

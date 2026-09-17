@@ -15,6 +15,13 @@ export interface SeoMetadataOptions {
   modifiedTime?: string;
   authors?: string[];
   section?: string;
+  sameAs?: string[];
+  openGraph?: {
+    title?: string;
+    description?: string;
+    url?: string;
+    images?: string[];
+  };
 }
 
 export function constructSeoMetadata({
@@ -29,6 +36,8 @@ export function constructSeoMetadata({
   modifiedTime,
   authors,
   section,
+  sameAs,
+  openGraph: customOpenGraph,
 }: SeoMetadataOptions): Metadata {
   const fullCanonical = canonicalUrl.startsWith('http')
     ? canonicalUrl
@@ -52,8 +61,21 @@ export function constructSeoMetadata({
         'rehvo rental',
       ];
 
+  // Clean title to prevent double-branding (e.g. "About Us | REHVO | REHVO")
+  // Strip trailing " | REHVO", " — REHVO", etc., so layout template "%s | REHVO" adds branding once.
+  let cleanTitle = title.trim();
+  const trailingPattern = /\s*[\|\—\-]\s*(?:REHVO|rehvo\.in|rehvo)\s*$/i;
+  while (trailingPattern.test(cleanTitle)) {
+    cleanTitle = cleanTitle.replace(trailingPattern, '').trim();
+  }
+  // Also strip leading "REHVO — " or "REHVO | " if title continues with descriptive text
+  // e.g. "REHVO AI Concierge" is fine, but "REHVO | About" -> "About"
+  cleanTitle = cleanTitle.replace(/^REHVO\s*[\|\—\-]\s*/i, '').trim() || title.trim();
+
+  const brandedTitle = cleanTitle.toLowerCase().includes('rehvo') ? cleanTitle : `${cleanTitle} | ${SITE_NAME}`;
+
   const metadata: Metadata = {
-    title: `${title} | ${SITE_NAME}`,
+    title: cleanTitle,
     description,
     keywords: parsedKeywords,
     metadataBase: new URL(BASE_URL),
@@ -76,18 +98,25 @@ export function constructSeoMetadata({
       },
     },
     openGraph: {
-      title: `${title} | ${SITE_NAME}`,
-      description,
-      url: fullCanonical,
+      title: customOpenGraph?.title || brandedTitle,
+      description: customOpenGraph?.description || description,
+      url: customOpenGraph?.url || fullCanonical,
       siteName: SITE_NAME,
-      images: [
-        {
-          url: resolvedImageUrl,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      images: customOpenGraph?.images?.length
+        ? customOpenGraph.images.map((img) => ({
+            url: img.startsWith('http') ? img : `${BASE_URL}${img.startsWith('/') ? img : `/${img}`}`,
+            width: 1200,
+            height: 630,
+            alt: customOpenGraph.title || cleanTitle,
+          }))
+        : [
+            {
+              url: resolvedImageUrl,
+              width: 1200,
+              height: 630,
+              alt: cleanTitle,
+            },
+          ],
       locale: 'en_IN',
       type: type === 'article' ? 'article' : 'website',
       ...(type === 'article' && {
@@ -99,9 +128,13 @@ export function constructSeoMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | ${SITE_NAME}`,
-      description,
-      images: [resolvedImageUrl],
+      title: customOpenGraph?.title || brandedTitle,
+      description: customOpenGraph?.description || description,
+      images: customOpenGraph?.images?.length
+        ? customOpenGraph.images.map((img) =>
+            img.startsWith('http') ? img : `${BASE_URL}${img.startsWith('/') ? img : `/${img}`}`
+          )
+        : [resolvedImageUrl],
       creator: '@rehvoapp',
       site: '@rehvoapp',
     },
@@ -109,6 +142,9 @@ export function constructSeoMetadata({
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'black-translucent',
       'format-detection': 'telephone=no',
+      ...(sameAs?.length && {
+        sameAs: JSON.stringify(sameAs),
+      }),
     },
   };
 

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateOrganizationSchema, generateItemListSchema } from '@/lib/seo/schema';
+import { generateItemListSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 
 // REHVO App-Mirrored Desktop Landing Page Components (Strict Hierarchy)
@@ -19,6 +19,7 @@ import { TrendingLocalities } from '@/components/v10/TrendingLocalities';
 import { SocietyPromoSection } from '@/components/v10/SocietyPromoSection';
 import { DownloadAppCTA } from '@/components/v10/DownloadAppCTA';
 import { ShowreelSection } from '@/components/v10/ShowreelSection';
+import { SocialCommunitySection } from '@/components/v10/SocialCommunitySection';
 
 export const revalidate = 60; // 60s ISR
 
@@ -27,6 +28,14 @@ export const metadata: Metadata = constructSeoMetadata({
   description:
     'Discover verified 1, 2, 3 BHK flats, commercial spaces, PGs & flatmates for rent in Mumbai with verified marketplace. Direct owner chat, confirmed physical visits, and transparent pricing.',
   canonicalUrl: 'https://rehvo.in',
+  sameAs: ['https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=='],
+  openGraph: {
+    title: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates',
+    description:
+      'Find verified flats, flatmates, PGs and zero brokerage homes across Mumbai with REHVO.',
+    url: 'https://rehvo.in',
+    images: ['/og-image.png'],
+  },
 });
 
 export default async function HomePage() {
@@ -37,7 +46,6 @@ export default async function HomePage() {
     limit: 12,
   });
 
-  const orgSchema = generateOrganizationSchema();
   const itemListSchema = generateItemListSchema(
     featuredListings,
     'Featured Verified Properties in Mumbai — REHVO'
@@ -45,7 +53,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLd data={orgSchema} />
       <JsonLd data={itemListSchema} />
 
       {/* 01: UNIFIED HERO AD STAGE + SEARCH PILL + LOCALITY SELECTOR */}
@@ -86,6 +93,9 @@ export default async function HomePage() {
 
       {/* 12: DOWNLOAD MOBILE APP CTA */}
       <DownloadAppCTA />
+
+      {/* 13: REHVO INSTAGRAM SOCIAL COMMUNITY SECTION */}
+      <SocialCommunitySection />
     </>
   );
 }

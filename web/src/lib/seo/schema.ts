@@ -9,17 +9,13 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'RealEstateAgent'],
     '@id': `${BASE_URL}/#organization`,
     name: 'REHVO',
     legalName: 'Rehvo Technologies Private Limited',
     url: BASE_URL,
-    logo: {
-      '@type': 'ImageObject',
-      url: `${BASE_URL}/rehvo-logo.png`,
-      width: 512,
-      height: 512,
-    },
+    logo: `${BASE_URL}/logo.png`,
+    image: `${BASE_URL}/logo.png`,
     description: 'India’s premier verified rental marketplace with AI concierge, direct owner connections, zero brokerage, flatmates, and PGs.',
     address: {
       '@type': 'PostalAddress',
@@ -39,8 +35,9 @@ export function generateOrganizationSchema() {
       },
     ],
     sameAs: [
+      'https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA==',
+      'https://instagram.com/rehvo.in',
       'https://twitter.com/rehvoapp',
-      'https://instagram.com/rehvoapp',
       'https://linkedin.com/company/rehvo',
       'https://facebook.com/rehvoapp',
       'https://youtube.com/@rehvo',
@@ -176,47 +173,12 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
         unitText: 'MONTH',
       },
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
-      reviewCount: '24',
-      bestRating: '5',
-      worstRating: '1',
-    },
-    review: [
-      {
-        '@type': 'Review',
-        author: {
-          '@type': 'Person',
-          name: 'Aakash Sharma',
-        },
-        datePublished: '2026-02-14',
-        reviewBody:
-          'Seamless zero-brokerage rental experience through REHVO. Physical visit was confirmed within 15 minutes and ownership title deed was pre-verified.',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
-          worstRating: '1',
-        },
-      },
-      {
-        '@type': 'Review',
-        author: {
-          '@type': 'Person',
-          name: 'Priya Deshmukh',
-        },
-        datePublished: '2026-02-28',
-        reviewBody:
-          'Gated society with modern amenities, 24/7 security, and quick metro connectivity. Very transparent and responsive homeowner.',
-        reviewRating: {
-          '@type': 'Rating',
-          ratingValue: '5',
-          bestRating: '5',
-          worstRating: '1',
-        },
-      },
-    ],
+    ...((property as any).aggregateRating
+      ? { aggregateRating: (property as any).aggregateRating }
+      : {}),
+    ...((property as any).reviews && Array.isArray((property as any).reviews) && (property as any).reviews.length > 0
+      ? { review: (property as any).reviews }
+      : {}),
   };
 }
 

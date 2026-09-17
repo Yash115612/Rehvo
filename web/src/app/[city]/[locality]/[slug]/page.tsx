@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: HierarchicalPropertyPageProps
   const cleanCity = slugify(property.city || params.city);
   const cleanLocality = slugify(property.locality || params.locality);
   const fullSlug = generatePropertySlug(property);
-  const canonicalUrl = `/${cleanCity}/${cleanLocality}/${fullSlug}`;
+  const canonicalUrl = `https://rehvo.in/${cleanCity}/${cleanLocality}/${fullSlug}`;
 
   const title = `${property.bedrooms ? `${property.bedrooms} BHK ` : ''}${property.title} for Rent in ${property.locality}, ${property.city}`;
   const description = `Verified ${property.bedrooms ? `${property.bedrooms} BHK ` : ''}apartment for rent in ${property.locality}, ${property.city}. Monthly rent ₹${property.price?.toLocaleString('en-IN')}. 100% verified title deed, zero brokerage, instant visit booking on REHVO.`;

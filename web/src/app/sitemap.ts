@@ -101,12 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
-    {
-      url: `${BASE_URL}/zero-brokerage`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
+
     {
       url: `${BASE_URL}/blog`,
       lastModified: new Date(),
@@ -201,7 +196,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  // 7. Verified Properties
+  // 7. Verified Properties (Hierarchical Locality Canonical URLs)
   publishedProperties.forEach((property) => {
     const slug = generatePropertySlug(property);
     const citySlug = slugify(property.city || 'mumbai');
@@ -209,17 +204,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const lastMod = property.updated_at ? new Date(property.updated_at) : new Date();
 
     routes.push({
-      url: `${BASE_URL}/property/${slug}`,
-      lastModified: lastMod,
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    });
-
-    routes.push({
       url: `${BASE_URL}/${citySlug}/${localitySlug}/${slug}`,
       lastModified: lastMod,
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.85,
     });
   });
 
