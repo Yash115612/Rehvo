@@ -39,14 +39,13 @@ import {
   Zap,
 } from 'lucide-react-native';
 import { useAppStore } from '../../../store/useAppStore';
-import { Property, AdvancedFilterPayload, SearchSuggestionItem, LocalityScoreRecord } from '../../../types';
+import { Property, AdvancedFilterPayload, SearchSuggestionItem } from '../../../types';
 import { V4_COLORS, V4_RADIUS, V4_SHADOWS } from '../../../theme/v4Theme';
 import { V4PropertyCardLarge } from '../ui/V4PropertyCardLarge';
 import { V4EmptyState } from '../ui/V4EmptyState';
 import { V4FilterSheet } from './V4FilterSheet';
 import { V4VoiceAssistantModal } from '../ai/V4VoiceAssistantModal';
 import { V4SearchSuggestions } from '../search/V4SearchSuggestions';
-import { V4NeighborhoodCard } from '../ui/V4NeighborhoodCard';
 import {
   getSearchSuggestions,
   correctQueryTypos,
@@ -54,7 +53,6 @@ import {
   getTrendingSearches,
   saveUserSearch,
 } from '../../../services/smartSearch';
-import { getLocalityScores } from '../../../services/smartMaps';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -126,7 +124,6 @@ export const V4ExploreScreen: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [dismissedPropertyIds, setDismissedPropertyIds] = useState<string[]>([]);
   const [compareList, setCompareList] = useState<string[]>([]);
-  const [localityScore, setLocalityScore] = useState<LocalityScoreRecord | null>(null);
 
   const trendingSearches = useMemo(() => getTrendingSearches(), []);
 
@@ -138,13 +135,6 @@ export const V4ExploreScreen: React.FC = () => {
     } else {
       setSuggestions([]);
     }
-  }, [searchQuery]);
-
-  // Fetch neighborhood intelligence when locality changes
-  useEffect(() => {
-    const nlp = parseNaturalLanguageQuery(searchQuery);
-    const targetLoc = nlp.detectedLocality || 'Bandra West';
-    getLocalityScores(targetLoc).then(setLocalityScore).catch(() => {});
   }, [searchQuery]);
 
   const typoInfo = useMemo(() => {
@@ -401,13 +391,6 @@ export const V4ExploreScreen: React.FC = () => {
   const listHeaderComponent = useMemo(() => {
     return (
       <View style={styles.feedHeaderWrapper}>
-        {/* Neighborhood Intelligence Banner */}
-        {localityScore && (
-          <View style={styles.neighborhoodScoreContainer}>
-            <V4NeighborhoodCard localityScore={localityScore} />
-          </View>
-        )}
-
         {/* Locality Quick Selector Pills */}
         <View style={styles.quickLocalitiesSection}>
           <Text style={styles.quickLocalitiesTitle}>Trending Mumbai Localities</Text>
@@ -457,7 +440,7 @@ export const V4ExploreScreen: React.FC = () => {
         </View>
       </View>
     );
-  }, [localityScore, searchQuery, searchResults.length, sortBy]);
+  }, [searchQuery, searchResults.length, sortBy]);
 
   const listFooterComponent = useMemo(() => {
     if (!hasMore) return null;
@@ -949,9 +932,6 @@ const styles = StyleSheet.create({
   },
   feedHeaderWrapper: {
     paddingTop: 10,
-  },
-  neighborhoodScoreContainer: {
-    marginBottom: 10,
   },
   quickLocalitiesSection: {
     marginBottom: 14,
