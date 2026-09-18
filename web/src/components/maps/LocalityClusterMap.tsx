@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   MapPin,
@@ -99,11 +100,13 @@ export const LocalityClusterMap: React.FC<LocalityClusterMapProps> = ({
 
             {selectedProperty ? (
               <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
-                <div className="aspect-[16/9] w-full rounded-xl overflow-hidden bg-slate-200">
-                  <img
+                <div className="aspect-[16/9] w-full rounded-xl overflow-hidden bg-slate-200 relative">
+                  <Image
                     src={selectedProperty.property_images?.[0]?.image_url || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600'}
                     alt={selectedProperty.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover"
                   />
                 </div>
                 <div className="space-y-1">

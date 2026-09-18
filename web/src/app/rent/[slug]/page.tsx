@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -140,9 +141,11 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
               <div>
                 <div className="aspect-[4/3] w-full bg-slate-100 relative overflow-hidden">
                   {property.property_images?.[0]?.image_url ? (
-                    <img
+                    <Image
                       src={property.property_images[0].image_url}
                       alt={property.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     />
@@ -151,7 +154,7 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
                       No image
                     </div>
                   )}
-                  <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs">
+                  <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs z-10">
                     Verified
                   </span>
                 </div>

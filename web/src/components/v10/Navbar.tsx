@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   ChevronDown,
@@ -157,11 +158,12 @@ export const Navbar: React.FC = () => {
               isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
             }`}
           >
-            <img
+            <Image
               src="/rehvo-logo.png"
               alt="REHVO"
               width={84}
               height={28}
+              priority
               style={{ maxHeight: '28px', height: '28px', width: 'auto' }}
               className="h-6 sm:h-7 w-auto object-contain max-h-[28px] group-hover:scale-105 transition-transform"
             />
@@ -354,7 +356,7 @@ export const Navbar: React.FC = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2"
                 >
-                  <img
+                  <Image
                     src="/rehvo-logo.png"
                     alt="REHVO"
                     width={84}

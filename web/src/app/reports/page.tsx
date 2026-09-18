@@ -1,8 +1,10 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, TrendingUp, Calendar, Clock, BarChart3, ShieldCheck } from 'lucide-react';
 import { MARKET_REPORTS } from '@/lib/seo/marketReportsData';
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 
 export const metadata: Metadata = {
   title: 'India Rental Market Reports & Yield Index 2026 | REHVO Research',
@@ -19,7 +21,8 @@ export default function ReportsIndexPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFB]">
       {/* Header */}
-      <section className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <Breadcrumbs items={[{ name: 'Research Reports', url: '/reports' }]} className="mb-6" />
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-bold tracking-wide uppercase mb-4">
           <TrendingUp className="w-3.5 h-3.5 text-[#0E8F73]" />
           REHVO Research & Economics
@@ -81,9 +84,11 @@ export default function ReportsIndexPage() {
 
               <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <img
+                  <Image
                     src={report.author.avatar}
                     alt={report.author.name}
+                    width={36}
+                    height={36}
                     className="w-9 h-9 rounded-full object-cover border border-slate-200"
                   />
                   <div>

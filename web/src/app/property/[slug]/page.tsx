@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import {
   MapPin,
@@ -137,18 +138,23 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 rounded-3xl overflow-hidden border border-slate-200 bg-white p-2 shadow-xs">
           <div className="md:col-span-2 aspect-[16/10] bg-slate-100 rounded-2xl overflow-hidden relative">
-            <img
+            <Image
               src={coverImage}
               alt={`${property.title} living room in ${property.locality} ${property.city}`}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 66vw"
               className="w-full h-full object-cover"
             />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
             {images.slice(1, 3).map((imgUrl, idx) => (
-              <div key={idx} className="aspect-[16/10] bg-slate-100 rounded-2xl overflow-hidden">
-                <img
+              <div key={idx} className="aspect-[16/10] bg-slate-100 rounded-2xl overflow-hidden relative">
+                <Image
                   src={imgUrl}
                   alt={`${property.title} bedroom view ${idx + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   loading="lazy"
                   className="w-full h-full object-cover"
                 />

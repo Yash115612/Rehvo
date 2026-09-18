@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import {
@@ -912,9 +913,11 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
                       {activeMapProperty && (
                         <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-2xl flex items-center justify-between gap-3 border border-white max-w-md mx-auto">
                           <div className="flex items-center gap-3 min-w-0">
-                            <img
+                            <Image
                               src={activeMapProperty.property_images?.[0]?.image_url || 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=300'}
                               alt={activeMapProperty.title}
+                              width={56}
+                              height={56}
                               className="w-14 h-14 rounded-xl object-cover shrink-0"
                             />
                             <div className="min-w-0">

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -118,9 +119,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Author Badge */}
           <div className="flex items-center justify-between pt-2 border-t border-slate-100">
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src={post.author.avatar}
                 alt={post.author.name}
+                width={40}
+                height={40}
                 className="w-10 h-10 rounded-full object-cover border border-slate-200"
               />
               <div>
@@ -136,9 +139,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Featured Image */}
           <div className="aspect-[16/9] w-full bg-slate-100 rounded-2xl overflow-hidden relative">
-            <img
+            <Image
               src={post.coverImage}
               alt={post.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
               className="w-full h-full object-cover"
             />
           </div>

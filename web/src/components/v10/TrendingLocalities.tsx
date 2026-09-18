@@ -29,7 +29,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹68,000/mo',
     tag: '🔥 Top Searched',
     tagColor: 'bg-[#FEF3C7] text-[#B45309]',
-    href: '/search?locality=bandra-west',
+    href: '/mumbai/bandra-west',
   },
   {
     name: 'BKC & Bandra East',
@@ -38,7 +38,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹75,000/mo',
     tag: '⚡ Financial Hub',
     tagColor: 'bg-[#CCFBF1] text-[#064E3B]',
-    href: '/search?locality=bkc',
+    href: '/mumbai/bkc',
   },
   {
     name: 'Powai Hiranandani',
@@ -47,7 +47,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹52,000/mo',
     tag: '🌿 Lakeside Living',
     tagColor: 'bg-[#ECFDF5] text-[#047857]',
-    href: '/search?locality=powai',
+    href: '/mumbai/powai',
   },
   {
     name: 'Andheri West',
@@ -56,7 +56,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹48,000/mo',
     tag: '🚇 Metro Hub',
     tagColor: 'bg-[#EFF6FF] text-[#1D4ED8]',
-    href: '/search?locality=andheri-west',
+    href: '/mumbai/andheri-west',
   },
   {
     name: 'Worli & Lower Parel',
@@ -65,7 +65,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹95,000/mo',
     tag: '🌟 Luxury Towers',
     tagColor: 'bg-[#FAF5FF] text-[#7E22CE]',
-    href: '/search?locality=worli',
+    href: '/mumbai/worli',
   },
   {
     name: 'Juhu & Vile Parle',
@@ -74,16 +74,16 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹82,000/mo',
     tag: '🌊 Beachside',
     tagColor: 'bg-[#F0FDFA] text-[#0F766E]',
-    href: '/search?locality=juhu',
+    href: '/mumbai/juhu',
   },
   {
-    name: 'Khar West',
-    zone: 'Western Suburbs',
+    name: 'Lower Parel',
+    zone: 'South Mumbai & BKC',
     count: 68,
     avgRent: '₹62,000/mo',
-    tag: '☕ Quiet Cafes',
+    tag: '☕ High Street',
     tagColor: 'bg-[#FEF2F2] text-[#B91C1C]',
-    href: '/search?locality=khar-west',
+    href: '/mumbai/lower-parel',
   },
   {
     name: 'Thane West & Ghodbunder',
@@ -92,7 +92,7 @@ const LOCALITIES: LocalityHub[] = [
     avgRent: '₹32,000/mo',
     tag: '🏊 Gated Townships',
     tagColor: 'bg-[#F0FDF4] text-[#15803D]',
-    href: '/search?locality=thane',
+    href: '/mumbai/thane',
   },
 ];
 

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Play,
   Pause,
@@ -265,12 +266,14 @@ export function ImmersiveShowReelsClient({ reels }: { reels: ShowReelItem[] }) {
                   }`}
                 >
                   <div className="relative w-20 h-24 rounded-xl overflow-hidden bg-black shrink-0">
-                    <img
+                    <Image
                       src={reel.thumbnailUrl}
                       alt={reel.title}
+                      fill
+                      sizes="80px"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center z-10">
                       <div className="w-7 h-7 rounded-full bg-white/90 text-[#031B2A] flex items-center justify-center">
                         <Play size={12} className="translate-x-0.5 fill-current" />
                       </div>

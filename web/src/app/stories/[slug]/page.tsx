@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateArticleSchema } from '@/lib/seo/schema';
+import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 import { REHVO_STORIES } from '@/lib/seo/storiesData';
 import { StoryViewerClient } from '@/components/seo/StoryViewerClient';
@@ -41,9 +41,15 @@ export default function StoryViewerPage({ params }: StoryPageProps) {
     category: story.category,
   });
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Web Stories', url: '/stories' },
+    { name: story.title, url: `/stories/${story.slug}` },
+  ]);
+
   return (
     <>
       <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <StoryViewerClient story={story} />
     </>
   );

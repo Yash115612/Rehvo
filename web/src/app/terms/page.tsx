@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { FileText, ShieldAlert, CheckCircle, Scale } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
+import { Breadcrumb } from '@/components/public/Breadcrumb';
 
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Terms of Service | REHVO Mumbai',
@@ -15,7 +16,10 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       {/* Header Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] to-[#031B2A] text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] to-[#031B2A] text-white pt-16 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto mb-6">
+          <Breadcrumb items={[{ name: 'Terms of Service', url: '/terms' }]} />
+        </div>
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#CCFBF1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">

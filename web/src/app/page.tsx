@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateItemListSchema } from '@/lib/seo/schema';
+import { generateItemListSchema, generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/schema';
 import { JsonLd } from '@/components/public/JsonLd';
 
 // REHVO App-Mirrored Desktop Landing Page Components (Strict Hierarchy)
@@ -51,8 +51,15 @@ export default async function HomePage() {
     'Featured Verified Properties in Mumbai — REHVO'
   );
 
+  const orgSchema = generateOrganizationSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+  ]);
+
   return (
     <>
+      <JsonLd data={orgSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <JsonLd data={itemListSchema} />
 
       {/* 01: UNIFIED HERO AD STAGE + SEARCH PILL + LOCALITY SELECTOR */}

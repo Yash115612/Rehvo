@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import {
@@ -336,9 +337,11 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({ conversationId }) 
                         : 'hover:bg-stone-100/70'
                     }`}
                   >
-                    <img
+                    <Image
                       src={avatar}
                       alt={title}
+                      width={40}
+                      height={40}
                       className="w-10 h-10 rounded-full object-cover border border-stone-200 flex-shrink-0 mt-0.5"
                     />
 
@@ -409,13 +412,15 @@ export const ChatWorkspace: React.FC<ChatWorkspaceProps> = ({ conversationId }) 
               {/* Active Conversation Header */}
               <div className="p-3.5 sm:p-4 border-b border-stone-200 bg-white flex items-center justify-between gap-3 shadow-sm">
                 <div className="flex items-center gap-3 min-w-0">
-                  <img
+                  <Image
                     src={
                       activeConv.other_participant?.profile_photo ||
                       prop?.property_images?.[0]?.image_url ||
                       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&auto=format&fit=crop&q=80'
                     }
                     alt={otherName}
+                    width={40}
+                    height={40}
                     className="w-10 h-10 rounded-full object-cover border border-stone-200 flex-shrink-0"
                   />
 

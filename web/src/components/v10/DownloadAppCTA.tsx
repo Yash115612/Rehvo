@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Smartphone,
   QrCode,
@@ -107,9 +108,11 @@ export const DownloadAppCTA: React.FC = () => {
               {/* Floating Companion Badge 1: Direct Landlord Chat (Left Overlay) */}
               <div className="hidden sm:flex absolute -left-4 top-16 bg-white/95 backdrop-blur-md rounded-2xl p-3 shadow-2xl border border-white/80 z-20 items-center gap-3 animate-in fade-in slide-in-from-left duration-500">
                 <div className="relative">
-                  <img
+                  <Image
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80"
                     alt="Owner Avatar"
+                    width={36}
+                    height={36}
                     className="w-9 h-9 rounded-full object-cover border border-emerald-300"
                   />
                   <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-[#10B981] border-2 border-white" />
@@ -240,9 +243,11 @@ export const DownloadAppCTA: React.FC = () => {
                     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-2xs">
                       {/* Image Stage */}
                       <div className="relative h-28 w-full bg-slate-100">
-                        <img
+                        <Image
                           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=80"
                           alt="Bandra Luxury Penthouse"
+                          fill
+                          sizes="(max-width: 640px) 250px, 300px"
                           className="w-full h-full object-cover"
                         />
                         {/* Badges */}

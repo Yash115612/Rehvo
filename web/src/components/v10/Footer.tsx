@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Instagram,
   Linkedin,
@@ -194,7 +195,7 @@ export const Footer: React.FC = () => {
             {/* Brand Column */}
             <div className="lg:col-span-3 space-y-6">
               <Link href="/" className="inline-flex items-center gap-3 group">
-                <img
+                <Image
                   src="/rehvo-logo.png"
                   alt="REHVO"
                   width={100}

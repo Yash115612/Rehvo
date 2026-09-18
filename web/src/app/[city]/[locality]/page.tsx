@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -17,7 +18,12 @@ import {
 } from 'lucide-react';
 import { LOCALITIES_DATA, CITIES_DATA } from '@/lib/seo/localityData';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
-import { generateBreadcrumbSchema, generateFaqSchema, generateItemListSchema } from '@/lib/seo/schema';
+import {
+  generateBreadcrumbSchema,
+  generateFaqSchema,
+  generateItemListSchema,
+  generateLocalityEntitySchema,
+} from '@/lib/seo/schema';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 import { getPublishedProperties } from '@/lib/seo/queries';
@@ -86,6 +92,8 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
     { name: locality.name, url: `/${city.slug}/${locality.slug}` },
   ];
 
+  const canonicalUrl = `https://rehvo.in/${city.slug}/${locality.slug}`;
+  const entitySchema = generateLocalityEntitySchema(locality, canonicalUrl);
   const faqSchema = generateFaqSchema(locality.faqs);
   const itemListSchema = generateItemListSchema(
     `Properties for Rent in ${locality.name}`,
@@ -99,6 +107,10 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
   return (
     <div className="min-h-screen bg-[#F8FAFB] pb-16">
       {/* Structured Data Injections */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(entitySchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -202,9 +214,11 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
                 <div>
                   <div className="aspect-[4/3] w-full bg-slate-100 relative overflow-hidden">
                     {property.property_images?.[0]?.image_url ? (
-                      <img
+                      <Image
                         src={property.property_images[0].image_url}
                         alt={`${property.title} in ${locality.name}`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                       />
@@ -213,7 +227,7 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
                         No image
                       </div>
                     )}
-                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs">
+                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs z-10">
                       100% Verified
                     </span>
                   </div>

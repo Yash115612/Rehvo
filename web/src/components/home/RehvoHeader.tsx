@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Menu,
@@ -111,9 +112,12 @@ export const RehvoHeader: React.FC = () => {
             isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
           }`}
         >
-          <img
+          <Image
             src="/rehvo-logo.png"
             alt="REHVO"
+            width={84}
+            height={30}
+            priority
             className="h-7 sm:h-8 w-auto object-contain max-h-[44px]"
             style={{ height: '30px', width: 'auto' }}
           />

@@ -20,6 +20,7 @@ export async function GET() {
     'sitemap-commercial.xml',
     'sitemap-showreels.xml',
     'video-sitemap.xml',
+    'image-sitemap.xml',
   ];
 
   const now = new Date().toISOString();

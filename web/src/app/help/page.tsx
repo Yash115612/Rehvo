@@ -16,6 +16,7 @@ import {
   Sparkles,
   Phone,
 } from 'lucide-react';
+import { Breadcrumb } from '@/components/public/Breadcrumb';
 
 const HELP_CATEGORIES = [
   {
@@ -113,7 +114,10 @@ export default function HelpPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       {/* Top Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] to-[#031B2A] text-white pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] to-[#031B2A] text-white pt-16 pb-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto mb-6">
+          <Breadcrumb items={[{ name: 'Help & Support', url: '/help' }]} />
+        </div>
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#CCFBF1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto text-center relative z-10">

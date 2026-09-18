@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   User,
@@ -135,11 +136,15 @@ export default function ProfileHubPage() {
               {/* Avatar circle */}
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#0F766E] text-white flex items-center justify-center text-3xl sm:text-4xl font-black shadow-lg shadow-teal-900/15 overflow-hidden shrink-0 border-4 border-white">
                 {profile?.profile_photo ? (
-                  <img
-                    src={profile.profile_photo}
-                    alt={displayName}
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={profile.profile_photo}
+                      alt={displayName}
+                      fill
+                      sizes="96px"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 ) : (
                   <span>{initial}</span>
                 )}

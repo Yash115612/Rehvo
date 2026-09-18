@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function Loading() {
   return (
@@ -8,11 +9,12 @@ export default function Loading() {
 
       {/* Real Official REHVO Logo with Splash Animation */}
       <div className="relative animate-real-logo-splash flex items-center justify-center p-4">
-        <img
+        <Image
           src="/rehvo-logo.png"
           alt="REHVO"
           width={220}
           height={74}
+          priority
           style={{ width: 'auto', maxHeight: '56px' }}
           className="h-11 sm:h-14 w-auto object-contain drop-shadow-sm select-none"
         />

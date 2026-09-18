@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
@@ -15,6 +16,8 @@ import {
 } from 'lucide-react';
 import { MARKET_REPORTS } from '@/lib/seo/marketReportsData';
 import { LOCALITIES_DATA } from '@/lib/seo/localityData';
+import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 
 interface Props {
   params: {
@@ -84,6 +87,11 @@ export default function ReportDetailPage({ params }: Props) {
     },
   };
 
+  const breadcrumbs = [
+    { name: 'Research Reports', url: '/reports' },
+    { name: report.title, url: `/reports/${report.slug}` },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F8FAFB]">
       <script
@@ -94,6 +102,7 @@ export default function ReportDetailPage({ params }: Props) {
       {/* Top Breadcrumb Header */}
       <div className="bg-white border-b border-slate-200/80">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6">
+          <Breadcrumbs items={breadcrumbs} className="mb-3" />
           <Link
             href="/reports"
             className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-[#0E8F73] transition-colors mb-4"
@@ -127,9 +136,11 @@ export default function ReportDetailPage({ params }: Props) {
 
           <div className="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img
+              <Image
                 src={report.author.avatar}
                 alt={report.author.name}
+                width={44}
+                height={44}
                 className="w-11 h-11 rounded-full object-cover border border-slate-200"
               />
               <div>

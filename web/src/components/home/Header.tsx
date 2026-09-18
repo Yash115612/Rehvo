@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   Heart,
@@ -50,9 +51,12 @@ export const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center group flex-shrink-0 pl-1">
-            <img
+            <Image
               src="/rehvo-logo.png"
               alt="REHVO"
+              width={84}
+              height={32}
+              priority
               className="h-7 sm:h-8 w-auto object-contain"
             />
           </Link>

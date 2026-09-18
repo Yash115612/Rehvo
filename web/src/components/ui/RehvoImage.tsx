@@ -94,7 +94,6 @@ export const RehvoImage: React.FC<RehvoImageProps> = ({
         height={!fill ? height || 300 : undefined}
         sizes={sizes || (fill ? '100vw' : undefined)}
         priority={priority}
-        unoptimized
         className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
         onError={handleImageError}
         onLoad={handleImageLoad}

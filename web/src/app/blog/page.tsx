@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { BookOpen, Sparkles, ArrowRight, Clock, MapPin, Users, Building2, ShieldCheck } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
@@ -87,13 +88,15 @@ export default function BlogPage() {
             >
               <div>
                 <div className="aspect-[16/9] w-full bg-slate-100 relative overflow-hidden">
-                  <img
+                  <Image
                     src={post.coverImage}
                     alt={post.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   />
-                  <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/80 text-white backdrop-blur-xs">
+                  <span className="absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-full bg-black/80 text-white backdrop-blur-xs z-10">
                     {post.category}
                   </span>
                 </div>
@@ -121,9 +124,11 @@ export default function BlogPage() {
               <div className="p-5 pt-0 border-t border-slate-100 mt-3">
                 <div className="flex items-center justify-between pt-3">
                   <div className="flex items-center gap-2">
-                    <img
+                    <Image
                       src={post.author.avatar}
                       alt={post.author.name}
+                      width={24}
+                      height={24}
                       className="w-6 h-6 rounded-full object-cover"
                     />
                     <span className="text-xs font-bold text-slate-700">{post.author.name}</span>

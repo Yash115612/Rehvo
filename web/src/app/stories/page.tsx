@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Metadata } from 'next';
 import { Sparkles, ArrowRight, BookOpen } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
@@ -45,9 +46,11 @@ export default function StoriesIndexPage() {
               className="group bg-white rounded-3xl overflow-hidden border border-slate-200 hover:border-[#0F766E] hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div className="relative aspect-[9/14] w-full overflow-hidden bg-slate-900">
-                <img
+                <Image
                   src={story.coverImage}
                   alt={story.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />

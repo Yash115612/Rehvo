@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Heart,
   Share2,
@@ -143,10 +144,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
     <article className="group bg-white rounded-[26px] overflow-hidden border border-[#E2E8F0] shadow-card hover:shadow-card-hover hover:border-[#0F766E]/40 transition-all duration-300 flex flex-col justify-between relative">
       {/* 1. TOP IMAGE CAROUSEL CONTAINER */}
       <div className="relative aspect-[16/10] w-full bg-slate-100 overflow-hidden select-none">
-        <Link href={`/property/${slug}`} className="block w-full h-full cursor-pointer">
-          <img
+        <Link href={`/property/${slug}`} className="block w-full h-full cursor-pointer relative">
+          <Image
             src={images[activeImageIndex] || coverImage}
             alt={property.title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />

@@ -8,6 +8,21 @@ import { Providers } from '@/components/Providers';
 import { generateOrganizationSchema, generateWebSiteSchema } from '@/lib/seo/schema';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 import { ServiceWorkerRegister } from '@/components/common/ServiceWorkerRegister';
+import { Plus_Jakarta_Sans, Inter } from 'next/font/google';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-plus-jakarta',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -122,18 +137,10 @@ export default function RootLayout({
   const isProduction = process.env.NODE_ENV === 'production';
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="preload" href="/rehvo-logo.png" as="image" type="image/png" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
         {/* Core Global Schema.org JSON-LD */}
         <script
           type="application/ld+json"

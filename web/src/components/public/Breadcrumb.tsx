@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
+import { generateBreadcrumbSchema } from '@/lib/seo/schema';
 
 export interface BreadcrumbItem {
   name: string;
@@ -12,8 +13,16 @@ interface BreadcrumbProps {
 }
 
 export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
+  const fullItems: BreadcrumbItem[] = [{ name: 'Home', url: '/' }, ...items];
+  const schema = generateBreadcrumbSchema(fullItems);
+
   return (
-    <nav aria-label="Breadcrumb" className="py-3 px-4 sm:px-0">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <nav aria-label="Breadcrumb" className="py-3 px-4 sm:px-0">
       <ol className="flex items-center space-x-2 text-xs font-medium text-stone-500 overflow-x-auto whitespace-nowrap">
         <li>
           <Link
@@ -47,5 +56,6 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
         })}
       </ol>
     </nav>
+    </>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -163,13 +164,15 @@ export default async function PgIntentPage({ params }: { params: { slug: string 
               >
                 <div>
                   <div className="aspect-[4/3] w-full bg-slate-100 relative overflow-hidden">
-                    <img
+                    <Image
                       src={cover}
                       alt={prop.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     />
-                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs">
+                    <span className="absolute top-2.5 left-2.5 text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/80 text-white backdrop-blur-xs z-10">
                       Verified PG
                     </span>
                   </div>

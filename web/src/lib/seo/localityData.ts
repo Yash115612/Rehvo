@@ -23,6 +23,14 @@ export interface LocalityProfile {
   faqs: { question: string; answer: string }[];
   coordinates: { lat: number; lng: number };
   popularPincodes: string[];
+  postalCode?: string;
+  latitude?: number;
+  longitude?: number;
+  geoShape?: {
+    type: 'Polygon';
+    coordinates: number[][][];
+  };
+  nearbyLocalities?: string[];
 }
 
 export interface CityProfile {
@@ -201,6 +209,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.1363, lng: 72.8277 },
     popularPincodes: ['400053', '400058', '400061'],
+    postalCode: '400053',
+    latitude: 19.1363,
+    longitude: 72.8277,
+    nearbyLocalities: ["juhu","andheri-east","bandra-west"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8127,19.1213],[72.8427,19.1213],[72.8427,19.1513],[72.8127,19.1513],[72.8127,19.1213]]]},
   },
   'bandra-west': {
     slug: 'bandra-west',
@@ -234,6 +247,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.0596, lng: 72.8295 },
     popularPincodes: ['400050'],
+    postalCode: '400050',
+    latitude: 19.0596,
+    longitude: 72.8295,
+    nearbyLocalities: ["bkc","worli","juhu","andheri-west"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8145,19.0446],[72.8445,19.0446],[72.8445,19.0746],[72.8145,19.0746],[72.8145,19.0446]]]},
   },
   powai: {
     slug: 'powai',
@@ -262,6 +280,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.1176, lng: 72.906 },
     popularPincodes: ['400076'],
+    postalCode: '400076',
+    latitude: 19.1176,
+    longitude: 72.906,
+    nearbyLocalities: ["andheri-east","bkc","thane"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.891,19.1026],[72.921,19.1026],[72.921,19.1326],[72.891,19.1326],[72.891,19.1026]]]},
   },
   'andheri-east': {
     slug: 'andheri-east',
@@ -290,6 +313,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.1136, lng: 72.8697 },
     popularPincodes: ['400069', '400093', '400096'],
+    postalCode: '400069',
+    latitude: 19.1136,
+    longitude: 72.8697,
+    nearbyLocalities: ["andheri-west","powai","bkc"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8547,19.0986],[72.8847,19.0986],[72.8847,19.1286],[72.8547,19.1286],[72.8547,19.0986]]]},
   },
   bkc: {
     slug: 'bkc',
@@ -318,6 +346,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.0688, lng: 72.8687 },
     popularPincodes: ['400051'],
+    postalCode: '400051',
+    latitude: 19.0688,
+    longitude: 72.8687,
+    nearbyLocalities: ["bandra-west","worli","lower-parel","andheri-east"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8537,19.0538],[72.8837,19.0538],[72.8837,19.0838],[72.8537,19.0838],[72.8537,19.0538]]]},
   },
   worli: {
     slug: 'worli',
@@ -346,6 +379,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.0178, lng: 72.8178 },
     popularPincodes: ['400018', '400030'],
+    postalCode: '400018',
+    latitude: 19.0178,
+    longitude: 72.8178,
+    nearbyLocalities: ["lower-parel","bkc","bandra-west"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8028,19.0028],[72.8328,19.0028],[72.8328,19.0328],[72.8028,19.0328],[72.8028,19.0028]]]},
   },
   juhu: {
     slug: 'juhu',
@@ -374,6 +412,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.1075, lng: 72.8263 },
     popularPincodes: ['400049'],
+    postalCode: '400049',
+    latitude: 19.1075,
+    longitude: 72.8263,
+    nearbyLocalities: ["andheri-west","bandra-west"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.8113,19.0925],[72.8413,19.0925],[72.8413,19.1225],[72.8113,19.1225],[72.8113,19.0925]]]},
   },
   'lower-parel': {
     slug: 'lower-parel',
@@ -402,6 +445,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 18.9953, lng: 72.831 },
     popularPincodes: ['400013'],
+    postalCode: '400013',
+    latitude: 18.9953,
+    longitude: 72.831,
+    nearbyLocalities: ["worli","bkc","bandra-west"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.816,18.9803],[72.846,18.9803],[72.846,19.0103],[72.816,19.0103],[72.816,18.9803]]]},
   },
   thane: {
     slug: 'thane',
@@ -430,6 +478,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.2183, lng: 72.9781 },
     popularPincodes: ['400601', '400607', '400610'],
+    postalCode: '400601',
+    latitude: 19.2183,
+    longitude: 72.9781,
+    nearbyLocalities: ["powai","navi-mumbai"],
+    geoShape: {"type":"Polygon","coordinates":[[[72.9631,19.2033],[72.9931,19.2033],[72.9931,19.2333],[72.9631,19.2333],[72.9631,19.2033]]]},
   },
   'navi-mumbai': {
     slug: 'navi-mumbai',
@@ -458,6 +511,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 19.033, lng: 73.0297 },
     popularPincodes: ['400703', '400705', '400706'],
+    postalCode: '400703',
+    latitude: 19.033,
+    longitude: 73.0297,
+    nearbyLocalities: ["thane","bkc","worli"],
+    geoShape: {"type":"Polygon","coordinates":[[[73.0147,19.018],[73.0447,19.018],[73.0447,19.048],[73.0147,19.048],[73.0147,19.018]]]},
   },
   hinjewadi: {
     slug: 'hinjewadi',
@@ -485,6 +543,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 18.5913, lng: 73.7389 },
     popularPincodes: ['411057'],
+    postalCode: '411057',
+    latitude: 18.5913,
+    longitude: 73.7389,
+    nearbyLocalities: ["baner","wakad","balewadi"],
+    geoShape: {"type":"Polygon","coordinates":[[[73.7239,18.5763],[73.7539,18.5763],[73.7539,18.6063],[73.7239,18.6063],[73.7239,18.5763]]]},
   },
   koramangala: {
     slug: 'koramangala',
@@ -512,6 +575,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 12.9352, lng: 77.6245 },
     popularPincodes: ['560034', '560095'],
+    postalCode: '560034',
+    latitude: 12.9352,
+    longitude: 77.6245,
+    nearbyLocalities: ["hsr-layout","indiranagar","bellandur"],
+    geoShape: {"type":"Polygon","coordinates":[[[77.6095,12.9202],[77.6395,12.9202],[77.6395,12.9502],[77.6095,12.9502],[77.6095,12.9202]]]},
   },
   whitefield: {
     slug: 'whitefield',
@@ -539,6 +607,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 12.9698, lng: 77.75 },
     popularPincodes: ['560066'],
+    postalCode: '560066',
+    latitude: 12.9698,
+    longitude: 77.75,
+    nearbyLocalities: ["bellandur","marathahalli","sarjapur"],
+    geoShape: {"type":"Polygon","coordinates":[[[77.735,12.9548],[77.765,12.9548],[77.765,12.9848],[77.735,12.9848],[77.735,12.9548]]]},
   },
   'gurgaon-cyber-city': {
     slug: 'gurgaon-cyber-city',
@@ -566,6 +639,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 28.4952, lng: 77.0895 },
     popularPincodes: ['122002', '122008'],
+    postalCode: '122002',
+    latitude: 28.4952,
+    longitude: 77.0895,
+    nearbyLocalities: ["dlf-phase-2","golf-course-road","sohna-road"],
+    geoShape: {"type":"Polygon","coordinates":[[[77.0745,28.4802],[77.1045,28.4802],[77.1045,28.5102],[77.0745,28.5102],[77.0745,28.4802]]]},
   },
   gachibowli: {
     slug: 'gachibowli',
@@ -593,6 +671,11 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     coordinates: { lat: 17.4401, lng: 78.3489 },
     popularPincodes: ['500032', '500081'],
+    postalCode: '500032',
+    latitude: 17.4401,
+    longitude: 78.3489,
+    nearbyLocalities: ["hitec-city","madhapur","kondapur","financial-district"],
+    geoShape: {"type":"Polygon","coordinates":[[[78.3339,17.4251],[78.3639,17.4251],[78.3639,17.4551],[78.3339,17.4551],[78.3339,17.4251]]]},
   },
 };
 

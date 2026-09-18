@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import {
   Smartphone,
@@ -21,6 +22,8 @@ import {
   User,
 } from 'lucide-react';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
+import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Download REHVO App | iOS & Android | Mumbai Verified Marketplace',
@@ -64,10 +67,23 @@ const COMPARISON_ITEMS = [
 ];
 
 export default function DownloadPage() {
+  const breadcrumbs = [{ name: 'Download App', url: '/download' }];
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Download App', url: '/download' },
+  ]);
+
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] via-[#043428] to-[#031B2A] text-white pt-24 pb-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#064E3B] via-[#043428] to-[#031B2A] text-white pt-16 pb-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto mb-6">
+          <Breadcrumbs items={breadcrumbs} className="text-emerald-200/80" />
+        </div>
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#CCFBF1_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
@@ -201,15 +217,17 @@ export default function DownloadPage() {
                 {/* Simulated Property Card */}
                 <div className="bg-white rounded-2xl p-2.5 border border-stone-200 shadow-sm space-y-2">
                   <div className="relative h-28 w-full bg-stone-200 rounded-xl overflow-hidden">
-                    <img
+                    <Image
                       src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80"
                       alt="Luxury Apartment"
+                      fill
+                      sizes="(max-width: 640px) 250px, 300px"
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-2 left-2 bg-[#0F766E] text-white text-[9px] font-bold px-2 py-0.5 rounded-md">
+                    <div className="absolute top-2 left-2 bg-[#0F766E] text-white text-[9px] font-bold px-2 py-0.5 rounded-md z-10">
                       VERIFIED LISTING
                     </div>
-                    <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                    <div className="absolute bottom-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md z-10">
                       ₹78,000/mo
                     </div>
                   </div>

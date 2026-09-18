@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
+import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { JsonLd } from '@/components/public/JsonLd';
 import { SearchPageClient } from '@/components/search/SearchPageClient';
 
 export const revalidate = 60;
@@ -38,11 +40,19 @@ export default async function PropertySearchPage({ searchParams }: SearchPagePro
     limit: 60,
   });
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Search Rentals', url: '/search' },
+  ]);
+
   return (
-    <SearchPageClient
-      initialProperties={properties}
-      serverTotalCount={totalCount}
-      initialParams={searchParams}
-    />
+    <>
+      <JsonLd data={breadcrumbSchema} />
+      <SearchPageClient
+        initialProperties={properties}
+        serverTotalCount={totalCount}
+        initialParams={searchParams}
+      />
+    </>
   );
 }

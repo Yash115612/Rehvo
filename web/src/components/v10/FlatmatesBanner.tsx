@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Users, Sparkles, ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 const COMPATIBILITY_CARDS = [
@@ -72,9 +73,11 @@ export const FlatmatesBanner: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <img
+                    <Image
                       src={card.avatar}
                       alt={card.name}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-2xl object-cover border-2 border-white shadow-xs"
                     />
                     <div>

@@ -24,6 +24,7 @@ import { FlatmateProfileCard } from '@/components/flatmates/FlatmateProfileCard'
 import { FlatmatesContainer } from '@/components/flatmates/FlatmatesContainer';
 import { unslugify } from '@/lib/seo/slugs';
 import { RehvoImage } from '@/components/ui/RehvoImage';
+import { Breadcrumb } from '@/components/public/Breadcrumb';
 
 export const revalidate = 60;
 
@@ -79,6 +80,12 @@ export default async function FlatmatesDynamicPage({ params }: FlatmatesDynamicP
 
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        <Breadcrumb
+          items={[
+            { name: 'Flatmates', url: '/flatmates' },
+            { name: flatmate.name, url: `/flatmates/${params.slug}` },
+          ]}
+        />
         {/* Back Link */}
         <Link
           href="/flatmates"
@@ -243,8 +250,16 @@ export default async function FlatmatesDynamicPage({ params }: FlatmatesDynamicP
   const rawFlatmates = await getPublishedFlatmates(cityName);
   const flatmates = isFemaleIntent ? rawFlatmates.filter((f) => f.gender === 'female') : rawFlatmates;
 
+  const pageTitle = isFemaleIntent ? 'Female Flatmates in Mumbai' : `Flatmates in ${cityName}`;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6">
+      <Breadcrumb
+        items={[
+          { name: 'Flatmates', url: '/flatmates' },
+          { name: pageTitle, url: `/flatmates/${params.slug}` },
+        ]}
+      />
       <FlatmatesContainer initialFlatmates={flatmates} />
     </div>
   );

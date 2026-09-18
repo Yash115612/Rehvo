@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, ShieldCheck, CheckCircle2, MessageCircle, CalendarCheck, Sparkles } from 'lucide-react';
 import { RehvoImage } from '@/components/ui/RehvoImage';
 
@@ -42,9 +43,12 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
               href="/"
               className="inline-flex items-center px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-xs group"
             >
-              <img
+              <Image
                 src="/rehvo-logo-white.png"
                 alt="REHVO"
+                width={84}
+                height={28}
+                priority
                 className="h-7 w-auto object-contain"
               />
             </Link>
@@ -109,9 +113,11 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
             {/* Mobile-only logo */}
             <div className="lg:hidden">
               <Link href="/" className="inline-flex items-center">
-                <img
+                <Image
                   src="/rehvo-logo.png"
                   alt="REHVO"
+                  width={72}
+                  height={24}
                   className="h-6 w-auto object-contain"
                 />
               </Link>

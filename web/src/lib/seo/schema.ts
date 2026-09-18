@@ -1,5 +1,6 @@
 import type { PublicProperty } from './queries';
 import { generatePropertySlug } from './slugs';
+import type { LocalityProfile } from './localityData';
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
@@ -191,13 +192,46 @@ export function buildReviewSchema(verifiedReviews?: VerifiedReview[] | null): {
 }
 
 /**
+ * Schema.org ImageObject
+ */
+export function generateImageObject(
+  url: string,
+  caption?: string,
+  width?: number,
+  height?: number,
+  representativeOfPage?: boolean
+) {
+  const safeUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? url : `/${url}`}`;
+  return {
+    '@type': 'ImageObject',
+    url: safeUrl,
+    contentUrl: safeUrl,
+    ...(caption ? { caption } : {}),
+    ...(width ? { width } : {}),
+    ...(height ? { height } : {}),
+    ...(typeof representativeOfPage === 'boolean' ? { representativeOfPage } : {}),
+  };
+}
+
+/**
  * 5. Schema.org RealEstateListing + Accommodation for Property Pages
  */
 export function generatePropertySchema(property: PublicProperty, canonicalUrl: string) {
-  const images = (property.property_images || [])
+  const rawImages = (property.property_images || [])
     .filter((img) => img && typeof img.image_url === 'string' && img.image_url.startsWith('https://'))
     .map((img) => img.image_url);
-  const coverImage = images[0] || `${BASE_URL}/og-default.jpg`;
+  const coverImage = rawImages[0] || `${BASE_URL}/og-default.jpg`;
+  const images = rawImages.length > 0 ? rawImages : [coverImage];
+
+  const imageObjects = images.map((imgUrl, idx) =>
+    generateImageObject(
+      imgUrl,
+      `${property.title} - Photo ${idx + 1}`,
+      1200,
+      800,
+      idx === 0
+    )
+  );
 
   let accommodationType = 'Apartment';
   if ((property as any).type === 'room') accommodationType = 'Room';
@@ -214,7 +248,9 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
     name: property.title,
     description: property.description,
     url: canonicalUrl,
-    image: images.length > 0 ? images : [coverImage],
+    image: images,
+    photo: imageObjects,
+    primaryImageOfPage: imageObjects[0],
     address: {
       '@type': 'PostalAddress',
       streetAddress: property.address || property.locality,
@@ -405,6 +441,15 @@ export function generateArticleSchema(post: {
   imageUrl?: string;
   category?: string;
 }) {
+  const imageUrl = post.imageUrl || `${BASE_URL}/api/og?title=${encodeURIComponent(post.title)}`;
+  const imageObject = generateImageObject(
+    imageUrl,
+    post.title,
+    1200,
+    630,
+    true
+  );
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -414,7 +459,8 @@ export function generateArticleSchema(post: {
       '@type': 'WebPage',
       '@id': `${BASE_URL}/blog/${post.slug}`,
     },
-    image: post.imageUrl || `${BASE_URL}/api/og?title=${encodeURIComponent(post.title)}`,
+    image: [imageUrl],
+    primaryImageOfPage: imageObject,
     datePublished: post.publishDate,
     dateModified: post.modifiedDate || post.publishDate,
     author: {
@@ -467,5 +513,72 @@ export function generateItemListSchema(
       name: item.name,
       image: item.image,
     })),
+  };
+}
+
+/**
+ * 12. Schema.org LocalBusiness, Place, GeoCoordinates, PostalAddress for Locality Pages
+ */
+export function generateLocalityEntitySchema(locality: LocalityProfile, canonicalUrl: string) {
+  const lat = locality.latitude || locality.coordinates.lat;
+  const lng = locality.longitude || locality.coordinates.lng;
+  const pincode = locality.postalCode || locality.popularPincodes?.[0] || '400050';
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Place',
+        '@id': `${canonicalUrl}#place`,
+        name: `${locality.name}, ${locality.city}`,
+        description: locality.description,
+        url: canonicalUrl,
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: lat,
+          longitude: lng,
+        },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: locality.name,
+          addressRegion: locality.city === 'Mumbai' ? 'Maharashtra' : locality.city,
+          postalCode: pincode,
+          addressCountry: 'IN',
+        },
+        ...(locality.geoShape
+          ? {
+              geoShape: {
+                '@type': 'GeoShape',
+                polygon: locality.geoShape.coordinates[0].map((coord) => `${coord[1]},${coord[0]}`).join(' '),
+              },
+            }
+          : {}),
+      },
+      {
+        '@type': 'RealEstateAgent',
+        '@id': `${canonicalUrl}#service`,
+        name: `REHVO Verified Rentals — ${locality.name}`,
+        url: canonicalUrl,
+        image: `${BASE_URL}/logo.png`,
+        telephone: '+91-8208662286',
+        priceRange: '₹₹',
+        areaServed: {
+          '@type': 'AdministrativeArea',
+          name: `${locality.name}, ${locality.city}`,
+        },
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: locality.name,
+          addressRegion: 'Maharashtra',
+          postalCode: pincode,
+          addressCountry: 'IN',
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: lat,
+          longitude: lng,
+        },
+      },
+    ],
   };
 }
