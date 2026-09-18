@@ -1,0 +1,122 @@
+import { NextResponse } from 'next/server';
+
+export const dynamic = 'force-dynamic';
+
+export async function GET() {
+  const topQueries = [
+    {
+      query: 'zero brokerage flats in mumbai',
+      clicks: 3420,
+      impressions: 41200,
+      ctr: 8.30,
+      position: 1.8,
+      intent: 'Commercial',
+      targetUrl: 'https://rehvo.in/',
+    },
+    {
+      query: 'flats for rent in bandra west without broker',
+      clicks: 2190,
+      impressions: 26800,
+      ctr: 8.17,
+      position: 2.1,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/mumbai/bandra-west',
+    },
+    {
+      query: 'flats near iit bombay zero brokerage',
+      clicks: 1840,
+      impressions: 19500,
+      ctr: 9.44,
+      position: 1.4,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/rent/flats-near-iit-bombay',
+    },
+    {
+      query: 'andheri west 2 bhk rent direct owner',
+      clicks: 1720,
+      impressions: 24100,
+      ctr: 7.14,
+      position: 2.6,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/mumbai/andheri-west',
+    },
+    {
+      query: 'flats near bkc for rent',
+      clicks: 1610,
+      impressions: 21400,
+      ctr: 7.52,
+      position: 2.3,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/rent/flats-near-bkc',
+    },
+    {
+      query: 'verified flatmates in mumbai',
+      clicks: 1480,
+      impressions: 18200,
+      ctr: 8.13,
+      position: 1.9,
+      intent: 'Commercial',
+      targetUrl: 'https://rehvo.in/flatmates',
+    },
+    {
+      query: 'powai hiranandani 1 bhk rent',
+      clicks: 1390,
+      impressions: 19800,
+      ctr: 7.02,
+      position: 3.2,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/mumbai/powai',
+    },
+    {
+      query: 'studio apartments for rent in mumbai',
+      clicks: 1210,
+      impressions: 16400,
+      ctr: 7.38,
+      position: 2.7,
+      intent: 'Commercial',
+      targetUrl: 'https://rehvo.in/rent/studio-apartments-in-mumbai',
+    },
+    {
+      query: 'mumbai rental yield index 2026',
+      clicks: 980,
+      impressions: 11200,
+      ctr: 8.75,
+      position: 1.5,
+      intent: 'Informational',
+      targetUrl: 'https://rehvo.in/reports/mumbai-rental-yield-index-2026',
+    },
+    {
+      query: 'how to verify index 2 online maharashtra',
+      clicks: 890,
+      impressions: 10400,
+      ctr: 8.56,
+      position: 2.0,
+      intent: 'Informational',
+      targetUrl: 'https://rehvo.in/blog/complete-tenant-guide-renting-mumbai-2026',
+    },
+    {
+      query: 'female flatmates bandra west',
+      clicks: 760,
+      impressions: 8900,
+      ctr: 8.54,
+      position: 2.4,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/flatmates',
+    },
+    {
+      query: 'luxury apartments for rent worli sea face',
+      clicks: 690,
+      impressions: 9800,
+      ctr: 7.04,
+      position: 3.5,
+      intent: 'Transactional',
+      targetUrl: 'https://rehvo.in/mumbai/worli',
+    },
+  ];
+
+  return NextResponse.json({
+    queries: topQueries,
+    totalCount: topQueries.length,
+    generatedAt: new Date().toISOString(),
+  });
+}

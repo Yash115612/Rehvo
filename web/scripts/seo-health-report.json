@@ -1,0 +1,80 @@
+{
+  "timestamp": "2026-09-18T14:45:32.238Z",
+  "overallScore": 100,
+  "checksPassed": "8/8",
+  "status": "HEALTHY",
+  "kpis": {
+    "totalPages": 238,
+    "schemaTypesAudited": 10,
+    "duplicateCanonicals": 0,
+    "duplicateTitles": 0,
+    "brokenLinks": 0,
+    "sitemapCount": 15
+  },
+  "checks": [
+    {
+      "category": "Index Coverage",
+      "name": "Total Indexable Pages Reach",
+      "passed": true,
+      "score": 100,
+      "details": "238 pages discovered and configured for indexing",
+      "metric": 238
+    },
+    {
+      "category": "Canonicals",
+      "name": "1-to-1 Clean Canonical Slugs",
+      "passed": true,
+      "score": 100,
+      "details": "Zero malformed or relative canonical URLs",
+      "metric": 0
+    },
+    {
+      "category": "Schema",
+      "name": "Structured Data & Rich Results Eligibility",
+      "passed": true,
+      "score": 100,
+      "details": "All 10 schema generators pass Google Rich Results strict rules",
+      "metric": 10
+    },
+    {
+      "category": "Sitemap Freshness",
+      "name": "Multi-Sitemap Architecture Completeness",
+      "passed": true,
+      "score": 100,
+      "details": "15 modular XML sitemaps operational under sitemap-index.xml",
+      "metric": 15
+    },
+    {
+      "category": "Meta Tags",
+      "name": "Title & Description Uniqueness",
+      "passed": true,
+      "score": 100,
+      "details": "Zero duplicate meta titles detected across all landing pages",
+      "metric": 0
+    },
+    {
+      "category": "Robots",
+      "name": "Robots.txt & Bot Directives Configuration",
+      "passed": true,
+      "score": 100,
+      "details": "Dynamic robots.ts active with GPTBot, ClaudeBot, PerplexityBot, and crawl-delay rules",
+      "metric": "Active"
+    },
+    {
+      "category": "Images",
+      "name": "next/image & Alt Attribute Coverage",
+      "passed": true,
+      "score": 100,
+      "details": "All images transformed to next/image with strict width, height, sizes, and WebP compression",
+      "metric": "100%"
+    },
+    {
+      "category": "Broken Links",
+      "name": "Internal Locality Graph Cross-References",
+      "passed": true,
+      "score": 100,
+      "details": "Zero broken internal references in locality comparison cards",
+      "metric": 0
+    }
+  ]
+}
