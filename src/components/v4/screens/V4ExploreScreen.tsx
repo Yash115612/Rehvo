@@ -391,6 +391,72 @@ export const V4ExploreScreen: React.FC = () => {
   const listHeaderComponent = useMemo(() => {
     return (
       <View style={styles.feedHeaderWrapper}>
+        {/* Action Row: Filters, Map View, Active Filter Indicator */}
+        <View style={styles.headerControlBar}>
+          <Pressable
+            style={[styles.filterIconButton, activeFiltersCount > 0 && styles.filterIconButtonActive]}
+            onPress={() => setFilterSheetOpen(true)}
+          >
+            <SlidersHorizontal size={14} color={activeFiltersCount > 0 ? '#FFFFFF' : '#031B2A'} strokeWidth={2.2} />
+            <Text style={[styles.filterIconButtonText, activeFiltersCount > 0 && styles.filterIconButtonTextActive]}>
+              Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ''}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.mapIconButton}
+            onPress={() => router.push('/(renter)/map' as any)}
+          >
+            <Map size={14} color="#0E8F73" strokeWidth={2.2} />
+            <Text style={styles.mapIconButtonText}>Map View</Text>
+          </Pressable>
+        </View>
+
+        {/* Typo Correction Bar */}
+        {typoInfo.hasCorrection && typoInfo.suggestionPill && (
+          <Pressable
+            style={styles.typoAlert}
+            onPress={() => setSearchQuery(typoInfo.correctedQuery)}
+          >
+            <Text style={styles.typoAlertText}>
+              Showing results for <Text style={styles.typoAlertBold}>{typoInfo.correctedQuery}</Text>
+            </Text>
+          </Pressable>
+        )}
+
+        {/* Lifestyle Category Tabs */}
+        <View style={styles.categoryBarContainer}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryScrollContent}
+          >
+            {LIFESTYLE_CATEGORIES.map((cat) => {
+              const isSelected = activeCategory === cat.id;
+              const IconComp = cat.icon;
+              return (
+                <Pressable
+                  key={cat.id}
+                  style={[styles.categoryTab, isSelected && styles.categoryTabActive]}
+                  onPress={() => {
+                    setActiveCategory(cat.id);
+                    setPage(1);
+                  }}
+                >
+                  <IconComp
+                    size={13}
+                    color={isSelected ? '#FFFFFF' : '#475569'}
+                    strokeWidth={2.2}
+                  />
+                  <Text style={[styles.categoryTabText, isSelected && styles.categoryTabTextActive]}>
+                    {cat.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
+
         {/* Locality Quick Selector Pills */}
         <View style={styles.quickLocalitiesSection}>
           <Text style={styles.quickLocalitiesTitle}>Trending Mumbai Localities</Text>
@@ -440,7 +506,16 @@ export const V4ExploreScreen: React.FC = () => {
         </View>
       </View>
     );
-  }, [searchQuery, searchResults.length, sortBy]);
+  }, [
+    activeFiltersCount,
+    router,
+    typoInfo,
+    activeCategory,
+    searchQuery,
+    handleSelectQuickLocality,
+    searchResults.length,
+    sortBy,
+  ]);
 
   const listFooterComponent = useMemo(() => {
     if (!hasMore) return null;
@@ -538,73 +613,7 @@ export const V4ExploreScreen: React.FC = () => {
             </Pressable>
           )}
         </View>
-
-        {/* Action Row: Filters, Map View, Active Filter Indicator */}
-        <View style={styles.headerControlBar}>
-          <Pressable
-            style={[styles.filterIconButton, activeFiltersCount > 0 && styles.filterIconButtonActive]}
-            onPress={() => setFilterSheetOpen(true)}
-          >
-            <SlidersHorizontal size={14} color={activeFiltersCount > 0 ? '#FFFFFF' : '#031B2A'} strokeWidth={2.2} />
-            <Text style={[styles.filterIconButtonText, activeFiltersCount > 0 && styles.filterIconButtonTextActive]}>
-              Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ''}
-            </Text>
-          </Pressable>
-
-          <Pressable
-            style={styles.mapIconButton}
-            onPress={() => router.push('/(renter)/map' as any)}
-          >
-            <Map size={14} color="#0E8F73" strokeWidth={2.2} />
-            <Text style={styles.mapIconButtonText}>Map View</Text>
-          </Pressable>
-        </View>
       </View>
-
-      {/* ── 2. LIFESTYLE CATEGORY TABS ──────────────────────────────────────── */}
-      <View style={styles.categoryBarContainer}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.categoryScrollContent}
-        >
-          {LIFESTYLE_CATEGORIES.map((cat) => {
-            const isSelected = activeCategory === cat.id;
-            const IconComp = cat.icon;
-            return (
-              <Pressable
-                key={cat.id}
-                style={[styles.categoryTab, isSelected && styles.categoryTabActive]}
-                onPress={() => {
-                  setActiveCategory(cat.id);
-                  setPage(1);
-                }}
-              >
-                <IconComp
-                  size={13}
-                  color={isSelected ? '#FFFFFF' : '#475569'}
-                  strokeWidth={2.2}
-                />
-                <Text style={[styles.categoryTabText, isSelected && styles.categoryTabTextActive]}>
-                  {cat.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-      </View>
-
-      {/* Typo Correction Bar */}
-      {typoInfo.hasCorrection && typoInfo.suggestionPill && (
-        <Pressable
-          style={styles.typoAlert}
-          onPress={() => setSearchQuery(typoInfo.correctedQuery)}
-        >
-          <Text style={styles.typoAlertText}>
-            Showing results for <Text style={styles.typoAlertBold}>{typoInfo.correctedQuery}</Text>
-          </Text>
-        </Pressable>
-      )}
 
       {/* Suggestions Dropdown */}
       {suggestions.length > 0 && (
@@ -836,6 +845,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 6,
   },
   filterIconButton: {
     flex: 1,
@@ -876,9 +888,6 @@ const styles = StyleSheet.create({
     color: '#0E8F73',
   },
   categoryBarContainer: {
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEF2F6',
     paddingVertical: 8,
   },
   categoryScrollContent: {
@@ -925,13 +934,13 @@ const styles = StyleSheet.create({
   },
   suggestionsContainer: {
     position: 'absolute',
-    top: 140,
+    top: 106,
     left: 16,
     right: 16,
     zIndex: 999,
   },
   feedHeaderWrapper: {
-    paddingTop: 10,
+    paddingTop: 4,
   },
   quickLocalitiesSection: {
     marginBottom: 14,
