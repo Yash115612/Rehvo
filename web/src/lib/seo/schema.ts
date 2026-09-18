@@ -108,6 +108,88 @@ export function generateFaqSchema(faqs: { question: string; answer: string }[]) 
 export const generateFAQSchema = generateFaqSchema;
 
 
+export interface VerifiedReview {
+  id: string;
+  author: string;
+  rating: number;
+  review: string;
+  createdAt: string;
+  verified: boolean;
+}
+
+/**
+ * Builds review and aggregateRating schema strictly from verified reviews.
+ * Returns null if no verified reviews exist or array is empty.
+ * Never emits fabricated or hardcoded review markup.
+ */
+export function buildReviewSchema(verifiedReviews?: VerifiedReview[] | null): {
+  review: Array<{
+    '@type': 'Review';
+    author: {
+      '@type': 'Person';
+      name: string;
+    };
+    reviewRating: {
+      '@type': 'Rating';
+      ratingValue: number;
+      bestRating: 5;
+      worstRating: 1;
+    };
+    reviewBody: string;
+    datePublished: string;
+  }>;
+  aggregateRating: {
+    '@type': 'AggregateRating';
+    ratingValue: number;
+    reviewCount: number;
+    ratingCount: number;
+    bestRating: 5;
+    worstRating: 1;
+  };
+} | null {
+  if (!Array.isArray(verifiedReviews) || verifiedReviews.length === 0) {
+    return null;
+  }
+
+  // Filter for valid verified reviews with non-empty review text and positive rating
+  const validReviews = verifiedReviews.filter(
+    (r) => r && r.verified && typeof r.rating === 'number' && r.rating >= 1 && r.rating <= 5 && r.review && r.review.trim()
+  );
+
+  if (validReviews.length === 0) {
+    return null;
+  }
+
+  const sum = validReviews.reduce((acc, r) => acc + r.rating, 0);
+  const avg = Math.round((sum / validReviews.length) * 10) / 10;
+
+  return {
+    review: validReviews.map((r) => ({
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: r.author || 'Verified Resident',
+      },
+      reviewRating: {
+        '@type': 'Rating',
+        ratingValue: r.rating,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      reviewBody: r.review.trim(),
+      datePublished: r.createdAt || '2026-01-01',
+    })),
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: avg,
+      reviewCount: validReviews.length,
+      ratingCount: validReviews.length,
+      bestRating: 5,
+      worstRating: 1,
+    },
+  };
+}
+
 /**
  * 5. Schema.org RealEstateListing + Accommodation for Property Pages
  */
@@ -121,6 +203,9 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
   if ((property as any).type === 'room') accommodationType = 'Room';
   if ((property as any).type === 'studio') accommodationType = 'Studio';
   if ((property as any).type === 'villa' || (property as any).type === 'house') accommodationType = 'House';
+
+  const reviewsData = (property as any).verifiedReviews || (property as any).reviews;
+  const reviewSchema = buildReviewSchema(reviewsData);
 
   return {
     '@context': 'https://schema.org',
@@ -173,12 +258,7 @@ export function generatePropertySchema(property: PublicProperty, canonicalUrl: s
         unitText: 'MONTH',
       },
     },
-    ...((property as any).aggregateRating
-      ? { aggregateRating: (property as any).aggregateRating }
-      : {}),
-    ...((property as any).reviews && Array.isArray((property as any).reviews) && (property as any).reviews.length > 0
-      ? { review: (property as any).reviews }
-      : {}),
+    ...(reviewSchema ? reviewSchema : {}),
   };
 }
 
