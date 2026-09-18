@@ -15,6 +15,10 @@ import {
   HelpCircle,
   Home,
   CheckCircle2,
+  Compass,
+  Building2,
+  Coffee,
+  Briefcase,
 } from 'lucide-react';
 import { LOCALITIES_DATA, CITIES_DATA } from '@/lib/seo/localityData';
 import { constructSeoMetadata } from '@/lib/seo/metadata';
@@ -23,6 +27,7 @@ import {
   generateFaqSchema,
   generateItemListSchema,
   generateLocalityEntitySchema,
+  generateTransitAndLandmarkSchema,
 } from '@/lib/seo/schema';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
@@ -94,6 +99,7 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
 
   const canonicalUrl = `https://rehvo.in/${city.slug}/${locality.slug}`;
   const entitySchema = generateLocalityEntitySchema(locality, canonicalUrl);
+  const transitLandmarkSchema = generateTransitAndLandmarkSchema(locality, canonicalUrl);
   const faqSchema = generateFaqSchema(locality.faqs);
   const itemListSchema = generateItemListSchema(
     `Properties for Rent in ${locality.name}`,
@@ -110,6 +116,10 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(entitySchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(transitLandmarkSchema) }}
       />
       <script
         type="application/ld+json"
@@ -148,33 +158,41 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
           </p>
 
           {/* Locality Price Benchmark Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-4 border-t border-slate-100">
-            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-6 gap-3 pt-4 border-t border-slate-100">
+            {locality.avgRent1RK ? (
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">1 RK Flat</span>
+                <div className="text-base sm:text-xl font-black text-[#031B2A] mt-0.5">
+                  ₹{(locality.avgRent1RK / 1000).toFixed(0)}k<span className="text-[10px] text-slate-400">/mo</span>
+                </div>
+              </div>
+            ) : null}
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">1 BHK Flat</span>
               <div className="text-base sm:text-xl font-black text-[#031B2A] mt-0.5">
                 ₹{(locality.avgRent1BHK / 1000).toFixed(0)}k<span className="text-[10px] text-slate-400">/mo</span>
               </div>
             </div>
-            <div className="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-100 text-center">
+            <div className="p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100 text-center">
               <span className="text-[10px] font-bold text-[#0E8F73] uppercase tracking-wider">2 BHK Flat</span>
               <div className="text-base sm:text-xl font-black text-[#0E8F73] mt-0.5">
                 ₹{(locality.avgRent2BHK / 1000).toFixed(0)}k<span className="text-[10px] text-emerald-600/70">/mo</span>
               </div>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">3 BHK Flat</span>
               <div className="text-base sm:text-xl font-black text-[#031B2A] mt-0.5">
                 ₹{(locality.avgRent3BHK / 1000).toFixed(0)}k<span className="text-[10px] text-slate-400">/mo</span>
               </div>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 text-center">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Co-Living / PG</span>
               <div className="text-base sm:text-xl font-black text-[#031B2A] mt-0.5">
                 ₹{(locality.avgRentPG / 1000).toFixed(0)}k<span className="text-[10px] text-slate-400">/bed</span>
               </div>
             </div>
-            <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/60 text-center col-span-2 sm:col-span-1">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Shared Flatmate</span>
+            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200/60 text-center col-span-2 sm:col-span-1">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Shared Room</span>
               <div className="text-base sm:text-xl font-black text-[#031B2A] mt-0.5">
                 ₹{(locality.avgRentFlatmate / 1000).toFixed(0)}k<span className="text-[10px] text-slate-400">/room</span>
               </div>
@@ -182,6 +200,37 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
           </div>
         </div>
       </header>
+
+      {/* Quick BHK & Intent Filters for Locality */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Explore in {locality.name}:</span>
+          <Link
+            href={`/rent/1-bhk-flats-for-rent-in-${locality.slug}`}
+            className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#0E8F73] hover:text-[#0E8F73] transition"
+          >
+            1 BHK in {locality.name}
+          </Link>
+          <Link
+            href={`/rent/2-bhk-flats-for-rent-in-${locality.slug}`}
+            className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#0E8F73] hover:text-[#0E8F73] transition"
+          >
+            2 BHK in {locality.name}
+          </Link>
+          <Link
+            href={`/rent/3-bhk-flats-for-rent-in-${locality.slug}`}
+            className="px-3 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:border-[#0E8F73] hover:text-[#0E8F73] transition"
+          >
+            3 BHK in {locality.name}
+          </Link>
+          <Link
+            href={`/rent/zero-brokerage-flats-in-${locality.slug}`}
+            className="px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-[#0E8F73] hover:bg-emerald-100 transition"
+          >
+            Zero Brokerage in {locality.name}
+          </Link>
+        </div>
+      </section>
 
       {/* Verified Listings Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -270,6 +319,24 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
         )}
       </section>
 
+      {/* Comprehensive Locality Deep Dive Narrative */}
+      {locality.aboutNarrative && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-4">
+            <div className="flex items-center gap-2 text-[#0E8F73] font-bold text-xs">
+              <Compass size={16} />
+              <span className="uppercase tracking-wider">Locality Intelligence & Rental Market Analysis</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-[#031B2A]">
+              About Living & Renting in {locality.name}
+            </h2>
+            <div className="text-sm text-slate-600 leading-relaxed space-y-3 whitespace-pre-line">
+              {locality.aboutNarrative}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Interactive Locality Map & Clusters */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <LocalityClusterMap
@@ -281,6 +348,48 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
         />
       </section>
 
+      {/* Nearby Localities Comparison (Task 7) */}
+      {locality.nearbyLocalitiesDetailed && locality.nearbyLocalitiesDetailed.length > 0 && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-6">
+            <div>
+              <h2 className="text-lg sm:text-2xl font-black text-[#031B2A]">
+                Nearby Localities & Rent Comparison
+              </h2>
+              <p className="text-xs text-slate-500 mt-1">
+                Compare average monthly rental rates and travel distances around {locality.name}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {locality.nearbyLocalitiesDetailed.map((nearby, idx) => (
+                <Link
+                  key={idx}
+                  href={`/${city.slug}/${nearby.slug}`}
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#0E8F73] hover:shadow-xs transition group block"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-[#031B2A] group-hover:text-[#0E8F73] transition">
+                      {nearby.name}
+                    </span>
+                    <span className="text-[10px] font-semibold text-slate-400">
+                      {nearby.distance}
+                    </span>
+                  </div>
+                  <div className="mt-2 text-sm font-bold text-slate-700">
+                    ₹{(nearby.avgRent2BHK / 1000).toFixed(0)}k<span className="text-xs text-slate-400 font-normal">/mo (2 BHK)</span>
+                  </div>
+                  <div className="mt-2 text-[11px] font-bold text-[#0E8F73] flex items-center gap-1">
+                    <span>Explore homes</span>
+                    <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Locality Infrastructure & Amenities Guide */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-8">
@@ -289,24 +398,31 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
               Neighborhood Infrastructure & Connectivity — {locality.name}
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Public transit, healthcare, education, and lifestyle hotspots evaluated by REHVO
+              Public transit, healthcare, education, corporate parks, and lifestyle hotspots evaluated by REHVO
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Metro & Transit */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Metro & Transit Stations */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
               <div className="flex items-center gap-2 text-[#0E8F73] font-bold text-xs">
                 <Train size={16} />
-                <span>Metro & Rail Transit</span>
+                <span>Transit & Connectivity</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-600">
-                {locality.metroLines.map((line, idx) => (
-                  <li key={idx} className="flex items-start gap-1.5">
-                    <CheckCircle2 size={13} className="text-[#0E8F73] shrink-0 mt-0.5" />
-                    <span>{line}</span>
-                  </li>
-                ))}
+                {locality.transitStations && locality.transitStations.length > 0
+                  ? locality.transitStations.map((station, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5">
+                        <CheckCircle2 size={13} className="text-[#0E8F73] shrink-0 mt-0.5" />
+                        <span>{station.name} {station.distance ? `(${station.distance})` : ''}</span>
+                      </li>
+                    ))
+                  : locality.metroLines.map((line, idx) => (
+                      <li key={idx} className="flex items-start gap-1.5">
+                        <CheckCircle2 size={13} className="text-[#0E8F73] shrink-0 mt-0.5" />
+                        <span>{line}</span>
+                      </li>
+                    ))}
               </ul>
             </div>
 
@@ -314,7 +430,7 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
               <div className="flex items-center gap-2 text-blue-600 font-bold text-xs">
                 <GraduationCap size={16} />
-                <span>Schools & Colleges</span>
+                <span>Premier Schools</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-600">
                 {locality.topSchools.map((school, idx) => (
@@ -325,6 +441,24 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
                 ))}
               </ul>
             </div>
+
+            {/* Top Colleges */}
+            {locality.topColleges && locality.topColleges.length > 0 && (
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+                <div className="flex items-center gap-2 text-indigo-600 font-bold text-xs">
+                  <GraduationCap size={16} />
+                  <span>Colleges & Universities</span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-slate-600">
+                  {locality.topColleges.map((college, idx) => (
+                    <li key={idx} className="flex items-start gap-1.5">
+                      <CheckCircle2 size={13} className="text-indigo-600 shrink-0 mt-0.5" />
+                      <span>{college}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Top Hospitals */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
@@ -342,11 +476,47 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
               </ul>
             </div>
 
-            {/* Lifestyle Hubs */}
+            {/* Top Offices & Tech Parks */}
+            {locality.topOffices && locality.topOffices.length > 0 && (
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+                <div className="flex items-center gap-2 text-amber-600 font-bold text-xs">
+                  <Briefcase size={16} />
+                  <span>Commercial Hubs & Tech Parks</span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-slate-600">
+                  {locality.topOffices.map((office, idx) => (
+                    <li key={idx} className="flex items-start gap-1.5">
+                      <CheckCircle2 size={13} className="text-amber-600 shrink-0 mt-0.5" />
+                      <span>{office}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Cafes & Dining */}
+            {locality.topCafes && locality.topCafes.length > 0 && (
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+                <div className="flex items-center gap-2 text-emerald-700 font-bold text-xs">
+                  <Coffee size={16} />
+                  <span>Popular Cafes & Dining</span>
+                </div>
+                <ul className="space-y-1.5 text-xs text-slate-600">
+                  {locality.topCafes.map((cafe, idx) => (
+                    <li key={idx} className="flex items-start gap-1.5">
+                      <CheckCircle2 size={13} className="text-emerald-700 shrink-0 mt-0.5" />
+                      <span>{cafe}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Lifestyle & Shopping */}
             <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
               <div className="flex items-center gap-2 text-purple-600 font-bold text-xs">
                 <ShoppingBag size={16} />
-                <span>Shopping & Cafes</span>
+                <span>Shopping Malls & Leisure</span>
               </div>
               <ul className="space-y-1.5 text-xs text-slate-600">
                 {locality.lifestyleHubs.map((hub, idx) => (

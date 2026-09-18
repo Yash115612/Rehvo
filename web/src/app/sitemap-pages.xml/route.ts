@@ -19,6 +19,8 @@ export async function GET() {
     { url: `${BASE_URL}/pg`, priority: '0.9', changefreq: 'daily', lastmod: now },
     { url: `${BASE_URL}/commercial`, priority: '0.9', changefreq: 'daily', lastmod: now },
     { url: `${BASE_URL}/society-services`, priority: '0.85', changefreq: 'weekly', lastmod: now },
+    { url: `${BASE_URL}/guides`, priority: '0.90', changefreq: 'weekly', lastmod: now },
+    { url: `${BASE_URL}/authors/rehvo-editorial`, priority: '0.85', changefreq: 'weekly', lastmod: now },
     { url: `${BASE_URL}/showreels`, priority: '0.85', changefreq: 'weekly', lastmod: now },
     { url: `${BASE_URL}/ai-concierge`, priority: '0.80', changefreq: 'weekly', lastmod: now },
     { url: `${BASE_URL}/safety`, priority: '0.70', changefreq: 'monthly', lastmod: now },

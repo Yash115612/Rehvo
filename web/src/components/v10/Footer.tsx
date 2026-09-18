@@ -49,12 +49,14 @@ const FOOTER_LINKS = [
     title: 'Top Localities',
     icon: MapPin,
     links: [
-      { label: 'Bandra West', href: '/search?locality=bandra-west' },
-      { label: 'Andheri West', href: '/search?locality=andheri-west' },
-      { label: 'Powai', href: '/search?locality=powai' },
-      { label: 'Worli & Lower Parel', href: '/search?locality=worli' },
-      { label: 'Juhu & Vile Parle', href: '/search?locality=juhu' },
-      { label: 'BKC', href: '/search?locality=bkc' },
+      { label: 'Bandra West', href: '/mumbai/bandra-west' },
+      { label: 'Andheri West', href: '/mumbai/andheri-west' },
+      { label: 'Powai', href: '/mumbai/powai' },
+      { label: 'Worli', href: '/mumbai/worli' },
+      { label: 'Lower Parel', href: '/mumbai/lower-parel' },
+      { label: 'Juhu', href: '/mumbai/juhu' },
+      { label: 'BKC', href: '/mumbai/bkc' },
+      { label: 'Malad West', href: '/mumbai/malad-west' },
     ],
   },
   {
@@ -63,9 +65,11 @@ const FOOTER_LINKS = [
     links: [
       { label: 'About REHVO', href: '/about' },
       { label: 'Instagram (@rehvo.in)', href: 'https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA==', isExternal: true },
-      { label: 'Blog', href: '/blog' },
+      { label: 'Rental Guides', href: '/guides' },
+      { label: 'Editorial Desk', href: '/authors/rehvo-editorial' },
       { label: 'Market Reports', href: '/reports' },
       { label: 'Stories', href: '/stories' },
+      { label: 'Blog', href: '/blog' },
       { label: 'Careers', href: '/careers' },
       { label: 'Contact Us', href: '/contact' },
       { label: 'Safety', href: '/safety' },
@@ -331,6 +335,89 @@ export const Footer: React.FC = () => {
                   </ul>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── SMART SEO INTERNAL LINKING DIRECTORY ─────────────────────────── */}
+      <div className="relative border-t border-white/8 bg-black/20">
+        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs text-white/50">
+            {/* Mumbai Localities */}
+            <div className="space-y-2">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
+                Mumbai Rental Localities
+              </h5>
+              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
+                <Link href="/mumbai/andheri-west" className="hover:text-[#2DD4BF] transition">Andheri West</Link> ·
+                <Link href="/mumbai/bandra-west" className="hover:text-[#2DD4BF] transition">Bandra West</Link> ·
+                <Link href="/mumbai/powai" className="hover:text-[#2DD4BF] transition">Powai</Link> ·
+                <Link href="/mumbai/worli" className="hover:text-[#2DD4BF] transition">Worli</Link> ·
+                <Link href="/mumbai/lower-parel" className="hover:text-[#2DD4BF] transition">Lower Parel</Link> ·
+                <Link href="/mumbai/juhu" className="hover:text-[#2DD4BF] transition">Juhu</Link> ·
+                <Link href="/mumbai/bkc" className="hover:text-[#2DD4BF] transition">BKC</Link> ·
+                <Link href="/mumbai/malad-west" className="hover:text-[#2DD4BF] transition">Malad West</Link> ·
+                <Link href="/mumbai/borivali-west" className="hover:text-[#2DD4BF] transition">Borivali West</Link> ·
+                <Link href="/mumbai/goregaon-west" className="hover:text-[#2DD4BF] transition">Goregaon West</Link> ·
+                <Link href="/mumbai/versova" className="hover:text-[#2DD4BF] transition">Versova</Link> ·
+                <Link href="/mumbai/santacruz-west" className="hover:text-[#2DD4BF] transition">Santacruz</Link> ·
+                <Link href="/mumbai/chembur" className="hover:text-[#2DD4BF] transition">Chembur</Link> ·
+                <Link href="/mumbai/dadar" className="hover:text-[#2DD4BF] transition">Dadar</Link> ·
+                <Link href="/mumbai/thane" className="hover:text-[#2DD4BF] transition">Thane</Link> ·
+                <Link href="/mumbai/navi-mumbai" className="hover:text-[#2DD4BF] transition">Navi Mumbai</Link>
+              </div>
+            </div>
+
+            {/* Popular Searches */}
+            <div className="space-y-2">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
+                Popular Rental Searches
+              </h5>
+              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
+                <Link href="/rent/1-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">1 BHK Mumbai</Link> ·
+                <Link href="/rent/2-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">2 BHK Mumbai</Link> ·
+                <Link href="/rent/3-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">3 BHK Mumbai</Link> ·
+                <Link href="/rent/zero-brokerage-flats-mumbai" className="hover:text-[#2DD4BF] transition">Zero Brokerage</Link> ·
+                <Link href="/rent/studio-apartments-in-mumbai" className="hover:text-[#2DD4BF] transition">Studio Apartments</Link> ·
+                <Link href="/rent/furnished-flats-for-rent-mumbai" className="hover:text-[#2DD4BF] transition">Furnished Flats</Link> ·
+                <Link href="/rent/bachelor-friendly-flats-mumbai" className="hover:text-[#2DD4BF] transition">Bachelor Homes</Link> ·
+                <Link href="/rent/family-flats-for-rent-mumbai" className="hover:text-[#2DD4BF] transition">Family Highrises</Link> ·
+                <Link href="/rent/flats-near-metro-station-mumbai" className="hover:text-[#2DD4BF] transition">Near Metro</Link>
+              </div>
+            </div>
+
+            {/* Landmark & Student Corridors */}
+            <div className="space-y-2">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
+                Tech & Student Hubs
+              </h5>
+              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
+                <Link href="/rent/flats-near-iit-bombay" className="hover:text-[#2DD4BF] transition">Near IIT Bombay</Link> ·
+                <Link href="/rent/flats-near-nmims" className="hover:text-[#2DD4BF] transition">Near NMIMS Juhu</Link> ·
+                <Link href="/rent/flats-near-bkc" className="hover:text-[#2DD4BF] transition">Near BKC</Link> ·
+                <Link href="/rent/flats-near-mumbai-airport" className="hover:text-[#2DD4BF] transition">Near CSMIA Airport</Link> ·
+                <Link href="/rent/flats-near-tcs-powai" className="hover:text-[#2DD4BF] transition">Near TCS Powai</Link> ·
+                <Link href="/rent/flats-near-mindspace-malad" className="hover:text-[#2DD4BF] transition">Near Mindspace Malad</Link> ·
+                <Link href="/rent/flats-near-jio-world-drive" className="hover:text-[#2DD4BF] transition">Near Jio World Drive</Link>
+              </div>
+            </div>
+
+            {/* Guides & Research */}
+            <div className="space-y-2">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
+                Legal & Rental Insights
+              </h5>
+              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
+                <Link href="/guides" className="hover:text-[#2DD4BF] transition">Tenant Guides</Link> ·
+                <Link href="/authors/rehvo-editorial" className="hover:text-[#2DD4BF] transition">Editorial Desk</Link> ·
+                <Link href="/reports" className="hover:text-[#2DD4BF] transition">Market Reports</Link> ·
+                <Link href="/blog" className="hover:text-[#2DD4BF] transition">Blog Articles</Link> ·
+                <Link href="/stories" className="hover:text-[#2DD4BF] transition">Web Stories</Link> ·
+                <Link href="/society-services" className="hover:text-[#2DD4BF] transition">Society NOCs</Link> ·
+                <Link href="/flatmates" className="hover:text-[#2DD4BF] transition">Find Flatmates</Link> ·
+                <Link href="/pg" className="hover:text-[#2DD4BF] transition">Verified PGs</Link>
+              </div>
             </div>
           </div>
         </div>

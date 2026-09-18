@@ -11,7 +11,12 @@ export interface SearchLandingProfile {
   faqs: { question: string; answer: string }[];
 }
 
+import { RENT_LANDING_PAGES } from './rentLandingData';
+
+export { RENT_LANDING_PAGES };
+
 export const SEARCH_LANDING_PAGES: Record<string, SearchLandingProfile> = {
+  ...RENT_LANDING_PAGES,
   '2-bhk-for-rent-in-mumbai': {
     slug: '2-bhk-for-rent-in-mumbai',
     title: '2 BHK Flats for Rent in Mumbai',

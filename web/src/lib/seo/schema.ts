@@ -582,3 +582,160 @@ export function generateLocalityEntitySchema(locality: LocalityProfile, canonica
     ],
   };
 }
+
+/**
+ * 13. Schema.org Transit Stations & Local Landmarks for Locality Pages
+ */
+export function generateTransitAndLandmarkSchema(locality: LocalityProfile, canonicalUrl: string) {
+  const items: any[] = [];
+  const lat = locality.latitude || locality.coordinates.lat;
+  const lng = locality.longitude || locality.coordinates.lng;
+
+  // Transit stations
+  if (Array.isArray(locality.transitStations)) {
+    locality.transitStations.forEach((station, idx) => {
+      let schemaType = 'CivicStructure';
+      if (station.type === 'metro') schemaType = 'MetroStation';
+      else if (station.type === 'railway') schemaType = 'TrainStation';
+      else if (station.type === 'bus') schemaType = 'BusStation';
+
+      items.push({
+        '@type': schemaType,
+        '@id': `${canonicalUrl}#transit-${idx + 1}`,
+        name: station.name,
+        containedInPlace: {
+          '@type': 'Place',
+          name: `${locality.name}, ${locality.city}`,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: lat,
+          longitude: lng,
+        },
+      });
+    });
+  }
+
+  // Top Schools
+  if (Array.isArray(locality.topSchools)) {
+    locality.topSchools.forEach((school, idx) => {
+      items.push({
+        '@type': 'School',
+        '@id': `${canonicalUrl}#school-${idx + 1}`,
+        name: school,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: locality.name,
+          addressRegion: 'Maharashtra',
+          addressCountry: 'IN',
+        },
+      });
+    });
+  }
+
+  // Top Colleges
+  if (Array.isArray(locality.topColleges)) {
+    locality.topColleges.forEach((college, idx) => {
+      items.push({
+        '@type': 'CollegeOrUniversity',
+        '@id': `${canonicalUrl}#college-${idx + 1}`,
+        name: college,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: locality.name,
+          addressRegion: 'Maharashtra',
+          addressCountry: 'IN',
+        },
+      });
+    });
+  }
+
+  // Top Hospitals
+  if (Array.isArray(locality.topHospitals)) {
+    locality.topHospitals.forEach((hosp, idx) => {
+      items.push({
+        '@type': 'Hospital',
+        '@id': `${canonicalUrl}#hospital-${idx + 1}`,
+        name: hosp,
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality: locality.name,
+          addressRegion: 'Maharashtra',
+          addressCountry: 'IN',
+        },
+      });
+    });
+  }
+
+  // Lifestyle Hubs / Landmarks
+  if (Array.isArray(locality.lifestyleHubs)) {
+    locality.lifestyleHubs.forEach((hub, idx) => {
+      items.push({
+        '@type': 'Place',
+        '@id': `${canonicalUrl}#landmark-${idx + 1}`,
+        name: hub,
+        containedInPlace: {
+          '@type': 'Place',
+          name: `${locality.name}, ${locality.city}`,
+        },
+      });
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': items,
+  };
+}
+
+/**
+ * 14. Schema.org Author & E-E-A-T Profile Schema
+ */
+export function generateAuthorSchema(author: {
+  name: string;
+  role: string;
+  bio: string;
+  url: string;
+  image?: string;
+  sameAs?: string[];
+  credentials?: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': `${author.url}#person`,
+        name: author.name,
+        jobTitle: author.role,
+        description: author.bio,
+        url: author.url,
+        image: author.image || `${BASE_URL}/logo.png`,
+        worksFor: {
+          '@type': 'Organization',
+          name: 'REHVO',
+          url: BASE_URL,
+        },
+        knowsAbout: [
+          'Mumbai Real Estate',
+          'Rental Yield Analysis',
+          'MahaRERA Regulations',
+          'Index-II Title Verification',
+          'Urban Planning & Housing Infrastructure',
+        ],
+        ...(author.sameAs ? { sameAs: author.sameAs } : {}),
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${author.url}#publisher`,
+        name: 'REHVO Editorial & Real Estate Intelligence Desk',
+        url: BASE_URL,
+        logo: `${BASE_URL}/logo.png`,
+        parentOrganization: {
+          '@id': `${BASE_URL}/#organization`,
+        },
+      },
+    ],
+  };
+}
+

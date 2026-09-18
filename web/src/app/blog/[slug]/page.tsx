@@ -118,7 +118,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
 
           {/* Author Badge */}
           <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-            <div className="flex items-center gap-3">
+            <Link
+              href="/authors/rehvo-editorial"
+              className="flex items-center gap-3 hover:opacity-80 transition group"
+              title="View Editorial Team Profile & Credentials"
+            >
               <Image
                 src={post.author.avatar}
                 alt={post.author.name}
@@ -127,10 +131,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 className="w-10 h-10 rounded-full object-cover border border-slate-200"
               />
               <div>
-                <div className="text-xs font-bold text-[#031B2A]">{post.author.name}</div>
+                <div className="text-xs font-bold text-[#031B2A] group-hover:text-[#0E8F73] transition flex items-center gap-1">
+                  <span>{post.author.name}</span>
+                  <span className="text-[10px] text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded-full font-bold">Verified</span>
+                </div>
                 <div className="text-[11px] text-slate-400">{post.author.role}</div>
               </div>
-            </div>
+            </Link>
 
             <div className="text-right text-[11px] text-slate-400">
               <span>Published: {new Date(post.publishDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</span>

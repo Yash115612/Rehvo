@@ -135,7 +135,11 @@ export default function ReportDetailPage({ params }: Props) {
           </p>
 
           <div className="mt-6 pt-6 border-t border-slate-100 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <Link
+              href="/authors/rehvo-editorial"
+              className="flex items-center gap-3 hover:opacity-85 transition group"
+              title="View Editorial Team Profile & Credentials"
+            >
               <Image
                 src={report.author.avatar}
                 alt={report.author.name}
@@ -144,10 +148,13 @@ export default function ReportDetailPage({ params }: Props) {
                 className="w-11 h-11 rounded-full object-cover border border-slate-200"
               />
               <div>
-                <p className="text-sm font-bold text-[#031B2A]">{report.author.name}</p>
+                <p className="text-sm font-bold text-[#031B2A] group-hover:text-[#0E8F73] transition flex items-center gap-1.5">
+                  <span>{report.author.name}</span>
+                  <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-bold">Verified</span>
+                </p>
                 <p className="text-xs text-slate-500">{report.author.role}</p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

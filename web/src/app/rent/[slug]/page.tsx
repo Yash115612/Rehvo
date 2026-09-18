@@ -17,7 +17,7 @@ import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { generatePropertySlug } from '@/lib/seo/slugs';
-import { generateItemListSchema, generateFaqSchema } from '@/lib/seo/schema';
+import { generateItemListSchema, generateFaqSchema, generateBreadcrumbSchema } from '@/lib/seo/schema';
 
 export const revalidate = 3600;
 
@@ -65,6 +65,7 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
   ];
 
   const faqSchema = generateFaqSchema(landing.faqs);
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbs);
   const itemListSchema = generateItemListSchema(
     landing.title,
     properties.map((p) => ({
@@ -76,6 +77,10 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
 
   return (
     <div className="min-h-screen bg-[#F8FAFB] pb-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
