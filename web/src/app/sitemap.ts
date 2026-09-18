@@ -196,15 +196,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   });
 
-  // 7. Verified Properties (Hierarchical Locality Canonical URLs)
+  // 7. Verified Properties (Primary Canonical URLs)
   publishedProperties.forEach((property) => {
     const slug = generatePropertySlug(property);
-    const citySlug = slugify(property.city || 'mumbai');
-    const localitySlug = slugify(property.locality || 'andheri-west');
     const lastMod = property.updated_at ? new Date(property.updated_at) : new Date();
 
     routes.push({
-      url: `${BASE_URL}/${citySlug}/${localitySlug}/${slug}`,
+      url: `${BASE_URL}/property/${slug}`,
       lastModified: lastMod,
       changeFrequency: 'weekly',
       priority: 0.85,

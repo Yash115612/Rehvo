@@ -20,9 +20,9 @@ interface SearchPageProps {
 export async function generateMetadata({ searchParams }: SearchPageProps): Promise<Metadata> {
   const loc = searchParams.locality || 'Mumbai';
   return constructSeoMetadata({
-    title: `Flats & Properties for Rent in ${loc} | Verified Marketplace | REHVO`,
+    title: `Flats & Properties for Rent in ${loc}`,
     description: `Search verified flats, commercial spaces & rooms for rent in ${loc} with verified marketplace and direct landlord contact.`,
-    canonicalUrl: `https://rehvo.in/search${searchParams.locality ? `?locality=${searchParams.locality}` : ''}`,
+    canonicalUrl: 'https://rehvo.in/search',
   });
 }
 

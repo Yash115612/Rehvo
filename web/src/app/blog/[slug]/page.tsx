@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return constructSeoMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
-    canonicalUrl: `/blog/${post.slug}`,
+    canonicalUrl: `https://rehvo.in/blog/${post.slug}`,
     imageUrl: post.coverImage,
     type: 'article',
     publishedTime: post.publishDate,

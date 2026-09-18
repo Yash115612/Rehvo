@@ -46,9 +46,9 @@ export async function generateMetadata({ params }: LocalityPageProps): Promise<M
   }
 
   return constructSeoMetadata({
-    title: `Flats, Rooms & Flatmates for Rent in ${locality.name}, ${city.name} | Zero Brokerage`,
+    title: `Flats, Rooms & Flatmates for Rent in ${locality.name}, ${city.name}`,
     description: `Browse 100% verified 1, 2 & 3 BHK flats, apartments, PGs and flatmates for rent in ${locality.name}, ${city.name}. Average 2 BHK rent ₹${locality.avgRent2BHK.toLocaleString('en-IN')}/mo with direct owner chat and instant physical visit booking on REHVO.`,
-    canonicalUrl: `/${city.slug}/${locality.slug}`,
+    canonicalUrl: `https://rehvo.in/${city.slug}/${locality.slug}`,
     keywords: [
       `flats for rent in ${locality.name.toLowerCase()}`,
       `apartments in ${locality.name.toLowerCase()}`,

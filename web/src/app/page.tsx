@@ -24,7 +24,7 @@ import { SocialCommunitySection } from '@/components/v10/SocialCommunitySection'
 export const revalidate = 60; // 60s ISR
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'REHVO — Verified Listing Flats, Rooms & Flatmates in Mumbai',
+  title: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
   description:
     'Discover verified 1, 2, 3 BHK flats, commercial spaces, PGs & flatmates for rent in Mumbai with verified marketplace. Direct owner chat, confirmed physical visits, and transparent pricing.',
   canonicalUrl: 'https://rehvo.in',

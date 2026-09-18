@@ -21,7 +21,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'REHVO — Verified Rental Marketplace in India | Direct Owners & Zero Brokerage',
+    default: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
     template: '%s | REHVO',
   },
   description:

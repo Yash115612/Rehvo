@@ -263,7 +263,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return constructSeoMetadata({
     title: landing.metaTitle,
     description: landing.metaDescription,
-    canonicalUrl: `/rent/${landing.slug}`,
+    canonicalUrl: `https://rehvo.in/rent/${landing.slug}`,
     keywords: [
       landing.title.toLowerCase(),
       'zero brokerage',

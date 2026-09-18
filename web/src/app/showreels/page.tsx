@@ -11,10 +11,10 @@ import { ImmersiveShowReelsClient } from '@/components/showreels/ImmersiveShowRe
 export const revalidate = 3600;
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'ShowReels — Video Property Walkthroughs & Locality Tours | REHVO',
+  title: 'ShowReels — Video Property Walkthroughs & Locality Tours',
   description:
     'Watch high-definition 4K video walkthroughs and neighbourhood tours of verified rental flats, luxury penthouses, and PGs across Mumbai. See real room dimensions before booking physical visits.',
-  canonicalUrl: '/showreels',
+  canonicalUrl: 'https://rehvo.in/showreels',
   keywords: [
     'property videos mumbai',
     'flat walkthrough videos',

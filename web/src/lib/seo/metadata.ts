@@ -61,21 +61,21 @@ export function constructSeoMetadata({
         'rehvo rental',
       ];
 
-  // Clean title to prevent double-branding (e.g. "About Us | REHVO | REHVO")
-  // Strip trailing " | REHVO", " — REHVO", etc., so layout template "%s | REHVO" adds branding once.
+  // Clean title: remove trailing/leading REHVO so layout template "%s | REHVO" brands once
   let cleanTitle = title.trim();
   const trailingPattern = /\s*[\|\—\-]\s*(?:REHVO|rehvo\.in|rehvo)\s*$/i;
   while (trailingPattern.test(cleanTitle)) {
     cleanTitle = cleanTitle.replace(trailingPattern, '').trim();
   }
-  // Also strip leading "REHVO — " or "REHVO | " if title continues with descriptive text
-  // e.g. "REHVO AI Concierge" is fine, but "REHVO | About" -> "About"
   cleanTitle = cleanTitle.replace(/^REHVO\s*[\|\—\-]\s*/i, '').trim() || title.trim();
 
+  const isHomepage = fullCanonical === `${BASE_URL}` || fullCanonical === `${BASE_URL}/` || canonicalUrl === '/' || canonicalUrl === BASE_URL;
   const brandedTitle = cleanTitle.toLowerCase().includes('rehvo') ? cleanTitle : `${cleanTitle} | ${SITE_NAME}`;
 
   const metadata: Metadata = {
-    title: cleanTitle,
+    // Next.js: if title is { absolute: ... }, it ignores layout template '%s | REHVO'.
+    // Homepage uses absolute title to avoid '%s | REHVO', whereas other pages use cleanTitle which the template transforms to 'Page | REHVO'.
+    title: isHomepage ? { absolute: title.trim() } : cleanTitle,
     description,
     keywords: parsedKeywords,
     metadataBase: new URL(BASE_URL),

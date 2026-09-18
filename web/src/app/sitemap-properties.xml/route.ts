@@ -51,15 +51,13 @@ export async function GET() {
 ${publishedProperties
   .map((p) => {
     const slug = generatePropertySlug({ id: p.id, title: p.title, locality: p.locality, city: p.city });
-    const citySlug = slugify(p.city || 'mumbai');
-    const localitySlug = slugify(p.locality || 'andheri-west');
     const lastMod = p.updated_at ? p.updated_at.split('T')[0] : now;
 
     return `  <url>
-    <loc>${BASE_URL}/${citySlug}/${localitySlug}/${slug}</loc>
+    <loc>${BASE_URL}/property/${slug}</loc>
     <lastmod>${lastMod}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>`;
   })
   .join('\n')}

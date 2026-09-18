@@ -37,9 +37,9 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
   }
 
   return constructSeoMetadata({
-    title: `Verified Flats, Rooms & PGs for Rent in ${city.name} | Zero Brokerage`,
+    title: `Verified Flats, Rooms & PGs for Rent in ${city.name}`,
     description: `Browse 100% verified flats, apartments, flatmates and PGs for rent in ${city.name}. Direct owner listings, AI concierge matching, zero broker fees, and verified Index-II title deeds on REHVO.`,
-    canonicalUrl: `/${city.slug}`,
+    canonicalUrl: `https://rehvo.in/${city.slug}`,
     keywords: [
       `rent in ${city.name.toLowerCase()}`,
       `flats for rent in ${city.name.toLowerCase()}`,

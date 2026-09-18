@@ -21,10 +21,10 @@ import { generateItemListSchema } from '@/lib/seo/schema';
 export const revalidate = 3600;
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'Flats & Apartments for Rent in Mumbai | 100% Verified Direct Owners | Zero Brokerage',
+  title: 'Flats & Apartments for Rent in Mumbai | 100% Verified Direct Owners',
   description:
     'Search 1, 2, 3 BHK verified rental flats in Mumbai without paying brokerage fees. Direct owner contact, physical walkthrough guarantee, and low security deposit rentals on REHVO.',
-  canonicalUrl: '/rent',
+  canonicalUrl: 'https://rehvo.in/rent',
   keywords: [
     'flats for rent in mumbai',
     'apartments for rent',

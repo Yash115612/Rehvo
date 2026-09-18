@@ -8,10 +8,10 @@ import { InternalLinksGrid } from '@/components/seo/InternalLinksGrid';
 import { BLOG_POSTS } from '@/lib/seo/blogData';
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'Real Estate Blog & Mumbai Rental Guides | REHVO',
+  title: 'Real Estate Blog & Mumbai Rental Guides',
   description:
     'Expert rental guides, Mumbai locality comparisons, flatmate advice, and tenant legal rights written by REHVO’s research team. Zero brokerage tips and rental yield intelligence.',
-  canonicalUrl: '/blog',
+  canonicalUrl: 'https://rehvo.in/blog',
   keywords: [
     'mumbai rental blog',
     'real estate guides mumbai',
