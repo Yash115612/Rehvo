@@ -73,10 +73,11 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google-site-verification-rehvo-production',
-    yandex: 'yandex-verification-token',
+    google: process.env.GOOGLE_SITE_VERIFICATION || process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || 'google1234567890abcdef',
+    yandex: process.env.YANDEX_VERIFICATION || 'yandex-verification-token',
     other: {
-      'msvalidate.01': 'msvalidate-token-rehvo',
+      'msvalidate.01': process.env.BING_SITE_VERIFICATION || process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION || 'BING1234567890ABCDEF',
+      'facebook-domain-verification': process.env.FACEBOOK_DOMAIN_VERIFICATION || 'fb-domain-verification-token',
     },
   },
   openGraph: {

@@ -989,28 +989,28 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     ],
     "nearbyLocalitiesDetailed": [
       {
-        "name": "Bandra East",
-        "slug": "bandra-east",
-        "avgRent2BHK": 85000,
-        "distance": "1.2 km"
-      },
-      {
         "name": "Bandra West",
         "slug": "bandra-west",
         "avgRent2BHK": 125000,
         "distance": "3.2 km"
       },
       {
-        "name": "Kurla West",
-        "slug": "kurla",
-        "avgRent2BHK": 48000,
-        "distance": "1.8 km"
+        "name": "Santacruz West",
+        "slug": "santacruz-west",
+        "avgRent2BHK": 85000,
+        "distance": "2.8 km"
       },
       {
-        "name": "Santacruz East",
-        "slug": "santacruz-east",
-        "avgRent2BHK": 62000,
-        "distance": "2.5 km"
+        "name": "Chembur",
+        "slug": "chembur",
+        "avgRent2BHK": 52000,
+        "distance": "4.5 km"
+      },
+      {
+        "name": "Worli",
+        "slug": "worli",
+        "avgRent2BHK": 130000,
+        "distance": "6.0 km"
       }
     ],
     "faqs": [

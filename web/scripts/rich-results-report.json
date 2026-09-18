@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-09-18T05:10:17.565Z",
+  "totalAudited": 10,
+  "passed": 10,
+  "failed": 0,
+  "healthScore": 100,
+  "results": [
+    {
+      "schemaType": "Organization",
+      "target": "Site Layout",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": [
+          "Organization",
+          "RealEstateAgent"
+        ]
+      }
+    },
+    {
+      "schemaType": "RealEstateListing",
+      "target": "Property Detail Page",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": [
+          "RealEstateListing",
+          "Apartment"
+        ]
+      }
+    },
+    {
+      "schemaType": "FAQPage",
+      "target": "Locality & Landing Pages",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "FAQPage"
+      }
+    },
+    {
+      "schemaType": "BreadcrumbList",
+      "target": "All Subpages",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "BreadcrumbList"
+      }
+    },
+    {
+      "schemaType": "VideoObject",
+      "target": "ShowReels Video Showcase",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "VideoObject"
+      }
+    },
+    {
+      "schemaType": "Article",
+      "target": "Blog & Market Reports",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "BlogPosting"
+      }
+    },
+    {
+      "schemaType": "ImageObject",
+      "target": "Image SEO & Gallery",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "ImageObject"
+      }
+    },
+    {
+      "schemaType": "Person",
+      "target": "Author Authority Profiles",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "Unknown",
+        "graphLength": 2
+      }
+    },
+    {
+      "schemaType": "LocalBusiness",
+      "target": "Society Services",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "LocalBusiness"
+      }
+    },
+    {
+      "schemaType": "Place",
+      "target": "Locality Landing Pages",
+      "status": "PASS",
+      "errors": [],
+      "warnings": [],
+      "details": {
+        "type": "Unknown",
+        "graphLength": 2
+      }
+    }
+  ]
+}

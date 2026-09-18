@@ -203,6 +203,7 @@ export function generateImageObject(
 ) {
   const safeUrl = url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? url : `/${url}`}`;
   return {
+    '@context': 'https://schema.org',
     '@type': 'ImageObject',
     url: safeUrl,
     contentUrl: safeUrl,

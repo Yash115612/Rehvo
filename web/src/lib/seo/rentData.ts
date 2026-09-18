@@ -56,7 +56,7 @@ export const SEARCH_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   '3-bhk-in-bandra': {
     slug: '3-bhk-in-bandra',
     title: '3 BHK Apartments in Bandra West',
-    metaTitle: '3 BHK Luxury Apartments for Rent in Bandra West, Mumbai | REHVO',
+    metaTitle: '3 BHK Sea View & Heritage Apartments in Bandra West | REHVO',
     metaDescription: 'Discover verified luxury 3 BHK apartments for rent in Bandra West, Mumbai. Sea views on Carter Road, Pali Hill serenity, and premium amenities with verified title deeds.',
     heading: 'Luxury 3 BHK Homes in Bandra West',
     subheading: 'Expansive sea-view residences and heritage-quarter penthouses in Mumbai’s most prestigious residential suburb.',
