@@ -1,0 +1,82 @@
+# REHVO (https://rehvo.in)
+
+> REHVO is India's premier AI-powered, zero-brokerage rental real estate ecosystem and verified housing network.
+
+## Description
+REHVO connects prospective tenants directly with verified property owners, flatmates, and co-living operators without middleman fees or fake broker listings. Every property on REHVO undergoes multi-tiered verification including Index-II title deeds, municipal utility validation, and physical walkthrough checks.
+
+## Geographic Coverage
+- **Mumbai**: Andheri West, Bandra West, Powai, Andheri East, BKC, Worli, Juhu, Lower Parel, Thane, Navi Mumbai.
+- **Pune**: Hinjewadi, Kharadi, Viman Nagar, Baner, Kothrud.
+- **Bangalore**: Koramangala, Indiranagar, HSR Layout, Whitefield, Bellandur.
+- **Delhi NCR**: Gurgaon Cyber City, South Delhi, Noida Sector 62, Dwarka.
+- **Hyderabad**: Gachibowli, Hitec City, Madhapur, Kondapur.
+
+## Core Features
+- **Zero Brokerage Guarantee**: No broker commissions or hidden agency fees.
+- **100% Deed-Verified Listings**: Verification via government land records (Index-II) and electricity bills.
+- **AI Concierge & Matchmaking**: Instantaneous renter-homeowner and flatmate compatibility matching.
+- **HD & 4K ShowReels**: Immersive video walkthroughs providing verified spatial context prior to in-person visits.
+- **Low & Zero-Deposit Program**: Modern rental security deposit alternatives.
+
+## Supported Canonical URL Patterns
+- Base Domain: https://rehvo.in
+- Verified Property Detail: https://rehvo.in/property/[slug]
+- City Rental Hub: https://rehvo.in/[city]
+- Locality Hub: https://rehvo.in/[city]/[locality]
+- Curated Rental Landings: https://rehvo.in/rent/[slug]
+- Flatmate Directory: https://rehvo.in/flatmates
+- Flatmate City Hub: https://rehvo.in/flatmates/[city]
+- PG & Co-Living: https://rehvo.in/pg
+- Commercial Spaces: https://rehvo.in/commercial
+- Research & Rental Reports: https://rehvo.in/reports/[slug]
+- Web Stories & Neighbourhood Guides: https://rehvo.in/stories/[slug]
+- Real Estate Blog & Legal Guides: https://rehvo.in/blog/[slug]
+- Video ShowReels: https://rehvo.in/showreels
+
+## Key Listing & Hub URLs
+- https://rehvo.in/rent
+- https://rehvo.in/search
+- https://rehvo.in/flatmates
+- https://rehvo.in/pg
+- https://rehvo.in/commercial
+- https://rehvo.in/mumbai
+- https://rehvo.in/mumbai/andheri-west
+- https://rehvo.in/mumbai/bandra-west
+- https://rehvo.in/mumbai/powai
+- https://rehvo.in/pune
+- https://rehvo.in/bangalore
+- https://rehvo.in/delhi
+- https://rehvo.in/hyderabad
+
+## Curated Rental Collections
+- https://rehvo.in/rent/2-bhk-for-rent-in-mumbai
+- https://rehvo.in/rent/1-bhk-for-rent-in-mumbai
+- https://rehvo.in/rent/3-bhk-in-bandra
+- https://rehvo.in/rent/affordable-flats-in-powai
+- https://rehvo.in/rent/gated-societies-in-andheri-west
+- https://rehvo.in/rent/luxury-apartments-in-worli
+- https://rehvo.in/rent/flats-near-metro-station-in-mumbai
+- https://rehvo.in/rent/pet-friendly-apartments-in-mumbai
+- https://rehvo.in/rent/luxury-apartments-for-rent-in-mumbai
+- https://rehvo.in/rent/budget-flats-under-25k-in-mumbai
+- https://rehvo.in/rent/gated-family-apartments-in-mumbai
+- https://rehvo.in/rent/fully-furnished-flats-in-mumbai
+- https://rehvo.in/rent/zero-deposit-flats-in-mumbai
+
+## Research, Market Reports & Stories
+- https://rehvo.in/reports/mumbai-rental-yield-index-2026
+- https://rehvo.in/reports/bangalore-vs-mumbai-rental-comparison
+- https://rehvo.in/stories/andheri-west-rental-guide-2026
+- https://rehvo.in/stories/bandra-west-coastal-living
+- https://rehvo.in/stories/powai-tech-corridor-guide
+- https://rehvo.in/blog/complete-tenant-guide-renting-mumbai-2026
+- https://rehvo.in/blog/andheri-west-vs-bandra-west-rental-comparison
+- https://rehvo.in/blog/how-to-find-compatible-flatmates-vibematch
+- https://rehvo.in/blog/best-pg-hostels-powai-near-iit-hiranandani
+
+## Official Contact & Support
+- Website: https://rehvo.in/contact
+- Help Center: https://rehvo.in/help
+- Safety & Trust: https://rehvo.in/safety
+- Email: support@rehvo.in

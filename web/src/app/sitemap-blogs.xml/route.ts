@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { LOCALITIES_DATA } from '@/lib/seo/localityData';
+import { BLOG_POSTS } from '@/lib/seo/blogData';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
@@ -8,19 +8,27 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 export async function GET() {
   const now = new Date().toISOString().split('T')[0];
-  const localities = Object.values(LOCALITIES_DATA || {});
+  const blogSlugs = Object.keys(BLOG_POSTS || {});
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${localities
-  .map(
-    (loc) => `  <url>
-    <loc>${BASE_URL}/${loc.citySlug}/${loc.slug}</loc>
+  <url>
+    <loc>${BASE_URL}/blog</loc>
     <lastmod>${now}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+  </url>
+${blogSlugs
+  .map((slug) => {
+    const post = BLOG_POSTS[slug];
+    const lastmod = post.modifiedDate || post.publishDate || now;
+    return `  <url>
+    <loc>${BASE_URL}/blog/${slug}</loc>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
-  </url>`
-  )
+    <priority>0.80</priority>
+  </url>`;
+  })
   .join('\n')}
 </urlset>`;
 

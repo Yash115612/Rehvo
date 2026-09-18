@@ -57,7 +57,7 @@ ${publishedProperties
     <loc>${BASE_URL}/property/${slug}</loc>
     <lastmod>${lastMod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.95</priority>
   </url>`;
   })
   .join('\n')}

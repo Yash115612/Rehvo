@@ -9,56 +9,26 @@ export const revalidate = 3600;
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 export async function GET() {
-  const pages: { url: string; priority: string; changefreq: string; lastmod?: string }[] = [
-    { url: `${BASE_URL}`, priority: '1.0', changefreq: 'daily' },
-    { url: `${BASE_URL}/rent`, priority: '0.95', changefreq: 'daily' },
-    { url: `${BASE_URL}/search`, priority: '0.95', changefreq: 'daily' },
-    { url: `${BASE_URL}/flatmates`, priority: '0.9', changefreq: 'daily' },
-    { url: `${BASE_URL}/pg`, priority: '0.9', changefreq: 'daily' },
-    { url: `${BASE_URL}/commercial`, priority: '0.9', changefreq: 'daily' },
-    { url: `${BASE_URL}/society-services`, priority: '0.85', changefreq: 'weekly' },
-    { url: `${BASE_URL}/showreels`, priority: '0.85', changefreq: 'weekly' },
-    { url: `${BASE_URL}/ai-concierge`, priority: '0.8', changefreq: 'weekly' },
-    { url: `${BASE_URL}/zero-brokerage`, priority: '0.8', changefreq: 'weekly' },
-    { url: `${BASE_URL}/reports`, priority: '0.85', changefreq: 'weekly' },
-    { url: `${BASE_URL}/stories`, priority: '0.85', changefreq: 'weekly' },
-    { url: `${BASE_URL}/safety`, priority: '0.7', changefreq: 'monthly' },
-    { url: `${BASE_URL}/download`, priority: '0.8', changefreq: 'monthly' },
-    { url: `${BASE_URL}/about`, priority: '0.6', changefreq: 'monthly' },
-    { url: `${BASE_URL}/contact`, priority: '0.6', changefreq: 'monthly' },
-    { url: `${BASE_URL}/blog`, priority: '0.85', changefreq: 'daily' },
-  ];
-
-  // Blog posts
-  Object.keys(BLOG_POSTS || {}).forEach((slug) => {
-    pages.push({
-      url: `${BASE_URL}/blog/${slug}`,
-      priority: '0.8',
-      changefreq: 'weekly',
-      lastmod: BLOG_POSTS[slug].modifiedDate || BLOG_POSTS[slug].publishDate,
-    });
-  });
-
-  // Web Stories
-  Object.keys(REHVO_STORIES || {}).forEach((slug) => {
-    pages.push({
-      url: `${BASE_URL}/stories/${slug}`,
-      priority: '0.8',
-      changefreq: 'weekly',
-    });
-  });
-
-  // Research & Market Reports
-  Object.keys(MARKET_REPORTS || {}).forEach((slug) => {
-    pages.push({
-      url: `${BASE_URL}/reports/${slug}`,
-      priority: '0.85',
-      changefreq: 'monthly',
-      lastmod: MARKET_REPORTS[slug].publishDate,
-    });
-  });
-
   const now = new Date().toISOString().split('T')[0];
+
+  const pages: { url: string; priority: string; changefreq: string; lastmod?: string }[] = [
+    { url: `${BASE_URL}`, priority: '1.0', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/rent`, priority: '0.95', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/search`, priority: '0.95', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/flatmates`, priority: '0.9', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/pg`, priority: '0.9', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/commercial`, priority: '0.9', changefreq: 'daily', lastmod: now },
+    { url: `${BASE_URL}/society-services`, priority: '0.85', changefreq: 'weekly', lastmod: now },
+    { url: `${BASE_URL}/showreels`, priority: '0.85', changefreq: 'weekly', lastmod: now },
+    { url: `${BASE_URL}/ai-concierge`, priority: '0.80', changefreq: 'weekly', lastmod: now },
+    { url: `${BASE_URL}/safety`, priority: '0.70', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/download`, priority: '0.80', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/about`, priority: '0.60', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/contact`, priority: '0.60', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/privacy`, priority: '0.60', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/terms`, priority: '0.60', changefreq: 'monthly', lastmod: now },
+    { url: `${BASE_URL}/careers`, priority: '0.60', changefreq: 'monthly', lastmod: now },
+  ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

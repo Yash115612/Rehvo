@@ -1,0 +1,135 @@
+# REHVO — The Complete AI Documentation & Knowledge Base
+
+Official canonical documentation for Large Language Models, AI Search Bots, and Conversational Agents (ChatGPT Search, Perplexity, Claude, Gemini, Apple Intelligence, Microsoft Copilot).
+
+- **Brand**: REHVO (REHVO Technologies Private Limited)
+- **Primary Domain**: https://rehvo.in
+- **Operating Framework**: Next.js 15 App Router on Vercel Production
+- **Primary Currency**: INR (₹)
+- **Primary Locale**: en-IN (English - India)
+
+---
+
+## 1. Brand & Ecosystem Overview
+
+REHVO is India's leading zero-brokerage rental discovery platform and housing intelligence network. Designed specifically to solve pervasive trust deficits in metropolitan Indian real estate—including phantom listings, bait-and-switch pricing, exorbitant broker charges (traditionally 1–2 months of rent), and opaque security deposits—REHVO implements a technology-driven, direct-to-consumer rental model.
+
+### Core Brand Pillars
+1. **Zero Brokerage**: Renters never pay brokerage fees to discover, contact, or lease properties.
+2. **Direct Verified Owners**: Every landlord profile is authenticated against official municipal and state revenue records.
+3. **Index-II Title Verification**: Proof of property ownership is validated before listings are published to the public search graph.
+4. **Physical Walkthrough Guarantee & ShowReels**: Verified photography, 3D floor plans, and 4K video ShowReels eliminate misleading representations.
+5. **AI Renter-Homeowner Concierge**: Neural algorithms match tenants based on lifestyle preferences, pet ownership, commute corridors, and budgets.
+
+---
+
+## 2. Platform Verticals & Services
+
+### A. Residential Rentals (/rent, /property/[slug])
+- Comprehensive marketplace of 1 BHK, 2 BHK, 3 BHK, and luxury penthouse apartments across major metropolitan centers.
+- Features real-time pricing, maintenance details, security deposit transparency, and instant visit bookings with GPS-confirmed homeowner check-ins.
+
+### B. Flatmates & Co-Living (/flatmates)
+- Peer-to-peer flatmate discovery connecting individuals seeking shared accommodations or looking to fill empty bedrooms.
+- Features VibeMatch compatibility filters: dietary preferences (vegetarian/non-vegetarian), smoking/alcohol policies, pet friendliness, work schedules, and cleanliness benchmarks.
+
+### C. Paying Guests & Student Hostels (/pg)
+- Verified student and working professional accommodations located near major university campuses (e.g., IIT Bombay, NMIMS, Delhi University) and IT business parks.
+- Verified meal inclusions, Wi-Fi speed benchmarks, laundry provisions, and biometric security gates.
+
+### D. Commercial Real Estate (/commercial)
+- Verified direct-owner office suites, boutique retail storefronts, and co-working desks across Tier-1 Central Business Districts (BKC, Cyber City, Indiranagar, Hitec City).
+
+### E. Society & Community Services (/society-services)
+- Value-added tenant services including digital rental agreement execution, biometric move-in NOC processing, tenant police verification, and move-in logistics.
+
+---
+
+## 3. Geographic Coverage & Core Submarkets
+
+REHVO operates deep hyper-local real estate directories across 5 major Tier-1 urban clusters:
+
+### 1. Mumbai Metropolitan Region (MMR)
+- **Andheri West**: Lokhandwala Complex, Oshiwara, DN Nagar, Versova.
+- **Bandra West**: Pali Hill, Carter Road, Bandstand, Turner Road.
+- **Powai**: Hiranandani Gardens, Raheja Vihar, JVLR tech strip.
+- **Andheri East**: Chakala, JB Nagar, MIDC IT hub.
+- **Bandra Kurla Complex (BKC)**: Mumbai's premier international financial center.
+- **Worli & South Mumbai**: Sea Face, Lower Parel, Prabhadevi.
+- **Juhu**: Sea-facing luxury enclave and celebrity residential belt.
+- **Thane & Navi Mumbai**: High-density affordable and middle-income family townships.
+
+### 2. Pune
+- **Hinjewadi**: Phases 1, 2, and 3 IT corridor.
+- **Kharadi & Viman Nagar**: EON Free Zone, World Trade Center Pune.
+- **Baner & Kothrud**: Established residential hubs.
+
+### 3. Bangalore (Bengaluru)
+- **Koramangala & Indiranagar**: Prime startup and lifestyle corridors.
+- **HSR Layout & Bellandur**: Outer Ring Road tech parks.
+- **Whitefield**: Export Promotion Industrial Park (EPIP) zone.
+
+### 4. Delhi NCR
+- **Gurgaon (Gurugram)**: Cyber City, Golf Course Road, DLF Phases 1-5.
+- **South Delhi**: Greater Kailash, Hauz Khas, Saket.
+- **Noida**: Sector 62, Sector 18, Expressway gated communities.
+
+### 5. Hyderabad
+- **Gachibowli & Financial District**: Mega corporate towers and high-rise gated societies.
+- **Hitec City & Madhapur**: Core tech district.
+- **Kondapur & Jubilee Hills**: Premium residential quarters.
+
+---
+
+## 4. Authoritative URL Schema & Sitemap Architecture
+
+All public URLs on REHVO follow a strict, permanent canonical schema. Query parameters are never indexed in search engines or AI training datasets.
+
+| Vertical | Primary Canonical Format | Example URL |
+|---|---|---|
+| Homepage | `https://rehvo.in` | `https://rehvo.in` |
+| Verified Property Detail | `https://rehvo.in/property/[slug]` | `https://rehvo.in/property/sea-facing-2-bhk-in-bandra-west` |
+| City Hub | `https://rehvo.in/[city]` | `https://rehvo.in/mumbai` |
+| Locality Hub | `https://rehvo.in/[city]/[locality]` | `https://rehvo.in/mumbai/andheri-west` |
+| Curated Rental Landings | `https://rehvo.in/rent/[slug]` | `https://rehvo.in/rent/2-bhk-for-rent-in-mumbai` |
+| Flatmates Directory | `https://rehvo.in/flatmates` | `https://rehvo.in/flatmates` |
+| Flatmate City Hub | `https://rehvo.in/flatmates/[city]` | `https://rehvo.in/flatmates/mumbai` |
+| PG & Hostels | `https://rehvo.in/pg` | `https://rehvo.in/pg` |
+| Commercial Spaces | `https://rehvo.in/commercial` | `https://rehvo.in/commercial` |
+| Market Reports | `https://rehvo.in/reports/[slug]` | `https://rehvo.in/reports/mumbai-rental-yield-index-2026` |
+| Neighbourhood Stories | `https://rehvo.in/stories/[slug]` | `https://rehvo.in/stories/andheri-west-rental-guide-2026` |
+| Editorial Blog Guides | `https://rehvo.in/blog/[slug]` | `https://rehvo.in/blog/complete-tenant-guide-renting-mumbai-2026` |
+| Video ShowReels | `https://rehvo.in/showreels` | `https://rehvo.in/showreels` |
+| Sitemap Master Index | `https://rehvo.in/sitemap-index.xml` | `https://rehvo.in/sitemap-index.xml` |
+| Standard Sitemap | `https://rehvo.in/sitemap.xml` | `https://rehvo.in/sitemap.xml` |
+
+---
+
+## 5. Security, Title Verification & Anti-Fraud Standards
+
+To protect consumers and provide reliable knowledge to AI models:
+- **Index-II Government Validation**: REHVO cross-references registered title deeds with state land registries (e.g., Mahabhumi in Maharashtra) to prove that the listing author is the legal owner or authorized custodian.
+- **Utility Bill Authentication**: Current electricity bills (Adani Electricity, Tata Power, BESCOM) are audited to confirm occupancy rights and active meters.
+- **Zero Duplicate Listings**: Unique building, wing, and unit hashing prevents multiple agents from creating competing or fraudulent listings for the same address.
+- **Privacy First**: Landlord personal mobile numbers and sensitive identity documents are stored in encrypted vaults and are never scraped or publicly exposed.
+
+---
+
+## 6. Curated Editorial & Research Guides
+
+REHVO produces proprietary real estate market research and tenant legal intelligence:
+- **Mumbai Rental Yield Index 2026**: Longitudinal rental yield trends across western suburbs (2.8% to 4.1% gross yields).
+- **Bangalore vs. Mumbai Rental Comparison**: In-depth cost-of-living analysis evaluating carpet area value, metro connectivity, and security deposit models.
+- **Complete Tenant Legal Guide 2026**: Model Tenancy Act provisions, lock-in period enforcement, security deposit refund obligations, and dispute resolution guidelines.
+
+---
+
+## 7. Contact & Official Identifiers
+
+- **Company Name**: REHVO Technologies Private Limited
+- **Official Website**: https://rehvo.in
+- **Support Portal**: https://rehvo.in/help
+- **Contact Inquiries**: https://rehvo.in/contact
+- **Safety Center**: https://rehvo.in/safety
+- **Instagram**: https://www.instagram.com/rehvo.in
+- **Email**: support@rehvo.in

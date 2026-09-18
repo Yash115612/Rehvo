@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { LOCALITIES_DATA } from '@/lib/seo/localityData';
+import { SEARCH_LANDING_PAGES } from '@/lib/seo/rentData';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
@@ -8,17 +8,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 
 export async function GET() {
   const now = new Date().toISOString().split('T')[0];
-  const localities = Object.values(LOCALITIES_DATA || {});
+  const rentPages = Object.keys(SEARCH_LANDING_PAGES || {});
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${localities
+${rentPages
   .map(
-    (loc) => `  <url>
-    <loc>${BASE_URL}/${loc.citySlug}/${loc.slug}</loc>
+    (slug) => `  <url>
+    <loc>${BASE_URL}/rent/${slug}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.88</priority>
+    <priority>0.92</priority>
   </url>`
   )
   .join('\n')}
