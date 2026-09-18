@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,15 +6,17 @@ import {
   ScrollView,
   FlatList,
   Pressable,
+  TextInput,
   RefreshControl,
   Share,
   Platform,
+  Dimensions,
+  Modal,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Map,
-  List,
   Sparkles,
   MapPin,
   Check,
@@ -25,16 +27,20 @@ import {
   Mic,
   ArrowRight,
   TrendingUp,
-  History,
-  RotateCcw,
-  Sliders,
-  AlertCircle,
   Share2,
   Scale,
+  ShieldCheck,
+  Compass,
+  Building2,
+  Home,
+  CheckCircle2,
+  Flame,
+  Award,
+  Zap,
 } from 'lucide-react-native';
 import { useAppStore } from '../../../store/useAppStore';
 import { Property, AdvancedFilterPayload, SearchSuggestionItem, LocalityScoreRecord } from '../../../types';
-import { V4_COLORS, V4_RADIUS, V4_SHADOWS, V4_TYPOGRAPHY } from '../../../theme/v4Theme';
+import { V4_COLORS, V4_RADIUS, V4_SHADOWS } from '../../../theme/v4Theme';
 import { V4PropertyCardLarge } from '../ui/V4PropertyCardLarge';
 import { V4EmptyState } from '../ui/V4EmptyState';
 import { V4FilterSheet } from './V4FilterSheet';
@@ -42,7 +48,6 @@ import { V4VoiceAssistantModal } from '../ai/V4VoiceAssistantModal';
 import { V4SearchSuggestions } from '../search/V4SearchSuggestions';
 import { V4NeighborhoodCard } from '../ui/V4NeighborhoodCard';
 import {
-  executeSmartSearch,
   getSearchSuggestions,
   correctQueryTypos,
   parseNaturalLanguageQuery,
@@ -50,19 +55,29 @@ import {
   saveUserSearch,
 } from '../../../services/smartSearch';
 import { getLocalityScores } from '../../../services/smartMaps';
-import { V4Skeleton } from '../ui/V4Skeleton';
 
-const QUICK_FILTERS = [
-  'Verified Listing',
-  '0 Deposit Pass',
-  'Under ₹40k',
-  '2+ BHK',
-  'Fully Furnished',
-  'Verified Landlord',
-  'Pet Friendly',
-  'Covered Parking',
-  'Near Metro',
-  'Immediate Move-in',
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+// ── LIFESTYLE / CATEGORY FILTERS ─────────────────────────────────────────────
+const LIFESTYLE_CATEGORIES = [
+  { id: 'all', label: 'All Homes', icon: Home, query: '' },
+  { id: 'verified', label: 'Verified Only', icon: ShieldCheck, filterKey: 'zero_brokerage_only' },
+  { id: 'zero_deposit', label: '0 Deposit Pass', icon: Zap, filterKey: 'zero_deposit_only' },
+  { id: 'bhk2', label: '2+ BHK', icon: Building2, bhk: ['2 BHK', '3 BHK', '4+ BHK'] },
+  { id: 'luxury', label: 'Sea-Facing / Luxury', icon: Award, rentMin: 65000 },
+  { id: 'budget', label: 'Under ₹40k', icon: Flame, rentMax: 40000 },
+  { id: 'furnished', label: 'Fully Furnished', icon: Sparkles, furnishing: 'FULLY_FURNISHED' },
+];
+
+const QUICK_LOCALITIES = [
+  'Bandra West',
+  'Andheri West',
+  'Powai',
+  'Worli',
+  'Lower Parel',
+  'Juhu',
+  'Khar West',
+  'Goregaon East',
 ];
 
 export type SortOption =
@@ -72,17 +87,19 @@ export type SortOption =
   | 'NEWEST'
   | 'VERIFIED';
 
-const SORT_OPTIONS: { key: SortOption; label: string }[] = [
-  { key: 'RECOMMENDED', label: 'AI Best Match' },
-  { key: 'PRICE_ASC', label: 'Price: Low to High' },
-  { key: 'PRICE_DESC', label: 'Price: High to Low' },
-  { key: 'NEWEST', label: 'Newly Listed' },
-  { key: 'VERIFIED', label: 'Verified Landlords First' },
+const SORT_OPTIONS: { key: SortOption; label: string; desc: string }[] = [
+  { key: 'RECOMMENDED', label: 'AI Best Match', desc: 'Personalized recommendation score' },
+  { key: 'PRICE_ASC', label: 'Price: Low to High', desc: 'Budget-friendly rentals first' },
+  { key: 'PRICE_DESC', label: 'Price: High to Low', desc: 'Premium luxury homes first' },
+  { key: 'NEWEST', label: 'Newly Listed', desc: 'Freshly posted direct-owner properties' },
+  { key: 'VERIFIED', label: 'Verified Landlords', desc: 'Deed-inspected & physical visited first' },
 ];
 
 export const V4ExploreScreen: React.FC = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const searchInputRef = useRef<TextInput>(null);
+
   const {
     properties,
     savedPropertyIds,
@@ -94,12 +111,12 @@ export const V4ExploreScreen: React.FC = () => {
 
   // Search States
   const [searchQuery, setSearchQuery] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>('all');
   const [suggestions, setSuggestions] = useState<SearchSuggestionItem[]>([]);
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [voiceModalOpen, setVoiceModalOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [advancedFilters, setAdvancedFilters] = useState<Partial<AdvancedFilterPayload>>({});
-  const [selectedQuickFilters, setSelectedQuickFilters] = useState<string[]>(['Verified Listing']);
   const [sortBy, setSortBy] = useState<SortOption>('RECOMMENDED');
   const [sortModalOpen, setSortModalOpen] = useState(false);
 
@@ -111,12 +128,11 @@ export const V4ExploreScreen: React.FC = () => {
   const [compareList, setCompareList] = useState<string[]>([]);
   const [localityScore, setLocalityScore] = useState<LocalityScoreRecord | null>(null);
 
-  // Trending & History
   const trendingSearches = useMemo(() => getTrendingSearches(), []);
 
-  // Update suggestions when user types
+  // Update suggestions when typing
   useEffect(() => {
-    if (searchQuery.trim().length > 0) {
+    if (searchQuery.trim().length > 1) {
       const sugs = getSearchSuggestions(searchQuery);
       setSuggestions(sugs);
     } else {
@@ -131,15 +147,21 @@ export const V4ExploreScreen: React.FC = () => {
     getLocalityScores(targetLoc).then(setLocalityScore).catch(() => {});
   }, [searchQuery]);
 
-  // Handle Typo Correction Suggestion Pill
   const typoInfo = useMemo(() => {
     return correctQueryTypos(searchQuery);
   }, [searchQuery]);
 
-  const toggleQuickFilter = (f: string) => {
-    setSelectedQuickFilters((prev) =>
-      prev.includes(f) ? prev.filter((item) => item !== f) : [...prev, f]
-    );
+  const handleSelectSuggestion = (item: SearchSuggestionItem) => {
+    setSearchQuery(item.title);
+    setSuggestions([]);
+    setIsSearchFocused(false);
+    searchInputRef.current?.blur();
+    setPage(1);
+  };
+
+  const handleSelectQuickLocality = (loc: string) => {
+    setSearchQuery(loc);
+    setSuggestions([]);
     setPage(1);
   };
 
@@ -148,12 +170,18 @@ export const V4ExploreScreen: React.FC = () => {
     setPage(1);
   };
 
-  const handleSelectSuggestion = (item: SearchSuggestionItem) => {
-    setSearchQuery(item.title);
-    setIsTyping(false);
-    setSuggestions([]);
-    setPage(1);
-  };
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (advancedFilters.rent_min !== undefined || advancedFilters.rent_max !== undefined) count++;
+    if (advancedFilters.bhk && advancedFilters.bhk.length > 0) count++;
+    if (advancedFilters.furnishing && advancedFilters.furnishing !== 'ALL') count++;
+    if (advancedFilters.zero_deposit_only) count++;
+    if (advancedFilters.zero_brokerage_only) count++;
+    if (advancedFilters.pet_friendly) count++;
+    if (advancedFilters.covered_car_parking) count++;
+    if (activeCategory !== 'all') count++;
+    return count;
+  }, [advancedFilters, activeCategory]);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -161,27 +189,25 @@ export const V4ExploreScreen: React.FC = () => {
     setIsRefreshing(false);
   };
 
-  // Convert quick filters into advanced filter attributes
-  const effectiveFilters: Partial<AdvancedFilterPayload> = useMemo(() => {
+  // Merge Category Filters & Advanced Filters
+  const effectiveFilters = useMemo(() => {
     const filters: Partial<AdvancedFilterPayload> = { ...advancedFilters };
+    const cat = LIFESTYLE_CATEGORIES.find((c) => c.id === activeCategory);
 
-    if (selectedQuickFilters.includes('Verified Listing')) filters.zero_brokerage_only = true;
-    if (selectedQuickFilters.includes('0 Deposit Pass')) filters.zero_deposit_only = true;
-    if (selectedQuickFilters.includes('Under ₹40k')) filters.rent_max = 40000;
-    if (selectedQuickFilters.includes('2+ BHK')) filters.bhk = ['2 BHK', '3 BHK', '4+ BHK'];
-    if (selectedQuickFilters.includes('Fully Furnished')) filters.furnishing = 'FULLY_FURNISHED';
-    if (selectedQuickFilters.includes('Verified Landlord')) filters.owner_verified_only = true;
-    if (selectedQuickFilters.includes('Pet Friendly')) filters.pet_friendly = true;
-    if (selectedQuickFilters.includes('Covered Parking')) filters.covered_car_parking = true;
-    if (selectedQuickFilters.includes('Near Metro')) filters.near_metro_only = true;
-    if (selectedQuickFilters.includes('Immediate Move-in')) filters.move_in_timeline = 'IMMEDIATE';
+    if (cat) {
+      if (cat.filterKey === 'zero_brokerage_only') filters.zero_brokerage_only = true;
+      if (cat.filterKey === 'zero_deposit_only') filters.zero_deposit_only = true;
+      if (cat.bhk) filters.bhk = cat.bhk;
+      if (cat.rentMin) filters.rent_min = cat.rentMin;
+      if (cat.rentMax) filters.rent_max = cat.rentMax;
+      if (cat.furnishing) filters.furnishing = cat.furnishing;
+    }
 
     return filters;
-  }, [advancedFilters, selectedQuickFilters]);
+  }, [advancedFilters, activeCategory]);
 
   // Execute smart search with AI Match scoring
   const searchResults = useMemo(() => {
-    // In-memory filtered candidate list
     const nlp = parseNaturalLanguageQuery(searchQuery);
     let list = (properties || []).filter((p) => !dismissedPropertyIds.includes(p.id));
 
@@ -233,16 +259,16 @@ export const V4ExploreScreen: React.FC = () => {
 
     // AI Scoring
     const scored = list.map((prop) => {
-      let score = 80;
+      let score = 82;
       let why = 'Verified Match';
 
       if (prop.verification_status === 'VERIFIED') score += 6;
       if ((prop.deposit || 0) <= prop.rent) {
-        score += 8;
-        why = 'Zero Deposit Deal';
+        score += 7;
+        why = '0 Deposit Deal';
       }
       if (nlp.detectedLocality && prop.locality?.toLowerCase().includes(nlp.detectedLocality.toLowerCase())) {
-        score += 10;
+        score += 8;
         why = `Prime ${nlp.detectedLocality}`;
       }
 
@@ -278,29 +304,28 @@ export const V4ExploreScreen: React.FC = () => {
   }, [searchResults, page]);
 
   const hasMore = visibleList.length < searchResults.length;
-
   const savedPropertyIdSet = useMemo(() => new Set(savedPropertyIds || []), [savedPropertyIds]);
 
-  // Property Actions: Share, Compare, Dismiss (Memoized)
+  // Property Actions
   const handleShareProperty = useCallback(async (prop: Property) => {
     try {
       await Share.share({
         title: `REHVO: ${prop.title}`,
-        message: `Check out this ${prop.bhk} in ${prop.locality}, Mumbai for ₹${(prop.rent || 0).toLocaleString('en-IN')}/mo on REHVO (Verified Listing): https://rehvo.in/property/${prop.id}`,
+        message: `Check out this verified ${prop.bhk} in ${prop.locality}, Mumbai for ₹${(prop.rent || 0).toLocaleString('en-IN')}/mo with zero brokerage on REHVO: https://rehvo.in/property/${prop.id}`,
       });
     } catch {
-      // Ignore share cancellation
+      // User cancelled
     }
   }, []);
 
   const handleToggleCompare = useCallback((propId: string) => {
     setCompareList((prev) => {
       if (prev.includes(propId)) {
-        showToast('Removed from compare list', 'info');
+        showToast('Removed from compare', 'info');
         return prev.filter((id) => id !== propId);
       } else {
         if (prev.length >= 4) {
-          showToast('You can compare up to 4 properties', 'info');
+          showToast('Maximum 4 properties can be compared', 'info');
           return prev;
         }
         showToast('Added to compare list', 'success');
@@ -311,14 +336,18 @@ export const V4ExploreScreen: React.FC = () => {
 
   const handleDismissProperty = useCallback((propId: string) => {
     setDismissedPropertyIds((prev) => [...prev, propId]);
-    showToast('Listing dismissed from search', 'info');
+    showToast('Property hidden from your feed', 'info');
   }, [showToast]);
+
+  const handleBookVisit = useCallback((prop: Property) => {
+    router.push(`/(renter)/property/${prop.id}` as any);
+  }, [router]);
 
   const renderPropertyItem = useCallback(({ item: property }: { item: Property & { aiMatchScore?: number; whyThisBadge?: string } }) => {
     const isComparing = compareList.includes(property.id);
 
     return (
-      <View style={styles.cardWrapper}>
+      <View style={styles.cardContainer}>
         <V4PropertyCardLarge
           property={property}
           aiMatchScore={property.aiMatchScore}
@@ -327,70 +356,115 @@ export const V4ExploreScreen: React.FC = () => {
           isSaved={savedPropertyIdSet.has(property.id)}
           onToggleSave={toggleSaveProperty}
           onSelect={() => router.push(`/(renter)/property/${property.id}` as any)}
+          onBookVisit={handleBookVisit}
           onNotInterested={handleDismissProperty}
         />
 
-        {/* Intelligence Preview Badges */}
-        <View style={styles.intelPreviewRow}>
-          <View style={styles.intelPreviewChip}>
-            <Text style={styles.intelPreviewText}>🛡️ Safety A+</Text>
+        {/* Card Utility Actions Bar */}
+        <View style={styles.cardQuickBar}>
+          <View style={styles.trustSignalsRow}>
+            <View style={styles.trustSignal}>
+              <CheckCircle2 size={11} color="#0E8F73" />
+              <Text style={styles.trustSignalText}>Index-II Deed Verified</Text>
+            </View>
+            <View style={styles.trustSignal}>
+              <Text style={styles.trustSignalText}>⚡ Direct Owner</Text>
+            </View>
           </View>
-          <View style={styles.intelPreviewChip}>
-            <Text style={styles.intelPreviewText}>🍃 AQI 68</Text>
-          </View>
-          <View style={styles.intelPreviewChip}>
-            <Text style={styles.intelPreviewText}>🚇 Metro ~7m</Text>
-          </View>
-          <View style={styles.intelPreviewChipHighlight}>
-            <Text style={styles.intelPreviewTextHighlight}>Verified Listing</Text>
-          </View>
-        </View>
 
-        {/* Extra Card Operations: Share & Compare */}
-        <View style={styles.cardExtraActions}>
-          <Pressable
-            style={styles.extraActionBtn}
-            onPress={() => handleToggleCompare(property.id)}
-          >
-            <Scale
-              size={14}
-              color={isComparing ? V4_COLORS.primary : '#64748B'}
-            />
-            <Text
-              style={[
-                styles.extraActionText,
-                isComparing && styles.extraActionTextActive,
-              ]}
+          <View style={styles.cardQuickActions}>
+            <Pressable
+              style={[styles.quickActionButton, isComparing && styles.quickActionButtonActive]}
+              onPress={() => handleToggleCompare(property.id)}
             >
-              {isComparing ? 'Comparing' : 'Compare'}
-            </Text>
-          </Pressable>
+              <Scale size={13} color={isComparing ? '#0E8F73' : '#64748B'} />
+              <Text style={[styles.quickActionText, isComparing && styles.quickActionTextActive]}>
+                {isComparing ? 'Comparing' : 'Compare'}
+              </Text>
+            </Pressable>
 
-          <Pressable
-            style={styles.extraActionBtn}
-            onPress={() => handleShareProperty(property)}
-          >
-            <Share2 size={14} color="#64748B" />
-            <Text style={styles.extraActionText}>Share</Text>
-          </Pressable>
+            <Pressable
+              style={styles.quickActionButton}
+              onPress={() => handleShareProperty(property)}
+            >
+              <Share2 size={13} color="#64748B" />
+              <Text style={styles.quickActionText}>Share</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     );
-  }, [compareList, savedPropertyIdSet, toggleSaveProperty, router, handleDismissProperty, handleToggleCompare, handleShareProperty]);
+  }, [compareList, savedPropertyIdSet, toggleSaveProperty, router, handleBookVisit, handleDismissProperty, handleToggleCompare, handleShareProperty]);
 
   const keyExtractor = useCallback((item: Property) => item.id, []);
 
   const listHeaderComponent = useMemo(() => {
-    if (!localityScore) return null;
-    return <V4NeighborhoodCard localityScore={localityScore} />;
-  }, [localityScore]);
+    return (
+      <View style={styles.feedHeaderWrapper}>
+        {/* Neighborhood Intelligence Banner */}
+        {localityScore && (
+          <View style={styles.neighborhoodScoreContainer}>
+            <V4NeighborhoodCard localityScore={localityScore} />
+          </View>
+        )}
+
+        {/* Locality Quick Selector Pills */}
+        <View style={styles.quickLocalitiesSection}>
+          <Text style={styles.quickLocalitiesTitle}>Trending Mumbai Localities</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.quickLocalitiesScroll}
+          >
+            {QUICK_LOCALITIES.map((loc) => {
+              const isActive = searchQuery.toLowerCase().includes(loc.toLowerCase());
+              return (
+                <Pressable
+                  key={loc}
+                  style={[styles.localityPill, isActive && styles.localityPillActive]}
+                  onPress={() => handleSelectQuickLocality(loc)}
+                >
+                  <MapPin size={11} color={isActive ? '#FFFFFF' : '#0E8F73'} />
+                  <Text style={[styles.localityPillText, isActive && styles.localityPillTextActive]}>
+                    {loc}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
+        </View>
+
+        {/* Results Metadata Bar */}
+        <View style={styles.resultsBar}>
+          <View>
+            <Text style={styles.resultsCountHeading}>
+              {searchResults.length} Verified Homes
+            </Text>
+            <Text style={styles.resultsCountSub}>
+              Zero Brokerage • Direct Owner Deals in Mumbai
+            </Text>
+          </View>
+
+          <Pressable
+            style={styles.sortTriggerPill}
+            onPress={() => setSortModalOpen(true)}
+          >
+            <Text style={styles.sortTriggerText}>
+              {SORT_OPTIONS.find((s) => s.key === sortBy)?.label}
+            </Text>
+            <ChevronDown size={13} color="#031B2A" strokeWidth={2.4} />
+          </Pressable>
+        </View>
+      </View>
+    );
+  }, [localityScore, searchQuery, searchResults.length, sortBy]);
 
   const listFooterComponent = useMemo(() => {
     if (!hasMore) return null;
     return (
-      <Pressable style={styles.loadMoreBtn} onPress={() => setPage((p) => p + 1)}>
-        <Text style={styles.loadMoreBtnText}>
-          Load More Properties ({searchResults.length - visibleList.length} remaining)
+      <Pressable style={styles.loadMoreButton} onPress={() => setPage((p) => p + 1)}>
+        <Text style={styles.loadMoreButtonText}>
+          Show More Homes ({searchResults.length - visibleList.length} remaining)
         </Text>
       </Pressable>
     );
@@ -399,52 +473,70 @@ export const V4ExploreScreen: React.FC = () => {
   const listEmptyComponent = useMemo(() => {
     return (
       <V4EmptyState
-        title="No Matching Homes"
-        description="Try broadening your budget or relaxing your locality and amenity filters."
-        actionLabel="Reset All Filters"
+        title="No Matching Homes Found"
+        description="Try expanding your search radius, adjusting budget limits, or clearing selected filters."
+        actionLabel="Clear All Filters"
         onActionPress={() => {
           setSearchQuery('');
-          setSelectedQuickFilters([]);
+          setActiveCategory('all');
           setAdvancedFilters({});
         }}
       />
     );
   }, []);
 
-  const handleSaveSearch = async () => {
-    const userId = user?.id || 'guest_user';
-    const res = await saveUserSearch(userId, searchQuery || 'Mumbai Search', effectiveFilters);
-    if (res.success) {
-      showToast('Search alert saved! You\'ll receive instant alerts.', 'success');
-    } else {
-      showToast(res.error || 'Failed to save search', 'error');
-    }
-  };
-
   return (
-    <View style={[styles.root, { paddingTop: Math.max(insets.top, 14) }]}>
-      {/* 1. TOP HEADER & SEARCH BAR */}
-      <View style={styles.header}>
-        <View style={styles.searchBarWrapper}>
-          <Search size={18} color="#0F766E" strokeWidth={2.4} />
-          <Pressable
-            style={styles.searchInputFake}
-            onPress={() => setIsTyping(true)}
-          >
-            <Text
-              style={[
-                styles.searchPlaceholder,
-                searchQuery ? styles.searchQueryText : undefined,
-              ]}
-              numberOfLines={1}
-            >
-              {searchQuery || 'Search "2BHK near BKC under 45k"'}
-            </Text>
-          </Pressable>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top, 10) }]}>
+      {/* ── 1. REFINED EDITORIAL HEADER ────────────────────────────────────── */}
+      <View style={styles.topHeader}>
+        {/* City & Live Status */}
+        <View style={styles.cityLocationRow}>
+          <View style={styles.cityBadge}>
+            <MapPin size={12} color="#0E8F73" />
+            <Text style={styles.cityName}>Mumbai</Text>
+            <View style={styles.cityDot} />
+            <Text style={styles.cityVerifiedText}>Zero Brokerage</Text>
+          </View>
 
-          {searchQuery ? (
+          <Pressable
+            style={styles.aiConciergePill}
+            onPress={() =>
+              router.push({
+                pathname: '/(renter)/ai',
+                params: {
+                  prompt: searchQuery
+                    ? `Find verified homes matching: ${searchQuery}`
+                    : 'Find me verified 2 BHK apartments in Bandra or Powai',
+                  context: 'explore',
+                },
+              } as any)
+            }
+          >
+            <Sparkles size={12} color="#0E8F73" />
+            <Text style={styles.aiConciergePillText}>AI Concierge</Text>
+          </Pressable>
+        </View>
+
+        {/* Search Bar with Native Keyboard Input */}
+        <View style={[styles.searchBox, isSearchFocused && styles.searchBoxFocused]}>
+          <Search size={18} color="#0E8F73" strokeWidth={2.4} />
+          
+          <TextInput
+            ref={searchInputRef}
+            style={styles.searchTextInput}
+            placeholder='Search "2 BHK Bandra under 60k" or locality...'
+            placeholderTextColor="#94A3B8"
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+            onFocus={() => setIsSearchFocused(true)}
+            onBlur={() => setIsSearchFocused(false)}
+            returnKeyType="search"
+            clearButtonMode="never"
+          />
+
+          {searchQuery.length > 0 ? (
             <Pressable
-              style={styles.clearSearchBtn}
+              style={styles.searchClearBtn}
               onPress={() => {
                 setSearchQuery('');
                 setSuggestions([]);
@@ -455,97 +547,63 @@ export const V4ExploreScreen: React.FC = () => {
             </Pressable>
           ) : (
             <Pressable
-              style={styles.micBtn}
+              style={styles.voiceSearchBtn}
               onPress={() => setVoiceModalOpen(true)}
               hitSlop={8}
             >
-              <Mic size={18} color={V4_COLORS.primary} strokeWidth={2.4} />
+              <Mic size={17} color="#0E8F73" strokeWidth={2.4} />
             </Pressable>
           )}
         </View>
 
-        {/* Map View Toggle Switch */}
-        <Pressable
-          style={styles.mapSwitchBtn}
-          onPress={() => router.push('/(renter)/map' as any)}
-          hitSlop={8}
-        >
-          <Map size={18} color={V4_COLORS.primary} strokeWidth={2.4} />
-        </Pressable>
+        {/* Action Row: Filters, Map View, Active Filter Indicator */}
+        <View style={styles.headerControlBar}>
+          <Pressable
+            style={[styles.filterIconButton, activeFiltersCount > 0 && styles.filterIconButtonActive]}
+            onPress={() => setFilterSheetOpen(true)}
+          >
+            <SlidersHorizontal size={14} color={activeFiltersCount > 0 ? '#FFFFFF' : '#031B2A'} strokeWidth={2.2} />
+            <Text style={[styles.filterIconButtonText, activeFiltersCount > 0 && styles.filterIconButtonTextActive]}>
+              Filters {activeFiltersCount > 0 ? `(${activeFiltersCount})` : ''}
+            </Text>
+          </Pressable>
 
-        {/* REHVO AI Assistant Trigger */}
-        <Pressable
-          style={[styles.mapSwitchBtn, { backgroundColor: '#CCFBF1' }]}
-          onPress={() =>
-            router.push({
-              pathname: '/(renter)/ai',
-              params: {
-                prompt: searchQuery
-                  ? `Find homes matching: ${searchQuery}`
-                  : 'Find me a verified verified listing home in Mumbai',
-                context: 'search',
-              },
-            } as any)
-          }
-          hitSlop={8}
-        >
-          <Sparkles size={18} color={V4_COLORS.primary} strokeWidth={2.4} />
-        </Pressable>
+          <Pressable
+            style={styles.mapIconButton}
+            onPress={() => router.push('/(renter)/map' as any)}
+          >
+            <Map size={14} color="#0E8F73" strokeWidth={2.2} />
+            <Text style={styles.mapIconButtonText}>Map View</Text>
+          </Pressable>
+        </View>
       </View>
 
-      {/* Typo Correction Banner */}
-      {typoInfo.hasCorrection && typoInfo.suggestionPill && (
-        <Pressable
-          style={styles.typoBanner}
-          onPress={() => setSearchQuery(typoInfo.correctedQuery)}
-        >
-          <AlertCircle size={13} color="#0F766E" />
-          <Text style={styles.typoBannerText}>
-            Showing results for <Text style={styles.typoBold}>{typoInfo.correctedQuery}</Text>.
-          </Text>
-        </Pressable>
-      )}
-
-      {/* Suggestions Overlay Dropdown */}
-      {suggestions.length > 0 && (
-        <View style={styles.suggestionsOverlay}>
-          <V4SearchSuggestions
-            suggestions={suggestions}
-            onSelectSuggestion={handleSelectSuggestion}
-          />
-        </View>
-      )}
-
-      {/* 2. QUICK FILTER PILLS & ADVANCED FILTER TRIGGER */}
-      <View style={styles.filtersBar}>
-        <Pressable
-          style={styles.filterSheetTrigger}
-          onPress={() => setFilterSheetOpen(true)}
-        >
-          <SlidersHorizontal size={14} color={V4_COLORS.primary} strokeWidth={2.4} />
-          <Text style={styles.filterSheetTriggerText}>Filters</Text>
-        </Pressable>
-
+      {/* ── 2. LIFESTYLE CATEGORY TABS ──────────────────────────────────────── */}
+      <View style={styles.categoryBarContainer}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.quickFiltersScroll}
+          contentContainerStyle={styles.categoryScrollContent}
         >
-          {QUICK_FILTERS.map((f) => {
-            const isSelected = selectedQuickFilters.includes(f);
+          {LIFESTYLE_CATEGORIES.map((cat) => {
+            const isSelected = activeCategory === cat.id;
+            const IconComp = cat.icon;
             return (
               <Pressable
-                key={f}
-                style={[styles.quickFilterChip, isSelected && styles.quickFilterChipActive]}
-                onPress={() => toggleQuickFilter(f)}
+                key={cat.id}
+                style={[styles.categoryTab, isSelected && styles.categoryTabActive]}
+                onPress={() => {
+                  setActiveCategory(cat.id);
+                  setPage(1);
+                }}
               >
-                <Text
-                  style={[
-                    styles.quickFilterText,
-                    isSelected && styles.quickFilterTextActive,
-                  ]}
-                >
-                  {f}
+                <IconComp
+                  size={13}
+                  color={isSelected ? '#FFFFFF' : '#475569'}
+                  strokeWidth={2.2}
+                />
+                <Text style={[styles.categoryTabText, isSelected && styles.categoryTabTextActive]}>
+                  {cat.label}
                 </Text>
               </Pressable>
             );
@@ -553,60 +611,29 @@ export const V4ExploreScreen: React.FC = () => {
         </ScrollView>
       </View>
 
-      {/* 3. RESULTS SUB-HEADER: COUNT, SORT DROPDOWN, SAVE SEARCH */}
-      <View style={styles.resultsSubHeader}>
-        <Text style={styles.resultsCount}>
-          <Text style={styles.resultsCountBold}>{searchResults.length}</Text> Homes in Mumbai
-        </Text>
+      {/* Typo Correction Bar */}
+      {typoInfo.hasCorrection && typoInfo.suggestionPill && (
+        <Pressable
+          style={styles.typoAlert}
+          onPress={() => setSearchQuery(typoInfo.correctedQuery)}
+        >
+          <Text style={styles.typoAlertText}>
+            Showing results for <Text style={styles.typoAlertBold}>{typoInfo.correctedQuery}</Text>
+          </Text>
+        </Pressable>
+      )}
 
-        <View style={styles.headerActions}>
-          <Pressable style={styles.saveSearchPill} onPress={handleSaveSearch}>
-            <Sparkles size={12} color="#0F766E" />
-            <Text style={styles.saveSearchPillText}>Save Search</Text>
-          </Pressable>
-
-          <Pressable
-            style={styles.sortDropdownPill}
-            onPress={() => setSortModalOpen(!sortModalOpen)}
-          >
-            <Text style={styles.sortDropdownText}>
-              {SORT_OPTIONS.find((s) => s.key === sortBy)?.label}
-            </Text>
-            <ChevronDown size={12} color="#475569" strokeWidth={2.4} />
-          </Pressable>
-        </View>
-      </View>
-
-      {/* Sort Dropdown Modal / Picker */}
-      {sortModalOpen && (
-        <View style={styles.sortDropdownCard}>
-          {SORT_OPTIONS.map((opt) => (
-            <Pressable
-              key={opt.key}
-              style={[
-                styles.sortOptionRow,
-                sortBy === opt.key && styles.sortOptionRowActive,
-              ]}
-              onPress={() => {
-                setSortBy(opt.key);
-                setSortModalOpen(false);
-              }}
-            >
-              <Text
-                style={[
-                  styles.sortOptionText,
-                  sortBy === opt.key && styles.sortOptionTextActive,
-                ]}
-              >
-                {opt.label}
-              </Text>
-              {sortBy === opt.key && <Check size={14} color={V4_COLORS.primary} />}
-            </Pressable>
-          ))}
+      {/* Suggestions Dropdown */}
+      {suggestions.length > 0 && (
+        <View style={styles.suggestionsContainer}>
+          <V4SearchSuggestions
+            suggestions={suggestions}
+            onSelectSuggestion={handleSelectSuggestion}
+          />
         </View>
       )}
 
-      {/* 4. MAIN SEARCH FEED (LIST OF HOMES WITH VIRTUALIZED FLATLIST) */}
+      {/* ── 3. MAIN HOMES FEED (FLATLIST) ────────────────────────────────────── */}
       <FlatList
         data={visibleList}
         renderItem={renderPropertyItem}
@@ -619,17 +646,75 @@ export const V4ExploreScreen: React.FC = () => {
         windowSize={5}
         removeClippedSubviews={Platform.OS === 'android'}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.feedContent, { paddingBottom: Math.max(insets.bottom, 24) + 90 }]}
+        contentContainerStyle={[
+          styles.feedContentContainer,
+          { paddingBottom: Math.max(insets.bottom, 20) + 90 },
+        ]}
         refreshControl={
           <RefreshControl
             refreshing={isRefreshing}
             onRefresh={handleRefresh}
-            tintColor={V4_COLORS.primary}
+            tintColor="#0E8F73"
           />
         }
       />
 
-      {/* Voice AI Assistant Modal (V7.1) */}
+      {/* ── 4. MODERN SORT SELECTION MODAL ───────────────────────────────────── */}
+      <Modal
+        visible={sortModalOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSortModalOpen(false)}
+      >
+        <Pressable style={styles.modalBackdrop} onPress={() => setSortModalOpen(false)}>
+          <View style={[styles.sortModalSheet, { paddingBottom: Math.max(insets.bottom, 20) + 10 }]}>
+            <View style={styles.sortModalHeader}>
+              <View>
+                <Text style={styles.sortModalTitle}>Sort Properties</Text>
+                <Text style={styles.sortModalSubtitle}>Choose your preferred discovery order</Text>
+              </View>
+              <Pressable
+                style={styles.modalCloseBtn}
+                onPress={() => setSortModalOpen(false)}
+                hitSlop={8}
+              >
+                <X size={18} color="#64748B" />
+              </Pressable>
+            </View>
+
+            <View style={styles.sortOptionsList}>
+              {SORT_OPTIONS.map((opt) => {
+                const isSelected = sortBy === opt.key;
+                return (
+                  <Pressable
+                    key={opt.key}
+                    style={[styles.sortItemRow, isSelected && styles.sortItemRowActive]}
+                    onPress={() => {
+                      setSortBy(opt.key);
+                      setSortModalOpen(false);
+                      setPage(1);
+                    }}
+                  >
+                    <View style={styles.sortItemInfo}>
+                      <Text style={[styles.sortItemTitle, isSelected && styles.sortItemTitleActive]}>
+                        {opt.label}
+                      </Text>
+                      <Text style={styles.sortItemDesc}>{opt.desc}</Text>
+                    </View>
+                    {isSelected && (
+                      <View style={styles.sortItemCheck}>
+                        <Check size={14} color="#0E8F73" strokeWidth={3} />
+                      </View>
+                    )}
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        </Pressable>
+      </Modal>
+
+      {/* Voice Assistant Modal */}
       <V4VoiceAssistantModal
         visible={voiceModalOpen}
         onClose={() => setVoiceModalOpen(false)}
@@ -645,7 +730,7 @@ export const V4ExploreScreen: React.FC = () => {
         }}
       />
 
-      {/* Advanced Filter Sheet V2 */}
+      {/* Advanced Filter Sheet */}
       <V4FilterSheet
         visible={filterSheetOpen}
         onClose={() => setFilterSheetOpen(false)}
@@ -653,21 +738,19 @@ export const V4ExploreScreen: React.FC = () => {
         onApply={handleApplyFilterSheet}
       />
 
-      {/* Floating Compare Bar */}
+      {/* Floating Compare Action Bar */}
       {compareList.length > 0 && (
-        <View style={[styles.floatingCompareBar, { bottom: insets.bottom + 16 }]}>
-          <View style={styles.compareBarInfo}>
-            <View style={styles.compareCountPill}>
-              <Text style={styles.compareCountText}>{compareList.length}/4</Text>
-            </View>
-            <Text style={styles.compareBarLabel}>Selected for compare</Text>
+        <View style={[styles.compareFloatingBar, { bottom: insets.bottom + 14 }]}>
+          <View style={styles.compareCountTag}>
+            <Text style={styles.compareCountText}>{compareList.length}/4</Text>
           </View>
+          <Text style={styles.compareBarText}>Properties selected to compare</Text>
           <Pressable
-            style={styles.compareBarActionBtn}
+            style={styles.compareSubmitBtn}
             onPress={() => router.push(`/(renter)/compare?ids=${compareList.join(',')}` as any)}
           >
-            <Text style={styles.compareBarActionText}>Compare Now</Text>
-            <ArrowRight size={14} color="#FFFFFF" />
+            <Text style={styles.compareSubmitText}>Compare</Text>
+            <ArrowRight size={13} color="#FFFFFF" />
           </Pressable>
         </View>
       )}
@@ -676,322 +759,443 @@ export const V4ExploreScreen: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
-  root: {
+  container: {
     flex: 1,
-    backgroundColor: '#FAFDFD',
+    backgroundColor: '#F8FAFB',
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    gap: 10,
-  },
-  searchBarWrapper: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+  topHeader: {
     backgroundColor: '#FFFFFF',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEF2F6',
+    gap: 10,
+  },
+  cityLocationRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  cityBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    backgroundColor: '#F0FDFA',
+    borderWidth: 1,
+    borderColor: '#CCFBF1',
+    paddingHorizontal: 10,
+    paddingVertical: 4.5,
+    borderRadius: 20,
+  },
+  cityName: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#031B2A',
+  },
+  cityDot: {
+    width: 3.5,
+    height: 3.5,
+    borderRadius: 2,
+    backgroundColor: '#0E8F73',
+  },
+  cityVerifiedText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#0E8F73',
+  },
+  aiConciergePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4.5,
+    backgroundColor: '#F0FDFA',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#A7F3D0',
+  },
+  aiConciergePillText: {
+    fontSize: 11,
+    fontWeight: '800',
+    color: '#0E8F73',
+  },
+  searchBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    backgroundColor: '#F8FAFC',
     borderRadius: 16,
     borderWidth: 1.5,
     borderColor: '#E2E8F0',
+    paddingHorizontal: 14,
+    height: 48,
+  },
+  searchBoxFocused: {
+    borderColor: '#0E8F73',
+    backgroundColor: '#FFFFFF',
     ...V4_SHADOWS.soft,
   },
-  searchInputFake: {
+  searchTextInput: {
     flex: 1,
+    fontSize: 13.5,
+    fontWeight: '600',
+    color: '#031B2A',
+    paddingVertical: 0,
   },
-  searchPlaceholder: {
-    fontSize: 13,
-    color: '#94A3B8',
-    fontWeight: '500',
+  searchClearBtn: {
+    padding: 6,
   },
-  searchQueryText: {
-    color: V4_COLORS.textPrimary,
-    fontWeight: '700',
+  voiceSearchBtn: {
+    padding: 6,
   },
-  clearSearchBtn: {
-    padding: 4,
-  },
-  micBtn: {
-    padding: 2,
-  },
-  mapSwitchBtn: {
+  headerControlBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 10,
+  },
+  filterIconButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    backgroundColor: '#F1F5F9',
+    height: 38,
+    borderRadius: 12,
+  },
+  filterIconButtonActive: {
+    backgroundColor: '#031B2A',
+  },
+  filterIconButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#031B2A',
+  },
+  filterIconButtonTextActive: {
+    color: '#FFFFFF',
+  },
+  mapIconButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
     backgroundColor: '#F0FDFA',
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: '#CCFBF1',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 16,
-    ...V4_SHADOWS.soft,
+    height: 38,
+    borderRadius: 12,
   },
-  mapSwitchText: {
-    fontSize: 12.5,
+  mapIconButtonText: {
+    fontSize: 12,
     fontWeight: '800',
-    color: V4_COLORS.primary,
+    color: '#0E8F73',
   },
-  typoBanner: {
+  categoryBarContainer: {
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEF2F6',
+    paddingVertical: 8,
+  },
+  categoryScrollContent: {
+    paddingHorizontal: 16,
+    gap: 8,
+  },
+  categoryTab: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    paddingHorizontal: 12,
+    paddingVertical: 7,
+    borderRadius: 20,
+  },
+  categoryTabActive: {
+    backgroundColor: '#0E8F73',
+    borderColor: '#0E8F73',
+  },
+  categoryTabText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#475569',
+  },
+  categoryTabTextActive: {
+    color: '#FFFFFF',
+    fontWeight: '800',
+  },
+  typoAlert: {
     backgroundColor: '#F0FDFA',
     paddingHorizontal: 16,
     paddingVertical: 6,
-    marginHorizontal: 16,
-    borderRadius: 10,
-    marginBottom: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCFBF1',
   },
-  typoBannerText: {
+  typoAlertText: {
     fontSize: 11.5,
-    color: '#0F766E',
+    color: '#0E8F73',
   },
-  typoBold: {
+  typoAlertBold: {
     fontWeight: '800',
   },
-  suggestionsOverlay: {
+  suggestionsContainer: {
     position: 'absolute',
-    top: 75,
+    top: 140,
     left: 16,
     right: 16,
     zIndex: 999,
   },
-  filtersBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 6,
+  feedHeaderWrapper: {
+    paddingTop: 10,
   },
-  filterSheetTrigger: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1.5,
-    borderColor: V4_COLORS.primary,
-    paddingHorizontal: 12,
-    paddingVertical: 6.5,
-    borderRadius: 12,
-    marginLeft: 16,
-    marginRight: 8,
-    ...V4_SHADOWS.soft,
+  neighborhoodScoreContainer: {
+    marginBottom: 10,
   },
-  filterSheetTriggerText: {
-    fontSize: 12,
+  quickLocalitiesSection: {
+    marginBottom: 14,
+  },
+  quickLocalitiesTitle: {
+    fontSize: 11,
     fontWeight: '800',
-    color: V4_COLORS.primary,
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    color: '#94A3B8',
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
-  quickFiltersScroll: {
-    paddingRight: 16,
-    gap: 8,
+  quickLocalitiesScroll: {
+    paddingHorizontal: 16,
+    gap: 7,
   },
-  quickFilterChip: {
+  localityPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4.5,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: '#E2E8F0',
-    paddingHorizontal: 12,
-    paddingVertical: 6.5,
-    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 5.5,
+    borderRadius: 14,
   },
-  quickFilterChipActive: {
-    backgroundColor: 'rgba(15, 118, 110, 0.12)',
-    borderColor: V4_COLORS.primary,
+  localityPillActive: {
+    backgroundColor: '#0E8F73',
+    borderColor: '#0E8F73',
   },
-  quickFilterText: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#475569',
+  localityPillText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#334155',
   },
-  quickFilterTextActive: {
-    color: V4_COLORS.primary,
-    fontWeight: '800',
+  localityPillTextActive: {
+    color: '#FFFFFF',
   },
-  resultsSubHeader: {
+  resultsBar: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 8,
+    marginBottom: 4,
   },
-  resultsCount: {
-    fontSize: 13,
-    color: V4_COLORS.textSecondary,
-  },
-  resultsCountBold: {
+  resultsCountHeading: {
+    fontSize: 14,
     fontWeight: '900',
-    color: V4_COLORS.textPrimary,
+    color: '#031B2A',
   },
-  headerActions: {
+  resultsCountSub: {
+    fontSize: 11,
+    fontWeight: '500',
+    color: '#64748B',
+    marginTop: 1,
+  },
+  sortTriggerPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  sortTriggerText: {
+    fontSize: 11.5,
+    fontWeight: '700',
+    color: '#031B2A',
+  },
+  feedContentContainer: {
+    paddingBottom: 110,
+  },
+  cardContainer: {
+    marginBottom: 14,
+  },
+  cardQuickBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
+    marginTop: -8,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#EEF2F6',
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  trustSignalsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-  saveSearchPill: {
+  trustSignal: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#F0FDFA',
-    paddingHorizontal: 9,
-    paddingVertical: 4.5,
-    borderRadius: 8,
+    gap: 3,
   },
-  saveSearchPillText: {
-    fontSize: 11,
-    fontWeight: '800',
-    color: '#0F766E',
-  },
-  sortDropdownPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    backgroundColor: '#F1F5F9',
-    paddingHorizontal: 9,
-    paddingVertical: 4.5,
-    borderRadius: 8,
-  },
-  sortDropdownText: {
-    fontSize: 11,
+  trustSignalText: {
+    fontSize: 10.5,
     fontWeight: '700',
     color: '#475569',
   },
-  sortDropdownCard: {
-    backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-    paddingVertical: 4,
-    marginBottom: 8,
-    ...V4_SHADOWS.card,
-  },
-  sortOptionRow: {
+  cardQuickActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-    paddingVertical: 9,
+    gap: 8,
   },
-  sortOptionRowActive: {
-    backgroundColor: '#F0FDFA',
-  },
-  sortOptionText: {
-    fontSize: 12.5,
-    fontWeight: '600',
-    color: '#475569',
-  },
-  sortOptionTextActive: {
-    color: V4_COLORS.primary,
-    fontWeight: '800',
-  },
-  feedContent: {
-    paddingBottom: 110,
-  },
-  cardWrapper: {
-    marginBottom: 8,
-  },
-  cardExtraActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    gap: 12,
-    marginHorizontal: 16,
-    marginTop: -8,
-    marginBottom: 14,
-    paddingHorizontal: 4,
-  },
-  extraActionBtn: {
+  quickActionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
     backgroundColor: '#F8FAFC',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 8,
     borderWidth: 1,
     borderColor: '#E2E8F0',
+    paddingHorizontal: 8,
+    paddingVertical: 4.5,
+    borderRadius: 8,
   },
-  extraActionText: {
+  quickActionButtonActive: {
+    backgroundColor: '#F0FDFA',
+    borderColor: '#0E8F73',
+  },
+  quickActionText: {
     fontSize: 11,
     fontWeight: '700',
     color: '#64748B',
   },
-  extraActionTextActive: {
-    color: V4_COLORS.primary,
-    fontWeight: '800',
+  quickActionTextActive: {
+    color: '#0E8F73',
   },
-  loadMoreBtn: {
+  loadMoreButton: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
     marginHorizontal: 16,
     marginVertical: 14,
-    backgroundColor: '#F1F5F9',
     paddingVertical: 12,
     borderRadius: 14,
     alignItems: 'center',
   },
-  loadMoreBtnText: {
+  loadMoreButtonText: {
     fontSize: 12.5,
     fontWeight: '800',
-    color: V4_COLORS.textPrimary,
+    color: '#031B2A',
   },
-  intelPreviewRow: {
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(3, 27, 42, 0.65)',
+    justifyContent: 'flex-end',
+  },
+  sortModalSheet: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 28,
+    borderTopRightRadius: 28,
+    padding: 20,
+    gap: 16,
+  },
+  sortModalHeader: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 6,
-    marginHorizontal: 16,
-    marginTop: -8,
-    marginBottom: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F1F5F9',
+    paddingBottom: 12,
   },
-  intelPreviewChip: {
+  sortModalTitle: {
+    fontSize: 17,
+    fontWeight: '900',
+    color: '#031B2A',
+  },
+  sortModalSubtitle: {
+    fontSize: 11.5,
+    color: '#64748B',
+    marginTop: 2,
+  },
+  modalCloseBtn: {
+    padding: 4,
+  },
+  sortOptionsList: {
+    gap: 8,
+  },
+  sortItemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: '#F1F5F9',
     backgroundColor: '#F8FAFC',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
   },
-  intelPreviewText: {
-    fontSize: 10.5,
-    fontWeight: '700',
-    color: '#475569',
+  sortItemRowActive: {
+    backgroundColor: '#F0FDFA',
+    borderColor: '#0E8F73',
   },
-  intelPreviewChipHighlight: {
-    backgroundColor: '#ECFDF5',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#A7F3D0',
+  sortItemInfo: {
+    gap: 2,
   },
-  intelPreviewTextHighlight: {
-    fontSize: 10.5,
+  sortItemTitle: {
+    fontSize: 13,
     fontWeight: '800',
-    color: '#059669',
+    color: '#334155',
   },
-  floatingCompareBar: {
+  sortItemTitleActive: {
+    color: '#0E8F73',
+  },
+  sortItemDesc: {
+    fontSize: 11,
+    color: '#94A3B8',
+  },
+  sortItemCheck: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#CCFBF1',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  compareFloatingBar: {
     position: 'absolute',
     left: 16,
     right: 16,
     backgroundColor: '#031B2A',
-    borderRadius: 18,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     ...V4_SHADOWS.card,
     zIndex: 999,
   },
-  compareBarInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  compareCountPill: {
-    backgroundColor: V4_COLORS.primary,
+  compareCountTag: {
+    backgroundColor: '#0E8F73',
     paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingVertical: 3.5,
     borderRadius: 8,
   },
   compareCountText: {
@@ -999,22 +1203,22 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     color: '#FFFFFF',
   },
-  compareBarLabel: {
+  compareBarText: {
     fontSize: 12,
-    color: '#CBD5E1',
     fontWeight: '700',
+    color: '#CBD5E1',
   },
-  compareBarActionBtn: {
+  compareSubmitBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    backgroundColor: '#0F766E',
+    gap: 5,
+    backgroundColor: '#0E8F73',
     paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingVertical: 7,
     borderRadius: 12,
   },
-  compareBarActionText: {
-    fontSize: 12.5,
+  compareSubmitText: {
+    fontSize: 12,
     fontWeight: '800',
     color: '#FFFFFF',
   },
