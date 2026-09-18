@@ -1,11 +1,9 @@
-import { NextResponse } from 'next/server';
 import { getPublishedProperties } from '@/lib/seo/queries';
 import { generatePropertySlug } from '@/lib/seo/slugs';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
 
-const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
+const BASE_URL = 'https://rehvo.in';
 
 export async function GET() {
   let properties: any[] = [];
@@ -37,14 +35,13 @@ export async function GET() {
     <priority>0.9</priority>
   </url>
 ${commercialPropertyUrls.join('\n')}
-</urlset>`;
+</urlset>`.trim();
 
-  return new NextResponse(xml, {
+  return new Response(xml, {
     status: 200,
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
-      'X-Robots-Tag': 'all',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=86400',
     },
   });
 }
