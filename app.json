@@ -16,6 +16,7 @@
       "**/*"
     ],
     "ios": {
+      "deploymentTarget": "15.1",
       "supportsTablet": false,
       "bundleIdentifier": "com.rehvo.app",
       "buildNumber": "90",
