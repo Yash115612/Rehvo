@@ -51,7 +51,7 @@ interface V4OwnerDashboardScreenProps {
   hideHeader?: boolean;
 }
 
-export const V4OwnerDashboardScreen: React.FC<V4OwnerDashboardScreenProps> = ({
+const V4OwnerDashboardScreenComponent: React.FC<V4OwnerDashboardScreenProps> = ({
   hideHeader = false,
 }) => {
   const router = useRouter();
@@ -1466,3 +1466,6 @@ const styles = StyleSheet.create({
     color: V4_COLORS.textPrimary,
   },
 });
+
+export const V4OwnerDashboardScreen = React.memo(V4OwnerDashboardScreenComponent);
+export default V4OwnerDashboardScreen;

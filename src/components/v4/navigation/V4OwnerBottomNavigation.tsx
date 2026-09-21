@@ -50,7 +50,7 @@ const TABS: { id: V4OwnerTab; label: string; icon: any }[] = [
   { id: 'profile', label: 'Profile', icon: CircleUser },
 ];
 
-export const V4OwnerBottomNavigation: React.FC<V4OwnerBottomNavigationProps> = ({
+const V4OwnerBottomNavigationComponent: React.FC<V4OwnerBottomNavigationProps> = ({
   activeTab,
   onTabPress,
   earningsBadge = true,
@@ -381,3 +381,21 @@ const styles = StyleSheet.create({
     borderColor: '#FFFFFF',
   },
 });
+
+export const V4OwnerBottomNavigation = React.memo(
+  V4OwnerBottomNavigationComponent,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.activeTab === nextProps.activeTab &&
+      prevProps.visible === nextProps.visible &&
+      prevProps.earningsBadge === nextProps.earningsBadge &&
+      prevProps.listingsCount === nextProps.listingsCount &&
+      prevProps.leadsCount === nextProps.leadsCount &&
+      prevProps.unreadMessagesCount === nextProps.unreadMessagesCount &&
+      prevProps.walletBadgeCount === nextProps.walletBadgeCount &&
+      prevProps.profileBadge === nextProps.profileBadge
+    );
+  }
+);
+
+export default V4OwnerBottomNavigation;

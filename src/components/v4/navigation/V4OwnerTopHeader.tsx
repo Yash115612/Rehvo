@@ -24,19 +24,18 @@ interface V4OwnerTopHeaderProps {
   showBack?: boolean;
 }
 
-export const V4OwnerTopHeader: React.FC<V4OwnerTopHeaderProps> = ({
+const V4OwnerTopHeaderComponent: React.FC<V4OwnerTopHeaderProps> = ({
   title,
   subtitle,
   showBack = false,
 }) => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const {
-    user,
-    ownerProfile,
-    unreadOwnerNotificationsCount,
-    conversations,
-  } = useAppStore();
+  
+  const user = useAppStore((state) => state.user);
+  const ownerProfile = useAppStore((state) => state.ownerProfile);
+  const unreadOwnerNotificationsCount = useAppStore((state) => state.unreadOwnerNotificationsCount);
+  const conversations = useAppStore((state) => state.conversations);
 
   const unreadChatCount = (conversations || []).reduce(
     (acc, c) => acc + (c.unread_count || 0),
@@ -224,3 +223,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 });
+
+export const V4OwnerTopHeader = React.memo(V4OwnerTopHeaderComponent);
+export default V4OwnerTopHeader;

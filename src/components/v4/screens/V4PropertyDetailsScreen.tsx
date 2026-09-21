@@ -64,7 +64,7 @@ interface V4PropertyDetailsScreenProps {
   property?: Property;
 }
 
-export const V4PropertyDetailsScreen: React.FC<V4PropertyDetailsScreenProps> = ({
+const V4PropertyDetailsScreenComponent: React.FC<V4PropertyDetailsScreenProps> = ({
   property,
 }) => {
   const router = useRouter();
@@ -1749,3 +1749,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0F172A',
   },
 });
+
+export const V4PropertyDetailsScreen = React.memo(V4PropertyDetailsScreenComponent);
+export default V4PropertyDetailsScreen;

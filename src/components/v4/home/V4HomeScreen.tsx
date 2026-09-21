@@ -276,7 +276,7 @@ const renderExploreServiceIcon = (iconName: string, color: string) => {
   }
 };
 
-export const V4HomeScreen: React.FC = () => {
+const V4HomeScreenComponent: React.FC = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
@@ -2842,5 +2842,6 @@ const styles = StyleSheet.create({
   },
 });
 
+export const V4HomeScreen = React.memo(V4HomeScreenComponent);
 export default V4HomeScreen;
 

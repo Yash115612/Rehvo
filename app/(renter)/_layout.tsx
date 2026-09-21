@@ -14,12 +14,17 @@ export default function RenterLayout() {
   const router = useRouter();
   const pathname = usePathname();
   usePushNotifications();
-  const {
-    conversations,
-    isNotificationPermissionModalVisible,
-    setNotificationPermissionModalVisible,
-    registerDevicePushToken,
-  } = useAppStore();
+
+  // Atomic selectors to prevent unnecessary re-renders of the navigation shell
+  const conversations = useAppStore((state) => state.conversations);
+  const isNotificationPermissionModalVisible = useAppStore(
+    (state) => state.isNotificationPermissionModalVisible
+  );
+  const setNotificationPermissionModalVisible = useAppStore(
+    (state) => state.setNotificationPermissionModalVisible
+  );
+  const registerDevicePushToken = useAppStore((state) => state.registerDevicePushToken);
+
   const [isPostModalVisible, setIsPostModalVisible] = useState(false);
 
   const unreadMessagesCount = useMemo(() => {
@@ -49,25 +54,25 @@ export default function RenterLayout() {
   const handleTabPress = (tab: V4TabType) => {
     switch (tab) {
       case 'home':
-        router.replace('/(renter)/home');
+        router.navigate('/(renter)/home');
         break;
       case 'explore':
-        router.replace('/(renter)/search');
+        router.navigate('/(renter)/search');
         break;
       case 'post':
         setIsPostModalVisible(true);
         break;
       case 'chat':
-        router.replace('/(renter)/chat');
+        router.navigate('/(renter)/chat/index' as any);
         break;
       case 'profile':
-        router.replace('/(renter)/profile');
+        router.navigate('/(renter)/profile');
         break;
       case 'saved':
-        router.replace('/(renter)/saved');
+        router.navigate('/(renter)/saved');
         break;
       default:
-        router.replace('/(renter)/home');
+        router.navigate('/(renter)/home');
         break;
     }
   };
@@ -103,6 +108,7 @@ export default function RenterLayout() {
     <View style={styles.root} pointerEvents="box-none">
       <Tabs
         backBehavior="history"
+        detachInactiveScreens={false}
         screenOptions={{
           headerShown: false,
           tabBarStyle: { display: 'none' },

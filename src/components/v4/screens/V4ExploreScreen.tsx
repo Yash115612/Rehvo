@@ -93,7 +93,7 @@ const SORT_OPTIONS: { key: SortOption; label: string; desc: string }[] = [
   { key: 'VERIFIED', label: 'Verified Landlords', desc: 'Deed-inspected & physical visited first' },
 ];
 
-export const V4ExploreScreen: React.FC = () => {
+const V4ExploreScreenComponent: React.FC = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const searchInputRef = useRef<TextInput>(null);
@@ -1212,3 +1212,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
+
+export const V4ExploreScreen = React.memo(V4ExploreScreenComponent);
+export default V4ExploreScreen;

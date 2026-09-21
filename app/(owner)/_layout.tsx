@@ -22,13 +22,13 @@ export default function OwnerLayout() {
   const router = useRouter();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
-  const {
-    isAuthenticated,
-    myProperties,
-    tenantLeads,
-    ownerProfile,
-    conversations,
-  } = useAppStore();
+
+  // Atomic selectors to prevent full layout re-rendering
+  const isAuthenticated = useAppStore((state) => state.isAuthenticated);
+  const myProperties = useAppStore((state) => state.myProperties);
+  const tenantLeads = useAppStore((state) => state.tenantLeads);
+  const ownerProfile = useAppStore((state) => state.ownerProfile);
+  const conversations = useAppStore((state) => state.conversations);
 
   const unreadMessagesCount = useMemo(() => {
     return (conversations || []).reduce((sum, c) => sum + (c.unread_count || 0), 0);
@@ -61,25 +61,25 @@ export default function OwnerLayout() {
   const handleTabPress = (tab: V4OwnerTab) => {
     switch (tab) {
       case 'dashboard':
-        router.replace('/(owner)/dashboard' as any);
+        router.navigate('/(owner)/dashboard' as any);
         break;
       case 'listings':
-        router.replace('/(owner)/listings' as any);
+        router.navigate('/(owner)/listings' as any);
         break;
       case 'inbox':
-        router.replace('/(owner)/messages' as any);
+        router.navigate('/(owner)/inbox' as any);
         break;
       case 'leads':
-        router.replace('/(owner)/leads' as any);
+        router.navigate('/(owner)/leads' as any);
         break;
       case 'wallet':
-        router.replace('/(owner)/wallet' as any);
+        router.navigate('/(owner)/wallet' as any);
         break;
       case 'profile':
-        router.replace('/(owner)/profile' as any);
+        router.navigate('/(owner)/profile' as any);
         break;
       default:
-        router.replace('/(owner)/dashboard' as any);
+        router.navigate('/(owner)/dashboard' as any);
         break;
     }
   };
@@ -207,6 +207,7 @@ export default function OwnerLayout() {
 
       <Tabs
         backBehavior="history"
+        detachInactiveScreens={false}
         screenOptions={{
           headerShown: false,
           tabBarStyle: { display: 'none' },

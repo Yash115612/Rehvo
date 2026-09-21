@@ -63,7 +63,7 @@ import { V4BrandLogo } from '../ui/V4BrandLogo';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-export const V4ProfileScreen: React.FC = () => {
+const V4ProfileScreenComponent: React.FC = () => {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const {
@@ -1697,3 +1697,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 });
+
+export const V4ProfileScreen = React.memo(V4ProfileScreenComponent);
+export default V4ProfileScreen;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { enableScreens } from 'react-native-screens';
 import { useAppStore } from '../src/store/useAppStore';
 import { supabase, isSupabaseConfigured } from '../src/lib/supabase';
 import { UserRole } from '../src/types';
@@ -10,6 +12,9 @@ import { V4ErrorBoundary } from '../src/components/v4/ui/V4ErrorBoundary';
 import { V4AppLockGate } from '../src/components/v4/security/V4AppLockGate';
 import { V4OfflineNotice } from '../src/components/v4/ui/V4OfflineNotice';
 import { addConnectivityListener } from '../src/services/offlineEngine';
+
+// Enable hardware-accelerated native screens
+enableScreens(true);
 
 export default function RootLayout() {
   const { login, logout, initializeFromStorage } = useAppStore();
@@ -119,7 +124,8 @@ export default function RootLayout() {
             initialRouteName="index"
             screenOptions={{
               headerShown: false,
-              animation: 'default',
+              animation: Platform.OS === 'ios' ? 'default' : 'fade_from_bottom',
+              animationDuration: 220,
               freezeOnBlur: true,
             }}
           >
