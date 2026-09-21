@@ -252,9 +252,12 @@ export const V4PropertyDetailsScreen: React.FC<V4PropertyDetailsScreenProps> = (
 
           {/* Bottom Floating Triggers: 360 Tour, Gallery Count */}
           <View style={styles.imageBottomRow}>
-            <Pressable style={styles.tourPill} onPress={handleOpenGallery}>
+            <Pressable
+              style={styles.tourPill}
+              onPress={() => router.push(`/(renter)/tour/${property?.id || 'prop-1'}` as any)}
+            >
               <Video size={12} color="#FFFFFF" strokeWidth={2.4} />
-              <Text style={styles.tourPillText}>360° Virtual Tour</Text>
+              <Text style={styles.tourPillText}>AI 3D Tour™</Text>
             </Pressable>
 
             <Pressable style={styles.countPill} onPress={handleOpenGallery}>
@@ -451,18 +454,18 @@ export const V4PropertyDetailsScreen: React.FC<V4PropertyDetailsScreenProps> = (
                   <Compass size={18} color="#2563EB" strokeWidth={2.4} />
                 </View>
                 <View>
-                  <Text style={styles.sectionTitle}>360° Virtual Tour</Text>
-                  <Text style={styles.featureSubtitle}>Interactive self-guided walkthrough</Text>
+                  <Text style={styles.sectionTitle}>REHVO AI Tour™ (3D Walkthrough)</Text>
+                  <Text style={styles.featureSubtitle}>Interactive spatial walkthrough & floorplan</Text>
                 </View>
               </View>
               <View style={styles.tourBadge}>
-                <Text style={styles.tourBadgeText}>4K HDR</Text>
+                <Text style={styles.tourBadgeText}>AI 3D</Text>
               </View>
             </View>
 
             <Pressable
               style={styles.virtualTourCard}
-              onPress={() => setVirtualTourModalOpen(true)}
+              onPress={() => router.push(`/(renter)/tour/${property?.id || 'prop-1'}` as any)}
             >
               <Image
                 source={{
