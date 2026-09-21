@@ -43,7 +43,7 @@ export const HERO_ADS: HeroAdItem[] = [
     superTag: 'INDIA’S VERIFIED RENTAL MARKETPLACE',
     superColor: '#6366F1',
     title: 'VERIFIED HOMES',
-    titleSub: 'OWNERS & TRUSTED BROKERS',
+    titleSub: 'OWNERS & TRUSTED MIDDLEMEN',
     pillText: 'Verified Listings • Transparent Pricing • Direct Chat',
     pillBg: '#FFE4E6',
     pillColor: '#E11D48',
@@ -76,7 +76,7 @@ export const HERO_ADS: HeroAdItem[] = [
   },
   {
     id: 'ad-4',
-    superTag: 'LANDLORD & BROKER HUB',
+    superTag: 'LANDLORD & AGENT HUB',
     superColor: '#D97706',
     title: 'LIST & EARN BONUS',
     titleSub: '₹5,000 HOST LAUNCH BONUS',

@@ -178,7 +178,7 @@ export async function GET(req: NextRequest) {
             >
               <span>{locality}</span>
               <span style={{ color: '#0E8F73' }}>•</span>
-              <span>Zero Brokerage</span>
+              <span>Zero Commission</span>
               <span style={{ color: '#0E8F73' }}>•</span>
               <span>Government Deed Verified</span>
               {metric1 && (

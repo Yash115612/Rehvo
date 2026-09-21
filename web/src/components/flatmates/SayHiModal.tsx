@@ -75,7 +75,7 @@ export const SayHiModal: React.FC<SayHiModalProps> = ({ flatmate, isOpen, onClos
             <span>Chat on the REHVO App</span>
           </div>
           <p className="text-xs text-emerald-100/90 font-medium leading-relaxed">
-            To message {flatmate.name.split(' ')[0]} directly and find shared flats without brokers, download the REHVO mobile app.
+            To message {flatmate.name.split(' ')[0]} directly and find shared flats without middlemen, download the REHVO mobile app.
           </p>
         </div>
 

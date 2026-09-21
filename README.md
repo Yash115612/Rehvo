@@ -15,7 +15,7 @@
 
 ## 🌟 Overview
 
-**REHVO** is a modern verified rental ecosystem built for Mumbai and expanding across India. It connects prospective tenants directly with verified property owners, trusted brokers, flatmates, and institutional commercial spaces — eliminating hidden fees, fake listings, and unverified listings with transparent pricing and instant digital verification.
+**REHVO** is a modern verified rental ecosystem built for Mumbai and expanding across India. It connects prospective tenants directly with verified property owners, landlords, flatmates, and institutional commercial spaces — eliminating hidden fees, fake listings, and unverified listings with transparent pricing and instant digital verification.
 
 The platform consists of:
 1. **Mobile Application** (iOS & Android) — Built with Expo SDK 54, React Native, and Expo Router.
@@ -29,7 +29,7 @@ The platform consists of:
 
 - **100% Verified Listings**: Multi-point property verification with title deed validation and physical doorstep checks.
 - **Transparent Pricing**: Complete breakdown of rent, deposit, and maintenance with zero hidden fees.
-- **Direct Owner & Broker Communication**: End-to-end real-time chat with instant inquiry management.
+- **Direct Owner Communication**: End-to-end real-time chat with instant inquiry management.
 - **Flatmate & Roommate Discovery**: Compatibility matching, lifestyle filters, and direct room discovery.
 - **Commercial & PG Spaces**: Dedicated portals for co-living, student hostels, and corporate office leases.
 - **Digital Lease & Agreement Vault**: Model Tenancy Act compliant lease drafting with digital signing.

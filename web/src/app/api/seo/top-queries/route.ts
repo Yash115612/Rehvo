@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   const topQueries = [
     {
-      query: 'zero brokerage flats in mumbai',
+      query: 'Zero Commission flats in mumbai',
       clicks: 3420,
       impressions: 41200,
       ctr: 8.30,
@@ -14,7 +14,7 @@ export async function GET() {
       targetUrl: 'https://rehvo.in/',
     },
     {
-      query: 'flats for rent in bandra west without broker',
+      query: 'flats for rent in bandra west without agent',
       clicks: 2190,
       impressions: 26800,
       ctr: 8.17,
@@ -23,7 +23,7 @@ export async function GET() {
       targetUrl: 'https://rehvo.in/mumbai/bandra-west',
     },
     {
-      query: 'flats near iit bombay zero brokerage',
+      query: 'flats near iit bombay Zero Commission',
       clicks: 1840,
       impressions: 19500,
       ctr: 9.44,

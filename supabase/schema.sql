@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS public.properties (
     price INTEGER NOT NULL,
     deposit INTEGER NOT NULL DEFAULT 0,
     maintenance INTEGER NOT NULL DEFAULT 0,
-    brokerage INTEGER NOT NULL DEFAULT 0,
+    commission INTEGER NOT NULL DEFAULT 0,
     city TEXT NOT NULL,
     state TEXT NOT NULL,
     locality TEXT NOT NULL,

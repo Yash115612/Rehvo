@@ -19,7 +19,7 @@ interface V4HiddenCostCardProps {
 export const V4HiddenCostCard: React.FC<V4HiddenCostCardProps> = React.memo(({ property }) => {
   const costs: HiddenCostBreakdown = useMemo(() => calculateHiddenCosts(property), [property]);
 
-  const traditionalBrokerFee = property.rent || 35000;
+  const traditionalMiddlemanFee = property.rent || 35000;
 
   const formatRupees = (val: number) => `₹${val.toLocaleString('en-IN')}`;
 
@@ -28,7 +28,7 @@ export const V4HiddenCostCard: React.FC<V4HiddenCostCardProps> = React.memo(({ p
     {
       label: 'REHVO Fee',
       amount: 0,
-      note: `100% Free (Saved ₹${traditionalBrokerFee.toLocaleString('en-IN')})`,
+      note: `100% Free (Saved ₹${traditionalMiddlemanFee.toLocaleString('en-IN')})`,
       highlightFree: true,
     },
     { label: 'Agreement & Stamp Duty', amount: costs.agreementAndStampDuty, note: 'Govt e-registration' },
@@ -67,11 +67,11 @@ export const V4HiddenCostCard: React.FC<V4HiddenCostCardProps> = React.memo(({ p
       </View>
 
       {/* REHVO Verified Marketplace Banner */}
-      <View style={styles.zeroBrokerageBanner}>
+      <View style={styles.zeroCommissionBanner}>
         <Sparkles size={16} color="#065F46" />
-        <Text style={styles.zeroBrokerageText}>
-          You save <Text style={styles.boldText}>{formatRupees(traditionalBrokerFee)}</Text> in
-          fees with verified owner & broker leasing on REHVO.
+        <Text style={styles.zeroCommissionText}>
+          You save <Text style={styles.boldText}>{formatRupees(traditionalMiddlemanFee)}</Text> in
+          fees with direct owner leasing on REHVO.
         </Text>
       </View>
 
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     color: '#64748B',
     marginTop: 2,
   },
-  zeroBrokerageBanner: {
+  zeroCommissionBanner: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#A7F3D0',
   },
-  zeroBrokerageText: {
+  zeroCommissionText: {
     fontSize: 12,
     color: '#065F46',
     flex: 1,

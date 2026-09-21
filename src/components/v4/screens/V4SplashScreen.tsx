@@ -62,9 +62,7 @@ export const V4SplashScreen: React.FC = () => {
 
     const activeMode = useAppStore.getState().activeMode;
     const destination =
-      activeMode === 'broker'
-        ? '/(broker)/dashboard'
-        : activeMode === 'owner'
+      activeMode === 'owner'
         ? '/(owner)/dashboard'
         : '/(renter)/home';
 

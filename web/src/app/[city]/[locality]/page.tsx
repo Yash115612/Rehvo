@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: LocalityPageProps): Promise<M
       `apartments in ${locality.name.toLowerCase()}`,
       `flatmates ${locality.name.toLowerCase()}`,
       `pg in ${locality.name.toLowerCase()}`,
-      `zero brokerage ${locality.name.toLowerCase()}`,
+      `Zero Commission ${locality.name.toLowerCase()}`,
       `1 bhk in ${locality.name.toLowerCase()}`,
       `2 bhk in ${locality.name.toLowerCase()}`,
       `3 bhk in ${locality.name.toLowerCase()}`,
@@ -224,10 +224,10 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
             3 BHK in {locality.name}
           </Link>
           <Link
-            href={`/rent/zero-brokerage-flats-in-${locality.slug}`}
+            href={`/rent/zero-commission-flats-in-${locality.slug}`}
             className="px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs font-semibold text-[#0E8F73] hover:bg-emerald-100 transition"
           >
-            Zero Brokerage in {locality.name}
+            Zero Commission in {locality.name}
           </Link>
         </div>
       </section>
@@ -240,7 +240,7 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
               Verified Homes in {locality.name}
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Zero brokerage listings directly from homeowners
+              Zero Commission listings directly from homeowners
             </p>
           </div>
           <Link
@@ -298,7 +298,7 @@ export default async function LocalityPage({ params }: LocalityPageProps) {
 
                 <div className="px-4 pb-4 pt-1 flex items-center justify-between text-[11px] font-bold text-slate-600 border-t border-slate-100">
                   <span>{property.bedrooms ? `${property.bedrooms} BHK` : 'Studio'}</span>
-                  <span className="text-[#0E8F73]">Zero Brokerage</span>
+                  <span className="text-[#0E8F73]">Zero Commission</span>
                 </div>
               </Link>
             ))}

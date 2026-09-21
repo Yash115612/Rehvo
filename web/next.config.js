@@ -70,7 +70,7 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/zero-brokerage',
+        source: '/zero-commission',
         destination: '/search',
         permanent: true,
       },

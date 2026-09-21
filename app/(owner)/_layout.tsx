@@ -97,7 +97,7 @@ export default function OwnerLayout() {
           <View style={styles.guestHeroCard}>
             <View style={styles.guestBadge}>
               <Sparkles size={13} color="#065F46" />
-              <Text style={styles.guestBadgeText}>0% BROKERAGE DIRECT HOST</Text>
+              <Text style={styles.guestBadgeText}>0% COMMISSION DIRECT HOST</Text>
             </View>
             <Text style={styles.guestHeroTitle}>
               Turn Your Property Into A High-Yield Luxury Asset
@@ -109,7 +109,7 @@ export default function OwnerLayout() {
             <View style={styles.guestStatsRow}>
               <View style={styles.guestStatCol}>
                 <Text style={styles.guestStatNum}>₹0</Text>
-                <Text style={styles.guestStatLabel}>Brokerage</Text>
+                <Text style={styles.guestStatLabel}>Commission</Text>
               </View>
               <View style={styles.guestStatDivider} />
               <View style={styles.guestStatCol}>

@@ -330,7 +330,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
               <Sparkles className="w-3 h-3 text-[#D97706] shrink-0" />
               <span className="truncate">{aiWhy}</span>
             </div>
-            <div className="text-[#0E8F73] font-black text-[10px] shrink-0">Zero Brokerage</div>
+            <div className="text-[#0E8F73] font-black text-[10px] shrink-0">Zero Commission</div>
           </div>
         </div>
 

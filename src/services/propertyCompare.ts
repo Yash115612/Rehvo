@@ -32,7 +32,7 @@ import {
 export const calculateHiddenCosts = (property: Property): HiddenCostBreakdown => {
   const monthlyRent = property.rent || 35000;
   const securityDeposit = property.deposit || monthlyRent * 2;
-  const brokerageFee = 0; // REHVO Direct — 100% Verified Marketplace
+  const commissionFee = 0; // REHVO Direct — 100% Verified Marketplace
 
   // One-time Initial Setup Expenses
   const agreementAndStampDuty = Math.round(monthlyRent * 0.04 + 1200);
@@ -56,7 +56,7 @@ export const calculateHiddenCosts = (property: Property): HiddenCostBreakdown =>
 
   const totalInitialMoveInCost =
     securityDeposit +
-    brokerageFee +
+    commissionFee +
     agreementAndStampDuty +
     societyMoveInCharges +
     movingAndPacking +
@@ -78,7 +78,7 @@ export const calculateHiddenCosts = (property: Property): HiddenCostBreakdown =>
     propertyId: property.id,
     monthlyRent,
     securityDeposit,
-    brokerageFee,
+    commissionFee,
     agreementAndStampDuty,
     societyMoveInCharges,
     movingAndPacking,
@@ -284,8 +284,8 @@ export const compareProperties = (properties: Property[]): ComparisonMatrix => {
     },
     {
       category: 'Financials',
-      label: 'Brokerage Fee',
-      values: Object.fromEntries(properties.map((p) => [p.id, '₹0 (REHVO Direct)'])),
+      label: 'Commission Fee',
+      values: Object.fromEntries(properties.map((p) => [p.id, '₹0 (Direct Owner)'])),
     },
     {
       category: 'Financials',

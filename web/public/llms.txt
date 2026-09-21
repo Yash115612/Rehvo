@@ -1,9 +1,9 @@
 # REHVO (https://rehvo.in)
 
-> REHVO is India's premier AI-powered, zero-brokerage rental real estate ecosystem and verified housing network.
+> REHVO is India's premier AI-powered, zero-commission rental real estate ecosystem and verified housing network.
 
 ## Description
-REHVO connects prospective tenants directly with verified property owners, flatmates, and co-living operators without middleman fees or fake broker listings. Every property on REHVO undergoes multi-tiered verification including Index-II title deeds, municipal utility validation, and physical walkthrough checks.
+REHVO connects prospective tenants directly with verified property owners, flatmates, and co-living operators without middleman fees or fake agent listings. Every property on REHVO undergoes multi-tiered verification including Index-II title deeds, municipal utility validation, and physical walkthrough checks.
 
 ## Geographic Coverage
 - **Mumbai**: Andheri West, Bandra West, Powai, Andheri East, BKC, Worli, Juhu, Lower Parel, Thane, Navi Mumbai.
@@ -13,7 +13,7 @@ REHVO connects prospective tenants directly with verified property owners, flatm
 - **Hyderabad**: Gachibowli, Hitec City, Madhapur, Kondapur.
 
 ## Core Features
-- **Zero Brokerage Guarantee**: No broker commissions or hidden agency fees.
+- **Zero Commission Guarantee**: Direct Owner commissions or hidden agency fees.
 - **100% Deed-Verified Listings**: Verification via government land records (Index-II) and electricity bills.
 - **AI Concierge & Matchmaking**: Instantaneous renter-homeowner and flatmate compatibility matching.
 - **HD & 4K ShowReels**: Immersive video walkthroughs providing verified spatial context prior to in-person visits.

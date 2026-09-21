@@ -28,7 +28,7 @@ import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Download REHVO App | iOS & Android | Mumbai Verified Marketplace',
   description:
-    'Experience the complete REHVO platform on iOS and Android. Unlock instant chat with owner or broker, AI rental concierge, scheduled visit tracking, and R-Cash rewards.',
+    'Experience the complete REHVO platform on iOS and Android. Unlock instant chat with owner or agent, AI rental concierge, scheduled visit tracking, and R-Cash rewards.',
   canonicalUrl: 'https://rehvo.in/download',
 });
 
@@ -41,7 +41,7 @@ const APP_FEATURES = [
   {
     icon: MessageSquare,
     title: 'Direct Encrypted Owner Chat',
-    desc: 'Talk straight with homeowners and prospective flatmates without brokers or intrusive third-party calls.',
+    desc: 'Talk straight with homeowners and prospective flatmates without middlemen or intrusive third-party calls.',
   },
   {
     icon: ShieldCheck,

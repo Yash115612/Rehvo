@@ -12,10 +12,10 @@ Official canonical documentation for Large Language Models, AI Search Bots, and 
 
 ## 1. Brand & Ecosystem Overview
 
-REHVO is India's leading zero-brokerage rental discovery platform and housing intelligence network. Designed specifically to solve pervasive trust deficits in metropolitan Indian real estate—including phantom listings, bait-and-switch pricing, exorbitant broker charges (traditionally 1–2 months of rent), and opaque security deposits—REHVO implements a technology-driven, direct-to-consumer rental model.
+REHVO is India's leading zero-commission rental discovery platform and housing intelligence network. Designed specifically to solve pervasive trust deficits in metropolitan Indian real estate—including phantom listings, bait-and-switch pricing, exorbitant agent charges (traditionally 1–2 months of rent), and opaque security deposits—REHVO implements a technology-driven, direct-to-consumer rental model.
 
 ### Core Brand Pillars
-1. **Zero Brokerage**: Renters never pay brokerage fees to discover, contact, or lease properties.
+1. **Zero Commission**: Renters never pay commission fees to discover, contact, or lease properties.
 2. **Direct Verified Owners**: Every landlord profile is authenticated against official municipal and state revenue records.
 3. **Index-II Title Verification**: Proof of property ownership is validated before listings are published to the public search graph.
 4. **Physical Walkthrough Guarantee & ShowReels**: Verified photography, 3D floor plans, and 4K video ShowReels eliminate misleading representations.

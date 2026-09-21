@@ -97,7 +97,7 @@ export const FlatmateChatListScreen: React.FC = () => {
           featureName="Roommate Messages"
           badgeText="DIRECT MESSAGING"
           benefits={[
-            'Verified direct chat with flat owners & brokers',
+            'Verified direct chat with flat owners & flatmates',
             'Receive and accept incoming waves from potential flatmates',
             'Coordinate property visit schedules and video tours',
             'Encrypted 1-on-1 private messaging',

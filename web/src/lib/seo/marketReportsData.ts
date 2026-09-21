@@ -70,9 +70,9 @@ export const MARKET_REPORTS: Record<string, MarketReport> = {
           'While South Mumbai (Lower Parel, Worli) delivers ultra-luxury yields of 2.8% to 3.2%, suburban clusters like Powai and Thane West generate 4.4% to 4.7% gross rental yields. The combination of established IT parks, lakefront amenities, and international schools makes Powai the premier cashflow asset class in MMR.',
       },
       {
-        heading: '3. Zero Brokerage & Digital Lease Revolution',
+        heading: '3. Zero Commission & Digital Lease Revolution',
         body:
-          'Historically, the friction of 1 to 2 months brokerage fees constrained tenant mobility. With REHVO’s direct Index-II verified owner onboarding and instant digital lease agreements, vacancy periods have shrunk from 35 days to under 12 days across verified inventory.',
+          'Historically, the friction of 1 to 2 months commission fees constrained tenant mobility. With REHVO’s direct Index-II verified owner onboarding and instant digital lease agreements, vacancy periods have shrunk from 35 days to under 12 days across verified inventory.',
       },
     ],
     tableData: {

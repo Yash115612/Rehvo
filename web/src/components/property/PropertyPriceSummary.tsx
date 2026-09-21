@@ -67,10 +67,10 @@ export const PropertyPriceSummary: React.FC<PropertyPriceSummaryProps> = ({ prop
           </span>
         </div>
 
-        {/* Maintenance & Brokerage */}
+        {/* Maintenance & Commission */}
         <div className="space-y-1 pt-4 sm:pt-0 sm:pl-6">
           <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider block">
-            Maintenance & Brokerage
+            Maintenance & Commission
           </span>
           <span className="text-base sm:text-lg font-bold text-[#031B2A] block">
             {formattedMaintenance}

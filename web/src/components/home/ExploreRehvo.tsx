@@ -24,7 +24,7 @@ const CATEGORIES: CategoryItem[] = [
     id: 'rent',
     badge: 'RESIDENTIAL',
     title: 'Find a Home',
-    description: 'Verified flats, apartments, villas and homes with verified owner & broker contact.',
+    description: 'Verified flats, apartments, villas and homes with verified owner & agent contact.',
     cta: 'Explore Homes',
     href: '/rent',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&auto=format&fit=crop&q=80',

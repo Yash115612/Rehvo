@@ -24,7 +24,7 @@ export interface PublicProperty {
   price: number;
   deposit: number;
   maintenance: number;
-  brokerage: number;
+  commission: number;
   city: string;
   state: string;
   locality: string;

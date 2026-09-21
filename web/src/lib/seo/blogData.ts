@@ -29,8 +29,8 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
   'complete-tenant-guide-renting-mumbai-2026': {
     slug: 'complete-tenant-guide-renting-mumbai-2026',
     title: 'The Complete Tenant Guide to Renting a Flat in Mumbai (2026 Edition)',
-    metaTitle: 'Renting a Flat in Mumbai Guide 2026 | Deposits, Leases & Zero Brokerage',
-    metaDescription: 'Everything you need to know about renting in Mumbai: typical security deposit norms, 11-month registered leave and license agreements, police verification, and how to avoid broker fees.',
+    metaTitle: 'Renting a Flat in Mumbai Guide 2026 | Deposits, Leases & Zero Commission',
+    metaDescription: 'Everything you need to know about renting in Mumbai: typical security deposit norms, 11-month registered leave and license agreements, police verification, and how to avoid Commission Fees.',
     category: 'Rental Tips',
     categorySlug: 'rental-tips',
     readTime: '6 min read',
@@ -48,7 +48,7 @@ export const BLOG_POSTS: Record<string, BlogPost> = {
       '1. Security Deposit Benchmarks: Traditionally, landlords in South Mumbai and Bandra ask for 3 to 6 months rent as security deposit, while newer western suburban complexes in Andheri, Malad, and Thane accept 2 to 3 months.',
       '2. Registered Leave and License Agreement: Always ensure your agreement is executed on government e-registration portals with biometric verification and stamp duty payment. This protects tenants under the Maharashtra Rent Control framework.',
       '3. Society Moving Charges & NOC: Check society bylaws regarding tenant move-in NOC and elevator usage deposits before signing your lease.',
-      '4. Going Broker-Free: Modern platforms like REHVO allow tenants to inspect government-verified Index-II ownership deeds and connect directly with landlords, saving tens of thousands in agent commissions.',
+      '4. Going Agent-Free: Modern platforms like REHVO allow tenants to inspect government-verified Index-II ownership deeds and connect directly with landlords, saving tens of thousands in agent commissions.',
     ],
     faqs: [
       {

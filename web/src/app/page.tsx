@@ -24,15 +24,15 @@ import { SocialCommunitySection } from '@/components/v10/SocialCommunitySection'
 export const revalidate = 60; // 60s ISR
 
 export const metadata: Metadata = constructSeoMetadata({
-  title: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
+  title: 'REHVO — Zero Commission Rentals, Verified Homes & Flatmates in Mumbai',
   description:
     'Discover verified 1, 2, 3 BHK flats, commercial spaces, PGs & flatmates for rent in Mumbai with verified marketplace. Direct owner chat, confirmed physical visits, and transparent pricing.',
   canonicalUrl: 'https://rehvo.in',
   sameAs: ['https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=='],
   openGraph: {
-    title: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates',
+    title: 'REHVO — Zero Commission Rentals, Verified Homes & Flatmates',
     description:
-      'Find verified flats, flatmates, PGs and zero brokerage homes across Mumbai with REHVO.',
+      'Find verified flats, flatmates, PGs and Zero Commission homes across Mumbai with REHVO.',
     url: 'https://rehvo.in',
     images: ['/og-image.png'],
   },

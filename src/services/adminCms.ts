@@ -38,7 +38,7 @@ export const updateFeatureFlag = async (key: string, enabled: boolean): Promise<
 };
 
 export const getCmsAnnouncements = async (
-  audience: 'all' | 'renter' | 'owner' | 'broker' = 'all'
+  audience: 'all' | 'renter' | 'owner' | 'admin' = 'all'
 ): Promise<CmsAnnouncement[]> => {
   try {
     const { data, error } = await supabase

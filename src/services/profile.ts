@@ -33,10 +33,9 @@ export function mapSupabaseProfileToUserProfile(
     phone: dbRow.phone || '',
     email: dbRow.email || '',
     role: (dbRow.role?.toUpperCase() || 'RENTER') as UserRole,
-    account_type: (dbRow.account_type || dbRow.role?.toLowerCase() || 'renter') as 'renter' | 'owner' | 'broker',
+    account_type: (dbRow.account_type || dbRow.role?.toLowerCase() || 'renter') as 'renter' | 'owner' | 'admin',
     company_name: dbRow.company_name || undefined,
     company_logo: dbRow.company_logo || undefined,
-    is_broker_verified: dbRow.is_broker_verified ?? false,
     rera_number: dbRow.rera_number || undefined,
     business_phone: dbRow.business_phone || undefined,
     office_address: dbRow.office_address || undefined,
@@ -76,11 +75,10 @@ export function mapUserProfileToSupabase(
   if (appData.locality !== undefined) mapped.locality = appData.locality;
   if (appData.occupation !== undefined) mapped.occupation = appData.occupation;
   if (appData.user_type !== undefined) mapped.user_type = appData.user_type?.toLowerCase() as SupabaseProfile['user_type'];
-  if (appData.role !== undefined) mapped.role = (appData.role.toLowerCase() as 'renter' | 'owner' | 'broker');
+  if (appData.role !== undefined) mapped.role = (appData.role.toLowerCase() as 'renter' | 'owner' | 'admin');
   if (appData.account_type !== undefined) mapped.account_type = appData.account_type;
   if (appData.company_name !== undefined) mapped.company_name = appData.company_name;
   if (appData.company_logo !== undefined) mapped.company_logo = appData.company_logo;
-  if (appData.is_broker_verified !== undefined) mapped.is_broker_verified = appData.is_broker_verified;
   if (appData.rera_number !== undefined) mapped.rera_number = appData.rera_number;
   if (appData.business_phone !== undefined) mapped.business_phone = appData.business_phone;
   if (appData.office_address !== undefined) mapped.office_address = appData.office_address;

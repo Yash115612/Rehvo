@@ -53,7 +53,7 @@ const TRENDING_QUICK_LOCALITIES = [
 
 const ROTATING_PLACEHOLDERS = [
   'Search for "2 BHK in Bandra West, PG..."',
-  'Search for "Furnished Flat in Powai, Verified Owner/Broker..."',
+  'Search for "Furnished Flat in Powai, Verified Owner/Agent..."',
   'Search for "Single Room in Andheri West..."',
   'Search for "Office Space in BKC..."',
 ];

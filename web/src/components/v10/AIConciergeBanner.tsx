@@ -52,7 +52,7 @@ export const AIConciergeBanner: React.FC = () => {
               <div className="bg-white/10 backdrop-blur-md rounded-2xl rounded-tr-none p-3.5 sm:p-4 border border-white/15 sm:ml-auto max-w-full sm:max-w-sm space-y-1">
                 <div className="text-[10px] font-black uppercase text-[#CCFBF1]/60">You</div>
                 <p className="text-xs sm:text-sm font-medium text-white">
-                  &quot;Find me a furnished 2 BHK in Bandra West under ₹50k with verified owner or broker.&quot;
+                  &quot;Find me a furnished 2 BHK in Bandra West under ₹50k with verified owner or agent.&quot;
                 </p>
               </div>
 

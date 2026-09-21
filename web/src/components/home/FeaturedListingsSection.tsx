@@ -29,7 +29,7 @@ export const FeaturedListingsSection: React.FC<FeaturedListingsSectionProps> = (
               Handpicked properties for you
             </h2>
             <p className="text-xs sm:text-sm font-medium text-[#64748B] mt-1">
-              100% verified listings from property owners and trusted brokers.
+              100% verified listings from property owners and trusted middlemen.
             </p>
           </div>
 

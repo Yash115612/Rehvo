@@ -27,7 +27,7 @@ import { useAppStore } from '../../../store/useAppStore';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-type RoleType = 'renter' | 'owner' | 'broker';
+type RoleType = 'renter' | 'owner';
 
 interface RoleOption {
   id: RoleType;
@@ -73,22 +73,6 @@ const ROLE_OPTIONS: RoleOption[] = [
       '100% verified tenant applicants (Aadhaar + PAN + police)',
       'Automated rent reconciliation on the 1st of every month',
       'Legally binding 11-month registered e-leases in 1-tap',
-    ],
-  },
-  {
-    id: 'broker',
-    title: 'Broker / Real Estate Agent',
-    roleTag: 'RERA CERTIFIED AGENTS & AGENCIES',
-    badge: 'RERA VERIFIED PARTNER',
-    badgeBg: '#EDE9FE',
-    badgeColor: '#5B21B6',
-    icon: Briefcase,
-    headline: 'Scale Your Agency Pipeline',
-    description: 'Manage exclusive inventory, connect with pre-screened luxury buyers and tenants, and close deals faster.',
-    perks: [
-      'Dedicated agency CRM with inventory broadsheets',
-      'High-intent qualified leads in Mumbai’s prime corridors',
-      'Official verified broker badge with RERA credential display',
     ],
   },
 ];

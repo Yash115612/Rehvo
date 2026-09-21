@@ -32,7 +32,7 @@ export const PopularPropertiesSection: React.FC<PopularPropertiesSectionProps> =
               Popular Properties
             </h2>
             <p className="text-sm font-medium text-stone-600 mt-1 max-w-xl">
-              Places people are exploring right now with verified owners & brokers and verified marketplace.
+              Places people are exploring right now with verified owners & middlemen and verified marketplace.
             </p>
           </div>
 

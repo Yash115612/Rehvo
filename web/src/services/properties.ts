@@ -26,7 +26,7 @@ export interface PropertyInput {
   price: number;
   deposit: number;
   maintenance?: number;
-  brokerage?: number;
+  commission?: number;
   city: string;
   state?: string;
   locality: string;
@@ -132,7 +132,7 @@ export interface CanonicalDbPropertyPayload {
   price: number;
   deposit: number;
   maintenance: number;
-  brokerage: number;
+  commission: number;
   city: string;
   state: string;
   locality: string;
@@ -201,7 +201,7 @@ export function mapListingFormToPropertyInsert(
     price: Number(input.price || 0),
     deposit: Number(input.deposit || 0),
     maintenance: Number(input.maintenance || 0),
-    brokerage: 0, // Strictly 100% Verified Marketplace on REHVO
+    commission: 0, // Strictly 100% Verified Marketplace on REHVO
     city: (input.city || 'Mumbai').trim(),
     state: (input.state || 'Maharashtra').trim(),
     locality: (input.locality || 'Andheri East').trim(),

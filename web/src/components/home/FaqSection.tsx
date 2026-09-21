@@ -13,7 +13,7 @@ export const FaqSection: React.FC = () => {
     },
     {
       q: 'Is REHVO really 100% verified marketplace?',
-      a: 'Yes. REHVO connects you with verified property owners and trusted brokers. All listings are verified with transparent pricing and no hidden fees.',
+      a: 'Yes. REHVO connects you with verified property owners and trusted middlemen. All listings are verified with transparent pricing and no hidden fees.',
     },
     {
       q: 'Can I list my property on REHVO?',

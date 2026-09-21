@@ -998,8 +998,8 @@ const CommercialCard: React.FC<CommercialCardProps> = ({
         <View style={styles.actionBottomRow}>
           <View style={styles.depositInfo}>
             <Text style={styles.depositTag}>{property.depositMonths} Months Deposit</Text>
-            <Text style={styles.zeroBrokerageSaveText}>
-              💰 Save ₹{(property.monthlyRent / 100000).toFixed(1)}L Brokerage
+            <Text style={styles.zeroCommissionSaveText}>
+              💰 Save ₹{(property.monthlyRent / 100000).toFixed(1)}L Commission
             </Text>
           </View>
 
@@ -1602,7 +1602,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#0F172A',
   },
-  zeroBrokerageSaveText: {
+  zeroCommissionSaveText: {
     fontSize: 10,
     fontWeight: '700',
     color: '#16A34A',

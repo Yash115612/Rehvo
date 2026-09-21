@@ -92,7 +92,7 @@ const STATS = [
   { value: '25,000+', label: 'Verified Homes' },
   { value: '4.9★', label: 'App Rating' },
   { value: '1,20,000+', label: 'Happy Renters' },
-  { value: '0%', label: 'Broker Fee' },
+  { value: '0%', label: 'Commission Fee' },
 ];
 
 export const Footer: React.FC = () => {
@@ -119,7 +119,7 @@ export const Footer: React.FC = () => {
                 <span className="text-[#2DD4BF]">Home in Mumbai</span>
               </h2>
               <p className="text-sm text-white/60 font-medium">
-                Verified homes · 0% brokerage · Move in within 7 days
+                Verified homes · 0% Commission · Move in within 7 days
               </p>
             </div>
 
@@ -210,7 +210,7 @@ export const Footer: React.FC = () => {
               </Link>
 
               <p className="text-sm text-white/55 leading-relaxed">
-                Mumbai's most trusted rental marketplace. Verified homes, zero brokerage, digital agreements — all in one app.
+                Mumbai's most trusted rental marketplace. Verified homes, Zero Commission, digital agreements — all in one app.
               </p>
 
               {/* Contact */}
@@ -378,7 +378,7 @@ export const Footer: React.FC = () => {
                 <Link href="/rent/1-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">1 BHK Mumbai</Link> ·
                 <Link href="/rent/2-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">2 BHK Mumbai</Link> ·
                 <Link href="/rent/3-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">3 BHK Mumbai</Link> ·
-                <Link href="/rent/zero-brokerage-flats-mumbai" className="hover:text-[#2DD4BF] transition">Zero Brokerage</Link> ·
+                <Link href="/rent/zero-commission-flats-mumbai" className="hover:text-[#2DD4BF] transition">Zero Commission</Link> ·
                 <Link href="/rent/studio-apartments-in-mumbai" className="hover:text-[#2DD4BF] transition">Studio Apartments</Link> ·
                 <Link href="/rent/furnished-flats-for-rent-mumbai" className="hover:text-[#2DD4BF] transition">Furnished Flats</Link> ·
                 <Link href="/rent/bachelor-friendly-flats-mumbai" className="hover:text-[#2DD4BF] transition">Bachelor Homes</Link> ·

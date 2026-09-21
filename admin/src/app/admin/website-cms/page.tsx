@@ -28,7 +28,7 @@ function AdminWebsiteCmsContent() {
   // CMS Form States
   const [heroSuperTag, setHeroSuperTag] = useState("INDIA'S VERIFIED RENTAL MARKETPLACE");
   const [heroHeadline, setHeroHeadline] = useState('VERIFIED HOMES');
-  const [heroSubhead, setHeroSubhead] = useState('OWNERS & TRUSTED BROKERS');
+  const [heroSubhead, setHeroSubhead] = useState('OWNERS & TRUSTED MIDDLEMEN');
   const [showreelHeading, setShowreelHeading] = useState('See Every Feature, Live.');
   const [showreelSubhead, setShowreelSubhead] = useState(
     'Watch how REHVO works — from verified listings to AI concierge, flatmate matching & smart society tools.'

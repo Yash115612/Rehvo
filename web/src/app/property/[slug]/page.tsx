@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PropertyDetailPageProps): Pro
   const canonicalUrl = `https://rehvo.in/property/${fullSlug}`;
 
   const title = `${property.bedrooms ? `${property.bedrooms} BHK ` : ''}${property.title} for Rent in ${property.locality}, ${property.city}`;
-  const description = `Verified ${property.bedrooms ? `${property.bedrooms} BHK ` : ''}apartment for rent in ${property.locality}, ${property.city}. Monthly rent ₹${property.price?.toLocaleString('en-IN')}. 100% verified title deed, zero brokerage, instant visit booking on REHVO.`;
+  const description = `Verified ${property.bedrooms ? `${property.bedrooms} BHK ` : ''}apartment for rent in ${property.locality}, ${property.city}. Monthly rent ₹${property.price?.toLocaleString('en-IN')}. 100% verified title deed, Zero Commission, instant visit booking on REHVO.`;
 
   return constructSeoMetadata({
     title,
@@ -131,7 +131,7 @@ export default async function PropertyDetailPage({ params }: PropertyDetailPageP
               {formattedPrice}
               <span className="text-xs font-normal text-slate-400">/month</span>
             </div>
-            <p className="text-xs text-[#0E8F73] font-bold">Zero Brokerage Guaranteed</p>
+            <p className="text-xs text-[#0E8F73] font-bold">Zero Commission Guaranteed</p>
           </div>
         </div>
 

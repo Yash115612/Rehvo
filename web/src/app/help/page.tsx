@@ -28,7 +28,7 @@ const HELP_CATEGORIES = [
   {
     id: 'chat',
     icon: MessageCircle,
-    title: 'Chat with Owner or Broker',
+    title: 'Chat with Owner or Agent',
     desc: 'Connect directly with verified homeowners and flatmates securely without middleman interference.',
   },
   {
@@ -61,7 +61,7 @@ const ALL_FAQS = [
   {
     category: 'search',
     q: 'Is REHVO really 100% verified marketplace?',
-    a: 'Yes, absolutely. REHVO connects tenants directly with verified homeowners and flatmates. There are zero broker commissions, hidden convenience fees, or transaction percentages charged on standard listings.',
+    a: 'Yes, absolutely. REHVO connects tenants directly with verified homeowners and flatmates. There are zero agent commissions, hidden convenience fees, or transaction percentages charged on standard listings.',
   },
   {
     category: 'search',
@@ -144,7 +144,7 @@ export default function HelpPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by keywords (e.g. brokerage, verification, security pass)..."
+              placeholder="Search by keywords (e.g. commission, verification, security pass)..."
               className="w-full bg-white text-stone-900 placeholder:text-stone-400 text-sm font-medium pl-12 pr-4 py-4 rounded-2xl shadow-xl focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
             />
           </div>

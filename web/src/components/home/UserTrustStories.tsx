@@ -8,12 +8,12 @@ export const UserTrustStories: React.FC = () => {
   const highlights = [
     {
       title: 'Direct Landlord Connections',
-      desc: 'Talk directly with flat owners and flatmates without brokers pushing artificial prices or deposit demands.',
+      desc: 'Talk directly with flat owners and flatmates without middlemen pushing artificial prices or deposit demands.',
       stat: '100% Direct',
     },
     {
       title: 'Guaranteed Zero Middleman Fees',
-      desc: 'Tenants save an average of ₹35,000 to ₹1,00,000 in upfront broker commissions on every rental agreement.',
+      desc: 'Tenants save an average of ₹35,000 to ₹1,00,000 in upfront agent commissions on every rental agreement.',
       stat: '₹0 Commission',
     },
     {

@@ -91,7 +91,7 @@ export const PropertyDownloadActions: React.FC<PropertyDownloadActionsProps> = (
         subtitle={
           modalMode === 'rent'
             ? 'To schedule a physical walkthrough, verify gate passes, and rent with verified listing, open or install the REHVO mobile app.'
-            : 'Talk straight with verified homeowners without brokers or intrusive third-party calls exclusively in the REHVO app.'
+            : 'Talk straight with verified homeowners without middlemen or intrusive third-party calls exclusively in the REHVO app.'
         }
         propertyTitle={propertyTitle}
       />

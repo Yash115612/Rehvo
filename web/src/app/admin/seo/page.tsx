@@ -122,9 +122,9 @@ const PREVIEW_PAGES = [
   {
     id: 'home',
     name: 'Homepage',
-    title: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
+    title: 'REHVO — Zero Commission Rentals, Verified Homes & Flatmates in Mumbai',
     description:
-      'Find verified rental homes, flatmates, PGs, and commercial properties with AI concierge, 3D walkthroughs, verified title deeds, and zero brokerage across Mumbai.',
+      'Find verified rental homes, flatmates, PGs, and commercial properties with AI concierge, 3D walkthroughs, verified title deeds, and Zero Commission across Mumbai.',
     url: 'https://rehvo.in',
     displayUrl: 'rehvo.in',
     breadcrumbs: ['Home'],
@@ -144,9 +144,9 @@ const PREVIEW_PAGES = [
   {
     id: 'rent',
     name: 'Rent Landing: 2 BHK Mumbai',
-    title: '2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Brokerage',
+    title: '2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Commission',
     description:
-      'Find verified 2 BHK apartments for rent in Mumbai with zero brokerage. Direct owner listings in Andheri West, Bandra, Powai, and Goregaon with instant visit scheduling.',
+      'Find verified 2 BHK apartments for rent in Mumbai with Zero Commission. Direct owner listings in Andheri West, Bandra, Powai, and Goregaon with instant visit scheduling.',
     url: 'https://rehvo.in/rent/2-bhk-for-rent-in-mumbai',
     displayUrl: 'rehvo.in > rent > 2-bhk-for-rent-in-mumbai',
     breadcrumbs: ['Home', 'Rentals', '2 BHK Flats in Mumbai'],
@@ -155,9 +155,9 @@ const PREVIEW_PAGES = [
   {
     id: 'landmark',
     name: 'Landmark: Flats near IIT Bombay',
-    title: 'Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Brokerage',
+    title: 'Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Commission',
     description:
-      'Find verified 1, 2, and 3 BHK flats for rent near IIT Bombay, Powai. Direct owner listings for students, professors, and tech professionals with zero brokerage on REHVO.',
+      'Find verified 1, 2, and 3 BHK flats for rent near IIT Bombay, Powai. Direct owner listings for students, professors, and tech professionals with Zero Commission on REHVO.',
     url: 'https://rehvo.in/rent/flats-near-iit-bombay',
     displayUrl: 'rehvo.in > rent > flats-near-iit-bombay',
     breadcrumbs: ['Home', 'Rentals', 'Flats near IIT Bombay'],
@@ -1122,7 +1122,7 @@ export default function AdminSeoPage() {
 
                 <div className="pt-2 flex flex-wrap items-center gap-2 text-[11px]">
                   <span className="px-2 py-0.5 rounded-sm bg-slate-100 text-slate-700 font-medium">
-                    Zero Brokerage Guaranteed
+                    Zero Commission Guaranteed
                   </span>
                   <span className="px-2 py-0.5 rounded-sm bg-emerald-50 text-emerald-700 font-medium">
                     Index-II Deed Verified

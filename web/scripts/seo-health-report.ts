@@ -105,7 +105,7 @@ try {
   if (breadcrumbs['@context'] !== 'https://schema.org' || breadcrumbs.itemListElement.length !== 3) schemaErrors++;
 
   const faq = generateFaqSchema([
-    { question: 'What is REHVO?', answer: 'Zero brokerage rental platform in Mumbai.' },
+    { question: 'What is REHVO?', answer: 'Zero Commission rental platform in Mumbai.' },
   ]);
   if (faq['@context'] !== 'https://schema.org' || faq.mainEntity.length !== 1) schemaErrors++;
 

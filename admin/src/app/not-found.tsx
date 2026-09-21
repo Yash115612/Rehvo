@@ -11,7 +11,7 @@ export default function NotFound() {
         </div>
         <h1 className="text-2xl font-extrabold text-stone-900 mb-2">Listing or Page Not Found</h1>
         <p className="text-xs text-stone-600 mb-8 leading-relaxed">
-          The property or page you are looking for may have been rented, unlisted, or moved. Explore our active zero-brokerage listings in Mumbai.
+          The property or page you are looking for may have been rented, unlisted, or moved. Explore our active zero-commission listings in Mumbai.
         </p>
 
         <div className="space-y-3">

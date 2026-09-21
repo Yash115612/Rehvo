@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, Banknote, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
 
-export const ZeroBrokerageBanner: React.FC = () => {
+export const ZeroCommissionBanner: React.FC = () => {
   return (
     <section className="py-12 sm:py-16 bg-[#F8FAFC]">
       <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,11 +20,11 @@ export const ZeroBrokerageBanner: React.FC = () => {
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
               India&apos;s Verified Rental Marketplace. <br />
-              Direct Owners &amp; Trusted Brokers.
+              Direct Owners &amp; Trusted Middlemen.
             </h2>
 
             <p className="text-sm sm:text-base text-[#CCFBF1]/90 font-medium leading-relaxed max-w-2xl">
-              REHVO connects verified renters with homeowners and registered brokers through transparent pricing, verified agreements, and AI-powered property matching.
+              REHVO connects verified renters with homeowners and registered middlemen through transparent pricing, verified agreements, and AI-powered property matching.
             </p>
           </div>
 
@@ -37,7 +37,7 @@ export const ZeroBrokerageBanner: React.FC = () => {
               </div>
               <h3 className="text-lg font-black text-white">100% Verified Listings</h3>
               <p className="text-xs text-[#CCFBF1]/80 leading-relaxed font-medium">
-                Every listing is verified by our team. Chat directly with verified owners or trusted brokers with full transparency.
+                Every listing is verified by our team. Chat directly with verified owners or trusted middlemen with full transparency.
               </p>
             </div>
 

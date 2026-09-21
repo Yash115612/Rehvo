@@ -142,7 +142,7 @@ export const TourViewer: React.FC<TourViewerProps> = ({ tour, onExit }) => {
     try {
       await Share.share({
         title: `REHVO AI 3D Tour — ${tour.title}`,
-        message: `Take an interactive 3D virtual tour of "${tour.title}" in ${tour.meta.locality} before visiting! Zero Brokerage on REHVO:\nhttps://rehvo.in/tour/${tour.id}`,
+        message: `Take an interactive 3D virtual tour of "${tour.title}" in ${tour.meta.locality} before visiting! Zero Commission on REHVO:\nhttps://rehvo.in/tour/${tour.id}`,
       });
     } catch {}
   };

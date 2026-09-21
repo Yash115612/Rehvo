@@ -1541,7 +1541,7 @@ export const rentalOperationsService = {
       {
         id: 'c4_intercom',
         title: 'Society Intercom & Security App Sync',
-        subtitle: 'Sync MyGate / NoBrokerHood flat mapping for instant visitor approvals',
+        subtitle: 'Sync MyGate / SocietyGate flat mapping for instant visitor approvals',
         category: 'utility_setup',
         completed: false,
         action_text: 'Society Pass',

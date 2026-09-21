@@ -239,7 +239,7 @@ export interface PaymentTransaction {
   user_id: string;
   user_name: string;
   user_email: string;
-  type: 'BROKERAGE' | 'SUBSCRIPTION' | 'FEATURED_LISTING' | 'REFUND' | 'WALLET_RELOAD' | 'SOCIETY_ONBOARDING';
+  type: 'COMMISSION' | 'SUBSCRIPTION' | 'FEATURED_LISTING' | 'REFUND' | 'WALLET_RELOAD' | 'SOCIETY_ONBOARDING';
   amount: number;
   gst_amount: number;
   total_amount: number;

@@ -26,7 +26,7 @@ export function InternalLinksGrid({
             </h2>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Browse verified direct-owner flats, shared flatmates, PGs, and commercial real estate with zero brokerage.
+            Browse verified direct-owner flats, shared flatmates, PGs, and commercial real estate with Zero Commission.
           </p>
         </div>
 
@@ -94,8 +94,8 @@ export function InternalLinksGrid({
                 </Link>
               </li>
               <li>
-                <Link href="/zero-brokerage" className="hover:text-[#0E8F73] transition block py-0.5">
-                  Zero Brokerage Homes Mumbai
+                <Link href="/zero-commission" className="hover:text-[#0E8F73] transition block py-0.5">
+                  Zero Commission Homes Mumbai
                 </Link>
               </li>
             </ul>

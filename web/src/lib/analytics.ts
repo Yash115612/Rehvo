@@ -370,7 +370,7 @@ export function trackLogin(
 export function trackSignup(
   params: {
     method?: 'otp' | 'google' | 'phone' | 'email' | string;
-    userRole?: 'tenant' | 'owner' | 'flatmate' | 'broker' | string;
+    userRole?: 'tenant' | 'owner' | 'flatmate' | 'agent' | string;
     userId?: string;
   } & BasePropertyAnalyticsParams = {}
 ) {

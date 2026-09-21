@@ -29,7 +29,7 @@ export const V4TermsScreen: React.FC = () => {
     {
       title: '2. Verified Marketplace Guarantee',
       content:
-        'REHVO operates as a verified rental marketplace connecting property owners, trusted brokers, and prospective tenants. All listings are verified and pricing is transparent.',
+        'REHVO operates as a verified rental marketplace connecting property owners, landlords, and prospective tenants. All listings are verified and pricing is transparent.',
     },
     {
       title: '3. DigiLocker Identity Verification',

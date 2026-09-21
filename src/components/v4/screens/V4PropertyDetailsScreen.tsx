@@ -348,7 +348,7 @@ export const V4PropertyDetailsScreen: React.FC<V4PropertyDetailsScreenProps> = (
               </Text>
             </View>
             <View style={styles.priceRow}>
-              <Text style={styles.priceSubLabel}>Brokerage Fee</Text>
+              <Text style={styles.priceSubLabel}>Commission Fee</Text>
               <Text style={[styles.priceSubVal, { color: '#16A34A', fontWeight: '900' }]}>
                 ₹0 (Zero Commission)
               </Text>

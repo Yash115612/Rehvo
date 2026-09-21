@@ -65,7 +65,6 @@ const TYPO_MAP: Record<string, string> = {
   unfurnish: 'unfurnished',
   semifurnished: 'semi furnished',
   deposite: 'deposit',
-  brokrage: 'brokerage',
   balcny: 'balcony',
   prking: 'parking',
   swim: 'swimming pool',
@@ -115,7 +114,7 @@ export interface ParsedNLPSearch {
   detectedMaxBudget?: number;
   detectedMinBudget?: number;
   detectedZeroDeposit?: boolean;
-  detectedZeroBrokerage?: boolean;
+  detectedZeroCommission?: boolean;
   detectedAmenities?: string[];
   detectedTenant?: string;
   summaryText: string;
@@ -132,7 +131,7 @@ export function parseNaturalLanguageQuery(inputQuery: string): ParsedNLPSearch {
   let detectedMaxBudget: number | undefined;
   let detectedMinBudget: number | undefined;
   let detectedZeroDeposit = false;
-  let detectedZeroBrokerage = false;
+  let detectedZeroCommission = false;
   let detectedTenant: string | undefined;
 
   // 1. BHK Detection
@@ -185,9 +184,9 @@ export function parseNaturalLanguageQuery(inputQuery: string): ParsedNLPSearch {
     detectedZeroDeposit = true;
     parsedFilters.zero_deposit_only = true;
   }
-  if (/\b(verified marketplace|verified listings|no brokerage|no broker|owner direct|direct owner)\b/.test(q)) {
-    detectedZeroBrokerage = true;
-    parsedFilters.zero_brokerage_only = true;
+  if (/\b(verified marketplace|verified listings|zero commission|no commission|owner direct|direct owner)\b/.test(q)) {
+    detectedZeroCommission = true;
+    parsedFilters.zero_commission_only = true;
   }
 
   // 4. Locality Detection
@@ -276,7 +275,7 @@ export function parseNaturalLanguageQuery(inputQuery: string): ParsedNLPSearch {
   if (detectedLocality) summaryParts.push(`in ${detectedLocality}`);
   if (detectedMaxBudget) summaryParts.push(`under ₹${(detectedMaxBudget / 1000).toFixed(0)}k`);
   if (detectedZeroDeposit) summaryParts.push('Zero Deposit');
-  if (detectedZeroBrokerage) summaryParts.push('Verified Listing');
+  if (detectedZeroCommission) summaryParts.push('Verified Listing');
   if (detectedAmenities.length) summaryParts.push(`with ${detectedAmenities.join(', ')}`);
 
   return {
@@ -288,7 +287,7 @@ export function parseNaturalLanguageQuery(inputQuery: string): ParsedNLPSearch {
     detectedMaxBudget,
     detectedMinBudget,
     detectedZeroDeposit,
-    detectedZeroBrokerage,
+    detectedZeroCommission,
     detectedAmenities,
     detectedTenant,
     summaryText: summaryParts.length ? summaryParts.join(' • ') : correctedQuery,
@@ -413,7 +412,7 @@ export async function executeSmartSearch(
     if (mergedFilters.zero_deposit_only && deposit > rent) return false;
 
     // Verified listings
-    if (mergedFilters.zero_brokerage_only && (prop.brokerage || 0) > 0) return false;
+    if (mergedFilters.zero_commission_only && ((prop as any).commission || 0) > 0) return false;
 
     // BHK Configuration
     if (mergedFilters.bhk && mergedFilters.bhk.length > 0) {

@@ -127,7 +127,6 @@ export default function RootLayout() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(renter)" options={{ headerShown: false }} />
             <Stack.Screen name="(owner)" options={{ headerShown: false }} />
-            <Stack.Screen name="(broker)" options={{ headerShown: false }} />
           </Stack>
         </V4AppLockGate>
       </V4ErrorBoundary>

@@ -35,13 +35,13 @@ export const RentPropertiesGrid: React.FC = () => {
               <span className="px-2.5 py-0.5 rounded-full bg-[#CCFBF1] text-[#064E3B] text-[10px] font-black uppercase tracking-wider">
                 VERIFIED MARKETPLACE
               </span>
-              <span className="text-[11px] font-bold text-[#64748B]">OWNERS &amp; BROKERS</span>
+              <span className="text-[11px] font-bold text-[#64748B]">OWNERS &amp; MIDDLEMEN</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#031B2A] tracking-tight">
               Rent Properties
             </h2>
             <p className="text-xs sm:text-sm font-medium text-[#64748B] mt-0.5">
-              Verified properties from direct homeowners, registered brokers, and builders with full transparency
+              Verified properties from direct homeowners, registered middlemen, and builders with full transparency
             </p>
           </div>
 
@@ -96,7 +96,7 @@ export const RentPropertiesGrid: React.FC = () => {
                 className="text-xs sm:text-sm font-semibold transition-colors duration-700 ease-in-out"
                 style={{ color: tallCard.subtextColor }}
               >
-                1, 2, 3+ BHK &bull; Owner &amp; Broker Verified
+                1, 2, 3+ BHK &bull; Owner &amp; Agent Verified
               </p>
 
               {/* Centered Large Circular Glowing Icon Badge */}

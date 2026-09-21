@@ -17,7 +17,7 @@ const TRUST_ITEMS: TrustCardItem[] = [
     iconBg: 'bg-[#CCFBF1]',
     iconColor: '#0F766E',
     title: 'Verified Listing',
-    desc: 'No hidden fees. Verified owners & brokers. Transparent pricing on every agreement.',
+    desc: 'No hidden fees. Verified owners & middlemen. Transparent pricing on every agreement.',
   },
   {
     icon: CheckCircle2,

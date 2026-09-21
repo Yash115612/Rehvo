@@ -38,7 +38,7 @@ export const FeaturedProperties: React.FC<FeaturedPropertiesProps> = ({ properti
               Featured Verified Homes
             </h2>
             <p className="text-xs sm:text-sm text-[#64748B] mt-1 font-medium">
-              Physical walkthrough verified homes with 100% zero broker commission.
+              Physical walkthrough verified homes with 100% zero agent commission.
             </p>
           </div>
 

@@ -74,7 +74,7 @@ function AdminPaymentsContent() {
             </span>
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Real-time brokerage collections, landlord subscriptions, Razorpay transactions, refunds, and GST tax invoices
+            Real-time commission collections, landlord subscriptions, Razorpay transactions, refunds, and GST tax invoices
           </p>
         </div>
 

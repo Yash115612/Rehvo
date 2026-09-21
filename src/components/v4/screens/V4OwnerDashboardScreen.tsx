@@ -122,7 +122,7 @@ export const V4OwnerDashboardScreen: React.FC<V4OwnerDashboardScreenProps> = ({
             <View style={styles.guestStatsRow}>
               <View style={styles.guestStatCol}>
                 <Text style={styles.guestStatNum}>₹0</Text>
-                <Text style={styles.guestStatLabel}>Brokerage</Text>
+                <Text style={styles.guestStatLabel}>Commission</Text>
               </View>
               <View style={styles.guestStatDivider} />
               <View style={styles.guestStatCol}>
@@ -643,7 +643,7 @@ export const V4OwnerDashboardScreen: React.FC<V4OwnerDashboardScreenProps> = ({
             <View style={{ flex: 1 }}>
               <Text style={styles.moduleRowTitle}>Subscription Plans</Text>
               <Text style={styles.moduleRowSub}>
-                Free, Starter ₹299, Pro ₹599, Premium ₹999, Broker & Enterprise
+                Free, Starter ₹299, Pro ₹599, Premium ₹999 & Enterprise
               </Text>
             </View>
             <View style={styles.moduleRightCol}>

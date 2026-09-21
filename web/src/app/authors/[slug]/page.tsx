@@ -42,23 +42,23 @@ const AUTHORS_DATA: Record<
     name: 'REHVO Editorial & Real Estate Intelligence Desk',
     role: 'Market Research, Deed Verification & Tenant Advocacy Team',
     avatar: '/logo.png',
-    bio: 'The REHVO Editorial Desk is an independent research collective of urban housing analysts, MahaRERA legal advisors, and field verification researchers. Based in Mumbai, the desk publishes quarterly rental yields, neighborhood pricing indexes, and consumer protection guides designed to empower renters with transparent, broker-free transaction data.',
+    bio: 'The REHVO Editorial Desk is an independent research collective of urban housing analysts, MahaRERA legal advisors, and field verification researchers. Based in Mumbai, the desk publishes quarterly rental yields, neighborhood pricing indexes, and consumer protection guides designed to empower renters with transparent, agent-free transaction data.',
     credentials: [
       '15+ Years Combined Mumbai Real Estate Market Research Experience',
       'Automated Maharashtra Index-II Land Registry & Title Deed Verification Specialists',
       'Authors of the Bi-Annual Mumbai Suburban Rental Yield Index',
-      'Strict Zero-Brokerage Consumer Protection & Anti-Fraud Policy',
+      'Strict Zero-Commission Consumer Protection & Anti-Fraud Policy',
     ],
     reviewMethodology: [
       'Every rental pricing benchmark is validated against registered government Index-II tenancy documents and active physical listings.',
       'Transit times, metro connectivity, and infrastructure milestones are verified via MMRDA, Maha-Metro, and Mumbai Municipal Corporation updates.',
-      'No sponsored broker promotions: All property reviews and locality evaluations are independently compiled without commercial bias.',
+      'No sponsored agent promotions: All property reviews and locality evaluations are independently compiled without commercial bias.',
     ],
     stats: [
       { label: 'Verified Listings Audited', value: '25,000+' },
       { label: 'Mumbai Localities Covered', value: '29+' },
       { label: 'Published Reports & Guides', value: '50+' },
-      { label: 'Broker Fees Saved for Renters', value: '₹12 Cr+' },
+      { label: 'Commission Fees Saved for Renters', value: '₹12 Cr+' },
     ],
   },
 };

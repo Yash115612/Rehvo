@@ -50,13 +50,13 @@ export function PropertyEditorModal({
   const [city, setCity] = useState(property?.city || 'Mumbai');
   const [rent, setRent] = useState(property?.rent || 0);
   const [deposit, setDeposit] = useState(property?.rent ? property.rent * 2 : 0);
-  const [brokerage, setBrokerage] = useState(0);
+  const [commission, setBrokerage] = useState(0);
   const [area, setArea] = useState(property?.area || 850);
   const [bedrooms, setBedrooms] = useState('2 BHK');
   const [furnishing, setFurnishing] = useState('Fully Furnished');
   const [availability, setAvailability] = useState('Immediate');
   const [description, setDescription] = useState(
-    'Prime verified rental home with natural lighting, sea breeze and zero brokerage verification.'
+    'Prime verified rental home with natural lighting, sea breeze and Zero Commission verification.'
   );
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([
     'Gated Security',
@@ -189,11 +189,11 @@ export function PropertyEditorModal({
             </div>
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
-                Brokerage (₹ / Zero)
+                Commission (₹ / Zero)
               </label>
               <input
                 type="number"
-                value={brokerage}
+                value={commission}
                 onChange={(e) => setBrokerage(Number(e.target.value))}
                 className="w-full bg-[#16161A] px-3.5 py-2 rounded-xl border border-white/10 text-xs font-bold text-white focus:outline-none focus:border-[#10B981]"
               />

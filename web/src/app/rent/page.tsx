@@ -24,12 +24,12 @@ export const revalidate = 3600;
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Flats & Apartments for Rent in Mumbai | 100% Verified Direct Owners',
   description:
-    'Search 1, 2, 3 BHK verified rental flats in Mumbai without paying brokerage fees. Direct owner contact, physical walkthrough guarantee, and low security deposit rentals on REHVO.',
+    'Search 1, 2, 3 BHK verified rental flats in Mumbai without paying commission fees. Direct owner contact, physical walkthrough guarantee, and low security deposit rentals on REHVO.',
   canonicalUrl: 'https://rehvo.in/rent',
   keywords: [
     'flats for rent in mumbai',
     'apartments for rent',
-    'zero brokerage mumbai',
+    'Zero Commission mumbai',
     'direct owner rentals',
     '1 bhk for rent mumbai',
     '2 bhk for rent mumbai',
@@ -81,7 +81,7 @@ export default async function RentHubPage() {
         <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xs space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-[#0E8F73] border border-emerald-200 text-xs font-bold">
             <ShieldCheck size={14} />
-            <span>Zero Brokerage • Direct Homeowners</span>
+            <span>Zero Commission • Direct Homeowners</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black text-[#031B2A] tracking-tight">
@@ -197,7 +197,7 @@ export default async function RentHubPage() {
 
               <div className="px-4 pb-4 pt-1 flex items-center justify-between text-[11px] font-bold text-slate-600 border-t border-slate-100">
                 <span>{property.bedrooms ? `${property.bedrooms} BHK` : 'Studio'}</span>
-                <span className="text-[#0E8F73]">Zero Brokerage</span>
+                <span className="text-[#0E8F73]">Zero Commission</span>
               </div>
             </Link>
           ))}

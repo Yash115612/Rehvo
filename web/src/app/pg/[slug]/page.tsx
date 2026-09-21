@@ -192,7 +192,7 @@ export default async function PgIntentPage({ params }: { params: { slug: string 
                 </div>
                 <div className="px-4 pb-4 pt-1 flex items-center justify-between text-[11px] font-bold text-slate-600 border-t border-slate-100">
                   <span>Student Friendly</span>
-                  <span className="text-[#0E8F73]">Zero Brokerage</span>
+                  <span className="text-[#0E8F73]">Zero Commission</span>
                 </div>
               </Link>
             );

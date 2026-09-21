@@ -96,7 +96,7 @@ export default function ListPropertyPage() {
           price: rent,
           deposit: rent * 2,
           maintenance: 0,
-          brokerage: 0,
+          commission: 0,
           city: 'Mumbai',
           state: 'Maharashtra',
           locality: formData.locality.trim(),
@@ -173,7 +173,7 @@ export default function ListPropertyPage() {
             </div>
             <h3 className="text-base font-black text-[#031B2A]">100% Transparent</h3>
             <p className="text-xs text-[#64748B] leading-relaxed">
-              No hidden broker fees or side commissions. You keep your full rental value.
+              No hidden Commission Fees or side commissions. You keep your full rental value.
             </p>
           </div>
 
@@ -393,7 +393,7 @@ export default function ListPropertyPage() {
               </div>
 
               <p className="text-[11px] text-center text-[#64748B] pt-2">
-                By submitting, you agree to REHVO&apos;s Verified Marketplace Policy. Direct owner and verified broker listings with transparent pricing.
+                By submitting, you agree to REHVO&apos;s Verified Marketplace Policy. Direct owner and verified agent listings with transparent pricing.
               </p>
             </form>
           )}

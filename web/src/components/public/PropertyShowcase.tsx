@@ -102,7 +102,7 @@ export const PropertyShowcase: React.FC<PropertyShowcaseProps> = ({
               Places worth seeing
             </h2>
             <p className="text-xs sm:text-sm text-stone-500 font-normal leading-relaxed pt-0.5">
-              Curated verified residences and rooms listed directly by property owners and trusted brokers.
+              Curated verified residences and rooms listed directly by property owners and trusted middlemen.
             </p>
           </div>
 

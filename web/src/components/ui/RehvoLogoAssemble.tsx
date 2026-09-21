@@ -102,7 +102,7 @@ export const RehvoLogoAssemble: React.FC<RehvoLogoAssembleProps> = ({
             <span
               className={`${sizeClasses.tagline} font-black text-[#0F766E] uppercase tracking-widest`}
             >
-              Verified Listing • Owners & Brokers
+              Verified Listing • Owners & Middlemen
             </span>
           </div>
         )}

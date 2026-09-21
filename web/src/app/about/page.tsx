@@ -36,12 +36,12 @@ export default function AboutPage() {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#031B2A] tracking-tight leading-tight">
-            Rent without brokers. <br />
+            Rent without middlemen. <br />
             Live with belonging.
           </h1>
 
           <p className="text-sm sm:text-base text-[#64748B] max-w-xl mx-auto font-medium">
-            REHVO was created to end predatory broker commissions, duplicate photos, and middleman chaos in Mumbai real estate.
+            REHVO was created to end predatory agent commissions, duplicate photos, and middleman chaos in Mumbai real estate.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function AboutPage() {
 
             <div className="space-y-2.5">
               <div className="text-2xl font-black text-[#0F766E]">03</div>
-              <h3 className="text-base font-black text-[#031B2A]">Chat with Owner or Broker</h3>
+              <h3 className="text-base font-black text-[#031B2A]">Chat with Owner or Agent</h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
                 Clarify questions, schedule visits, and confirm details directly with verified landlords.
               </p>

@@ -81,7 +81,7 @@ export const V4AuthGate: React.FC<V4AuthGateProps> = ({
   };
 
   const defaultBenefits = [
-    'Verified direct communication with owners & trusted brokers',
+    'Verified direct communication with verified owners',
     'AI roommate matching and instant mutual waves',
     'Earn up to ₹5,000 R-Cash on rent & bill payments',
     'Free DigiLocker identity verification & trust score',

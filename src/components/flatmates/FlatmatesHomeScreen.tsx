@@ -612,8 +612,8 @@ export const FlatmatesHomeScreen: React.FC = () => {
             {selectedLocality}
           </Text>
           <ChevronDown size={11} color="#64748B" strokeWidth={2.4} />
-          <View style={styles.zeroBrokeragePill}>
-            <Text style={styles.zeroBrokeragePillText}>VERIFIED LISTING</Text>
+          <View style={styles.zeroCommissionPill}>
+            <Text style={styles.zeroCommissionPillText}>VERIFIED LISTING</Text>
           </View>
         </Pressable>
       </View>
@@ -1506,7 +1506,7 @@ const styles: any = StyleSheet.create({
     color: '#0F172A',
     letterSpacing: -0.2,
   },
-  zeroBrokeragePill: {
+  zeroCommissionPill: {
     marginLeft: 'auto',
     backgroundColor: '#ECFDF5',
     paddingHorizontal: 7,
@@ -1515,7 +1515,7 @@ const styles: any = StyleSheet.create({
     borderWidth: 0.8,
     borderColor: '#A7F3D0',
   },
-  zeroBrokeragePillText: {
+  zeroCommissionPillText: {
     fontSize: 8.5,
     fontWeight: '900',
     color: '#059669',

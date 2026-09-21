@@ -350,7 +350,7 @@ export const SearchPageClient: React.FC<SearchPageClientProps> = ({
                 </span>
               </div>
               <p className="text-xs sm:text-sm font-medium text-[#64748B] mt-1">
-                Verified listings • Owner & broker contact • Verified physically with scheduled doorstep visits
+                Verified listings • Owner & agent contact • Verified physically with scheduled doorstep visits
               </p>
             </div>
           </div>

@@ -75,7 +75,7 @@ export const V4PropertyAICard: React.FC<V4PropertyAICardProps> = React.memo(
             <Sparkles size={13} color={V4_COLORS.primary} />
             <Text style={styles.badgeText}>ASK REHVO AI</Text>
           </View>
-          <Text style={styles.zeroBrokerageBadge}>100% Verified Comps</Text>
+          <Text style={styles.zeroCommissionBadge}>100% Verified Comps</Text>
         </View>
 
         <Text style={styles.title}>AI Property Audit & Intelligence</Text>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     color: V4_COLORS.primary,
     letterSpacing: 0.5,
   },
-  zeroBrokerageBadge: {
+  zeroCommissionBadge: {
     fontSize: 11,
     fontWeight: '700',
     color: '#16A34A',

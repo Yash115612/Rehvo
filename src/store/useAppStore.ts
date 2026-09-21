@@ -22,9 +22,6 @@ import {
   NotificationPreferences,
   UserRole,
   AppMode,
-  BrokerProfile,
-  BrokerClientLead,
-  BrokerDashboardMetrics,
   Enquiry,
   PropertyType,
   FurnishingType,
@@ -115,7 +112,6 @@ import {
 import { getItem, setItem, removeItem, clearAll } from '../lib/storage';
 import { supabase } from '../lib/supabase';
 import * as profileService from '../services/profile';
-import * as brokerService from '../services/broker';
 import * as authService from '../services/auth';
 import * as propertyService from '../services/properties';
 import * as flatmateService from '../services/flatmates';
@@ -172,19 +168,14 @@ interface AppState {
   isOnboarded: boolean;
   currentRole: UserRole;
   role: UserRole;
-  userRole: 'renter' | 'owner' | 'broker';
-  activeMode: 'renter' | 'owner' | 'broker';
-  pendingAuthRole: 'renter' | 'owner' | 'broker';
-  setPendingAuthRole: (role: 'renter' | 'owner' | 'broker') => void;
-  brokerProfile: BrokerProfile | null;
-  brokerMetrics: BrokerDashboardMetrics | null;
-  brokerClients: BrokerClientLead[];
-  switchRole: (newRole: UserRole | 'renter' | 'owner' | 'broker') => Promise<void>;
-  switchMode: (mode: 'renter' | 'owner' | 'broker') => Promise<void>;
+  userRole: 'renter' | 'owner' | 'admin';
+  activeMode: 'renter' | 'owner' | 'admin';
+  pendingAuthRole: 'renter' | 'owner' | 'admin';
+  setPendingAuthRole: (role: 'renter' | 'owner' | 'admin') => void;
+  switchRole: (newRole: UserRole | 'renter' | 'owner' | 'admin') => Promise<void>;
+  switchMode: (mode: 'renter' | 'owner' | 'admin') => Promise<void>;
   initializeRole: () => Promise<void>;
   fetchRoleProfile: () => Promise<void>;
-  updateBrokerProfile: (data: Partial<BrokerProfile>) => Promise<void>;
-  updateBrokerClientStage: (leadId: string, stage: BrokerClientLead['stage']) => Promise<void>;
   blockedUserIds: string[];
   initialized: boolean;
 
@@ -400,7 +391,7 @@ interface AppState {
     rent: number;
     deposit: number;
     maintenance: number;
-    brokerage: number;
+    commission: number;
     bhk: string;
     bathrooms: number;
     washrooms?: number;
@@ -416,7 +407,7 @@ interface AppState {
     images: PropertyImage[];
     description: string;
     additional_info: string;
-    no_brokerage: boolean;
+    zero_commission: boolean;
     tenant_preferences: string[];
     lease_type?: string;
   };
@@ -754,7 +745,7 @@ const DEFAULT_FILTER: PropertyFilter = {
   rent_min: 0,
   rent_max: 200000,
   furnishing: 'ALL',
-  brokerage_free_only: false,
+  direct_owner_only: false,
   verified_only: false,
   amenities: [],
   sort_by: 'recommended',
@@ -773,15 +764,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   userRole: 'renter',
   activeMode: 'renter',
   pendingAuthRole: 'renter',
-  setPendingAuthRole: (role: 'renter' | 'owner' | 'broker') => set({ pendingAuthRole: role }),
-  brokerProfile: brokerService.DEFAULT_BROKER_PROFILE,
-  brokerMetrics: brokerService.DEFAULT_BROKER_METRICS,
-  brokerClients: brokerService.DEFAULT_BROKER_CLIENTS,
+  setPendingAuthRole: (role: 'renter' | 'owner' | 'admin') => set({ pendingAuthRole: role }),
 
-  switchRole: async (newRole: UserRole | 'renter' | 'owner' | 'broker') => {
-    const rawRole = (typeof newRole === 'string' ? newRole.toLowerCase() : 'renter') as 'renter' | 'owner' | 'broker';
-    const normalizedMode: 'renter' | 'owner' | 'broker' =
-      rawRole === 'broker' ? 'broker' : rawRole === 'owner' ? 'owner' : 'renter';
+  switchRole: async (newRole: UserRole | 'renter' | 'owner' | 'admin') => {
+    const rawRole = (typeof newRole === 'string' ? newRole.toLowerCase() : 'renter') as 'renter' | 'owner' | 'admin';
+    const normalizedMode: 'renter' | 'owner' | 'admin' =
+      rawRole === 'owner' ? 'owner' : rawRole === 'admin' ? 'admin' : 'renter';
     const legacyRole: UserRole = (normalizedMode.toUpperCase() as any);
 
     set({
@@ -795,19 +783,17 @@ export const useAppStore = create<AppState>((set, get) => ({
       get().fetchMyProperties();
       get().fetchOwnerMetrics();
       get().fetchOwnerEcosystemData();
-    } else if (normalizedMode === 'broker') {
-      get().fetchRoleProfile();
     }
     get().fetchEnquiries();
     get().fetchVisits();
     get().fetchConversations();
     get().showToast(
-      `Switched to ${normalizedMode === 'broker' ? 'Broker' : normalizedMode === 'owner' ? 'Owner' : 'Renter'} Experience`,
+      `Switched to ${normalizedMode === 'owner' ? 'Owner' : normalizedMode === 'admin' ? 'Admin' : 'Renter'} Experience`,
       'info'
     );
   },
 
-  switchMode: async (mode: 'renter' | 'owner' | 'broker') => {
+  switchMode: async (mode: 'renter' | 'owner' | 'admin') => {
     await get().switchRole(mode);
   },
 
@@ -815,8 +801,8 @@ export const useAppStore = create<AppState>((set, get) => ({
     try {
       const savedActiveMode = (await getItem('rehvo_active_mode')) as string | null;
       if (savedActiveMode) {
-        const mode = savedActiveMode.toLowerCase() as 'renter' | 'owner' | 'broker';
-        if (mode === 'broker' || mode === 'owner' || mode === 'renter') {
+        const mode = savedActiveMode.toLowerCase() as 'renter' | 'owner' | 'admin';
+        if (mode === 'owner' || mode === 'renter' || mode === 'admin') {
           set({
             activeMode: mode,
             currentRole: (mode.toUpperCase() as any),
@@ -830,35 +816,14 @@ export const useAppStore = create<AppState>((set, get) => ({
   fetchRoleProfile: async () => {
     const { user, activeMode } = get();
     if (!user?.id) return;
-    if (activeMode === 'broker' || user.role?.toLowerCase() === 'broker') {
-      const res = await brokerService.getBrokerProfile(user.id);
-      if (res.success && res.data) {
-        set({ brokerProfile: res.data });
-      }
-      const clients = await brokerService.getBrokerClients(user.id);
-      set({ brokerClients: clients });
-    } else if (activeMode === 'owner' || user.role?.toLowerCase() === 'owner') {
+     else if (activeMode === 'owner' || user.role?.toLowerCase() === 'owner') {
       await get().fetchOwnerEcosystemData();
     }
   },
 
-  updateBrokerProfile: async (data: Partial<BrokerProfile>) => {
-    const { user } = get();
-    if (!user?.id) return;
-    const res = await brokerService.upsertBrokerProfile(user.id, data);
-    if (res.success && res.data) {
-      set({ brokerProfile: res.data });
-      get().showToast('Agency profile updated successfully', 'success');
-    }
-  },
+  
 
-  updateBrokerClientStage: async (leadId: string, stage: BrokerClientLead['stage']) => {
-    const { user } = get();
-    const brokerId = user?.id || 'broker-prof-1';
-    const updated = await brokerService.updateBrokerClientStage(brokerId, leadId, stage);
-    set({ brokerClients: updated });
-    get().showToast('Client pipeline stage updated', 'success');
-  },
+  
   blockedUserIds: [],
   initialized: false,
 
@@ -965,7 +930,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     rent: 0,
     deposit: 0,
     maintenance: 0,
-    brokerage: 0,
+    commission: 0,
     bhk: '',
     bathrooms: 1,
     washrooms: 2,
@@ -981,7 +946,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     images: [],
     description: '',
     additional_info: '',
-    no_brokerage: false,
+    zero_commission: false,
     tenant_preferences: [],
     lease_type: undefined,
   },
@@ -1090,10 +1055,8 @@ export const useAppStore = create<AppState>((set, get) => ({
           const parsed = JSON.parse(saved);
           if (parsed && parsed.id) {
             const rawSaved = (savedActiveMode || '').toLowerCase();
-            const userPrimaryRole: 'renter' | 'owner' | 'broker' =
-              parsed.role?.toLowerCase() === 'broker' ? 'broker' : parsed.role?.toLowerCase() === 'owner' ? 'owner' : 'renter';
-            const normalizedMode: 'renter' | 'owner' | 'broker' =
-              rawSaved === 'broker' ? 'broker' : rawSaved === 'owner' ? 'owner' : rawSaved === 'renter' ? 'renter' : userPrimaryRole;
+            const userPrimaryRole: 'renter' | 'owner' | 'admin' = parsed.role?.toLowerCase() === 'owner' ? 'owner' : parsed.role?.toLowerCase() === 'admin' ? 'admin' : 'renter';
+            const normalizedMode: 'renter' | 'owner' | 'admin' = rawSaved === 'owner' ? 'owner' : rawSaved === 'admin' ? 'admin' : rawSaved === 'renter' ? 'renter' : userPrimaryRole;
             const effectiveRole: UserRole = (normalizedMode.toUpperCase() as any);
 
             set({
@@ -1248,8 +1211,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (isCompleted) {
       setItem('rehvo_onboarding_completed', 'true');
     }
-    const userRoleLower: 'renter' | 'owner' | 'broker' =
-      user.role?.toLowerCase() === 'broker' ? 'broker' : user.role?.toLowerCase() === 'owner' ? 'owner' : 'renter';
+    const userRoleLower: 'renter' | 'owner' | 'admin' = user.role?.toLowerCase() === 'owner' ? 'owner' : user.role?.toLowerCase() === 'admin' ? 'admin' : 'renter';
     const currentActiveMode = get().activeMode || userRoleLower;
     const legacyRole: UserRole = (currentActiveMode.toUpperCase() as any);
 
@@ -1331,9 +1293,6 @@ export const useAppStore = create<AppState>((set, get) => ({
       userRole: 'renter',
       activeMode: 'renter',
       pendingAuthRole: 'renter',
-      brokerProfile: brokerService.DEFAULT_BROKER_PROFILE,
-      brokerClients: brokerService.DEFAULT_BROKER_CLIENTS,
-      brokerMetrics: brokerService.DEFAULT_BROKER_METRICS,
       myFlatmateProfile: null,
       flatmateDraft: null,
       ownerMetrics: null,
@@ -4052,7 +4011,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         rent: 0,
         deposit: 0,
         maintenance: 0,
-        brokerage: 0,
+        commission: 0,
         bhk: '',
         bathrooms: 1,
         washrooms: 2,
@@ -4068,7 +4027,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         images: [],
         description: '',
         additional_info: '',
-        no_brokerage: false,
+        zero_commission: false,
         tenant_preferences: [],
         lease_type: undefined,
       },

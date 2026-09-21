@@ -41,7 +41,7 @@ import { useAppStore } from '../../../store/useAppStore';
 
 export interface V4LoginScreenProps {
   initialMode?: 'signin' | 'signup';
-  initialRole?: 'renter' | 'owner' | 'broker';
+  initialRole?: 'renter' | 'owner';
 }
 
 export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
@@ -68,23 +68,18 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<'renter' | 'owner' | 'broker'>(
-    initialRole || pendingAuthRole || 'renter'
+  const [selectedRole, setSelectedRole] = useState<'renter' | 'owner'>(
+    initialRole || (pendingAuthRole === 'owner' ? 'owner' : 'renter')
   );
 
   useEffect(() => {
     if (initialRole) {
       setSelectedRole(initialRole);
-    } else if (pendingAuthRole) {
+    } else if (pendingAuthRole === 'owner' || pendingAuthRole === 'renter') {
       setSelectedRole(pendingAuthRole);
     }
   }, [initialRole, pendingAuthRole]);
 
-  // Broker specific fields
-  const [agencyName, setAgencyName] = useState('');
-  const [operatingCity, setOperatingCity] = useState('Mumbai');
-  const [reraNumber, setReraNumber] = useState('');
-  const [officeAddress, setOfficeAddress] = useState('');
 
   // UI State
   const [loading, setLoading] = useState(false);
@@ -104,9 +99,7 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
   // Helper to route user to correct role ecosystem
   const navigateToRoleDestination = (role?: string) => {
     const raw = (role || selectedRole || useAppStore.getState().activeMode || 'renter').toLowerCase();
-    if (raw.includes('broker')) {
-      router.replace('/(broker)/dashboard' as any);
-    } else if (raw.includes('owner') || raw.includes('lister')) {
+    if (raw.includes('owner') || raw.includes('lister')) {
       router.replace('/(owner)/dashboard' as any);
     } else {
       router.replace('/(renter)/home' as any);
@@ -135,9 +128,7 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
       } else {
         showToast('Signed in successfully!', 'success');
         const userRole = (useAppStore.getState().user?.role || selectedRole) as string;
-        const normalizedRole = userRole?.toLowerCase().includes('broker')
-          ? 'broker'
-          : userRole?.toLowerCase().includes('owner')
+        const normalizedRole = userRole?.toLowerCase().includes('owner')
           ? 'owner'
           : 'renter';
         await switchMode(normalizedRole);
@@ -172,11 +163,6 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
       return;
     }
 
-    if (selectedRole === 'broker' && !agencyName.trim()) {
-      setErrorMessage('Please enter your Real Estate Agency / Company name.');
-      return;
-    }
-
     setLoading(true);
     try {
       const result = await authService.signUpWithEmail({
@@ -185,9 +171,6 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
         phone: phone.trim(),
         password,
         role: selectedRole,
-        agencyName: selectedRole === 'broker' ? agencyName.trim() : undefined,
-        reraNumber: selectedRole === 'broker' ? reraNumber.trim() : undefined,
-        officeAddress: selectedRole === 'broker' ? officeAddress.trim() : undefined,
       });
 
       if (!result.success) {
@@ -252,9 +235,7 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
       } else {
         showToast('Signed in with Google!', 'success');
         const userRole = (useAppStore.getState().user?.role || selectedRole) as string;
-        const normalizedRole = userRole?.toLowerCase().includes('broker')
-          ? 'broker'
-          : userRole?.toLowerCase().includes('owner')
+        const normalizedRole = userRole?.toLowerCase().includes('owner')
           ? 'owner'
           : 'renter';
         await switchMode(normalizedRole);
@@ -532,7 +513,6 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
                 {[
                   { id: 'renter', label: 'Renter', icon: Compass },
                   { id: 'owner', label: 'Owner', icon: Building2 },
-                  { id: 'broker', label: 'Broker', icon: Briefcase },
                 ].map((item) => {
                   const isRoleActive = selectedRole === item.id;
                   const IconComp = item.icon;
@@ -563,80 +543,6 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
                 })}
               </View>
             </View>
-
-            {/* Broker Business Details Card */}
-            {selectedRole === 'broker' && (
-              <View style={styles.brokerFieldsCard}>
-                <View style={styles.brokerCardHeader}>
-                  <Briefcase size={16} color="#5B21B6" />
-                  <Text style={styles.brokerCardTitle}>Agency & Broker Profile</Text>
-                </View>
-
-                {/* Agency Name */}
-                <View style={styles.inputGroup}>
-                  <Text style={styles.inputLabel}>Real Estate Agency / Company Name *</Text>
-                  <View style={styles.inputRow}>
-                    <Building2 size={18} color="#94A3B8" />
-                    <TextInput
-                      placeholder="e.g. Apex Luxury Realty"
-                      placeholderTextColor={V4_COLORS.textMuted}
-                      value={agencyName}
-                      onChangeText={setAgencyName}
-                      style={styles.textInput}
-                    />
-                  </View>
-                </View>
-
-                {/* Operating City */}
-                <View style={styles.inputGroup}>
-                  <Text style={styles.inputLabel}>Primary Operating City *</Text>
-                  <View style={styles.inputRow}>
-                    <MapPin size={18} color="#94A3B8" />
-                    <TextInput
-                      placeholder="e.g. Mumbai / Bandra / BKC"
-                      placeholderTextColor={V4_COLORS.textMuted}
-                      value={operatingCity}
-                      onChangeText={setOperatingCity}
-                      style={styles.textInput}
-                    />
-                  </View>
-                </View>
-
-                {/* RERA Number */}
-                <View style={styles.inputGroup}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={styles.inputLabel}>MahaRERA Registration Number</Text>
-                    <Text style={{ fontSize: 11, color: '#059669', fontWeight: '700' }}>Recommended</Text>
-                  </View>
-                  <View style={styles.inputRow}>
-                    <ShieldCheck size={18} color="#94A3B8" />
-                    <TextInput
-                      placeholder="e.g. A51800012345"
-                      placeholderTextColor={V4_COLORS.textMuted}
-                      value={reraNumber}
-                      onChangeText={setReraNumber}
-                      autoCapitalize="characters"
-                      style={styles.textInput}
-                    />
-                  </View>
-                </View>
-
-                {/* Office Address */}
-                <View style={styles.inputGroup}>
-                  <Text style={styles.inputLabel}>Registered Office Address (Optional)</Text>
-                  <View style={styles.inputRow}>
-                    <MapPin size={18} color="#94A3B8" />
-                    <TextInput
-                      placeholder="e.g. 402, Trade Centre, BKC, Mumbai"
-                      placeholderTextColor={V4_COLORS.textMuted}
-                      value={officeAddress}
-                      onChangeText={setOfficeAddress}
-                      style={styles.textInput}
-                    />
-                  </View>
-                </View>
-              </View>
-            )}
 
             {/* Full Name */}
             <View style={styles.inputGroup}>
@@ -1174,28 +1080,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '800',
   },
-  brokerFieldsCard: {
-    backgroundColor: '#FDF4FF',
-    borderRadius: 16,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#F0ABFC',
-    marginBottom: 14,
-    gap: 12,
-  },
-  brokerCardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingBottom: 6,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F5D0FE',
-  },
-  brokerCardTitle: {
-    fontSize: 13,
-    fontWeight: '800',
-    color: '#5B21B6',
-    letterSpacing: 0.3,
-  },
+
 });
 

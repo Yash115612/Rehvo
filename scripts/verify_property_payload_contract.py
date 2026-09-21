@@ -25,7 +25,7 @@ CANONICAL_DB_COLUMNS = {
     'price',
     'deposit',
     'maintenance',
-    'brokerage',
+    'commission',
     'city',
     'state',
     'locality',

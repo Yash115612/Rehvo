@@ -17,7 +17,7 @@ export function generateOrganizationSchema() {
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
     image: `${BASE_URL}/logo.png`,
-    description: 'India’s premier verified rental marketplace with AI concierge, direct owner connections, zero brokerage, flatmates, and PGs.',
+    description: 'India’s premier verified rental marketplace with AI concierge, direct owner connections, Zero Commission, flatmates, and PGs.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Bandra West & Andheri West Tech Corridor',

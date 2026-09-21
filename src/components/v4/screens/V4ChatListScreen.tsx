@@ -144,7 +144,7 @@ export const V4ChatListScreen: React.FC = () => {
           featureName="Messages & Chat"
           badgeText="DIRECT MESSAGING"
           benefits={[
-            'Verified direct chat with property owners & brokers',
+            'Verified direct chat with verified owners',
             'Receive and accept incoming waves from potential flatmates',
             'Coordinate property visit schedules and video tours',
             'Encrypted 1-on-1 private messaging',

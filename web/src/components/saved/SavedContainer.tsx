@@ -86,7 +86,7 @@ export const SavedContainer: React.FC<SavedContainerProps> = ({ seedFlatmates = 
         const propPromise = supabase
           .from('properties')
           .select(`
-            id, title, type, description, price, deposit, maintenance, brokerage, city, state,
+            id, title, type, description, price, deposit, maintenance, commission, city, state,
             locality, address, latitude, longitude, bedrooms, bathrooms, area, furnishing, parking,
             availability, status, verification_status, amenities, tenant_preferences, views_count,
             created_at, updated_at, property_images (id, image_url, is_cover, sort_order)

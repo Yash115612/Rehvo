@@ -37,7 +37,7 @@ export const PropertyCardEmbed: React.FC<{ property: Property }> = React.memo(({
           <Sparkles size={11} color={V4_COLORS.primary} />
           <Text style={styles.badgeText}>AI Match</Text>
         </View>
-        <Text style={styles.zeroBrokerageTag}>Verified Listing</Text>
+        <Text style={styles.zeroCommissionTag}>Verified Listing</Text>
       </View>
 
       <View style={styles.propRow}>
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: V4_COLORS.primary,
   },
-  zeroBrokerageTag: {
+  zeroCommissionTag: {
     fontSize: 11,
     fontWeight: '700',
     color: '#16A34A',

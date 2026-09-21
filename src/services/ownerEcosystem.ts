@@ -525,14 +525,6 @@ class OwnerEcosystemService {
       ai = true;
       digitalLease = true;
       zeroDeposit = true;
-    } else if (tier === 'broker') {
-      name = 'Broker Partner Plan';
-      price = 2499;
-      limit = 999;
-      featured = 25;
-      ai = true;
-      digitalLease = true;
-      zeroDeposit = true;
     } else if (tier === 'enterprise') {
       name = 'Enterprise Institutional';
       price = 9999;
@@ -553,7 +545,7 @@ class OwnerEcosystemService {
       listings_limit: limit,
       featured_credits: featured,
       ai_boost_enabled: ai,
-      priority_support: tier === 'premium' || tier === 'broker' || tier === 'enterprise',
+      priority_support: tier === 'premium' || tier === 'enterprise',
       crm_enabled: true,
       digital_lease_included: digitalLease,
       zero_deposit_priority: zeroDeposit,

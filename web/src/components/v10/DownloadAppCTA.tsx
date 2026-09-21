@@ -206,7 +206,7 @@ export const DownloadAppCTA: React.FC = () => {
                         Find Your Ideal Home in Mumbai
                       </div>
                       <p className="text-[9.5px] text-[#CCFBF1]/80 font-medium leading-tight">
-                        0% Broker Commission &bull; Physical Walkthroughs
+                        0% Agent Commission &bull; Physical Walkthroughs
                       </p>
                     </div>
 

@@ -97,7 +97,7 @@ export function AIConciergeInteractiveClient() {
       if (lower.includes('bandra') || lower.includes('बांद्रा')) {
         aiText =
           lang === 'en'
-            ? 'Found 4 verified homes in Bandra West matching your request! Top pick on Carter Road features sea-facing views and 0 brokerage.'
+            ? 'Found 4 verified homes in Bandra West matching your request! Top pick on Carter Road features sea-facing views and 0 commission.'
             : 'बांद्रा वेस्ट में आपकी पसंद के 4 सत्यापित फ्लैट मिले हैं! कार्टर रोड पर सी-फेसिंग 2 बीएचके बिना किसी ब्रोकरेज के उपलब्ध है।';
         recommendation = {
           title: 'Sea-Facing 2 BHK on Carter Road',
@@ -138,7 +138,7 @@ export function AIConciergeInteractiveClient() {
           matchScore: '95% Match',
           slug: 'modern-2bhk-andheri-west',
         };
-        pills = ['Zero Brokerage', '2 Mins to Metro 2A', 'Fully Furnished'];
+        pills = ['Zero Commission', '2 Mins to Metro 2A', 'Fully Furnished'];
       }
 
       setMessages((prev) => [

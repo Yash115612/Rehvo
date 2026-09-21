@@ -59,7 +59,7 @@ const { width: SCREEN_WIDTH } = Dimensions.get('window');
 // ── LIFESTYLE / CATEGORY FILTERS ─────────────────────────────────────────────
 const LIFESTYLE_CATEGORIES = [
   { id: 'all', label: 'All Homes', icon: Home, query: '' },
-  { id: 'verified', label: 'Verified Only', icon: ShieldCheck, filterKey: 'zero_brokerage_only' },
+  { id: 'verified', label: 'Verified Only', icon: ShieldCheck, filterKey: 'zero_commission_only' },
   { id: 'zero_deposit', label: '0 Deposit Pass', icon: Zap, filterKey: 'zero_deposit_only' },
   { id: 'bhk2', label: '2+ BHK', icon: Building2, bhk: ['2 BHK', '3 BHK', '4+ BHK'] },
   { id: 'luxury', label: 'Sea-Facing / Luxury', icon: Award, rentMin: 65000 },
@@ -166,7 +166,7 @@ export const V4ExploreScreen: React.FC = () => {
     if (advancedFilters.bhk && advancedFilters.bhk.length > 0) count++;
     if (advancedFilters.furnishing && advancedFilters.furnishing !== 'ALL') count++;
     if (advancedFilters.zero_deposit_only) count++;
-    if (advancedFilters.zero_brokerage_only) count++;
+    if (advancedFilters.zero_commission_only) count++;
     if (advancedFilters.pet_friendly) count++;
     if (advancedFilters.covered_car_parking) count++;
     if (activeCategory !== 'all') count++;
@@ -185,7 +185,7 @@ export const V4ExploreScreen: React.FC = () => {
     const cat = LIFESTYLE_CATEGORIES.find((c) => c.id === activeCategory);
 
     if (cat) {
-      if (cat.filterKey === 'zero_brokerage_only') filters.zero_brokerage_only = true;
+      if (cat.filterKey === 'zero_commission_only') filters.zero_commission_only = true;
       if (cat.filterKey === 'zero_deposit_only') filters.zero_deposit_only = true;
       if (cat.bhk) filters.bhk = cat.bhk;
       if (cat.rentMin) filters.rent_min = cat.rentMin;
@@ -211,8 +211,8 @@ export const V4ExploreScreen: React.FC = () => {
     if (effectiveFilters.zero_deposit_only) {
       list = list.filter((p) => (p.deposit || 0) <= (p.rent || 0));
     }
-    if (effectiveFilters.zero_brokerage_only) {
-      list = list.filter((p) => (p.brokerage || 0) === 0);
+    if (effectiveFilters.zero_commission_only) {
+      list = list.filter((p) => ((p as any).commission || 0) === 0);
     }
     if (effectiveFilters.bhk && effectiveFilters.bhk.length > 0) {
       list = list.filter((p) =>
@@ -301,7 +301,7 @@ export const V4ExploreScreen: React.FC = () => {
     try {
       await Share.share({
         title: `REHVO: ${prop.title}`,
-        message: `Check out this verified ${prop.bhk} in ${prop.locality}, Mumbai for ₹${(prop.rent || 0).toLocaleString('en-IN')}/mo with zero brokerage on REHVO: https://rehvo.in/property/${prop.id}`,
+        message: `Check out this verified ${prop.bhk} in ${prop.locality}, Mumbai for ₹${(prop.rent || 0).toLocaleString('en-IN')}/mo with zero commission on REHVO: https://rehvo.in/property/${prop.id}`,
       });
     } catch {
       // User cancelled
@@ -490,7 +490,7 @@ export const V4ExploreScreen: React.FC = () => {
               {searchResults.length} Verified Homes
             </Text>
             <Text style={styles.resultsCountSub}>
-              Zero Brokerage • Direct Owner Deals in Mumbai
+              Zero Commission • Direct Owner Deals in Mumbai
             </Text>
           </View>
 
@@ -553,7 +553,7 @@ export const V4ExploreScreen: React.FC = () => {
             <MapPin size={12} color="#0E8F73" />
             <Text style={styles.cityName}>Mumbai</Text>
             <View style={styles.cityDot} />
-            <Text style={styles.cityVerifiedText}>Zero Brokerage</Text>
+            <Text style={styles.cityVerifiedText}>Zero Commission</Text>
           </View>
 
           <Pressable

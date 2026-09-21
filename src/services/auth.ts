@@ -29,11 +29,8 @@ export interface SignUpData {
   email: string;
   phone: string;
   password: string;
-  role?: 'renter' | 'owner' | 'broker';
+  role?: 'renter' | 'owner' | 'admin';
   city?: string;
-  agencyName?: string;
-  reraNumber?: string;
-  officeAddress?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -176,9 +173,6 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
           role: userRole,
           account_type: userRole,
           city: data.city || 'Mumbai',
-          company_name: data.agencyName || undefined,
-          rera_number: data.reraNumber || undefined,
-          office_address: data.officeAddress || undefined,
           onboarding_completed: false,
         },
       },

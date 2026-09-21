@@ -80,8 +80,7 @@ export const V4ProfileScreen: React.FC = () => {
   } = useAppStore();
 
   const isHost = currentRole === 'OWNER';
-  const isBroker = currentRole === 'BROKER';
-
+  
   // Role modal & support modal state
   const [showRoleModal, setShowRoleModal] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
@@ -113,13 +112,11 @@ export const V4ProfileScreen: React.FC = () => {
   const completedChecksCount = completionChecks.filter((c) => c.completed).length;
   const profileCompletionScore = Math.round((completedChecksCount / completionChecks.length) * 100);
 
-  const handleRoleSelect = async (mode: 'renter' | 'owner' | 'broker') => {
+  const handleRoleSelect = async (mode: 'renter' | 'owner') => {
     setShowRoleModal(false);
     await switchRole(mode);
     if (mode === 'owner') {
       router.replace('/(owner)/dashboard' as any);
-    } else if (mode === 'broker') {
-      router.replace('/(broker)/dashboard' as any);
     } else {
       router.replace('/(renter)/home' as any);
     }
@@ -170,7 +167,7 @@ export const V4ProfileScreen: React.FC = () => {
           <Pressable style={styles.roleSwitchChip} onPress={() => setShowRoleModal(true)}>
             <View style={styles.roleDot} />
             <Text style={styles.roleSwitchChipText}>
-              {isHost ? 'Owner Mode' : isBroker ? 'Broker Pro' : 'Renter Mode'}
+              {isHost ? 'Owner Mode' : 'Renter Mode'}
             </Text>
             <ChevronDown size={11} color="#0E8F73" strokeWidth={2.5} />
           </Pressable>
@@ -624,7 +621,7 @@ export const V4ProfileScreen: React.FC = () => {
             <View style={styles.ownerPromoContent}>
               <View style={styles.ownerPromoBadge}>
                 <Building2 size={12} color="#0E8F73" />
-                <Text style={styles.ownerPromoBadgeText}>OWNER ZERO BROKERAGE</Text>
+                <Text style={styles.ownerPromoBadgeText}>OWNER DIRECT ZERO COMMISSION</Text>
               </View>
               <Text style={styles.ownerPromoTitle}>Have a Flat or Room in Mumbai?</Text>
               <Text style={styles.ownerPromoDesc}>
@@ -709,7 +706,7 @@ export const V4ProfileScreen: React.FC = () => {
             </View>
             <View style={styles.menuItemTextCol}>
               <Text style={styles.menuItemTitle}>About REHVO</Text>
-              <Text style={styles.menuItemDesc}>Mumbai's 100% verified zero brokerage network</Text>
+              <Text style={styles.menuItemDesc}>Mumbai's 100% verified zero commission network</Text>
             </View>
             <ChevronRight size={15} color="#94A3B8" />
           </Pressable>
@@ -833,34 +830,6 @@ export const V4ProfileScreen: React.FC = () => {
                 </View>
                 {currentRole === 'OWNER' ? (
                   <CheckCircle2 size={18} color="#B45309" />
-                ) : (
-                  <ChevronRight size={18} color="#CBD5E1" />
-                )}
-              </Pressable>
-
-              {/* Option 3: Broker */}
-              <Pressable
-                style={[styles.roleOptionCard, currentRole === 'BROKER' && styles.roleOptionCardActive]}
-                onPress={() => handleRoleSelect('broker')}
-              >
-                <View style={[styles.roleOptionIcon, { backgroundColor: '#EDE9FE' }]}>
-                  <Briefcase size={20} color="#6D28D9" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                    <Text style={styles.roleOptionTitle}>Broker Pro Mode</Text>
-                    {currentRole === 'BROKER' && (
-                      <View style={[styles.roleActiveBadge, { backgroundColor: '#EDE9FE' }]}>
-                        <Text style={[styles.roleActiveBadgeText, { color: '#6D28D9' }]}>Active</Text>
-                      </View>
-                    )}
-                  </View>
-                  <Text style={styles.roleOptionDesc}>
-                    Verified agency inventory, client CRM & partner payouts
-                  </Text>
-                </View>
-                {currentRole === 'BROKER' ? (
-                  <CheckCircle2 size={18} color="#6D28D9" />
                 ) : (
                   <ChevronRight size={18} color="#CBD5E1" />
                 )}

@@ -69,7 +69,7 @@ export function SignupAndUploadGraphs({ totalProperties = 5 }: { totalProperties
         <div className="grid grid-cols-2 gap-3 py-2">
           <div className="p-3 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/5">
             <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-              Zero Brokerage Policy
+              Zero Commission Policy
             </span>
             <div className="text-sm font-black text-emerald-600 dark:text-emerald-400 mt-1">Active / Verified</div>
             <span className="text-[10px] text-slate-500 dark:text-slate-400">system_settings key</span>

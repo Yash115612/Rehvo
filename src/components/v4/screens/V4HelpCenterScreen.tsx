@@ -42,7 +42,7 @@ import { SupportTicketMessage } from '../../../types';
 const FAQS = [
   {
     q: 'How does Verified Listing work on REHVO?',
-    a: 'REHVO connects renters directly with DigiLocker verified property owners. There are zero broker commissions, hidden middleman fees, or listing charges for basic tenancies.',
+    a: 'REHVO connects renters directly with DigiLocker verified property owners. There are zero middleman commissions, hidden fees, or listing charges for basic tenancies.',
   },
   {
     q: 'Is my Aadhaar and DigiLocker data secure?',

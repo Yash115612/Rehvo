@@ -42,7 +42,7 @@ export default function PrivacyPage() {
           <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-start gap-3">
             <Lock className="w-5 h-5 text-[#0F766E] shrink-0 mt-0.5" />
             <p className="text-xs text-[#064E3B] leading-relaxed">
-              <strong>Zero Spam Commitment:</strong> REHVO never sells, rents, or shares your phone number or email address with brokers, telemarketers, or unverified third parties. Your data is encrypted and used exclusively for your property rental journeys.
+              <strong>Zero Spam Commitment:</strong> REHVO never sells, rents, or shares your phone number or email address with middlemen, telemarketers, or unverified third parties. Your data is encrypted and used exclusively for your property rental journeys.
             </p>
           </div>
 
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
               1. Introduction & Scope
             </h2>
             <p className="text-[#64748B]">
-              REHVO Technologies Private Limited (&ldquo;REHVO&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;) provides a peer-to-peer real estate platform and mobile application connecting homeowners directly with tenants and flatmates without brokers. This Privacy Policy outlines our standards regarding data collection, processing, and retention across https://rehvo.in and REHVO mobile apps.
+              REHVO Technologies Private Limited (&ldquo;REHVO&rdquo;, &ldquo;we&rdquo;, &ldquo;our&rdquo;) provides a peer-to-peer real estate platform and mobile application connecting homeowners directly with tenants and flatmates without middlemen. This Privacy Policy outlines our standards regarding data collection, processing, and retention across https://rehvo.in and REHVO mobile apps.
             </p>
           </section>
 
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
               <li>Facilitating direct renter-to-owner chat and scheduled physical walkthroughs.</li>
               <li>Generating digital society visitor passes for gated community security.</li>
               <li>Assisting with legal tenant verification and e-stamped digital rental agreements.</li>
-              <li>Preventing fraudulent broker solicitations and verifying homeowner authenticity.</li>
+              <li>Preventing fraudulent agent solicitations and verifying homeowner authenticity.</li>
             </ul>
           </section>
 

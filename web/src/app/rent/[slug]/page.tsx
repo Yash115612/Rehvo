@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     canonicalUrl: `https://rehvo.in/rent/${landing.slug}`,
     keywords: [
       landing.title.toLowerCase(),
-      'zero brokerage',
+      'Zero Commission',
       'verified flats mumbai',
       'direct owner rent',
       'rehvo',
@@ -101,7 +101,7 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[#0E8F73] border border-emerald-200 text-xs font-bold">
               <ShieldCheck size={14} />
-              <span>Zero Brokerage Guaranteed</span>
+              <span>Zero Commission Guaranteed</span>
             </span>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold">
               <TrendingUp size={14} />
@@ -181,7 +181,7 @@ export default async function SearchLandingPage({ params }: { params: { slug: st
 
               <div className="px-4 pb-4 pt-1 flex items-center justify-between text-[11px] font-bold text-slate-600 border-t border-slate-100">
                 <span>{property.bedrooms ? `${property.bedrooms} BHK` : 'Studio'}</span>
-                <span className="text-[#0E8F73]">Zero Brokerage</span>
+                <span className="text-[#0E8F73]">Zero Commission</span>
               </div>
             </Link>
           ))}

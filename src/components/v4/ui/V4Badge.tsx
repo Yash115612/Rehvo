@@ -13,7 +13,7 @@ export type V4BadgeType =
   | 'emerald'
   // Marketing & Legacy Variants
   | 'verified'
-  | 'zero_brokerage'
+  | 'zero_commission'
   | 'rating'
   | 'superhost'
   | 'instant'
@@ -103,7 +103,7 @@ export const V4BadgeComponent: React.FC<V4BadgeProps> = ({
       dotColor = V4_COLORS.primary;
       break;
 
-    case 'zero_brokerage':
+    case 'zero_commission':
       defaultLabel = label || 'VERIFIED LISTING';
       defaultIcon = icon || <Sparkles size={size === 'sm' ? 10 : 12} color="#0F766E" strokeWidth={2.4} />;
       bg = bgColor || '#E6FFFA';

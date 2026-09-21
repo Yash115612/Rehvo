@@ -48,7 +48,7 @@ const CLIPS: ShowreelClip[] = [
     tag: 'PG STAYS',
     tagColor: '#D69E2E',
     tagBg: '#FEF9C3',
-    caption: 'Premium Paying-Guest Stays · Zero Brokerage',
+    caption: 'Premium Paying-Guest Stays · Zero Commission',
     route: '/pg',
     accent: '#D69E2E',
   },

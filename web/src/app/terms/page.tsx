@@ -42,7 +42,7 @@ export default function TermsPage() {
           <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-start gap-3">
             <ShieldAlert className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
             <p className="text-xs text-amber-900 leading-relaxed">
-              <strong>Strict Zero Broker Policy:</strong> Commercial brokers, property agents, and unauthorized intermediaries are strictly prohibited from harvesting contacts, posing as property owners, or demanding commissions from REHVO users. Violators face immediate permanent banning and legal prosecution under applicable fraud statutes.
+              <strong>Strict Zero Agent Policy:</strong> Commercial middlemen, property agents, and unauthorized intermediaries are strictly prohibited from harvesting contacts, posing as property owners, or demanding commissions from REHVO users. Violators face immediate permanent banning and legal prosecution under applicable fraud statutes.
             </p>
           </div>
 
@@ -64,7 +64,7 @@ export default function TermsPage() {
               <ul className="list-disc pl-5 space-y-1 text-stone-600">
                 <li>They hold legitimate title, power of attorney, or written authorization from the registered legal owner.</li>
                 <li>All listed photos, pricing, deposit amounts, and amenity descriptions reflect current reality.</li>
-                <li>They will not charge brokerage, processing fees, or commission of any nature to tenants.</li>
+                <li>They will not charge commission, processing fees, or commission of any nature to tenants.</li>
               </ul>
             </div>
           </section>

@@ -143,7 +143,7 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
   // 1. Economics
   const [selectedBudget, setSelectedBudget] = useState('all');
   const [selectedDeposit, setSelectedDeposit] = useState('any');
-  const [zeroBrokerageOnly, setZeroBrokerageOnly] = useState(false);
+  const [zeroCommissionOnly, setZeroCommissionOnly] = useState(false);
   const [zeroDepositOnly, setZeroDepositOnly] = useState(false);
 
   // 2. Unit Configuration
@@ -210,7 +210,7 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
     let count = 0;
     if (selectedBudget !== 'all') count++;
     if (selectedDeposit !== 'any' || zeroDepositOnly) count++;
-    if (zeroBrokerageOnly) count++;
+    if (zeroCommissionOnly) count++;
     if (selectedBhk.length > 0) count += selectedBhk.length;
     if (selectedPropTypes.length > 0) count += selectedPropTypes.length;
     if (selectedBaths.length > 0) count += selectedBaths.length;
@@ -229,7 +229,7 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
     selectedBudget,
     selectedDeposit,
     zeroDepositOnly,
-    zeroBrokerageOnly,
+    zeroCommissionOnly,
     selectedBhk,
     selectedPropTypes,
     selectedBaths,
@@ -248,7 +248,7 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
   const handleReset = () => {
     setSelectedBudget('all');
     setSelectedDeposit('any');
-    setZeroBrokerageOnly(false);
+    setZeroCommissionOnly(false);
     setZeroDepositOnly(false);
     setSelectedBhk([]);
     setSelectedPropTypes([]);
@@ -274,7 +274,7 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
       rent_max: budgetConfig?.max,
       deposit_max_months: depositConfig?.maxMonths,
       zero_deposit_only: zeroDepositOnly || depositConfig?.zeroDeposit,
-      zero_brokerage_only: zeroBrokerageOnly,
+      zero_commission_only: zeroCommissionOnly,
       bhk: selectedBhk.length > 0 ? selectedBhk : undefined,
       property_types: selectedPropTypes.length > 0 ? selectedPropTypes : undefined,
       bathrooms: selectedBaths.length > 0 ? selectedBaths : undefined,
@@ -310,11 +310,11 @@ export const V4FilterSheet: React.FC<V4FilterSheetProps> = ({
           {/* Quick Economics Row: Verified Listing & 0 Deposit */}
           <View style={styles.quickBannerRow}>
             <Pressable
-              style={[styles.highlightPill, zeroBrokerageOnly && styles.highlightPillActive]}
-              onPress={() => setZeroBrokerageOnly(!zeroBrokerageOnly)}
+              style={[styles.highlightPill, zeroCommissionOnly && styles.highlightPillActive]}
+              onPress={() => setZeroCommissionOnly(!zeroCommissionOnly)}
             >
-              <Zap size={14} color={zeroBrokerageOnly ? '#FFFFFF' : V4_COLORS.primary} strokeWidth={2.4} />
-              <Text style={[styles.highlightPillText, zeroBrokerageOnly && styles.highlightPillTextActive]}>
+              <Zap size={14} color={zeroCommissionOnly ? '#FFFFFF' : V4_COLORS.primary} strokeWidth={2.4} />
+              <Text style={[styles.highlightPillText, zeroCommissionOnly && styles.highlightPillTextActive]}>
                 Verified Listing Only
               </Text>
             </Pressable>

@@ -26,7 +26,7 @@ export const REHVO_BENEFITS = [
   {
     id: 'b2',
     title: 'Verified Marketplace',
-    sub: 'Rent from verified owners and trusted brokers with transparent pricing.',
+    sub: 'Rent directly from verified owners with transparent pricing.',
     icon: Zap,
     color: '#F59E0B',
     bg: 'rgba(245, 158, 11, 0.12)',

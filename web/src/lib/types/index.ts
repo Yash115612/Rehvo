@@ -44,7 +44,7 @@ export interface Property {
   price: number;
   deposit: number;
   maintenance: number;
-  brokerage: number;
+  commission: number;
   city: string;
   state: string;
   locality: string;

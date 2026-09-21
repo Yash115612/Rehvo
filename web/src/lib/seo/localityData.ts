@@ -60,7 +60,7 @@ export const CITIES_DATA: Record<string, CityProfile> = {
     "name": "Mumbai",
     "state": "Maharashtra",
     "tagline": "India’s Financial Capital — Verified Direct Owner Rentals",
-    "description": "Explore verified rental apartments, co-living flatmates, and PGs in Mumbai without brokerage. From sea-facing luxury flats in Bandra to tech-hub apartments in Powai and Andheri West, REHVO provides 100% deed-verified listings.",
+    "description": "Explore verified rental apartments, co-living flatmates, and PGs in Mumbai without commission. From sea-facing luxury flats in Bandra to tech-hub apartments in Powai and Andheri West, REHVO provides 100% deed-verified listings.",
     "avgRent1BHK": 38000,
     "avgRent2BHK": 62000,
     "avgRent3BHK": 115000,
@@ -101,8 +101,8 @@ export const CITIES_DATA: Record<string, CityProfile> = {
         "answer": "The average monthly rent for a 2 BHK in Mumbai ranges from ₹45,000 to ₹75,000 in prime western suburbs like Andheri West and Goregaon, and ₹95,000 to ₹1,60,000+ in upscale corridors like Bandra West and Worli."
       },
       {
-        "question": "How does REHVO eliminate broker fees in Mumbai?",
-        "answer": "REHVO directly onboards verified property owners through automated Index-II title deed validation, allowing renters to chat directly with landlords and schedule physical walkthroughs without paying typical 1-month brokerage fees."
+        "question": "How does REHVO eliminate Commission Fees in Mumbai?",
+        "answer": "REHVO directly onboards verified property owners through automated Index-II title deed validation, allowing renters to chat directly with landlords and schedule physical walkthroughs without paying typical 1-month commission fees."
       },
       {
         "question": "Which areas in Mumbai are best for working professionals?",
@@ -110,7 +110,7 @@ export const CITIES_DATA: Record<string, CityProfile> = {
       },
       {
         "question": "How much security deposit do Mumbai homeowners typically require?",
-        "answer": "While conventional brokers demand 4 to 8 months deposit, REHVO verified listings feature low-deposit or 1-2 month deposit guarantees."
+        "answer": "While conventional middlemen demand 4 to 8 months deposit, REHVO verified listings feature low-deposit or 1-2 month deposit guarantees."
       }
     ],
     "coordinates": {
@@ -123,7 +123,7 @@ export const CITIES_DATA: Record<string, CityProfile> = {
     "name": "Pune",
     "state": "Maharashtra",
     "tagline": "The Oxford of the East & Premier IT Rental Hub",
-    "description": "Find verified flats and student PGs in Pune across Hinjewadi, Kharadi, Viman Nagar, Kothrud, and Baner with instant owner chats and zero brokerage.",
+    "description": "Find verified flats and student PGs in Pune across Hinjewadi, Kharadi, Viman Nagar, Kothrud, and Baner with instant owner chats and Zero Commission.",
     "avgRent1BHK": 18000,
     "avgRent2BHK": 28000,
     "avgRent3BHK": 48000,
@@ -193,7 +193,7 @@ export const CITIES_DATA: Record<string, CityProfile> = {
     "name": "Hyderabad",
     "state": "Telangana",
     "tagline": "Cyberabad Tech Corridor — High-Growth Rental Living",
-    "description": "Discover verified gated community rentals and modern PGs in Gachibowli, Hitec City, Madhapur, and Kondapur with zero brokerage.",
+    "description": "Discover verified gated community rentals and modern PGs in Gachibowli, Hitec City, Madhapur, and Kondapur with Zero Commission.",
     "avgRent1BHK": 18000,
     "avgRent2BHK": 30000,
     "avgRent3BHK": 52000,
@@ -361,7 +361,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
       },
       {
         "question": "What is the security deposit standard in Andheri West?",
-        "answer": "Traditional brokers demand 3-6 months deposit, but REHVO verified direct listings typically require only 1 to 2 months security deposit with zero brokerage fees."
+        "answer": "Traditional middlemen demand 3-6 months deposit, but REHVO verified direct listings typically require only 1 to 2 months security deposit with Zero Commission fees."
       },
       {
         "question": "Are pet-friendly rental societies available in Andheri West?",
@@ -380,7 +380,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Notable gated societies include Green Acres, RNA Mirage, Oberoi Sky Gardens, Runwal Elegante, and Transcon Triumph."
       }
     ],
-    "aboutNarrative": "Andheri West stands as the undisputed pulsating heart of Mumbai’s media, entertainment, and modern commercial lifestyle. Stretched strategically along the Western Railway corridor and bordered by the Arabian Sea to the west, this expansive suburb offers an unparalleled blend of cosmopolitan residential high-rises, heritage fishing enclaves in Versova, bustling commercial avenues along Link Road, and celebrity-studded enclaves across Lokhandwala Complex. \n\nFor working professionals and corporate executives, the connectivity ecosystem of Andheri West is virtually unmatched across the Mumbai Metropolitan Region. The neighborhood acts as the western anchor of Mumbai Metro Line 1 (Versova–Andheri–Ghatkopar), enabling commuters to glide across the city to the eastern suburbs and Central Railway within 25 minutes. Furthermore, the operational Mumbai Metro Line 2A (Dahisar to DN Nagar) connects the entire western suburban belt directly to Andheri West, alleviating traditional road congestion on Link Road and S.V. Road. Western Railway suburban trains via Andheri Station provide express connectivity to Churchgate and South Mumbai in under 35 minutes.\n\nThe residential real estate landscape in Andheri West caters to diverse rental cohorts, ranging from aspiring actors, media professionals, and tech innovators seeking compact 1 RKs and shared flatmates in Lokhandwala and Oshiwara, to senior corporate directors and expatriates renting luxury 3 BHK penthouses in landmark developments like Runwal Elegante and Oberoi Sky Gardens. Rental yield in Andheri West averages an attractive 3.8%, supported by persistent rental demand and low vacancy turnarounds.\n\nSocial infrastructure in Andheri West is among the most sophisticated in urban India. Healthcare is anchored by the globally accredited Kokilaben Dhirubhai Ambani Hospital, offering quaternary multispeciality care. Educational institutions range from Ryan International and Bhavan’s A.H. Wadia High School to premier engineering colleges like Sardar Patel College of Engineering (SPCE). For dining, arts, and leisure, the district boasts an eclectic spectrum of third-wave artisanal roasteries, pet-friendly coastal cafes in Versova, and premier shopping destinations such as Infinity Mall and Citi Mall. Renting directly through REHVO provides deed-verified Index-II certainty, eliminating broker overheads and enabling transparent homeowner relationships."
+    "aboutNarrative": "Andheri West stands as the undisputed pulsating heart of Mumbai’s media, entertainment, and modern commercial lifestyle. Stretched strategically along the Western Railway corridor and bordered by the Arabian Sea to the west, this expansive suburb offers an unparalleled blend of cosmopolitan residential high-rises, heritage fishing enclaves in Versova, bustling commercial avenues along Link Road, and celebrity-studded enclaves across Lokhandwala Complex. \n\nFor working professionals and corporate executives, the connectivity ecosystem of Andheri West is virtually unmatched across the Mumbai Metropolitan Region. The neighborhood acts as the western anchor of Mumbai Metro Line 1 (Versova–Andheri–Ghatkopar), enabling commuters to glide across the city to the eastern suburbs and Central Railway within 25 minutes. Furthermore, the operational Mumbai Metro Line 2A (Dahisar to DN Nagar) connects the entire western suburban belt directly to Andheri West, alleviating traditional road congestion on Link Road and S.V. Road. Western Railway suburban trains via Andheri Station provide express connectivity to Churchgate and South Mumbai in under 35 minutes.\n\nThe residential real estate landscape in Andheri West caters to diverse rental cohorts, ranging from aspiring actors, media professionals, and tech innovators seeking compact 1 RKs and shared flatmates in Lokhandwala and Oshiwara, to senior corporate directors and expatriates renting luxury 3 BHK penthouses in landmark developments like Runwal Elegante and Oberoi Sky Gardens. Rental yield in Andheri West averages an attractive 3.8%, supported by persistent rental demand and low vacancy turnarounds.\n\nSocial infrastructure in Andheri West is among the most sophisticated in urban India. Healthcare is anchored by the globally accredited Kokilaben Dhirubhai Ambani Hospital, offering quaternary multispeciality care. Educational institutions range from Ryan International and Bhavan’s A.H. Wadia High School to premier engineering colleges like Sardar Patel College of Engineering (SPCE). For dining, arts, and leisure, the district boasts an eclectic spectrum of third-wave artisanal roasteries, pet-friendly coastal cafes in Versova, and premier shopping destinations such as Infinity Mall and Citi Mall. Renting directly through REHVO provides deed-verified Index-II certainty, eliminating agent overheads and enabling transparent homeowner relationships."
   },
   "bandra-west": {
     "slug": "bandra-west",
@@ -530,8 +530,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Bandra West blends Portuguese heritage villages, boutique cafes, live music bistros, art alleys in Ranwar Village, and sea promenades."
       },
       {
-        "question": "How does REHVO eliminate the 1-month broker fee in Bandra?",
-        "answer": "REHVO directly onboards homeowners with verified Index-II property records, enabling direct chat and zero brokerage contracts."
+        "question": "How does REHVO eliminate the 1-month Commission Fee in Bandra?",
+        "answer": "REHVO directly onboards homeowners with verified Index-II property records, enabling direct chat and Zero Commission contracts."
       },
       {
         "question": "Is Bandra West convenient for airport transit?",
@@ -546,7 +546,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Modern gated complexes provide reserved stack or stilt parking, while heritage village areas rely on municipal street parking."
       }
     ],
-    "aboutNarrative": "Bandra West holds undisputed status as the \"Queen of Suburbs,\" radiating an intoxicating blend of aristocratic old-world charm, coastal elegance, and modern celebrity lifestyle. Nestled along the Arabian Sea with iconic promenades along Bandstand and Carter Road, Bandra West is a coveted residential address for multinational executives, consulates, creative industry titans, Bollywood celebrities, and discerning expatriates.\n\nThe architectural fabric of Bandra West is remarkably multifaceted. Portuguese-style heritage bungalows with wooden verandas and hand-painted tile work in Ranwar and Chapel Road sit side-by-side with state-of-the-art sea-facing penthouses on Carter Road and exclusive high-rise towers in Pali Hill. The neighborhood’s tree-lined avenues, boutique designer outlets, vibrant street markets on Hill Road and Linking Road, and world-class cafes such as Subko, Veronica’s, and Candies foster an energetic pedestrian community.\n\nFrom a connectivity perspective, Bandra West is the premier geographic transit hub of Mumbai. It connects to South Mumbai and Nariman Point in just 15 to 20 minutes via the Bandra-Worli Sea Link and the newly inaugurated Mumbai Coastal Road. Eastbound, the elevated BKC Connector delivers finance and banking professionals directly into the heart of Bandra Kurla Complex without facing suburban choke points. Bandra Railway Station, a Grade-I heritage building, serves both Western and Harbour Suburban railway corridors.\n\nRental dynamics in Bandra West reflect its scarce supply and evergreen prestige. The rental market commands Mumbai's highest suburban premiums, with 1 BHKs starting around ₹65,000 and luxury sea-view 3 BHK penthouses exceeding ₹2.5 to ₹3.5 Lakhs per month. REHVO transforms the rental experience here by eliminating the punitive traditional 1-to-2 month brokerage commissions, delivering direct access to verified title owners with digital MahaRERA-compliant e-agreements."
+    "aboutNarrative": "Bandra West holds undisputed status as the \"Queen of Suburbs,\" radiating an intoxicating blend of aristocratic old-world charm, coastal elegance, and modern celebrity lifestyle. Nestled along the Arabian Sea with iconic promenades along Bandstand and Carter Road, Bandra West is a coveted residential address for multinational executives, consulates, creative industry titans, Bollywood celebrities, and discerning expatriates.\n\nThe architectural fabric of Bandra West is remarkably multifaceted. Portuguese-style heritage bungalows with wooden verandas and hand-painted tile work in Ranwar and Chapel Road sit side-by-side with state-of-the-art sea-facing penthouses on Carter Road and exclusive high-rise towers in Pali Hill. The neighborhood’s tree-lined avenues, boutique designer outlets, vibrant street markets on Hill Road and Linking Road, and world-class cafes such as Subko, Veronica’s, and Candies foster an energetic pedestrian community.\n\nFrom a connectivity perspective, Bandra West is the premier geographic transit hub of Mumbai. It connects to South Mumbai and Nariman Point in just 15 to 20 minutes via the Bandra-Worli Sea Link and the newly inaugurated Mumbai Coastal Road. Eastbound, the elevated BKC Connector delivers finance and banking professionals directly into the heart of Bandra Kurla Complex without facing suburban choke points. Bandra Railway Station, a Grade-I heritage building, serves both Western and Harbour Suburban railway corridors.\n\nRental dynamics in Bandra West reflect its scarce supply and evergreen prestige. The rental market commands Mumbai's highest suburban premiums, with 1 BHKs starting around ₹65,000 and luxury sea-view 3 BHK penthouses exceeding ₹2.5 to ₹3.5 Lakhs per month. REHVO transforms the rental experience here by eliminating the punitive traditional 1-to-2 month commission commissions, delivering direct access to verified title owners with digital MahaRERA-compliant e-agreements."
   },
   "powai": {
     "slug": "powai",
@@ -705,7 +705,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
       },
       {
         "question": "Are student flatmates common near IIT Bombay?",
-        "answer": "Yes, thousands of IIT-B scholars and interns rent shared flatmates and 1 BHKs in Powai with zero brokerage on REHVO."
+        "answer": "Yes, thousands of IIT-B scholars and interns rent shared flatmates and 1 BHKs in Powai with Zero Commission on REHVO."
       },
       {
         "question": "What is the rental yield in Powai?",
@@ -865,8 +865,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "CSMIA Terminal 2 is located right in Andheri East, reachable within 5 to 15 minutes from most residential clusters."
       },
       {
-        "question": "How can I rent a flat in Andheri East without broker commissions?",
-        "answer": "REHVO connects you directly with verified landlords with digital Index-II deed checks and zero brokerage fees."
+        "question": "How can I rent a flat in Andheri East without agent commissions?",
+        "answer": "REHVO connects you directly with verified landlords with digital Index-II deed checks and Zero Commission fees."
       },
       {
         "question": "What metro stations serve Andheri East?",
@@ -881,7 +881,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Andheri East boasts one of Mumbai’s highest suburban rental yields at 4.4%, driven by heavy corporate and IT workforce occupancy."
       }
     ],
-    "aboutNarrative": "Andheri East functions as the primary commercial engine, aviation gateway, and transit crossroads of suburban Mumbai. Bounded by the Western Express Highway to the west, Powai to the east, and Chhatrapati Shivaji Maharaj International Airport (CSMIA) to the south, Andheri East provides exceptional logistical efficiency for corporations, business executives, IT professionals, and frequent flyers.\n\nThe commercial footprint of Andheri East is staggering. The neighborhood encompasses the massive MIDC (Maharashtra Industrial Development Corporation) business district and SEEPZ (Santacruz Electronic Export Processing Zone), which host hundreds of multinational corporations, IT software export firms, pharmaceuticals, and diamond processing units. Premium grade-A commercial complexes like Kanakia Wall Street, Solitaire Corporate Park, and Times Square line the Andheri-Kurla corridor.\n\nFrom a residential standpoint, Andheri East offers diverse options from modern gated townships in Marol and Chandivali to established residential societies in JB Nagar, Chakala, and Sher-e-Punjab. Contemporary communities such as Vasant Oasis, Kanakia Rainforest, and Lodha Eternis provide lush landscaped gardens, clubhouses, swimming pools, and dedicated sports courts.\n\nTransit infrastructure is Andheri East’s defining superpower. It is the only micro-market in Mumbai served by three distinct metro networks: Metro Line 1 (Versova-Ghatkopar), Metro Line 7 (Dahisar-Gundavali), and the underground Aqua Line Metro 3. Suburban railway commuters access Andheri Station East for rapid transit to Churchgate and Borivali. With REHVO, tenants discover 100% verified direct owner listings in Andheri East, saving an entire month's rent in brokerage fees."
+    "aboutNarrative": "Andheri East functions as the primary commercial engine, aviation gateway, and transit crossroads of suburban Mumbai. Bounded by the Western Express Highway to the west, Powai to the east, and Chhatrapati Shivaji Maharaj International Airport (CSMIA) to the south, Andheri East provides exceptional logistical efficiency for corporations, business executives, IT professionals, and frequent flyers.\n\nThe commercial footprint of Andheri East is staggering. The neighborhood encompasses the massive MIDC (Maharashtra Industrial Development Corporation) business district and SEEPZ (Santacruz Electronic Export Processing Zone), which host hundreds of multinational corporations, IT software export firms, pharmaceuticals, and diamond processing units. Premium grade-A commercial complexes like Kanakia Wall Street, Solitaire Corporate Park, and Times Square line the Andheri-Kurla corridor.\n\nFrom a residential standpoint, Andheri East offers diverse options from modern gated townships in Marol and Chandivali to established residential societies in JB Nagar, Chakala, and Sher-e-Punjab. Contemporary communities such as Vasant Oasis, Kanakia Rainforest, and Lodha Eternis provide lush landscaped gardens, clubhouses, swimming pools, and dedicated sports courts.\n\nTransit infrastructure is Andheri East’s defining superpower. It is the only micro-market in Mumbai served by three distinct metro networks: Metro Line 1 (Versova-Ghatkopar), Metro Line 7 (Dahisar-Gundavali), and the underground Aqua Line Metro 3. Suburban railway commuters access Andheri Station East for rapid transit to Churchgate and Borivali. With REHVO, tenants discover 100% verified direct owner listings in Andheri East, saving an entire month's rent in commission fees."
   },
   "bkc": {
     "slug": "bkc",
@@ -1035,8 +1035,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Jio World Drive, Maker Maxity, Yauatcha, CinCin, and Bastian at the Top offer premier fine dining and retail."
       },
       {
-        "question": "Can I rent a home in BKC with zero brokerage?",
-        "answer": "Yes, REHVO lists verified direct owner apartments in BKC and Bandra East, eliminating all broker charges."
+        "question": "Can I rent a home in BKC with Zero Commission?",
+        "answer": "Yes, REHVO lists verified direct owner apartments in BKC and Bandra East, eliminating all agent charges."
       },
       {
         "question": "Which major consulates and embassies are located in BKC?",
@@ -1047,7 +1047,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "The BKC Connector links directly to the Eastern Express Highway, while the Kalanagar flyovers connect to Western Express Highway."
       }
     ],
-    "aboutNarrative": "Bandra Kurla Complex (BKC) is the crown jewel of modern urban planning in India and the financial engine of South Asia. Conceptualized by MMRDA to decongest South Mumbai’s historic financial precinct, BKC has evolved into an immaculate, global-standard business district housing the Reserve Bank of India (RBI), the National Stock Exchange of India (NSE), the Securities and Exchange Board of India (SEBI), and premier global investment banks such as JPMorgan, Morgan Stanley, Standard Chartered, and Citibank.\n\nBeyond its towering glass facades and sovereign diplomatic missions (including the US Consulate), BKC has witnessed an extraordinary residential and lifestyle renaissance. Ultra-luxury residential developments such as Signia Isles, Signia Oceans, Ten BKC, and Kalpataru Magnus offer high-net-worth individuals, diplomatic attachés, and corporate executives world-class living with concierge services, temperature-controlled pools, and state-of-the-art security systems.\n\nThe social and cultural infrastructure of BKC is unmatched across Mumbai. The district is home to the world-renowned Dhirubhai Ambani International School (DAIS) and the American School of Bombay (ASB). Lifestyle, luxury retail, and haute cuisine thrive at the sprawling Jio World Centre and Jio World Drive, hosting iconic restaurants like Yauatcha, CinCin, and Bastian at the Top alongside open-air drive-in movie theaters and rooftop cultural venues.\n\nConnectivity to BKC has reached golden-standard levels with the operational underground Mumbai Metro Line 3 (Aqua Line), whisking travelers to CSMIA International Airport and South Mumbai in under 20 minutes. The elevated BKC Connector delivers seamless travel to the Eastern Express Highway in under 5 minutes. REHVO provides verified direct owner listings across BKC and Bandra East with zero brokerage fees."
+    "aboutNarrative": "Bandra Kurla Complex (BKC) is the crown jewel of modern urban planning in India and the financial engine of South Asia. Conceptualized by MMRDA to decongest South Mumbai’s historic financial precinct, BKC has evolved into an immaculate, global-standard business district housing the Reserve Bank of India (RBI), the National Stock Exchange of India (NSE), the Securities and Exchange Board of India (SEBI), and premier global investment banks such as JPMorgan, Morgan Stanley, Standard Chartered, and Citibank.\n\nBeyond its towering glass facades and sovereign diplomatic missions (including the US Consulate), BKC has witnessed an extraordinary residential and lifestyle renaissance. Ultra-luxury residential developments such as Signia Isles, Signia Oceans, Ten BKC, and Kalpataru Magnus offer high-net-worth individuals, diplomatic attachés, and corporate executives world-class living with concierge services, temperature-controlled pools, and state-of-the-art security systems.\n\nThe social and cultural infrastructure of BKC is unmatched across Mumbai. The district is home to the world-renowned Dhirubhai Ambani International School (DAIS) and the American School of Bombay (ASB). Lifestyle, luxury retail, and haute cuisine thrive at the sprawling Jio World Centre and Jio World Drive, hosting iconic restaurants like Yauatcha, CinCin, and Bastian at the Top alongside open-air drive-in movie theaters and rooftop cultural venues.\n\nConnectivity to BKC has reached golden-standard levels with the operational underground Mumbai Metro Line 3 (Aqua Line), whisking travelers to CSMIA International Airport and South Mumbai in under 20 minutes. The elevated BKC Connector delivers seamless travel to the Eastern Express Highway in under 5 minutes. REHVO provides verified direct owner listings across BKC and Bandra East with Zero Commission fees."
   },
   "worli": {
     "slug": "worli",
@@ -1195,7 +1195,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
       },
       {
         "question": "Are verified direct owner flats available in Worli on REHVO?",
-        "answer": "Yes, REHVO features 100% Index-II verified listings in Worli, eliminating broker commissions of ₹1 to ₹3 Lakhs."
+        "answer": "Yes, REHVO features 100% Index-II verified listings in Worli, eliminating agent commissions of ₹1 to ₹3 Lakhs."
       },
       {
         "question": "What recreational facilities exist along Worli Seaface?",
@@ -1214,7 +1214,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Four Seasons Hotel (with rooftop AER Lounge) and The St. Regis Mumbai are renowned luxury destinations in Worli."
       }
     ],
-    "aboutNarrative": "Worli represents the pinnacle of luxury seafront living and modern high-rise architecture in South Mumbai. Stretched along the Arabian Sea between Prabhadevi to the north and Haji Ali to the south, Worli has evolved from its historical origins into India’s most exclusive residential skyscraper corridor, affectionately dubbed the \"Billionaires’ Row of Mumbai.\"\n\nThe skyline of Worli is a marvel of contemporary global engineering. Megaprojects such as Birla Niyaara, Trump Tower Mumbai at Lodha Park, Raheja Imperia, and Omkar 1973 redefine urban luxury with helipads, private climate-controlled sky clubs, Michelin-starred fine dining banquets, and unobstructed 270-degree vistas of the Arabian Sea and the Bandra-Worli Sea Link.\n\nInfrastructure developments have supercharged Worli’s accessibility. The Bandra-Worli Sea Link delivers lightning-fast commutes across Mahim Bay into Bandra West and the northern suburbs in 8 minutes. Complementing this, the Mumbai Coastal Road connects Worli directly to Nariman Point, Marine Drive, and Fort in under 10 minutes. The underground Mumbai Metro Line 3 stations at Worli and Acharya Atre Chowk provide effortless rapid transit.\n\nCulturally and socially, Worli blends iconic urban institutions such as Nehru Planetarium, Nehru Centre art galleries, and the historical Worli Fort with South Mumbai’s most glamorous nightlife and dining venues. On REHVO, renters can browse verified direct owner apartments in Worli, bypass exorbitant broker fees, and experience hassle-free digital onboarding."
+    "aboutNarrative": "Worli represents the pinnacle of luxury seafront living and modern high-rise architecture in South Mumbai. Stretched along the Arabian Sea between Prabhadevi to the north and Haji Ali to the south, Worli has evolved from its historical origins into India’s most exclusive residential skyscraper corridor, affectionately dubbed the \"Billionaires’ Row of Mumbai.\"\n\nThe skyline of Worli is a marvel of contemporary global engineering. Megaprojects such as Birla Niyaara, Trump Tower Mumbai at Lodha Park, Raheja Imperia, and Omkar 1973 redefine urban luxury with helipads, private climate-controlled sky clubs, Michelin-starred fine dining banquets, and unobstructed 270-degree vistas of the Arabian Sea and the Bandra-Worli Sea Link.\n\nInfrastructure developments have supercharged Worli’s accessibility. The Bandra-Worli Sea Link delivers lightning-fast commutes across Mahim Bay into Bandra West and the northern suburbs in 8 minutes. Complementing this, the Mumbai Coastal Road connects Worli directly to Nariman Point, Marine Drive, and Fort in under 10 minutes. The underground Mumbai Metro Line 3 stations at Worli and Acharya Atre Chowk provide effortless rapid transit.\n\nCulturally and socially, Worli blends iconic urban institutions such as Nehru Planetarium, Nehru Centre art galleries, and the historical Worli Fort with South Mumbai’s most glamorous nightlife and dining venues. On REHVO, renters can browse verified direct owner apartments in Worli, bypass exorbitant Commission Fees, and experience hassle-free digital onboarding."
   },
   "lower-parel": {
     "slug": "lower-parel",
@@ -1366,7 +1366,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
       },
       {
         "question": "Are verified direct owner flats available in Lower Parel?",
-        "answer": "Yes, REHVO lists verified properties direct from homeowners in Lower Parel, eliminating the traditional 1-month brokerage fee."
+        "answer": "Yes, REHVO lists verified properties direct from homeowners in Lower Parel, eliminating the traditional 1-month Commission Fee."
       },
       {
         "question": "What are the top residential societies in Lower Parel?",
@@ -1381,7 +1381,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Lower Parel is one of Mumbai’s most active commercial and dining enclaves with 24/7 private security and high pedestrian traffic."
       }
     ],
-    "aboutNarrative": "Lower Parel represents the most dramatic and successful urban regeneration story in Indian history. Once known as the \"Girangaon\" (Village of Mills) and dominated by smoke-billowing textile factories, Lower Parel has been reborn as Mumbai’s premier corporate skyscraper district, luxury lifestyle capital, and nightlife hub.\n\nThe architectural landscape of Lower Parel is defined by glittering corporate monoliths and ultra-luxurious residential skyscrapers rising dramatically from historic mill footprints. Corporate mega-complexes like One World Center, Peninsula Corporate Park, Marathon Futurex, and Kamala Mills house multinational consultancies, private equity giants, media networks, and advertising agencies. Adjacent residential towers like Lodha Park, World One, Ashok Towers, and Indiabulls Sky Forest offer residents private screening theaters, infinity rooftop pools, and sports arenas.\n\nLower Parel is undeniably the retail and gastronomic heartbeat of Mumbai. High Street Phoenix and Phoenix Palladium form an expansive 1.5 million-square-foot luxury retail destination featuring flagship international couture houses, fine-dining restaurants, and entertainment complexes. The restored mill compounds of Kamala Mills and Mathuradas Mills host award-winning restaurants like The Bombay Canteen alongside trendy artisanal craft breweries.\n\nConnectivity in Lower Parel is exceptional, boasting dual suburban rail connections through Lower Parel Station on the Western Line and Currey Road Station on the Central Line. Monorail transit links the district towards Chembur and Wadala. REHVO connects Lower Parel corporate professionals directly to verified homeowner listings with zero brokerage fees."
+    "aboutNarrative": "Lower Parel represents the most dramatic and successful urban regeneration story in Indian history. Once known as the \"Girangaon\" (Village of Mills) and dominated by smoke-billowing textile factories, Lower Parel has been reborn as Mumbai’s premier corporate skyscraper district, luxury lifestyle capital, and nightlife hub.\n\nThe architectural landscape of Lower Parel is defined by glittering corporate monoliths and ultra-luxurious residential skyscrapers rising dramatically from historic mill footprints. Corporate mega-complexes like One World Center, Peninsula Corporate Park, Marathon Futurex, and Kamala Mills house multinational consultancies, private equity giants, media networks, and advertising agencies. Adjacent residential towers like Lodha Park, World One, Ashok Towers, and Indiabulls Sky Forest offer residents private screening theaters, infinity rooftop pools, and sports arenas.\n\nLower Parel is undeniably the retail and gastronomic heartbeat of Mumbai. High Street Phoenix and Phoenix Palladium form an expansive 1.5 million-square-foot luxury retail destination featuring flagship international couture houses, fine-dining restaurants, and entertainment complexes. The restored mill compounds of Kamala Mills and Mathuradas Mills host award-winning restaurants like The Bombay Canteen alongside trendy artisanal craft breweries.\n\nConnectivity in Lower Parel is exceptional, boasting dual suburban rail connections through Lower Parel Station on the Western Line and Currey Road Station on the Central Line. Monorail transit links the district towards Chembur and Wadala. REHVO connects Lower Parel corporate professionals directly to verified homeowner listings with Zero Commission fees."
   },
   "juhu": {
     "slug": "juhu",
@@ -1535,8 +1535,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, JVPD Scheme and Vile Parle borders feature student flatshares, 1 BHKs, and verified PG accommodations on REHVO."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Juhu?",
-        "answer": "Yes, REHVO onboards verified Juhu landlords with Index-II legal checks, eliminating standard 1-month brokerage fees."
+        "question": "Can I rent direct from owners without commission in Juhu?",
+        "answer": "Yes, REHVO onboards verified Juhu landlords with Index-II legal checks, eliminating standard 1-month commission fees."
       },
       {
         "question": "What cultural and artistic venues are famous in Juhu?",
@@ -1547,7 +1547,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Juhu Beach features dedicated morning jogging paths, active beach guards, and a vibrant family community."
       }
     ],
-    "aboutNarrative": "Juhu has long captured the popular imagination as Mumbai’s Beverly Hills, an idyllic coastal enclave where silver-screen Bollywood legends, industrial tycoons, and creative visionaries reside along the Arabian Sea. Situated in the western suburbs just north of Santacruz and south of Versova, Juhu combines the breezy serenity of its world-famous 6-kilometer sandy beach with opulent residential living.\n\nThe urban layout of Juhu is anchored by the renowned JVPD Scheme (Juhu Vile Parle Development Scheme), one of Mumbai’s earliest and most successful planned suburban layouts. Characterized by expansive tree-canopied residential roads, sprawling low-rise family bungalows, and discreet luxury mid-rises, JVPD provides a quiet residential sanctuary secluded from Mumbai's notorious commercial hustle. Along Juhu Tara Road and the beachfront, striking modern towers and private penthouses boast direct, unobstructed ocean views.\n\nJuhu’s cultural and social credentials are internationally celebrated. Prithvi Theatre, established by the Kapoor family, remains the undisputed epicenter of Hindi and English experimental theatre, hosting world-class festivals alongside its famous open-air cafe. Luxury hospitality is anchored by the five-star beachfront JW Marriott Mumbai Juhu and Soho House Mumbai, the exclusive members club overlooking the sea. Elite educational institutions include Jamnabai Narsee School and Arya Vidya Mandir, with NMIMS and Mithibai College right on the JVPD border.\n\nConnectivity is seamless via Vile Parle and Andheri railway stations, the Western Express Highway, and proximity to Mumbai Domestic and International Airports (15 to 20 minutes). On REHVO, tenants explore verified direct owner rental listings in Juhu without paying any broker fees."
+    "aboutNarrative": "Juhu has long captured the popular imagination as Mumbai’s Beverly Hills, an idyllic coastal enclave where silver-screen Bollywood legends, industrial tycoons, and creative visionaries reside along the Arabian Sea. Situated in the western suburbs just north of Santacruz and south of Versova, Juhu combines the breezy serenity of its world-famous 6-kilometer sandy beach with opulent residential living.\n\nThe urban layout of Juhu is anchored by the renowned JVPD Scheme (Juhu Vile Parle Development Scheme), one of Mumbai’s earliest and most successful planned suburban layouts. Characterized by expansive tree-canopied residential roads, sprawling low-rise family bungalows, and discreet luxury mid-rises, JVPD provides a quiet residential sanctuary secluded from Mumbai's notorious commercial hustle. Along Juhu Tara Road and the beachfront, striking modern towers and private penthouses boast direct, unobstructed ocean views.\n\nJuhu’s cultural and social credentials are internationally celebrated. Prithvi Theatre, established by the Kapoor family, remains the undisputed epicenter of Hindi and English experimental theatre, hosting world-class festivals alongside its famous open-air cafe. Luxury hospitality is anchored by the five-star beachfront JW Marriott Mumbai Juhu and Soho House Mumbai, the exclusive members club overlooking the sea. Elite educational institutions include Jamnabai Narsee School and Arya Vidya Mandir, with NMIMS and Mithibai College right on the JVPD border.\n\nConnectivity is seamless via Vile Parle and Andheri railway stations, the Western Express Highway, and proximity to Mumbai Domestic and International Airports (15 to 20 minutes). On REHVO, tenants explore verified direct owner rental listings in Juhu without paying any Commission Fees."
   },
   "malad-west": {
     "slug": "malad-west",
@@ -1555,7 +1555,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Malad West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Malad West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Malad West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 16000,
     "avgRent1BHK": 28000,
     "avgRent2BHK": 46000,
@@ -1681,12 +1681,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Malad West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Malad West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Malad West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Malad West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Malad West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Malad West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Malad West?",
@@ -1701,7 +1701,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Malad West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Malad West is anchored by Metro Line 2A (Malad West & Lower Malad). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Malad West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹28,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Malad West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Malad West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Malad West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Malad West is anchored by Metro Line 2A (Malad West & Lower Malad). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Malad West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹28,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Malad West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Malad West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "borivali-west": {
     "slug": "borivali-west",
@@ -1709,7 +1709,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Borivali West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Borivali West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Borivali West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 15000,
     "avgRent1BHK": 26000,
     "avgRent2BHK": 42000,
@@ -1835,12 +1835,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Borivali West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Borivali West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Borivali West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Borivali West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Borivali West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Borivali West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Borivali West?",
@@ -1855,7 +1855,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Borivali West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Borivali West is anchored by Metro Line 2A & Western Railway Borivali. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Borivali West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹26,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Borivali West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Borivali West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Borivali West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Borivali West is anchored by Metro Line 2A & Western Railway Borivali. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Borivali West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹26,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Borivali West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Borivali West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "borivali-east": {
     "slug": "borivali-east",
@@ -1863,7 +1863,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Borivali East",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Borivali East, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Borivali East, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 14000,
     "avgRent1BHK": 24000,
     "avgRent2BHK": 38000,
@@ -1989,12 +1989,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Borivali East offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Borivali East?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Borivali East, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Borivali East?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Borivali East, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Borivali East?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Borivali East?",
@@ -2009,7 +2009,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Borivali East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Borivali East is anchored by Metro Line 7 & Western Express Highway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Borivali East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Borivali East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Borivali East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Borivali East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Borivali East is anchored by Metro Line 7 & Western Express Highway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Borivali East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Borivali East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Borivali East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "kandivali-west": {
     "slug": "kandivali-west",
@@ -2017,7 +2017,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Kandivali West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Kandivali West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Kandivali West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 15000,
     "avgRent1BHK": 25000,
     "avgRent2BHK": 40000,
@@ -2143,12 +2143,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Kandivali West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Kandivali West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Kandivali West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Kandivali West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Kandivali West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Kandivali West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Kandivali West?",
@@ -2163,7 +2163,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Kandivali West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Kandivali West is anchored by Metro Line 2A (Kandivali West & Dahanukarwadi). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Kandivali West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹25,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Kandivali West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Kandivali West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Kandivali West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Kandivali West is anchored by Metro Line 2A (Kandivali West & Dahanukarwadi). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Kandivali West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹25,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Kandivali West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Kandivali West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "kandivali-east": {
     "slug": "kandivali-east",
@@ -2171,7 +2171,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Kandivali East",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Kandivali East, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Kandivali East, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 14000,
     "avgRent1BHK": 24000,
     "avgRent2BHK": 39000,
@@ -2297,12 +2297,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Kandivali East offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Kandivali East?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Kandivali East, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Kandivali East?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Kandivali East, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Kandivali East?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Kandivali East?",
@@ -2317,7 +2317,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Kandivali East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Kandivali East is anchored by Metro Line 7 & Thakur Village Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Kandivali East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Kandivali East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Kandivali East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Kandivali East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Kandivali East is anchored by Metro Line 7 & Thakur Village Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Kandivali East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Kandivali East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Kandivali East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "goregaon-west": {
     "slug": "goregaon-west",
@@ -2325,7 +2325,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Goregaon West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Goregaon West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Goregaon West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 18000,
     "avgRent1BHK": 30000,
     "avgRent2BHK": 48000,
@@ -2451,12 +2451,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Goregaon West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Goregaon West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Goregaon West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Goregaon West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Goregaon West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Goregaon West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Goregaon West?",
@@ -2471,7 +2471,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Goregaon West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Goregaon West is anchored by Metro Line 2A & Western Railway Goregaon. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Goregaon West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹30,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Goregaon West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Goregaon West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Goregaon West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Goregaon West is anchored by Metro Line 2A & Western Railway Goregaon. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Goregaon West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹30,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Goregaon West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Goregaon West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "goregaon-east": {
     "slug": "goregaon-east",
@@ -2479,7 +2479,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Goregaon East",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Goregaon East, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Goregaon East, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 20000,
     "avgRent1BHK": 32000,
     "avgRent2BHK": 52000,
@@ -2605,12 +2605,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Goregaon East offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Goregaon East?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Goregaon East, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Goregaon East?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Goregaon East, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Goregaon East?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Goregaon East?",
@@ -2625,7 +2625,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Goregaon East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Goregaon East is anchored by Metro Line 7 & Oberoi Garden City. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Goregaon East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹32,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Goregaon East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Goregaon East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Goregaon East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Goregaon East is anchored by Metro Line 7 & Oberoi Garden City. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Goregaon East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹32,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Goregaon East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Goregaon East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "versova": {
     "slug": "versova",
@@ -2633,7 +2633,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Versova",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Versova, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Versova, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 22000,
     "avgRent1BHK": 38000,
     "avgRent2BHK": 64000,
@@ -2759,12 +2759,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Versova offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Versova?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Versova, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Versova?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Versova, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Versova?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Versova?",
@@ -2779,7 +2779,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Versova has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Versova is anchored by Metro Line 1 (Versova Station Terminal). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Versova caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹38,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Versova provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Versova is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Versova has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Versova is anchored by Metro Line 1 (Versova Station Terminal). Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Versova caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹38,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Versova provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Versova is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "santacruz-west": {
     "slug": "santacruz-west",
@@ -2787,7 +2787,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Santacruz West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Santacruz West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Santacruz West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 26000,
     "avgRent1BHK": 48000,
     "avgRent2BHK": 85000,
@@ -2913,12 +2913,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Santacruz West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Santacruz West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Santacruz West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Santacruz West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Santacruz West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Santacruz West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Santacruz West?",
@@ -2933,7 +2933,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Santacruz West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Santacruz West is anchored by Western Railway & S.V. Road. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Santacruz West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹48,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Santacruz West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Santacruz West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Santacruz West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Santacruz West is anchored by Western Railway & S.V. Road. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Santacruz West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹48,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Santacruz West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Santacruz West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "santacruz-east": {
     "slug": "santacruz-east",
@@ -2941,7 +2941,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Santacruz East",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Santacruz East, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Santacruz East, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 20000,
     "avgRent1BHK": 34000,
     "avgRent2BHK": 55000,
@@ -3067,12 +3067,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Santacruz East offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Santacruz East?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Santacruz East, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Santacruz East?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Santacruz East, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Santacruz East?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Santacruz East?",
@@ -3087,7 +3087,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Santacruz East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Santacruz East is anchored by CST Road & Western Express Highway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Santacruz East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹34,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Santacruz East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Santacruz East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Santacruz East has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Santacruz East is anchored by CST Road & Western Express Highway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Santacruz East caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹34,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Santacruz East provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Santacruz East is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "vile-parle-west": {
     "slug": "vile-parle-west",
@@ -3095,7 +3095,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Vile Parle West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Vile Parle West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Vile Parle West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 24000,
     "avgRent1BHK": 44000,
     "avgRent2BHK": 78000,
@@ -3221,12 +3221,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Vile Parle West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Vile Parle West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Vile Parle West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Vile Parle West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Vile Parle West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Vile Parle West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Vile Parle West?",
@@ -3241,7 +3241,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Vile Parle West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Vile Parle West is anchored by Western Railway & Near NMIMS Campus. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Vile Parle West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹44,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Vile Parle West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Vile Parle West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Vile Parle West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Vile Parle West is anchored by Western Railway & Near NMIMS Campus. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Vile Parle West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹44,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Vile Parle West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Vile Parle West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "chembur": {
     "slug": "chembur",
@@ -3249,7 +3249,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Chembur",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Chembur, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Chembur, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 18000,
     "avgRent1BHK": 32000,
     "avgRent2BHK": 52000,
@@ -3375,12 +3375,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Chembur offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Chembur?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Chembur, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Chembur?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Chembur, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Chembur?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Chembur?",
@@ -3395,7 +3395,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Chembur has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Chembur is anchored by Eastern Freeway & Monorail Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Chembur caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹32,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Chembur provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Chembur is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Chembur has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Chembur is anchored by Eastern Freeway & Monorail Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Chembur caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹32,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Chembur provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Chembur is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "dadar": {
     "slug": "dadar",
@@ -3403,7 +3403,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Dadar",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Dadar, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Dadar, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 25000,
     "avgRent1BHK": 45000,
     "avgRent2BHK": 75000,
@@ -3529,12 +3529,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Dadar offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Dadar?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Dadar, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Dadar?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Dadar, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Dadar?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Dadar?",
@@ -3549,7 +3549,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Dadar has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Dadar is anchored by Western & Central Suburban Railway Interchange. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Dadar caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹45,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Dadar provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Dadar is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Dadar has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Dadar is anchored by Western & Central Suburban Railway Interchange. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Dadar caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹45,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Dadar provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Dadar is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "prabhadevi": {
     "slug": "prabhadevi",
@@ -3557,7 +3557,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Prabhadevi",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Prabhadevi, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Prabhadevi, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 30000,
     "avgRent1BHK": 54000,
     "avgRent2BHK": 95000,
@@ -3683,12 +3683,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Prabhadevi offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Prabhadevi?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Prabhadevi, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Prabhadevi?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Prabhadevi, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Prabhadevi?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Prabhadevi?",
@@ -3703,7 +3703,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Prabhadevi has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Prabhadevi is anchored by Siddhivinayak Temple & Coastal Access. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Prabhadevi caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹54,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Prabhadevi provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Prabhadevi is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Prabhadevi has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Prabhadevi is anchored by Siddhivinayak Temple & Coastal Access. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Prabhadevi caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹54,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Prabhadevi provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Prabhadevi is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "ghatkopar": {
     "slug": "ghatkopar",
@@ -3711,7 +3711,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Ghatkopar",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Ghatkopar, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Ghatkopar, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 18000,
     "avgRent1BHK": 30000,
     "avgRent2BHK": 50000,
@@ -3837,12 +3837,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Ghatkopar offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Ghatkopar?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Ghatkopar, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Ghatkopar?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Ghatkopar, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Ghatkopar?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Ghatkopar?",
@@ -3857,7 +3857,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Ghatkopar has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Ghatkopar is anchored by Metro Line 1 (Ghatkopar Terminal) & Central Rail. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Ghatkopar caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹30,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Ghatkopar provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Ghatkopar is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Ghatkopar has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Ghatkopar is anchored by Metro Line 1 (Ghatkopar Terminal) & Central Rail. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Ghatkopar caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹30,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Ghatkopar provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Ghatkopar is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "khar-west": {
     "slug": "khar-west",
@@ -3865,7 +3865,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Khar West",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Khar West, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Khar West, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 28000,
     "avgRent1BHK": 52000,
     "avgRent2BHK": 95000,
@@ -3991,12 +3991,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Khar West offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Khar West?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Khar West, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Khar West?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Khar West, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Khar West?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Khar West?",
@@ -4011,7 +4011,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Khar West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Khar West is anchored by Linking Road & Western Railway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Khar West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹52,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Khar West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Khar West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Khar West has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Khar West is anchored by Linking Road & Western Railway. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Khar West caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹52,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Khar West provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Khar West is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "colaba": {
     "slug": "colaba",
@@ -4019,7 +4019,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Colaba",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Colaba, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Colaba, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 32000,
     "avgRent1BHK": 55000,
     "avgRent2BHK": 95000,
@@ -4145,12 +4145,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Colaba offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Colaba?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Colaba, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Colaba?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Colaba, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Colaba?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Colaba?",
@@ -4165,7 +4165,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Colaba has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Colaba is anchored by Gateway of India & South Mumbai Heritage. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Colaba caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹55,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Colaba provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Colaba is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Colaba has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Colaba is anchored by Gateway of India & South Mumbai Heritage. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Colaba caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹55,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Colaba provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Colaba is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "mira-road": {
     "slug": "mira-road",
@@ -4173,7 +4173,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Mira Road",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Mira Road, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Mira Road, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 10000,
     "avgRent1BHK": 16000,
     "avgRent2BHK": 25000,
@@ -4299,12 +4299,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Mira Road offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Mira Road?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Mira Road, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Mira Road?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Mira Road, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Mira Road?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Mira Road?",
@@ -4319,7 +4319,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Mira Road has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Mira Road is anchored by Western Railway & Upcoming Metro Line 9. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Mira Road caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹16,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Mira Road provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Mira Road is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Mira Road has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Mira Road is anchored by Western Railway & Upcoming Metro Line 9. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Mira Road caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹16,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Mira Road provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Mira Road is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "mulund": {
     "slug": "mulund",
@@ -4327,7 +4327,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Mulund",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Mulund, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Mulund, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 14000,
     "avgRent1BHK": 24000,
     "avgRent2BHK": 38000,
@@ -4453,12 +4453,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Mulund offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Mulund?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Mulund, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Mulund?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Mulund, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Mulund?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Mulund?",
@@ -4473,7 +4473,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Mulund has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Mulund is anchored by Central Railway & LBS Marg Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Mulund caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Mulund provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Mulund is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Mulund has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Mulund is anchored by Central Railway & LBS Marg Corridor. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Mulund caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹24,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Mulund provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Mulund is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "thane": {
     "slug": "thane",
@@ -4481,7 +4481,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Thane",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Thane, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Thane, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 12000,
     "avgRent1BHK": 20000,
     "avgRent2BHK": 32000,
@@ -4607,12 +4607,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Thane offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Thane?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Thane, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Thane?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Thane, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Thane?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Thane?",
@@ -4627,7 +4627,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Thane has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Thane is anchored by Central Railway & Ghodbunder Road. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Thane caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹20,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Thane provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Thane is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Thane has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Thane is anchored by Central Railway & Ghodbunder Road. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Thane caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹20,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Thane provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Thane is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "navi-mumbai": {
     "slug": "navi-mumbai",
@@ -4635,7 +4635,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Mumbai",
     "citySlug": "mumbai",
     "tagline": "Verified Direct Owner Rental Apartments in Navi Mumbai",
-    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Navi Mumbai, Mumbai. Direct owner contacts, zero brokerage, and instant visit bookings on REHVO.",
+    "description": "Discover verified 1, 2, and 3 BHK flats, studio apartments, and flatmates for rent in Navi Mumbai, Mumbai. Direct owner contacts, Zero Commission, and instant visit bookings on REHVO.",
     "avgRent1RK": 11000,
     "avgRent1BHK": 18000,
     "avgRent2BHK": 28000,
@@ -4761,12 +4761,12 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "Yes, Navi Mumbai offers gated communities featuring swimming pools, gymnasiums, children play areas, 24/7 security, and power backup."
       },
       {
-        "question": "Can I rent without paying brokerage fees in Navi Mumbai?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Navi Mumbai, saving the standard 1-month brokerage commission."
+        "question": "Can I rent without paying commission fees in Navi Mumbai?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Navi Mumbai, saving the standard 1-month commission commission."
       },
       {
         "question": "What is the typical security deposit in Navi Mumbai?",
-        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional broker demands."
+        "answer": "Direct owner listings on REHVO typically ask for 1 to 2 months rent as deposit, significantly lower than traditional agent demands."
       },
       {
         "question": "What healthcare facilities serve Navi Mumbai?",
@@ -4781,7 +4781,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "With REHVO's digital KYC and government-compliant online e-agreements, tenants can finalize leases and move in within 48 to 72 hours."
       }
     ],
-    "aboutNarrative": "Navi Mumbai has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Navi Mumbai is anchored by Navi Mumbai Metro & Harbour Line. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Navi Mumbai caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹18,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Navi Mumbai provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Navi Mumbai is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month broker fee."
+    "aboutNarrative": "Navi Mumbai has emerged as one of Mumbai's most dynamic and high-demand residential rental corridors. Located strategically along major transport arteries, this vibrant neighborhood offers an exceptional balance of modern urban infrastructure, gated residential societies, reputable educational institutions, and thriving retail high streets.\n\nFor daily commuters, connectivity in Navi Mumbai is anchored by Navi Mumbai Metro & Harbour Line. Commuters enjoy rapid, congestion-free access to major commercial business districts such as BKC, Lower Parel, Nesco IT Park, and Mindspace. Suburban railway lines and arterial highways ensure that transit to both South Mumbai and the northern suburbs remains efficient and predictable.\n\nThe rental housing landscape in Navi Mumbai caters comprehensively to families, corporate professionals, startup founders, and students. Accommodations range from compact, budget-friendly 1 RKs and 1 BHKs starting around ₹18,000/month to spacious 2 and 3 BHK family residences in well-managed high-rise towers. Gated societies in Navi Mumbai provide comprehensive modern amenities including clubhouse facilities, fitness centers, dedicated car parking bays, and 24/7 biometric gate security.\n\nSocial and commercial infrastructure in Navi Mumbai is fully mature. Premier ICSE and CBSE schools, engineering colleges, and multi-speciality hospitals are located within a short radius. Shopping malls, multiplexes, supermarkets, and dining destinations provide abundant leisure options for residents. Renting through REHVO guarantees 100% Index-II title verification and direct landlord communication, completely eliminating the conventional 1-month Commission Fee."
   },
   "hinjewadi": {
     "slug": "hinjewadi",
@@ -4789,7 +4789,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Pune",
     "citySlug": "pune",
     "tagline": "Verified Direct Owner Rentals in Hinjewadi, Pune",
-    "description": "Rent verified apartments, flatmates, and rooms in Hinjewadi, Pune with zero brokerage and direct owner chat on REHVO.",
+    "description": "Rent verified apartments, flatmates, and rooms in Hinjewadi, Pune with Zero Commission and direct owner chat on REHVO.",
     "avgRent1RK": 10800,
     "avgRent1BHK": 18000,
     "avgRent2BHK": 28000,
@@ -4857,8 +4857,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "A 2 BHK apartment in Hinjewadi ranges between ₹28,000 per month."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Hinjewadi?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Hinjewadi with zero brokerage fees."
+        "question": "Can I rent direct from owners without commission in Hinjewadi?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Hinjewadi with Zero Commission fees."
       }
     ],
     "aboutNarrative": "Hinjewadi in Pune represents a prime high-growth tech corridor and residential rental hub. Offering modern gated communities, rapid transit, premier IT hubs, and world-class healthcare, it is a favored living destination for working professionals and families."
@@ -4869,7 +4869,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Bangalore",
     "citySlug": "bangalore",
     "tagline": "Verified Direct Owner Rentals in Koramangala, Bangalore",
-    "description": "Rent verified apartments, flatmates, and rooms in Koramangala, Bangalore with zero brokerage and direct owner chat on REHVO.",
+    "description": "Rent verified apartments, flatmates, and rooms in Koramangala, Bangalore with Zero Commission and direct owner chat on REHVO.",
     "avgRent1RK": 14400,
     "avgRent1BHK": 24000,
     "avgRent2BHK": 42000,
@@ -4937,8 +4937,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "A 2 BHK apartment in Koramangala ranges between ₹42,000 per month."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Koramangala?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Koramangala with zero brokerage fees."
+        "question": "Can I rent direct from owners without commission in Koramangala?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Koramangala with Zero Commission fees."
       }
     ],
     "aboutNarrative": "Koramangala in Bangalore represents a prime high-growth tech corridor and residential rental hub. Offering modern gated communities, rapid transit, premier IT hubs, and world-class healthcare, it is a favored living destination for working professionals and families."
@@ -4949,7 +4949,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Bangalore",
     "citySlug": "bangalore",
     "tagline": "Verified Direct Owner Rentals in Whitefield, Bangalore",
-    "description": "Rent verified apartments, flatmates, and rooms in Whitefield, Bangalore with zero brokerage and direct owner chat on REHVO.",
+    "description": "Rent verified apartments, flatmates, and rooms in Whitefield, Bangalore with Zero Commission and direct owner chat on REHVO.",
     "avgRent1RK": 13200,
     "avgRent1BHK": 22000,
     "avgRent2BHK": 38000,
@@ -5017,8 +5017,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "A 2 BHK apartment in Whitefield ranges between ₹38,000 per month."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Whitefield?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Whitefield with zero brokerage fees."
+        "question": "Can I rent direct from owners without commission in Whitefield?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Whitefield with Zero Commission fees."
       }
     ],
     "aboutNarrative": "Whitefield in Bangalore represents a prime high-growth tech corridor and residential rental hub. Offering modern gated communities, rapid transit, premier IT hubs, and world-class healthcare, it is a favored living destination for working professionals and families."
@@ -5029,7 +5029,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Delhi NCR",
     "citySlug": "delhi",
     "tagline": "Verified Direct Owner Rentals in Gurgaon Cyber City, Delhi NCR",
-    "description": "Rent verified apartments, flatmates, and rooms in Gurgaon Cyber City, Delhi NCR with zero brokerage and direct owner chat on REHVO.",
+    "description": "Rent verified apartments, flatmates, and rooms in Gurgaon Cyber City, Delhi NCR with Zero Commission and direct owner chat on REHVO.",
     "avgRent1RK": 16800,
     "avgRent1BHK": 28000,
     "avgRent2BHK": 48000,
@@ -5097,8 +5097,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "A 2 BHK apartment in Gurgaon Cyber City ranges between ₹48,000 per month."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Gurgaon Cyber City?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Gurgaon Cyber City with zero brokerage fees."
+        "question": "Can I rent direct from owners without commission in Gurgaon Cyber City?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Gurgaon Cyber City with Zero Commission fees."
       }
     ],
     "aboutNarrative": "Gurgaon Cyber City in Delhi NCR represents a prime high-growth tech corridor and residential rental hub. Offering modern gated communities, rapid transit, premier IT hubs, and world-class healthcare, it is a favored living destination for working professionals and families."
@@ -5109,7 +5109,7 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
     "city": "Hyderabad",
     "citySlug": "hyderabad",
     "tagline": "Verified Direct Owner Rentals in Gachibowli, Hyderabad",
-    "description": "Rent verified apartments, flatmates, and rooms in Gachibowli, Hyderabad with zero brokerage and direct owner chat on REHVO.",
+    "description": "Rent verified apartments, flatmates, and rooms in Gachibowli, Hyderabad with Zero Commission and direct owner chat on REHVO.",
     "avgRent1RK": 12000,
     "avgRent1BHK": 20000,
     "avgRent2BHK": 32000,
@@ -5177,8 +5177,8 @@ export const LOCALITIES_DATA: Record<string, LocalityProfile> = {
         "answer": "A 2 BHK apartment in Gachibowli ranges between ₹32,000 per month."
       },
       {
-        "question": "Can I rent direct from owners without brokerage in Gachibowli?",
-        "answer": "Yes, REHVO connects renters directly with verified homeowners in Gachibowli with zero brokerage fees."
+        "question": "Can I rent direct from owners without commission in Gachibowli?",
+        "answer": "Yes, REHVO connects renters directly with verified homeowners in Gachibowli with Zero Commission fees."
       }
     ],
     "aboutNarrative": "Gachibowli in Hyderabad represents a prime high-growth tech corridor and residential rental hub. Offering modern gated communities, rapid transit, premier IT hubs, and world-class healthcare, it is a favored living destination for working professionals and families."

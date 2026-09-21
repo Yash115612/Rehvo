@@ -1,89 +1,7 @@
-export type UserRole = 'RENTER' | 'OWNER' | 'BROKER' | 'renter' | 'owner' | 'broker';
+export type UserRole = 'RENTER' | 'OWNER' | 'ADMIN' | 'renter' | 'owner' | 'admin';
 export type UserType = 'student' | 'working_professional' | 'family' | 'other';
 export type VerificationStatus = 'UNVERIFIED' | 'PENDING' | 'VERIFIED' | 'REJECTED';
 
-export interface BrokerProfile {
-  id: string;
-  user_id: string;
-  agency_name: string;
-  company_name?: string;
-  owner_name?: string;
-  company_logo?: string;
-  rera_number?: string;
-  office_address?: string;
-  operating_city?: string;
-  years_experience?: number;
-  languages?: string[];
-  specializations?: string[];
-  verified?: boolean;
-  is_rera_verified?: boolean;
-  rating?: number;
-  properties_count?: number;
-  clients_count?: number;
-  response_time?: string;
-  subscription_plan?: string;
-  created_at?: string;
-  updated_at?: string;
-}
-
-export interface SupabaseBrokerProfile {
-  id: string;
-  user_id: string;
-  agency_name: string;
-  company_name?: string | null;
-  owner_name: string | null;
-  company_logo: string | null;
-  rera_number: string | null;
-  office_address: string | null;
-  operating_city: string;
-  years_experience: number;
-  languages: string[];
-  specializations: string[];
-  verified: boolean;
-  rating: number;
-  properties_count: number;
-  clients_count: number;
-  response_time: string;
-  subscription_plan: string;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface BrokerClientLead {
-  id: string;
-  broker_id: string;
-  client_name: string;
-  client_phone: string;
-  client_email?: string;
-  client_avatar?: string;
-  avatar?: string;
-  requirement: string;
-  requirement_bhk?: string;
-  budget_min: number;
-  budget_max: number;
-  budget_range?: string;
-  preferred_locations: string[];
-  preferred_locality?: string;
-  stage: 'NEW' | 'VIEWING_SCHEDULED' | 'OFFER_SUBMITTED' | 'CLOSED' | 'DROPPED' | 'CONTACTED' | 'NEGOTIATION' | 'CLOSED_WON' | 'LOST' | 'DEAL_CLOSED';
-  is_verified: boolean;
-  notes?: string;
-  created_at: string;
-}
-
-export interface BrokerDashboardMetrics {
-  active_inventory_count: number;
-  total_clients_count: number;
-  active_deals_count: number;
-  visits_this_week: number;
-  commission_earned: number;
-  pipeline_value: number;
-  average_closing_days: number;
-  total_properties?: number;
-  total_clients?: number;
-  active_deals?: number;
-  closed_deals?: number;
-  monthly_commission?: number;
-}
 
 export interface UserProfile {
   id: string;
@@ -95,15 +13,13 @@ export interface UserProfile {
   email: string;
   bio?: string;
   role: UserRole;
-  account_type?: 'renter' | 'owner' | 'broker';
+  account_type?: 'renter' | 'owner' | 'admin';
   company_name?: string;
   company_logo?: string;
-  is_broker_verified?: boolean;
   rera_number?: string;
   business_phone?: string;
   office_address?: string;
   operating_city?: string;
-  broker_profile?: BrokerProfile;
   onboarding_completed?: boolean;
   city: string;
   locality: string;
@@ -146,11 +62,10 @@ export interface SupabaseProfile {
   bio: string | null;
   occupation: string | null;
   user_type: 'student' | 'working_professional' | 'family' | 'other' | null;
-  role: 'renter' | 'owner' | 'broker';
-  account_type?: 'renter' | 'owner' | 'broker' | null;
+  role: 'renter' | 'owner' | 'admin';
+  account_type?: 'renter' | 'owner' | 'admin' | null;
   company_name?: string | null;
   company_logo?: string | null;
-  is_broker_verified?: boolean;
   rera_number?: string | null;
   business_phone?: string | null;
   office_address?: string | null;
@@ -196,7 +111,7 @@ export interface SupabaseProperty {
   price: number;
   deposit: number;
   maintenance: number;
-  brokerage: number;
+  commission: number;
   city: string;
   state: string;
   locality: string;
@@ -366,7 +281,7 @@ export interface SupabaseMessage {
   created_at: string;
 }
 
-export type AppMode = 'renter' | 'owner' | 'broker' | 'RENTER' | 'FLATMATE' | 'LISTER' | 'OWNER' | 'BROKER';
+export type AppMode = 'renter' | 'owner' | 'admin' | 'RENTER' | 'FLATMATE' | 'LISTER' | 'OWNER' | 'ADMIN';
 
 export type PropertyType =
   // Residential
@@ -423,7 +338,7 @@ export interface Property {
   rent: number;
   deposit: number;
   maintenance: number;
-  brokerage: number; // 0 for No Brokerage
+  commission: number; // 0 for Direct Owner
   bhk: string; // e.g. "1 BHK", "2 BHK", "Studio", "Office", "Retail"
   bathrooms: number;
   area_sqft: number;
@@ -1138,7 +1053,7 @@ export interface PropertyFilter {
   furnishing: FurnishingType | 'ALL';
   power_backup?: boolean;
   washrooms?: number;
-  brokerage_free_only: boolean;
+  direct_owner_only: boolean;
   verified_only: boolean;
   amenities: string[];
   sort_by: 'recommended' | 'newest' | 'price_low' | 'price_high' | 'most_saved';
@@ -2008,7 +1923,7 @@ export interface OwnerProfile {
   updated_at?: string;
 }
 
-export type OwnerPlanTier = 'free' | 'starter' | 'pro' | 'premium' | 'broker' | 'enterprise';
+export type OwnerPlanTier = 'free' | 'starter' | 'pro' | 'premium' | 'enterprise';
 export type OwnerPlanCycle = 'monthly' | 'annual';
 
 export interface OwnerSubscriptionPlan {
@@ -2998,7 +2913,7 @@ export interface AdvancedFilterPayload {
   deposit_min_months?: number;
   deposit_max_months?: number;
   zero_deposit_only?: boolean;
-  zero_brokerage_only?: boolean;
+  zero_commission_only?: boolean;
 
   // 2. Unit Configuration (9)
   bhk?: string[]; // '1 RK', '1 BHK', '2 BHK', '3 BHK', '4+ BHK'
@@ -3097,7 +3012,7 @@ export interface HiddenCostBreakdown {
   propertyId: string;
   monthlyRent: number;
   securityDeposit: number;
-  brokerageFee: number; // 0 for REHVO Direct
+  commissionFee: number; // 0 for REHVO Direct
   agreementAndStampDuty: number;
   societyMoveInCharges: number;
   movingAndPacking: number;
@@ -3936,7 +3851,7 @@ export interface CmsAnnouncement {
   id: string;
   title: string;
   body: string;
-  audience: 'all' | 'renter' | 'owner' | 'broker';
+  audience: 'all' | 'renter' | 'owner' | 'admin';
   priority: 'low' | 'medium' | 'high' | 'critical';
   start_date: string;
   end_date?: string;

@@ -22,7 +22,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Mumbai Rental Guides, Legal Advice & Tenant Rights | REHVO',
   description:
-    'Authoritative guides on renting in Mumbai, Maharashtra Index-II title verification, MahaRERA tenancy rules, finding flatmates, zero brokerage, and society bye-laws.',
+    'Authoritative guides on renting in Mumbai, Maharashtra Index-II title verification, MahaRERA tenancy rules, finding flatmates, Zero Commission, and society bye-laws.',
   canonicalUrl: 'https://rehvo.in/guides',
   keywords: [
     'mumbai rental guide',
@@ -30,7 +30,7 @@ export const metadata: Metadata = constructSeoMetadata({
     'index-ii verification guide',
     'maharera rental agreement',
     'finding flatmates mumbai',
-    'zero brokerage guide',
+    'Zero Commission guide',
     'housing society bye laws mumbai',
   ],
 });
@@ -60,16 +60,16 @@ const GUIDE_CATEGORIES = [
   },
   {
     id: 'renting',
-    title: 'Renting & Zero Brokerage',
+    title: 'Renting & Zero Commission',
     icon: Home,
     description: 'Bypassing middlemen, direct homeowner negotiations, and move-in checklists.',
     guides: [
       {
-        title: 'How to Rent Direct from Homeowners Without Broker Fees',
+        title: 'How to Rent Direct from Homeowners Without Commission Fees',
         summary: 'Save an entire month rent (₹40,000 to ₹1,50,000) using verified direct landlord platforms.',
-        href: '/blog/zero-brokerage-renting-mumbai',
+        href: '/blog/zero-commission-renting-mumbai',
         readTime: '5 min read',
-        tag: 'Zero Brokerage',
+        tag: 'Zero Commission',
       },
       {
         title: 'Moving to Mumbai: Suburban vs Island City Guide',
@@ -133,14 +133,14 @@ const GUIDES_FAQS = [
       'All REHVO guides are authored by our Real Estate Intelligence Desk and reviewed by MahaRERA legal consultants, ensuring compliance with Maharashtra Rent Control laws and Index-II title deed verification standards.',
   },
   {
-    question: 'How do I avoid paying broker fees in Mumbai?',
+    question: 'How do I avoid paying Commission Fees in Mumbai?',
     answer:
-      'Utilize REHVO to access 100% verified direct owner listings where title deeds have already been authenticated, allowing direct landlord communication without broker intermediaries.',
+      'Utilize REHVO to access 100% verified direct owner listings where title deeds have already been authenticated, allowing direct landlord communication without agent intermediaries.',
   },
   {
     question: 'What is the standard security deposit legally allowed in Mumbai?',
     answer:
-      'While traditional brokers demand 4 to 8 months deposit, standard market practices recommend 2 to 3 months, and REHVO verified listings often feature Zero-Deposit or 1-month deposit guarantees.',
+      'While traditional middlemen demand 4 to 8 months deposit, standard market practices recommend 2 to 3 months, and REHVO verified listings often feature Zero-Deposit or 1-month deposit guarantees.',
   },
 ];
 

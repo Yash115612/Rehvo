@@ -227,7 +227,7 @@ export function mapSupabasePropertyToApp(
     rent: dbRow.price,
     deposit: dbRow.deposit,
     maintenance: dbRow.maintenance,
-    brokerage: dbRow.brokerage,
+    commission: (dbRow as any).commission ?? 0,
     bhk: dbRow.bedrooms || (isCommercial ? 'Commercial Space' : '1 BHK'),
     bathrooms: dbRow.bathrooms || (isCommercial ? 0 : 1),
     area_sqft: dbRow.area || 0,
@@ -281,7 +281,7 @@ export function mapAppPropertyToDb(appData: Partial<PropertyInput | Property>): 
   if (appData.rent !== undefined) mapped.price = appData.rent;
   if (appData.deposit !== undefined) mapped.deposit = appData.deposit;
   if (appData.maintenance !== undefined) mapped.maintenance = appData.maintenance;
-  if (appData.brokerage !== undefined) mapped.brokerage = appData.brokerage;
+  if ((appData as any).commission !== undefined) (mapped as any).commission = (appData as any).commission;
   if (appData.city !== undefined) mapped.city = appData.city;
   if (appData.locality !== undefined) mapped.locality = appData.locality;
   if (appData.address !== undefined) mapped.address = appData.address;
@@ -365,8 +365,8 @@ export async function getPublishedProperties(
     if (filter?.furnishing && filter.furnishing !== 'ALL') {
       query = query.eq('furnishing', mapAppFurnishingToDb(filter.furnishing));
     }
-    if (filter?.brokerage_free_only) {
-      query = query.eq('brokerage', 0);
+    if (filter?.direct_owner_only) {
+      query = query.not('owner_id', 'is', null);
     }
     if (filter?.verified_only) {
       query = query.eq('verification_status', 'verified');

@@ -59,7 +59,7 @@ export const V4AboutScreen: React.FC = () => {
             REHVO was born out of a single conviction: <Text style={{ fontWeight: '800', color: V4_COLORS.primary }}>Renting a home in India should be transparent, effortless, and 10verified listing-free.</Text>
           </Text>
           <Text style={[styles.missionText, { marginTop: 10 }]}>
-            We replace outdated broker networks and spam listings with official DigiLocker authentication, digital e-signed agreements, and direct owner-tenant connections.
+            We replace outdated middleman networks and spam listings with official DigiLocker authentication, digital e-signed agreements, and direct owner-tenant connections.
           </Text>
         </View>
 

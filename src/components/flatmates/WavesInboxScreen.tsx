@@ -371,7 +371,7 @@ export const WavesInboxScreen: React.FC = () => {
           benefits={[
             'Send instant waves to prospective flatmates',
             'Receive real-time match celebrations when interest is mutual',
-            '1-tap direct chat without paying any brokerage',
+            '1-tap direct chat without paying any commission',
             '48-hour live countdown timers & priority Super Waves',
           ]}
           fullScreen={false}

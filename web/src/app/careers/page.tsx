@@ -19,7 +19,7 @@ import { Breadcrumb } from '@/components/public/Breadcrumb';
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Careers at REHVO | Rebuild Real Estate in Mumbai',
   description:
-    'Join REHVO in Mumbai. We are hiring engineers, product designers, and ground operations leaders to eliminate broker commissions and bring transparency to renting.',
+    'Join REHVO in Mumbai. We are hiring engineers, product designers, and ground operations leaders to eliminate agent commissions and bring transparency to renting.',
   canonicalUrl: 'https://rehvo.in/careers',
 });
 
@@ -123,7 +123,7 @@ export default function CareersPage() {
           </h1>
 
           <p className="mt-6 text-base sm:text-lg text-emerald-100/80 max-w-2xl mx-auto leading-relaxed">
-            We are ending broker harassment, opaque pricing, and wasted deposits. Join an obsessive crew of builders reimagining how Mumbai rents, lives, and thrives.
+            We are ending agent harassment, opaque pricing, and wasted deposits. Join an obsessive crew of builders reimagining how Mumbai rents, lives, and thrives.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">

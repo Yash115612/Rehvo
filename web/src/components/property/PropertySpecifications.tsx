@@ -117,7 +117,7 @@ export const PropertySpecifications: React.FC<PropertySpecificationsProps> = ({ 
   }
 
   specs.push({
-    label: 'Brokerage Fee',
+    label: 'Commission Fee',
     value: '₹0 (Verified Marketplace)',
   });
 

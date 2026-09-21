@@ -107,7 +107,7 @@ validate('RealEstateListing', 'Property Detail Page', propSchema, (s, errs) => {
 // 3. FAQPage Schema
 const sampleFaqs = [
   { question: 'What is the average rent in Bandra West?', answer: 'Average 2 BHK rent ranges between ₹95,000 to ₹1,65,000/mo.' },
-  { question: 'Does REHVO charge brokerage fees?', answer: 'No, all direct owner listings on REHVO have 0% broker fee.' },
+  { question: 'Does REHVO charge commission fees?', answer: 'No, all direct owner listings on REHVO have 0% Commission Fee.' },
 ];
 const faqSchema = generateFaqSchema(sampleFaqs);
 validate('FAQPage', 'Locality & Landing Pages', faqSchema, (s, errs) => {

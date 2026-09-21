@@ -7,7 +7,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/',
       path: '/',
-      pageTitle: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
+      pageTitle: 'REHVO — Zero Commission Rentals, Verified Homes & Flatmates in Mumbai',
       clicks: 4280,
       impressions: 54100,
       ctr: 7.91,
@@ -51,7 +51,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/rent/flats-near-iit-bombay',
       path: '/rent/flats-near-iit-bombay',
-      pageTitle: 'Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Brokerage',
+      pageTitle: 'Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Commission',
       clicks: 1890,
       impressions: 21600,
       ctr: 8.75,
@@ -62,7 +62,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/rent/flats-near-bkc',
       path: '/rent/flats-near-bkc',
-      pageTitle: 'Flats for Rent near BKC Bandra Kurla Complex | Zero Brokerage | REHVO',
+      pageTitle: 'Flats for Rent near BKC Bandra Kurla Complex | Zero Commission | REHVO',
       clicks: 1740,
       impressions: 23100,
       ctr: 7.53,
@@ -73,7 +73,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/rent/1-bhk-for-rent-in-mumbai',
       path: '/rent/1-bhk-for-rent-in-mumbai',
-      pageTitle: '1 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Brokerage',
+      pageTitle: '1 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Commission',
       clicks: 1650,
       impressions: 29800,
       ctr: 5.54,
@@ -84,7 +84,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/rent/2-bhk-for-rent-in-mumbai',
       path: '/rent/2-bhk-for-rent-in-mumbai',
-      pageTitle: '2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Brokerage',
+      pageTitle: '2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Commission',
       clicks: 1580,
       impressions: 31200,
       ctr: 5.06,
@@ -106,7 +106,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/flatmates',
       path: '/flatmates',
-      pageTitle: 'Find Verified Flatmates in Mumbai | AI Lifestyle Match | Zero Brokerage | REHVO',
+      pageTitle: 'Find Verified Flatmates in Mumbai | AI Lifestyle Match | Zero Commission | REHVO',
       clicks: 1390,
       impressions: 17400,
       ctr: 7.99,
@@ -117,7 +117,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/rent/studio-apartments-in-mumbai',
       path: '/rent/studio-apartments-in-mumbai',
-      pageTitle: 'Studio Apartments for Rent in Mumbai | 1 RK Verified Flats | Zero Brokerage',
+      pageTitle: 'Studio Apartments for Rent in Mumbai | 1 RK Verified Flats | Zero Commission',
       clicks: 1240,
       impressions: 16200,
       ctr: 7.65,
@@ -150,7 +150,7 @@ export async function GET() {
     {
       url: 'https://rehvo.in/commercial',
       path: '/commercial',
-      pageTitle: 'Commercial Offices & Retail Shops for Rent in Mumbai | Zero Brokerage | REHVO',
+      pageTitle: 'Commercial Offices & Retail Shops for Rent in Mumbai | Zero Commission | REHVO',
       clicks: 890,
       impressions: 12900,
       ctr: 6.90,

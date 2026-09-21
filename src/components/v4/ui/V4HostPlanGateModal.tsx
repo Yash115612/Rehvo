@@ -120,7 +120,7 @@ export const V4HostPlanGateModal: React.FC<V4HostPlanGateModalProps> = ({
                 <Check size={11} color="#0F766E" strokeWidth={3} />
               </View>
               <Text style={styles.perkText}>
-                <Text style={{ fontWeight: '800' }}>Direct WhatsApp & Calls</Text> without middleman brokers
+                <Text style={{ fontWeight: '800' }}>Direct WhatsApp & Calls</Text> without middleman agents
               </Text>
             </View>
           </View>

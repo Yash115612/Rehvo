@@ -11,7 +11,7 @@ import { BLOG_POSTS } from '@/lib/seo/blogData';
 export const metadata: Metadata = constructSeoMetadata({
   title: 'Real Estate Blog & Mumbai Rental Guides',
   description:
-    'Expert rental guides, Mumbai locality comparisons, flatmate advice, and tenant legal rights written by REHVO’s research team. Zero brokerage tips and rental yield intelligence.',
+    'Expert rental guides, Mumbai locality comparisons, flatmate advice, and tenant legal rights written by REHVO’s research team. Zero Commission tips and rental yield intelligence.',
   canonicalUrl: 'https://rehvo.in/blog',
   keywords: [
     'mumbai rental blog',

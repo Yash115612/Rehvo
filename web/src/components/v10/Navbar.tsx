@@ -479,7 +479,7 @@ export const Navbar: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-xs font-black text-[#031B2A] block">Own a Property?</span>
-                    <span className="text-[10px] font-semibold text-[#0F766E]">Post for Free &bull; Zero Broker</span>
+                    <span className="text-[10px] font-semibold text-[#0F766E]">Post for Free &bull; Zero Agent</span>
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />

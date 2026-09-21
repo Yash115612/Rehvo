@@ -20,7 +20,7 @@ const INSTAGRAM_URL =
 const FEATURE_CHIPS = [
   { label: 'Rental Tips', icon: KeyRound },
   { label: 'Property Tours', icon: Video },
-  { label: 'Zero Brokerage Deals', icon: FileCheck2 },
+  { label: 'Zero Commission Deals', icon: FileCheck2 },
   { label: 'Flatmate Stories', icon: Users },
   { label: 'Mumbai Locality Guides', icon: Compass },
   { label: 'REHVO Reels', icon: TrendingUp },
@@ -46,7 +46,7 @@ const COMMUNITY_STATS = [
     badgeColor: 'text-[#D97706] bg-[#FEF3C7]',
   },
   {
-    title: 'Zero Brokerage Insights',
+    title: 'Zero Commission Insights',
     description: 'Tenant rights, transparent rent index data, society rules & legal checklist tips.',
     badge: '100% Free',
     badgeColor: 'text-[#16A34A] bg-[#DCFCE7]',
@@ -77,7 +77,7 @@ export const SocialCommunitySection: React.FC = () => {
           </h2>
 
           <p className="text-xs sm:text-base text-[#64748B] font-medium leading-relaxed">
-            Get daily rental tips, Mumbai property updates, zero brokerage deals, apartment tours, flatmate stories and exclusive REHVO reels directly on Instagram.
+            Get daily rental tips, Mumbai property updates, Zero Commission deals, apartment tours, flatmate stories and exclusive REHVO reels directly on Instagram.
           </p>
         </div>
 

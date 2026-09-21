@@ -197,7 +197,7 @@ export const V4ChatRoomScreen: React.FC = () => {
           featureName="Private Chat"
           badgeText="ENCRYPTED CHAT"
           benefits={[
-            'Verified direct chat with property owners & brokers',
+            'Verified direct chat with verified owners',
             'Receive and accept incoming waves from potential flatmates',
             'Coordinate property visit schedules and video tours',
             'Instant real-time message delivery',

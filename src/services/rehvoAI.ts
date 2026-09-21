@@ -490,12 +490,12 @@ export const explainProperty = async (
         headline: `Move-in Upfront: ₹${moveInTotal.toLocaleString('en-IN')}`,
         verdict: 'Good',
         scoreOutOf100: 90,
-        detailedAnalysis: `100% transparent cost projection. Unlike other brokers charging ₹${rent.toLocaleString('en-IN')}, REHVO charges verified marketplace.`,
+        detailedAnalysis: `100% transparent cost projection. Unlike traditional middlemen charging ₹${rent.toLocaleString('en-IN')}, REHVO charges verified marketplace.`,
         bulletPoints: [
           `Security Deposit: ₹${deposit.toLocaleString('en-IN')} (Refundable)`,
           `Agreement & Stamp Duty: ₹${stampDuty.toLocaleString('en-IN')}`,
           'Moving & Deep Cleaning: ~₹12,000 one-time',
-          `REHVO Brokerage: ₹0 (You save ₹${rent.toLocaleString('en-IN')})`,
+          `REHVO Commission: ₹0 (You save ₹${rent.toLocaleString('en-IN')})`,
         ],
         suggestedAction: 'Lock in this unit to avail zero-deposit options if eligible.',
         confidenceScore: 95,
@@ -929,12 +929,12 @@ Warm regards!`;
   const phoneCallScriptEnglish = `1. OPENING: "Hello Sir/Ma'am, I am calling regarding your ${bhk} in ${locality} on REHVO. I really loved the layout and verified photos."
 2. PITCH: "I work with a reputed firm, live quietly, and take care of the house like my own. I can move in within this week itself with zero delays."
 3. COUNTER-OFFER: "I am ready to transfer the booking token right now if we can agree on ₹${target.toLocaleString('en-IN')}/month."
-4. CLOSING: "Since there are 0% broker fees involved on REHVO, both of us save significantly and can close directly today."`;
+4. CLOSING: "Since there are 0% commission fees involved on REHVO, both of us save significantly and can close directly today."`;
 
   const phoneCallScriptHindi = `1. शुरुआत: "नमस्ते सर/मैडम, मैंने REHVO पर आपका ${locality} वाला फ्लैट देखा। मुझे घर बहुत अच्छा लगा।"
 2. प्रोफाइल: "मैं एक कॉर्पोरेट कंपनी में काम करता हूँ और घर को अपने घर की तरह साफ-सुथरा रखता हूँ। मैं इसी हफ्ते शिफ्ट होने के लिए तैयार हूँ।"
 3. ऑफर: "अगर आप इसे ₹${target.toLocaleString('en-IN')} प्रति माह कर दें, तो मैं अभी टोकन अमाउंट ट्रांसफर करने को तैयार हूँ।"
-4. समापन: "चूंकि REHVO पर कोई ब्रोकरेज नहीं है, हम दोनों की बचत हो रही है और हम आज ही एग्रीमेंट लॉक कर सकते हैं।"`;
+4. समापन: "चूंकि REHVO पर कोई अतिरिक्त कमीशन नहीं है, हम दोनों की बचत हो रही है और हम आज ही एग्रीमेंट लॉक कर सकते हैं।"`;
 
   return {
     propertyId: property?.id || 'prop_neg',

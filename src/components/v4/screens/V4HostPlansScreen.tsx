@@ -133,27 +133,6 @@ const PLANS: HostPlanConfig[] = [
     cta: 'Upgrade to Premium',
   },
   {
-    tier: 'broker',
-    name: 'Broker Partner',
-    price: 'Custom',
-    priceNum: 0,
-    period: 'Partner tier',
-    badge: 'FOR REAL ESTATE AGENTS',
-    badgeBg: '#F3E8FF',
-    badgeColor: '#7E22CE',
-    headline: 'Powerful toolset for verified brokers',
-    features: [
-      'Unlimited Property Listings',
-      'Broker CRM Dashboard',
-      'Team Members & Sub-agents',
-      'Automated Lead Routing',
-      'Official Broker Verified Badge',
-      'Direct WhatsApp Integration',
-    ],
-    cta: 'Contact Us',
-    isCustomCta: true,
-  },
-  {
     tier: 'enterprise',
     name: 'Enterprise Institutional',
     price: 'Custom',
@@ -189,13 +168,13 @@ export const V4HostPlansScreen: React.FC<V4HostPlansScreenProps> = ({ hideHeader
   const [selectedPlan, setSelectedPlan] = useState<HostPlanConfig | null>(null);
 
   const [contactModalVisible, setContactModalVisible] = useState(false);
-  const [contactType, setContactType] = useState<'BROKER' | 'ENTERPRISE'>('BROKER');
+  const [contactType, setContactType] = useState<'ENTERPRISE'>('ENTERPRISE');
 
   const currentTier = ownerPlan?.plan_tier || 'pro';
 
   const handlePlanClick = (plan: HostPlanConfig) => {
     if (plan.isCustomCta) {
-      setContactType(plan.tier === 'enterprise' ? 'ENTERPRISE' : 'BROKER');
+      setContactType('ENTERPRISE');
       setContactModalVisible(true);
       return;
     }
@@ -379,7 +358,7 @@ export const V4HostPlansScreen: React.FC<V4HostPlansScreenProps> = ({ hideHeader
       </Modal>
 
       {/* =====================================================================
-          CONTACT MODAL (BROKER / ENTERPRISE)
+          CONTACT MODAL (ENTERPRISE)
          ===================================================================== */}
       <Modal
         visible={contactModalVisible}
@@ -390,18 +369,14 @@ export const V4HostPlansScreen: React.FC<V4HostPlansScreenProps> = ({ hideHeader
         <View style={styles.modalOverlay}>
           <View style={styles.upgradeModalCard}>
             <View style={styles.modalHeaderRow}>
-              <Text style={styles.modalTitle}>
-                {contactType === 'ENTERPRISE' ? 'Institutional Inquiries' : 'Broker Partnership'}
-              </Text>
+              <Text style={styles.modalTitle}>Institutional Inquiries</Text>
               <Pressable onPress={() => setContactModalVisible(false)}>
                 <Text style={{ fontSize: 16, color: '#64748B' }}>✕</Text>
               </Pressable>
             </View>
 
             <Text style={styles.contactSubtitle}>
-              {contactType === 'ENTERPRISE'
-                ? 'For developers, PG chains, and coliving brands managing 50+ units.'
-                : 'Connect with our dedicated relationship manager for custom API keys, broker CRM, and bulk listings.'}
+              For developers, PG chains, and coliving brands managing 50+ units.
             </Text>
 
             <View style={styles.contactMethodsBox}>

@@ -58,7 +58,7 @@ const CARPET_AREA_PILLS = [
 const COMMERCIAL_FAQS = [
   {
     q: 'How does REHVO provide verified listing on commercial leases in Mumbai?',
-    a: 'Traditional commercial real estate brokers charge 1 to 2 months rent as commission from both tenant and landlord. REHVO connects enterprise tenants and business owners directly with verified institutional and individual landlords, completely eliminating all broker fees.',
+    a: 'Traditional commercial real estate middlemen charge 1 to 2 months rent as commission from both tenant and landlord. REHVO connects enterprise tenants and business owners directly with verified institutional and individual landlords, completely eliminating all Commission Fees.',
   },
   {
     q: 'What is the standard lease lock-in and agreement period for offices?',
@@ -151,7 +151,7 @@ export const CommercialPageClient: React.FC<CommercialPageClientProps> = ({ init
             </h1>
 
             <p className="text-xs sm:text-base font-medium text-[#64748B] leading-relaxed">
-              Lease plug-and-play corporate workspaces, high-street retail shops, prime showrooms, and flex coworking spaces with zero broker commission.
+              Lease plug-and-play corporate workspaces, high-street retail shops, prime showrooms, and flex coworking spaces with zero agent commission.
             </p>
           </div>
 

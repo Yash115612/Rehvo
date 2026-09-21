@@ -77,7 +77,7 @@ export const REHVO_STORIES: Record<string, WebStory> = {
         title: 'Sea-Facing Residences',
         subtitle: 'Spacious sea-view 2 and 3 BHK flats on Carter Road and Bandstand directly verified by REHVO.',
         image: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1000&auto=format&fit=crop&q=80',
-        stat: 'Zero Brokerage',
+        stat: 'Zero Commission',
         ctaText: 'Explore Bandra West Rentals',
         ctaLink: '/mumbai/bandra-west',
       },

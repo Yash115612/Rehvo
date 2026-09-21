@@ -121,7 +121,7 @@ export const HostAndEarn: React.FC = () => {
                 Earn from your<br />Property
               </h3>
               <p className="text-xs text-[#475569] font-medium mt-1">
-                Direct verified tenants &bull; 0% broker commission
+                Direct verified tenants &bull; 0% agent commission
               </p>
             </div>
 
@@ -322,7 +322,7 @@ export const HostAndEarn: React.FC = () => {
                   <div className="text-sm sm:text-base font-black text-[#031B2A] mt-0.5">{formattedAnnualCashflow}</div>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#0F766E]">Brokerage Saved</div>
+                  <div className="text-[9px] sm:text-[10px] font-black uppercase text-[#0F766E]">Commission Saved</div>
                   <div className="text-sm sm:text-base font-black text-[#059669] mt-0.5">Save {formattedSavings}</div>
                 </div>
                 <div>

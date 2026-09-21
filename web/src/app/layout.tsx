@@ -36,17 +36,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'REHVO — Zero Brokerage Rentals, Verified Homes & Flatmates in Mumbai',
+    default: 'REHVO — Zero Commission Rentals, Verified Homes & Flatmates in Mumbai',
     template: '%s | REHVO',
   },
   description:
-    'Find verified rental homes, flatmates, PGs, and commercial properties with AI concierge, 3D walkthroughs, verified title deeds, and zero brokerage across Mumbai, Pune, Bangalore & India.',
+    'Find verified rental homes, flatmates, PGs, and commercial properties with AI concierge, 3D walkthroughs, verified title deeds, and Zero Commission across Mumbai, Pune, Bangalore & India.',
   keywords: [
     'rental properties mumbai',
     'verified flats for rent',
     'flatmates mumbai',
     'pg in andheri west',
-    'zero brokerage apartments',
+    'Zero Commission apartments',
     'commercial office space rent',
     'direct owner rentals',
     'rehvo',
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "REHVO — India's Verified Rental Marketplace",
     description:
-      'Discover verified properties from direct homeowners, trusted brokers, and developers with AI-powered search, maps, and instant chat.',
+      'Discover verified properties from direct homeowners, trusted middlemen, and developers with AI-powered search, maps, and instant chat.',
     url: BASE_URL,
     siteName: 'REHVO',
     locale: 'en_IN',

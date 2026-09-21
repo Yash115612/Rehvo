@@ -39,13 +39,13 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
 
   return constructSeoMetadata({
     title: `Verified Flats, Rooms & PGs for Rent in ${city.name}`,
-    description: `Browse 100% verified flats, apartments, flatmates and PGs for rent in ${city.name}. Direct owner listings, AI concierge matching, zero broker fees, and verified Index-II title deeds on REHVO.`,
+    description: `Browse 100% verified flats, apartments, flatmates and PGs for rent in ${city.name}. Direct owner listings, AI concierge matching, zero Commission Fees, and verified Index-II title deeds on REHVO.`,
     canonicalUrl: `https://rehvo.in/${city.slug}`,
     keywords: [
       `rent in ${city.name.toLowerCase()}`,
       `flats for rent in ${city.name.toLowerCase()}`,
       `apartments ${city.name.toLowerCase()}`,
-      `zero brokerage ${city.name.toLowerCase()}`,
+      `Zero Commission ${city.name.toLowerCase()}`,
       `flatmates in ${city.name.toLowerCase()}`,
       `pg in ${city.name.toLowerCase()}`,
       `direct owner rentals ${city.name.toLowerCase()}`,
@@ -254,7 +254,7 @@ export default async function CityPage({ params }: CityPageProps) {
 
                 <div className="px-4 pb-4 pt-1 flex items-center justify-between text-[11px] font-bold text-slate-600 border-t border-slate-100">
                   <span>{property.bedrooms ? `${property.bedrooms} BHK` : 'Studio'}</span>
-                  <span className="text-[#0E8F73]">Zero Brokerage</span>
+                  <span className="text-[#0E8F73]">Zero Commission</span>
                 </div>
               </Link>
             ))}

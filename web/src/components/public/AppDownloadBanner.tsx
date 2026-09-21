@@ -21,7 +21,7 @@ export const AppDownloadBanner: React.FC<AppDownloadBannerProps> = ({ propertyId
           </div>
 
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Rent With Verified Owners & Brokers
+            Rent With Verified Owners & Middlemen
           </h2>
 
           <p className="text-sm text-stone-300 max-w-xl leading-relaxed">

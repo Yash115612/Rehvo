@@ -22,8 +22,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "flats-near-iit-bombay": {
     "slug": "flats-near-iit-bombay",
     "title": "Flats for Rent near IIT Bombay Powai",
-    "metaTitle": "Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Brokerage",
-    "metaDescription": "Find verified 1, 2, and 3 BHK flats for rent near IIT Bombay, Powai. Direct owner listings for students, professors, and tech professionals with zero brokerage on REHVO.",
+    "metaTitle": "Flats for Rent near IIT Bombay Powai | Verified Direct Owners | Zero Commission",
+    "metaDescription": "Find verified 1, 2, and 3 BHK flats for rent near IIT Bombay, Powai. Direct owner listings for students, professors, and tech professionals with Zero Commission on REHVO.",
     "heading": "Flats for Rent near IIT Bombay, Powai",
     "subheading": "Premium student and faculty housing in Powai, JVLR, and Hiranandani within 5-10 minutes from IIT Bombay Main Gate.",
     "priceRange": "₹28,000 - ₹85,000/mo",
@@ -35,7 +35,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       },
       {
         "question": "Are student-friendly accommodations available near IIT Bombay on REHVO?",
-        "answer": "Yes, REHVO features bachelor-friendly apartments, verified flatmates, and private rooms with zero brokerage and low security deposits within walking distance of IIT Bombay."
+        "answer": "Yes, REHVO features bachelor-friendly apartments, verified flatmates, and private rooms with Zero Commission and low security deposits within walking distance of IIT Bombay."
       },
       {
         "question": "What transit links connect IIT Bombay to Western Mumbai?",
@@ -46,8 +46,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "flats-near-nmims": {
     "slug": "flats-near-nmims",
     "title": "Flats for Rent near NMIMS Vile Parle & Juhu",
-    "metaTitle": "Flats for Rent near NMIMS Vile Parle & Juhu | Zero Brokerage | REHVO",
-    "metaDescription": "Verified 1 BHK, 2 BHK, and student flatshare apartments near NMIMS Mumbai in Vile Parle West and Juhu. 100% verified owners, zero brokerage fees.",
+    "metaTitle": "Flats for Rent near NMIMS Vile Parle & Juhu | Zero Commission | REHVO",
+    "metaDescription": "Verified 1 BHK, 2 BHK, and student flatshare apartments near NMIMS Mumbai in Vile Parle West and Juhu. 100% verified owners, Zero Commission fees.",
     "heading": "Flats for Rent near NMIMS University, Vile Parle",
     "subheading": "Student-friendly furnished flats, studio apartments, and shared rooms within walking distance of NMIMS and Mithibai College.",
     "priceRange": "₹35,000 - ₹1,10,000/mo",
@@ -66,7 +66,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "flats-near-bkc": {
     "slug": "flats-near-bkc",
     "title": "Flats for Rent near BKC Bandra Kurla Complex",
-    "metaTitle": "Flats for Rent near BKC (Bandra Kurla Complex) | Zero Brokerage Rentals",
+    "metaTitle": "Flats for Rent near BKC (Bandra Kurla Complex) | Zero Commission Rentals",
     "metaDescription": "Find luxury 1, 2, and 3 BHK apartments for rent near BKC Mumbai. Direct homeowner listings in Bandra East, Kurla, and Kalina with 5-min office commute.",
     "heading": "Executive Apartments for Rent near BKC",
     "subheading": "High-end apartments and gated communities for corporate executives and banking professionals within minutes of BKC financial center.",
@@ -86,8 +86,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "flats-near-mumbai-airport": {
     "slug": "flats-near-mumbai-airport",
     "title": "Flats for Rent near Mumbai International Airport (CSMIA)",
-    "metaTitle": "Flats for Rent near Mumbai Airport (CSMIA) | Direct Owners | Zero Brokerage",
-    "metaDescription": "Browse verified flats for rent near Mumbai Airport Terminal 1 & 2 in Andheri East, Vile Parle, and Santacruz. Zero brokerage, instant physical visits.",
+    "metaTitle": "Flats for Rent near Mumbai Airport (CSMIA) | Direct Owners | Zero Commission",
+    "metaDescription": "Browse verified flats for rent near Mumbai Airport Terminal 1 & 2 in Andheri East, Vile Parle, and Santacruz. Zero Commission, instant physical visits.",
     "heading": "Apartments for Rent near Mumbai International Airport",
     "subheading": "Ideal living spaces for airline crew, consultants, and frequent business travelers near T1 and T2 Mumbai International Airport.",
     "priceRange": "₹32,000 - ₹85,000/mo",
@@ -107,9 +107,9 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "flats-near-tcs-powai",
     "title": "Flats for Rent near TCS Olympus & Powai IT Parks",
     "metaTitle": "Flats for Rent near TCS Powai & Hiranandani Tech Hub | REHVO",
-    "metaDescription": "Rent 1 & 2 BHK flats near TCS Olympus, Kensington, and Hiranandani Business Park in Powai with zero brokerage. Direct owner contact on REHVO.",
+    "metaDescription": "Rent 1 & 2 BHK flats near TCS Olympus, Kensington, and Hiranandani Business Park in Powai with Zero Commission. Direct owner contact on REHVO.",
     "heading": "Flats for Rent near TCS & Hiranandani IT Hubs",
-    "subheading": "Walk-to-work residences for IT professionals and engineers in Powai with resort-style amenities and zero broker commissions.",
+    "subheading": "Walk-to-work residences for IT professionals and engineers in Powai with resort-style amenities and zero agent commissions.",
     "priceRange": "₹35,000 - ₹95,000/mo",
     "localityFilter": "Powai",
     "faqs": [
@@ -118,15 +118,15 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "Hiranandani Gardens complexes (Castle Rock, Somerset, Verona), Lake Homes, and Raheja Vistas offer walk-to-work proximity to TCS and Kensington."
       },
       {
-        "question": "Can IT professionals rent without broker fees in Powai?",
-        "answer": "Yes, REHVO connects software engineers directly with verified homeowners in Powai, eliminating standard 1-month brokerage fees."
+        "question": "Can IT professionals rent without Commission Fees in Powai?",
+        "answer": "Yes, REHVO connects software engineers directly with verified homeowners in Powai, eliminating standard 1-month commission fees."
       }
     ]
   },
   "flats-near-mindspace-malad": {
     "slug": "flats-near-mindspace-malad",
     "title": "Flats for Rent near Mindspace Malad West",
-    "metaTitle": "Flats for Rent near Mindspace Malad West | Zero Brokerage | REHVO",
+    "metaTitle": "Flats for Rent near Mindspace Malad West | Zero Commission | REHVO",
     "metaDescription": "Explore verified apartments for rent near Mindspace IT Park, Malad West. 1 BHK & 2 BHK flats with metro connectivity and direct owner verification.",
     "heading": "Flats for Rent near Mindspace IT Park, Malad West",
     "subheading": "Convenient rental apartments near Mindspace, Inorbit Mall, and Link Road metro for IT, BPO, and media professionals.",
@@ -147,7 +147,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "flats-near-jio-world-drive",
     "title": "Flats for Rent near Jio World Drive & BKC",
     "metaTitle": "Flats for Rent near Jio World Drive BKC | Luxury Living | REHVO",
-    "metaDescription": "Luxury rental apartments near Jio World Drive, BKC. Premium 2 & 3 BHK residences in Bandra Kurla Complex with high-end amenities and zero brokerage.",
+    "metaDescription": "Luxury rental apartments near Jio World Drive, BKC. Premium 2 & 3 BHK residences in Bandra Kurla Complex with high-end amenities and Zero Commission.",
     "heading": "Flats for Rent near Jio World Drive, BKC",
     "subheading": "Premium residences near Mumbai’s epicenter of international luxury retail, fine dining, and multinational headquarters.",
     "priceRange": "₹85,000 - ₹2,50,000/mo",
@@ -162,8 +162,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "2-bhk-for-rent-in-mumbai": {
     "slug": "2-bhk-for-rent-in-mumbai",
     "title": "2 BHK Flats for Rent in Mumbai",
-    "metaTitle": "2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Brokerage",
-    "metaDescription": "Find verified 2 BHK apartments for rent in Mumbai with zero brokerage. Direct owner listings in Andheri West, Bandra, Powai, and Goregaon with instant visit scheduling.",
+    "metaTitle": "2 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Commission",
+    "metaDescription": "Find verified 2 BHK apartments for rent in Mumbai with Zero Commission. Direct owner listings in Andheri West, Bandra, Powai, and Goregaon with instant visit scheduling.",
     "heading": "2 BHK Apartments for Rent in Mumbai",
     "subheading": "Most preferred configuration for nuclear families and working professionals across Western and Central Mumbai.",
     "bhkFilter": 2,
@@ -174,15 +174,15 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "Average rents for 2 BHK flats in western suburbs range between ₹45,000 to ₹75,000/month, while Bandra and Worli command ₹95,000 to ₹1,60,000/month."
       },
       {
-        "question": "Do 2 BHK rentals on REHVO have zero brokerage?",
-        "answer": "Yes, all listings on REHVO are direct from verified homeowners, saving renters the traditional 1-month brokerage fee."
+        "question": "Do 2 BHK rentals on REHVO have Zero Commission?",
+        "answer": "Yes, all listings on REHVO are direct from verified homeowners, saving renters the traditional 1-month Commission Fee."
       }
     ]
   },
   "1-bhk-for-rent-in-mumbai": {
     "slug": "1-bhk-for-rent-in-mumbai",
     "title": "1 BHK Flats for Rent in Mumbai",
-    "metaTitle": "1 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Brokerage",
+    "metaTitle": "1 BHK Flats for Rent in Mumbai | Verified Direct Owners | Zero Commission",
     "metaDescription": "Affordable and verified 1 BHK flats for rent in Mumbai. Direct owner contacts, low security deposit, and instant visit bookings in Andheri, Powai, Malad, and Thane.",
     "heading": "1 BHK Flats for Rent in Mumbai",
     "subheading": "Ideal compact homes for single professionals, couples, and startup founders near Mumbai metro corridors.",
@@ -199,7 +199,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-for-rent-in-mumbai",
     "title": "3 BHK Apartments for Rent in Mumbai",
     "metaTitle": "3 BHK Apartments for Rent in Mumbai | Luxury Gated Communities | REHVO",
-    "metaDescription": "Discover spacious 3 BHK luxury flats for rent across Mumbai. Verified owners, premium gated societies in Bandra, Worli, Powai, and Juhu with zero brokerage.",
+    "metaDescription": "Discover spacious 3 BHK luxury flats for rent across Mumbai. Verified owners, premium gated societies in Bandra, Worli, Powai, and Juhu with Zero Commission.",
     "heading": "Spacious 3 BHK Homes for Rent in Mumbai",
     "subheading": "Expansive family residences with modern clubhouses, swimming pools, and dedicated parking in Mumbai’s prime neighborhoods.",
     "bhkFilter": 3,
@@ -211,18 +211,18 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-mumbai": {
-    "slug": "zero-brokerage-flats-mumbai",
-    "title": "Zero Brokerage Flats for Rent in Mumbai",
-    "metaTitle": "Zero Brokerage Flats for Rent in Mumbai | 100% Direct Owners | REHVO",
-    "metaDescription": "Rent direct from property owners in Mumbai without paying broker fees. Browse verified flats, apartments, and penthouses with Index-II verified deeds.",
-    "heading": "100% Zero Brokerage Rentals Across Mumbai",
-    "subheading": "Stop paying 1 month rent as broker commissions. Connect directly with verified homeowners and move into your dream home seamlessly.",
+  "zero-commission-flats-mumbai": {
+    "slug": "zero-commission-flats-mumbai",
+    "title": "Zero Commission Flats for Rent in Mumbai",
+    "metaTitle": "Zero Commission Flats for Rent in Mumbai | 100% Direct Owners | REHVO",
+    "metaDescription": "Rent direct from property owners in Mumbai without paying Commission Fees. Browse verified flats, apartments, and penthouses with Index-II verified deeds.",
+    "heading": "100% Zero Commission Rentals Across Mumbai",
+    "subheading": "Stop paying 1 month rent as agent commissions. Connect directly with verified homeowners and move into your dream home seamlessly.",
     "priceRange": "₹20,000 - ₹2,00,000/mo",
     "faqs": [
       {
-        "question": "How much money does zero brokerage save in Mumbai?",
-        "answer": "Renters save between ₹30,000 to ₹1,50,000+ upfront by bypassing traditional broker commissions and documentation fees."
+        "question": "How much money does Zero Commission save in Mumbai?",
+        "answer": "Renters save between ₹30,000 to ₹1,50,000+ upfront by bypassing traditional agent commissions and documentation fees."
       }
     ]
   },
@@ -246,7 +246,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "furnished-flats-for-rent-mumbai",
     "title": "Furnished Flats for Rent in Mumbai",
     "metaTitle": "Fully Furnished Flats for Rent in Mumbai | Move-In Ready | REHVO",
-    "metaDescription": "Explore fully furnished 1, 2, and 3 BHK flats for rent in Mumbai. Move-in ready apartments with modern interiors, appliances, and zero brokerage.",
+    "metaDescription": "Explore fully furnished 1, 2, and 3 BHK flats for rent in Mumbai. Move-in ready apartments with modern interiors, appliances, and Zero Commission.",
     "heading": "Move-in Ready Furnished Apartments in Mumbai",
     "subheading": "Hassle-free furnished homes equipped with premium furnishings, modular kitchens, smart appliances, and broadband connectivity.",
     "priceRange": "₹35,000 - ₹1,40,000/mo",
@@ -261,7 +261,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "bachelor-friendly-flats-mumbai",
     "title": "Bachelor Friendly Flats for Rent in Mumbai",
     "metaTitle": "Bachelor Friendly Flats for Rent in Mumbai | No Society Restrictions | REHVO",
-    "metaDescription": "Find bachelor-friendly apartments for rent in Mumbai. No moral policing, verified direct owners, low security deposits, and zero brokerage on REHVO.",
+    "metaDescription": "Find bachelor-friendly apartments for rent in Mumbai. No moral policing, verified direct owners, low security deposits, and Zero Commission on REHVO.",
     "heading": "Bachelor Friendly Rental Homes in Mumbai",
     "subheading": "Welcoming homes for working professionals and students without intrusive society restrictions or discriminatory screening.",
     "priceRange": "₹22,000 - ₹75,000/mo",
@@ -291,7 +291,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "flats-near-metro-station-mumbai": {
     "slug": "flats-near-metro-station-mumbai",
     "title": "Flats near Metro Stations in Mumbai",
-    "metaTitle": "Flats for Rent near Metro Stations in Mumbai | Zero Brokerage | REHVO",
+    "metaTitle": "Flats for Rent near Metro Stations in Mumbai | Zero Commission | REHVO",
     "metaDescription": "Browse apartments within 5-10 minutes walking distance of Mumbai Metro Lines 1, 2A, 7, and 3. Slash daily commute times with direct owner rentals.",
     "heading": "Transit-Oriented Flats near Mumbai Metro",
     "subheading": "Live within footsteps of Mumbai Metro stations. Enjoy effortless commutes across Andheri, Ghatkopar, Malad, Borivali, and BKC.",
@@ -306,8 +306,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-andheri-west": {
     "slug": "1-bhk-flats-for-rent-in-andheri-west",
     "title": "1 BHK Flats for Rent in Andheri West",
-    "metaTitle": "1 BHK Flats for Rent in Andheri West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Andheri West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Andheri West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Andheri West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Andheri West",
     "subheading": "Compact and comfortable 1 BHK homes in Andheri West with seamless connectivity via Metro Line 1, 2A.",
     "bhkFilter": 1,
@@ -319,8 +319,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Andheri West rents for approximately ₹35,000 - ₹50,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Andheri West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Andheri West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Andheri West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Andheri West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Andheri West?",
@@ -332,7 +332,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-andheri-west",
     "title": "2 BHK Flats for Rent in Andheri West",
     "metaTitle": "2 BHK Flats for Rent in Andheri West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Andheri West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Andheri West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Andheri West",
     "subheading": "Spacious 2 BHK family and professional apartments in Andheri West close to Metro Line 1, 2A.",
     "bhkFilter": 2,
@@ -357,7 +357,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-andheri-west",
     "title": "3 BHK Flats for Rent in Andheri West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Andheri West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Andheri West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Andheri West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Andheri West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Andheri West.",
     "bhkFilter": 3,
@@ -374,19 +374,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-andheri-west": {
-    "slug": "zero-brokerage-flats-in-andheri-west",
-    "title": "Zero Brokerage Flats in Andheri West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Andheri West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Andheri West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Andheri West",
-    "subheading": "Direct homeowner rentals in Andheri West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-andheri-west": {
+    "slug": "zero-commission-flats-in-andheri-west",
+    "title": "Zero Commission Flats in Andheri West",
+    "metaTitle": "Zero Commission Flats for Rent in Andheri West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Andheri West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Andheri West",
+    "subheading": "Direct homeowner rentals in Andheri West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Andheri West",
     "priceRange": "₹55,000 - ₹85,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Andheri West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Andheri West via REHVO."
+        "question": "How much can I save renting without a agent in Andheri West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Andheri West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Andheri West?",
@@ -397,8 +397,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-andheri-east": {
     "slug": "1-bhk-flats-for-rent-in-andheri-east",
     "title": "1 BHK Flats for Rent in Andheri East",
-    "metaTitle": "1 BHK Flats for Rent in Andheri East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Andheri East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Andheri East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Andheri East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Andheri East",
     "subheading": "Compact and comfortable 1 BHK homes in Andheri East with seamless connectivity via Metro Line 1, 7.",
     "bhkFilter": 1,
@@ -410,8 +410,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Andheri East rents for approximately ₹30,000 - ₹45,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Andheri East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Andheri East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Andheri East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Andheri East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Andheri East?",
@@ -423,7 +423,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-andheri-east",
     "title": "2 BHK Flats for Rent in Andheri East",
     "metaTitle": "2 BHK Flats for Rent in Andheri East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Andheri East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Andheri East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Andheri East",
     "subheading": "Spacious 2 BHK family and professional apartments in Andheri East close to Metro Line 1, 7.",
     "bhkFilter": 2,
@@ -448,7 +448,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-andheri-east",
     "title": "3 BHK Flats for Rent in Andheri East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Andheri East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Andheri East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Andheri East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Andheri East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Andheri East.",
     "bhkFilter": 3,
@@ -465,19 +465,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-andheri-east": {
-    "slug": "zero-brokerage-flats-in-andheri-east",
-    "title": "Zero Brokerage Flats in Andheri East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Andheri East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Andheri East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Andheri East",
-    "subheading": "Direct homeowner rentals in Andheri East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-andheri-east": {
+    "slug": "zero-commission-flats-in-andheri-east",
+    "title": "Zero Commission Flats in Andheri East",
+    "metaTitle": "Zero Commission Flats for Rent in Andheri East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Andheri East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Andheri East",
+    "subheading": "Direct homeowner rentals in Andheri East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Andheri East",
     "priceRange": "₹48,000 - ₹72,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Andheri East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Andheri East via REHVO."
+        "question": "How much can I save renting without a agent in Andheri East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Andheri East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Andheri East?",
@@ -488,8 +488,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-bandra-west": {
     "slug": "1-bhk-flats-for-rent-in-bandra-west",
     "title": "1 BHK Flats for Rent in Bandra West",
-    "metaTitle": "1 BHK Flats for Rent in Bandra West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Bandra West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Bandra West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Bandra West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Bandra West",
     "subheading": "Compact and comfortable 1 BHK homes in Bandra West with seamless connectivity via Western Railway, Coastal Road.",
     "bhkFilter": 1,
@@ -501,8 +501,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Bandra West rents for approximately ₹60,000 - ₹95,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Bandra West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Bandra West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Bandra West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Bandra West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Bandra West?",
@@ -514,7 +514,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-bandra-west",
     "title": "2 BHK Flats for Rent in Bandra West",
     "metaTitle": "2 BHK Flats for Rent in Bandra West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Bandra West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Bandra West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Bandra West",
     "subheading": "Spacious 2 BHK family and professional apartments in Bandra West close to Western Railway, Coastal Road.",
     "bhkFilter": 2,
@@ -539,7 +539,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-bandra-west",
     "title": "3 BHK Flats for Rent in Bandra West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Bandra West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Bandra West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Bandra West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Bandra West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Bandra West.",
     "bhkFilter": 3,
@@ -556,19 +556,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-bandra-west": {
-    "slug": "zero-brokerage-flats-in-bandra-west",
-    "title": "Zero Brokerage Flats in Bandra West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Bandra West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Bandra West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Bandra West",
-    "subheading": "Direct homeowner rentals in Bandra West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-bandra-west": {
+    "slug": "zero-commission-flats-in-bandra-west",
+    "title": "Zero Commission Flats in Bandra West",
+    "metaTitle": "Zero Commission Flats for Rent in Bandra West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Bandra West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Bandra West",
+    "subheading": "Direct homeowner rentals in Bandra West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Bandra West",
     "priceRange": "₹95,000 - ₹1,65,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Bandra West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Bandra West via REHVO."
+        "question": "How much can I save renting without a agent in Bandra West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Bandra West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Bandra West?",
@@ -579,8 +579,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-bandra-east": {
     "slug": "1-bhk-flats-for-rent-in-bandra-east",
     "title": "1 BHK Flats for Rent in Bandra East",
-    "metaTitle": "1 BHK Flats for Rent in Bandra East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Bandra East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Bandra East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Bandra East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Bandra East",
     "subheading": "Compact and comfortable 1 BHK homes in Bandra East with seamless connectivity via BKC Connector, Western Railway.",
     "bhkFilter": 1,
@@ -592,8 +592,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Bandra East rents for approximately ₹45,000 - ₹65,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Bandra East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Bandra East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Bandra East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Bandra East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Bandra East?",
@@ -605,7 +605,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-bandra-east",
     "title": "2 BHK Flats for Rent in Bandra East",
     "metaTitle": "2 BHK Flats for Rent in Bandra East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Bandra East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Bandra East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Bandra East",
     "subheading": "Spacious 2 BHK family and professional apartments in Bandra East close to BKC Connector, Western Railway.",
     "bhkFilter": 2,
@@ -630,7 +630,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-bandra-east",
     "title": "3 BHK Flats for Rent in Bandra East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Bandra East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Bandra East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Bandra East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Bandra East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Bandra East.",
     "bhkFilter": 3,
@@ -647,19 +647,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-bandra-east": {
-    "slug": "zero-brokerage-flats-in-bandra-east",
-    "title": "Zero Brokerage Flats in Bandra East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Bandra East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Bandra East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Bandra East",
-    "subheading": "Direct homeowner rentals in Bandra East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-bandra-east": {
+    "slug": "zero-commission-flats-in-bandra-east",
+    "title": "Zero Commission Flats in Bandra East",
+    "metaTitle": "Zero Commission Flats for Rent in Bandra East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Bandra East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Bandra East",
+    "subheading": "Direct homeowner rentals in Bandra East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Bandra East",
     "priceRange": "₹70,000 - ₹1,10,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Bandra East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Bandra East via REHVO."
+        "question": "How much can I save renting without a agent in Bandra East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Bandra East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Bandra East?",
@@ -670,8 +670,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-powai": {
     "slug": "1-bhk-flats-for-rent-in-powai",
     "title": "1 BHK Flats for Rent in Powai",
-    "metaTitle": "1 BHK Flats for Rent in Powai, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Powai, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Powai, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Powai, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Powai",
     "subheading": "Compact and comfortable 1 BHK homes in Powai with seamless connectivity via JVLR, Metro Line 6 (upcoming).",
     "bhkFilter": 1,
@@ -683,8 +683,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Powai rents for approximately ₹36,000 - ₹52,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Powai?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Powai are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Powai?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Powai are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Powai?",
@@ -696,7 +696,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-powai",
     "title": "2 BHK Flats for Rent in Powai",
     "metaTitle": "2 BHK Flats for Rent in Powai, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Powai, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Powai, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Powai",
     "subheading": "Spacious 2 BHK family and professional apartments in Powai close to JVLR, Metro Line 6 (upcoming).",
     "bhkFilter": 2,
@@ -721,7 +721,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-powai",
     "title": "3 BHK Flats for Rent in Powai",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Powai, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Powai, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Powai, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Powai",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Powai.",
     "bhkFilter": 3,
@@ -738,19 +738,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-powai": {
-    "slug": "zero-brokerage-flats-in-powai",
-    "title": "Zero Brokerage Flats in Powai",
-    "metaTitle": "Zero Brokerage Flats for Rent in Powai, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Powai, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Powai",
-    "subheading": "Direct homeowner rentals in Powai. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-powai": {
+    "slug": "zero-commission-flats-in-powai",
+    "title": "Zero Commission Flats in Powai",
+    "metaTitle": "Zero Commission Flats for Rent in Powai, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Powai, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Powai",
+    "subheading": "Direct homeowner rentals in Powai. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Powai",
     "priceRange": "₹58,000 - ₹90,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Powai?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Powai via REHVO."
+        "question": "How much can I save renting without a agent in Powai?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Powai via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Powai?",
@@ -761,8 +761,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-juhu": {
     "slug": "1-bhk-flats-for-rent-in-juhu",
     "title": "1 BHK Flats for Rent in Juhu",
-    "metaTitle": "1 BHK Flats for Rent in Juhu, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Juhu, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Juhu, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Juhu, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Juhu",
     "subheading": "Compact and comfortable 1 BHK homes in Juhu with seamless connectivity via Western Railway (Vile Parle), Metro 2A.",
     "bhkFilter": 1,
@@ -774,8 +774,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Juhu rents for approximately ₹55,000 - ₹85,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Juhu?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Juhu are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Juhu?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Juhu are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Juhu?",
@@ -787,7 +787,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-juhu",
     "title": "2 BHK Flats for Rent in Juhu",
     "metaTitle": "2 BHK Flats for Rent in Juhu, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Juhu, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Juhu, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Juhu",
     "subheading": "Spacious 2 BHK family and professional apartments in Juhu close to Western Railway (Vile Parle), Metro 2A.",
     "bhkFilter": 2,
@@ -812,7 +812,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-juhu",
     "title": "3 BHK Flats for Rent in Juhu",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Juhu, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Juhu, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Juhu, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Juhu",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Juhu.",
     "bhkFilter": 3,
@@ -829,19 +829,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-juhu": {
-    "slug": "zero-brokerage-flats-in-juhu",
-    "title": "Zero Brokerage Flats in Juhu",
-    "metaTitle": "Zero Brokerage Flats for Rent in Juhu, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Juhu, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Juhu",
-    "subheading": "Direct homeowner rentals in Juhu. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-juhu": {
+    "slug": "zero-commission-flats-in-juhu",
+    "title": "Zero Commission Flats in Juhu",
+    "metaTitle": "Zero Commission Flats for Rent in Juhu, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Juhu, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Juhu",
+    "subheading": "Direct homeowner rentals in Juhu. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Juhu",
     "priceRange": "₹85,000 - ₹1,50,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Juhu?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Juhu via REHVO."
+        "question": "How much can I save renting without a agent in Juhu?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Juhu via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Juhu?",
@@ -852,8 +852,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-worli": {
     "slug": "1-bhk-flats-for-rent-in-worli",
     "title": "1 BHK Flats for Rent in Worli",
-    "metaTitle": "1 BHK Flats for Rent in Worli, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Worli, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Worli, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Worli, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Worli",
     "subheading": "Compact and comfortable 1 BHK homes in Worli with seamless connectivity via Coastal Road, Metro Line 3.",
     "bhkFilter": 1,
@@ -865,8 +865,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Worli rents for approximately ₹65,000 - ₹95,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Worli?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Worli are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Worli?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Worli are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Worli?",
@@ -878,7 +878,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-worli",
     "title": "2 BHK Flats for Rent in Worli",
     "metaTitle": "2 BHK Flats for Rent in Worli, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Worli, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Worli, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Worli",
     "subheading": "Spacious 2 BHK family and professional apartments in Worli close to Coastal Road, Metro Line 3.",
     "bhkFilter": 2,
@@ -903,7 +903,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-worli",
     "title": "3 BHK Flats for Rent in Worli",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Worli, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Worli, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Worli, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Worli",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Worli.",
     "bhkFilter": 3,
@@ -920,19 +920,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-worli": {
-    "slug": "zero-brokerage-flats-in-worli",
-    "title": "Zero Brokerage Flats in Worli",
-    "metaTitle": "Zero Brokerage Flats for Rent in Worli, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Worli, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Worli",
-    "subheading": "Direct homeowner rentals in Worli. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-worli": {
+    "slug": "zero-commission-flats-in-worli",
+    "title": "Zero Commission Flats in Worli",
+    "metaTitle": "Zero Commission Flats for Rent in Worli, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Worli, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Worli",
+    "subheading": "Direct homeowner rentals in Worli. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Worli",
     "priceRange": "₹1,10,000 - ₹1,80,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Worli?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Worli via REHVO."
+        "question": "How much can I save renting without a agent in Worli?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Worli via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Worli?",
@@ -943,8 +943,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-lower-parel": {
     "slug": "1-bhk-flats-for-rent-in-lower-parel",
     "title": "1 BHK Flats for Rent in Lower Parel",
-    "metaTitle": "1 BHK Flats for Rent in Lower Parel, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Lower Parel, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Lower Parel, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Lower Parel, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Lower Parel",
     "subheading": "Compact and comfortable 1 BHK homes in Lower Parel with seamless connectivity via Monorail, Western & Central Railway.",
     "bhkFilter": 1,
@@ -956,8 +956,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Lower Parel rents for approximately ₹55,000 - ₹80,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Lower Parel?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Lower Parel are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Lower Parel?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Lower Parel are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Lower Parel?",
@@ -969,7 +969,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-lower-parel",
     "title": "2 BHK Flats for Rent in Lower Parel",
     "metaTitle": "2 BHK Flats for Rent in Lower Parel, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Lower Parel, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Lower Parel, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Lower Parel",
     "subheading": "Spacious 2 BHK family and professional apartments in Lower Parel close to Monorail, Western & Central Railway.",
     "bhkFilter": 2,
@@ -994,7 +994,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-lower-parel",
     "title": "3 BHK Flats for Rent in Lower Parel",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Lower Parel, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Lower Parel, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Lower Parel, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Lower Parel",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Lower Parel.",
     "bhkFilter": 3,
@@ -1011,19 +1011,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-lower-parel": {
-    "slug": "zero-brokerage-flats-in-lower-parel",
-    "title": "Zero Brokerage Flats in Lower Parel",
-    "metaTitle": "Zero Brokerage Flats for Rent in Lower Parel, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Lower Parel, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Lower Parel",
-    "subheading": "Direct homeowner rentals in Lower Parel. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-lower-parel": {
+    "slug": "zero-commission-flats-in-lower-parel",
+    "title": "Zero Commission Flats in Lower Parel",
+    "metaTitle": "Zero Commission Flats for Rent in Lower Parel, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Lower Parel, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Lower Parel",
+    "subheading": "Direct homeowner rentals in Lower Parel. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Lower Parel",
     "priceRange": "₹90,000 - ₹1,50,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Lower Parel?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Lower Parel via REHVO."
+        "question": "How much can I save renting without a agent in Lower Parel?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Lower Parel via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Lower Parel?",
@@ -1034,8 +1034,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-malad-west": {
     "slug": "1-bhk-flats-for-rent-in-malad-west",
     "title": "1 BHK Flats for Rent in Malad West",
-    "metaTitle": "1 BHK Flats for Rent in Malad West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Malad West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Malad West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Malad West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Malad West",
     "subheading": "Compact and comfortable 1 BHK homes in Malad West with seamless connectivity via Metro Line 2A.",
     "bhkFilter": 1,
@@ -1047,8 +1047,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Malad West rents for approximately ₹25,000 - ₹38,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Malad West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Malad West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Malad West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Malad West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Malad West?",
@@ -1060,7 +1060,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-malad-west",
     "title": "2 BHK Flats for Rent in Malad West",
     "metaTitle": "2 BHK Flats for Rent in Malad West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Malad West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Malad West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Malad West",
     "subheading": "Spacious 2 BHK family and professional apartments in Malad West close to Metro Line 2A.",
     "bhkFilter": 2,
@@ -1085,7 +1085,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-malad-west",
     "title": "3 BHK Flats for Rent in Malad West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Malad West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Malad West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Malad West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Malad West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Malad West.",
     "bhkFilter": 3,
@@ -1102,19 +1102,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-malad-west": {
-    "slug": "zero-brokerage-flats-in-malad-west",
-    "title": "Zero Brokerage Flats in Malad West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Malad West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Malad West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Malad West",
-    "subheading": "Direct homeowner rentals in Malad West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-malad-west": {
+    "slug": "zero-commission-flats-in-malad-west",
+    "title": "Zero Commission Flats in Malad West",
+    "metaTitle": "Zero Commission Flats for Rent in Malad West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Malad West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Malad West",
+    "subheading": "Direct homeowner rentals in Malad West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Malad West",
     "priceRange": "₹42,000 - ₹65,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Malad West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Malad West via REHVO."
+        "question": "How much can I save renting without a agent in Malad West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Malad West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Malad West?",
@@ -1125,8 +1125,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-borivali-west": {
     "slug": "1-bhk-flats-for-rent-in-borivali-west",
     "title": "1 BHK Flats for Rent in Borivali West",
-    "metaTitle": "1 BHK Flats for Rent in Borivali West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Borivali West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Borivali West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Borivali West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Borivali West",
     "subheading": "Compact and comfortable 1 BHK homes in Borivali West with seamless connectivity via Metro Line 2A, Western Railway.",
     "bhkFilter": 1,
@@ -1138,8 +1138,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Borivali West rents for approximately ₹24,000 - ₹36,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Borivali West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Borivali West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Borivali West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Borivali West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Borivali West?",
@@ -1151,7 +1151,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-borivali-west",
     "title": "2 BHK Flats for Rent in Borivali West",
     "metaTitle": "2 BHK Flats for Rent in Borivali West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Borivali West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Borivali West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Borivali West",
     "subheading": "Spacious 2 BHK family and professional apartments in Borivali West close to Metro Line 2A, Western Railway.",
     "bhkFilter": 2,
@@ -1176,7 +1176,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-borivali-west",
     "title": "3 BHK Flats for Rent in Borivali West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Borivali West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Borivali West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Borivali West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Borivali West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Borivali West.",
     "bhkFilter": 3,
@@ -1193,19 +1193,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-borivali-west": {
-    "slug": "zero-brokerage-flats-in-borivali-west",
-    "title": "Zero Brokerage Flats in Borivali West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Borivali West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Borivali West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Borivali West",
-    "subheading": "Direct homeowner rentals in Borivali West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-borivali-west": {
+    "slug": "zero-commission-flats-in-borivali-west",
+    "title": "Zero Commission Flats in Borivali West",
+    "metaTitle": "Zero Commission Flats for Rent in Borivali West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Borivali West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Borivali West",
+    "subheading": "Direct homeowner rentals in Borivali West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Borivali West",
     "priceRange": "₹38,000 - ₹58,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Borivali West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Borivali West via REHVO."
+        "question": "How much can I save renting without a agent in Borivali West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Borivali West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Borivali West?",
@@ -1216,8 +1216,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-borivali-east": {
     "slug": "1-bhk-flats-for-rent-in-borivali-east",
     "title": "1 BHK Flats for Rent in Borivali East",
-    "metaTitle": "1 BHK Flats for Rent in Borivali East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Borivali East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Borivali East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Borivali East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Borivali East",
     "subheading": "Compact and comfortable 1 BHK homes in Borivali East with seamless connectivity via Metro Line 7, Western Express Highway.",
     "bhkFilter": 1,
@@ -1229,8 +1229,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Borivali East rents for approximately ₹22,000 - ₹34,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Borivali East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Borivali East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Borivali East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Borivali East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Borivali East?",
@@ -1242,7 +1242,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-borivali-east",
     "title": "2 BHK Flats for Rent in Borivali East",
     "metaTitle": "2 BHK Flats for Rent in Borivali East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Borivali East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Borivali East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Borivali East",
     "subheading": "Spacious 2 BHK family and professional apartments in Borivali East close to Metro Line 7, Western Express Highway.",
     "bhkFilter": 2,
@@ -1267,7 +1267,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-borivali-east",
     "title": "3 BHK Flats for Rent in Borivali East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Borivali East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Borivali East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Borivali East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Borivali East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Borivali East.",
     "bhkFilter": 3,
@@ -1284,19 +1284,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-borivali-east": {
-    "slug": "zero-brokerage-flats-in-borivali-east",
-    "title": "Zero Brokerage Flats in Borivali East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Borivali East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Borivali East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Borivali East",
-    "subheading": "Direct homeowner rentals in Borivali East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-borivali-east": {
+    "slug": "zero-commission-flats-in-borivali-east",
+    "title": "Zero Commission Flats in Borivali East",
+    "metaTitle": "Zero Commission Flats for Rent in Borivali East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Borivali East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Borivali East",
+    "subheading": "Direct homeowner rentals in Borivali East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Borivali East",
     "priceRange": "₹36,000 - ₹54,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Borivali East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Borivali East via REHVO."
+        "question": "How much can I save renting without a agent in Borivali East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Borivali East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Borivali East?",
@@ -1307,8 +1307,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-kandivali-west": {
     "slug": "1-bhk-flats-for-rent-in-kandivali-west",
     "title": "1 BHK Flats for Rent in Kandivali West",
-    "metaTitle": "1 BHK Flats for Rent in Kandivali West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Kandivali West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Kandivali West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Kandivali West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Kandivali West",
     "subheading": "Compact and comfortable 1 BHK homes in Kandivali West with seamless connectivity via Metro Line 2A.",
     "bhkFilter": 1,
@@ -1320,8 +1320,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Kandivali West rents for approximately ₹24,000 - ₹36,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Kandivali West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Kandivali West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Kandivali West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Kandivali West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Kandivali West?",
@@ -1333,7 +1333,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-kandivali-west",
     "title": "2 BHK Flats for Rent in Kandivali West",
     "metaTitle": "2 BHK Flats for Rent in Kandivali West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Kandivali West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Kandivali West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Kandivali West",
     "subheading": "Spacious 2 BHK family and professional apartments in Kandivali West close to Metro Line 2A.",
     "bhkFilter": 2,
@@ -1358,7 +1358,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-kandivali-west",
     "title": "3 BHK Flats for Rent in Kandivali West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Kandivali West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Kandivali West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Kandivali West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Kandivali West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Kandivali West.",
     "bhkFilter": 3,
@@ -1375,19 +1375,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-kandivali-west": {
-    "slug": "zero-brokerage-flats-in-kandivali-west",
-    "title": "Zero Brokerage Flats in Kandivali West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Kandivali West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Kandivali West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Kandivali West",
-    "subheading": "Direct homeowner rentals in Kandivali West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-kandivali-west": {
+    "slug": "zero-commission-flats-in-kandivali-west",
+    "title": "Zero Commission Flats in Kandivali West",
+    "metaTitle": "Zero Commission Flats for Rent in Kandivali West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Kandivali West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Kandivali West",
+    "subheading": "Direct homeowner rentals in Kandivali West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Kandivali West",
     "priceRange": "₹38,000 - ₹60,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Kandivali West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Kandivali West via REHVO."
+        "question": "How much can I save renting without a agent in Kandivali West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Kandivali West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Kandivali West?",
@@ -1398,8 +1398,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-kandivali-east": {
     "slug": "1-bhk-flats-for-rent-in-kandivali-east",
     "title": "1 BHK Flats for Rent in Kandivali East",
-    "metaTitle": "1 BHK Flats for Rent in Kandivali East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Kandivali East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Kandivali East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Kandivali East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Kandivali East",
     "subheading": "Compact and comfortable 1 BHK homes in Kandivali East with seamless connectivity via Metro Line 7, WEH.",
     "bhkFilter": 1,
@@ -1411,8 +1411,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Kandivali East rents for approximately ₹23,000 - ₹35,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Kandivali East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Kandivali East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Kandivali East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Kandivali East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Kandivali East?",
@@ -1424,7 +1424,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-kandivali-east",
     "title": "2 BHK Flats for Rent in Kandivali East",
     "metaTitle": "2 BHK Flats for Rent in Kandivali East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Kandivali East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Kandivali East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Kandivali East",
     "subheading": "Spacious 2 BHK family and professional apartments in Kandivali East close to Metro Line 7, WEH.",
     "bhkFilter": 2,
@@ -1449,7 +1449,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-kandivali-east",
     "title": "3 BHK Flats for Rent in Kandivali East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Kandivali East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Kandivali East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Kandivali East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Kandivali East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Kandivali East.",
     "bhkFilter": 3,
@@ -1466,19 +1466,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-kandivali-east": {
-    "slug": "zero-brokerage-flats-in-kandivali-east",
-    "title": "Zero Brokerage Flats in Kandivali East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Kandivali East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Kandivali East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Kandivali East",
-    "subheading": "Direct homeowner rentals in Kandivali East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-kandivali-east": {
+    "slug": "zero-commission-flats-in-kandivali-east",
+    "title": "Zero Commission Flats in Kandivali East",
+    "metaTitle": "Zero Commission Flats for Rent in Kandivali East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Kandivali East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Kandivali East",
+    "subheading": "Direct homeowner rentals in Kandivali East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Kandivali East",
     "priceRange": "₹37,000 - ₹56,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Kandivali East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Kandivali East via REHVO."
+        "question": "How much can I save renting without a agent in Kandivali East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Kandivali East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Kandivali East?",
@@ -1489,8 +1489,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-goregaon-west": {
     "slug": "1-bhk-flats-for-rent-in-goregaon-west",
     "title": "1 BHK Flats for Rent in Goregaon West",
-    "metaTitle": "1 BHK Flats for Rent in Goregaon West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Goregaon West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Goregaon West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Goregaon West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Goregaon West",
     "subheading": "Compact and comfortable 1 BHK homes in Goregaon West with seamless connectivity via Metro Line 2A, Western Railway.",
     "bhkFilter": 1,
@@ -1502,8 +1502,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Goregaon West rents for approximately ₹28,000 - ₹42,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Goregaon West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Goregaon West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Goregaon West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Goregaon West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Goregaon West?",
@@ -1515,7 +1515,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-goregaon-west",
     "title": "2 BHK Flats for Rent in Goregaon West",
     "metaTitle": "2 BHK Flats for Rent in Goregaon West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Goregaon West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Goregaon West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Goregaon West",
     "subheading": "Spacious 2 BHK family and professional apartments in Goregaon West close to Metro Line 2A, Western Railway.",
     "bhkFilter": 2,
@@ -1540,7 +1540,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-goregaon-west",
     "title": "3 BHK Flats for Rent in Goregaon West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Goregaon West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Goregaon West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Goregaon West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Goregaon West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Goregaon West.",
     "bhkFilter": 3,
@@ -1557,19 +1557,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-goregaon-west": {
-    "slug": "zero-brokerage-flats-in-goregaon-west",
-    "title": "Zero Brokerage Flats in Goregaon West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Goregaon West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Goregaon West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Goregaon West",
-    "subheading": "Direct homeowner rentals in Goregaon West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-goregaon-west": {
+    "slug": "zero-commission-flats-in-goregaon-west",
+    "title": "Zero Commission Flats in Goregaon West",
+    "metaTitle": "Zero Commission Flats for Rent in Goregaon West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Goregaon West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Goregaon West",
+    "subheading": "Direct homeowner rentals in Goregaon West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Goregaon West",
     "priceRange": "₹45,000 - ₹70,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Goregaon West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Goregaon West via REHVO."
+        "question": "How much can I save renting without a agent in Goregaon West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Goregaon West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Goregaon West?",
@@ -1580,8 +1580,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-goregaon-east": {
     "slug": "1-bhk-flats-for-rent-in-goregaon-east",
     "title": "1 BHK Flats for Rent in Goregaon East",
-    "metaTitle": "1 BHK Flats for Rent in Goregaon East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Goregaon East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Goregaon East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Goregaon East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Goregaon East",
     "subheading": "Compact and comfortable 1 BHK homes in Goregaon East with seamless connectivity via Metro Line 7, Oberoi Garden City.",
     "bhkFilter": 1,
@@ -1593,8 +1593,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Goregaon East rents for approximately ₹30,000 - ₹44,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Goregaon East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Goregaon East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Goregaon East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Goregaon East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Goregaon East?",
@@ -1606,7 +1606,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-goregaon-east",
     "title": "2 BHK Flats for Rent in Goregaon East",
     "metaTitle": "2 BHK Flats for Rent in Goregaon East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Goregaon East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Goregaon East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Goregaon East",
     "subheading": "Spacious 2 BHK family and professional apartments in Goregaon East close to Metro Line 7, Oberoi Garden City.",
     "bhkFilter": 2,
@@ -1631,7 +1631,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-goregaon-east",
     "title": "3 BHK Flats for Rent in Goregaon East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Goregaon East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Goregaon East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Goregaon East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Goregaon East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Goregaon East.",
     "bhkFilter": 3,
@@ -1648,19 +1648,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-goregaon-east": {
-    "slug": "zero-brokerage-flats-in-goregaon-east",
-    "title": "Zero Brokerage Flats in Goregaon East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Goregaon East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Goregaon East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Goregaon East",
-    "subheading": "Direct homeowner rentals in Goregaon East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-goregaon-east": {
+    "slug": "zero-commission-flats-in-goregaon-east",
+    "title": "Zero Commission Flats in Goregaon East",
+    "metaTitle": "Zero Commission Flats for Rent in Goregaon East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Goregaon East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Goregaon East",
+    "subheading": "Direct homeowner rentals in Goregaon East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Goregaon East",
     "priceRange": "₹48,000 - ₹75,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Goregaon East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Goregaon East via REHVO."
+        "question": "How much can I save renting without a agent in Goregaon East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Goregaon East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Goregaon East?",
@@ -1671,8 +1671,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-versova": {
     "slug": "1-bhk-flats-for-rent-in-versova",
     "title": "1 BHK Flats for Rent in Versova",
-    "metaTitle": "1 BHK Flats for Rent in Versova, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Versova, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Versova, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Versova, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Versova",
     "subheading": "Compact and comfortable 1 BHK homes in Versova with seamless connectivity via Metro Line 1 (Versova Station).",
     "bhkFilter": 1,
@@ -1684,8 +1684,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Versova rents for approximately ₹38,000 - ₹55,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Versova?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Versova are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Versova?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Versova are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Versova?",
@@ -1697,7 +1697,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-versova",
     "title": "2 BHK Flats for Rent in Versova",
     "metaTitle": "2 BHK Flats for Rent in Versova, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Versova, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Versova, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Versova",
     "subheading": "Spacious 2 BHK family and professional apartments in Versova close to Metro Line 1 (Versova Station).",
     "bhkFilter": 2,
@@ -1722,7 +1722,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-versova",
     "title": "3 BHK Flats for Rent in Versova",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Versova, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Versova, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Versova, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Versova",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Versova.",
     "bhkFilter": 3,
@@ -1739,19 +1739,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-versova": {
-    "slug": "zero-brokerage-flats-in-versova",
-    "title": "Zero Brokerage Flats in Versova",
-    "metaTitle": "Zero Brokerage Flats for Rent in Versova, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Versova, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Versova",
-    "subheading": "Direct homeowner rentals in Versova. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-versova": {
+    "slug": "zero-commission-flats-in-versova",
+    "title": "Zero Commission Flats in Versova",
+    "metaTitle": "Zero Commission Flats for Rent in Versova, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Versova, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Versova",
+    "subheading": "Direct homeowner rentals in Versova. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Versova",
     "priceRange": "₹60,000 - ₹95,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Versova?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Versova via REHVO."
+        "question": "How much can I save renting without a agent in Versova?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Versova via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Versova?",
@@ -1762,8 +1762,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-santacruz-west": {
     "slug": "1-bhk-flats-for-rent-in-santacruz-west",
     "title": "1 BHK Flats for Rent in Santacruz West",
-    "metaTitle": "1 BHK Flats for Rent in Santacruz West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Santacruz West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Santacruz West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Santacruz West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Santacruz West",
     "subheading": "Compact and comfortable 1 BHK homes in Santacruz West with seamless connectivity via Western Railway, S.V. Road.",
     "bhkFilter": 1,
@@ -1775,8 +1775,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Santacruz West rents for approximately ₹45,000 - ₹68,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Santacruz West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Santacruz West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Santacruz West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Santacruz West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Santacruz West?",
@@ -1788,7 +1788,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-santacruz-west",
     "title": "2 BHK Flats for Rent in Santacruz West",
     "metaTitle": "2 BHK Flats for Rent in Santacruz West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Santacruz West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Santacruz West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Santacruz West",
     "subheading": "Spacious 2 BHK family and professional apartments in Santacruz West close to Western Railway, S.V. Road.",
     "bhkFilter": 2,
@@ -1813,7 +1813,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-santacruz-west",
     "title": "3 BHK Flats for Rent in Santacruz West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Santacruz West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Santacruz West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Santacruz West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Santacruz West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Santacruz West.",
     "bhkFilter": 3,
@@ -1830,19 +1830,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-santacruz-west": {
-    "slug": "zero-brokerage-flats-in-santacruz-west",
-    "title": "Zero Brokerage Flats in Santacruz West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Santacruz West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Santacruz West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Santacruz West",
-    "subheading": "Direct homeowner rentals in Santacruz West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-santacruz-west": {
+    "slug": "zero-commission-flats-in-santacruz-west",
+    "title": "Zero Commission Flats in Santacruz West",
+    "metaTitle": "Zero Commission Flats for Rent in Santacruz West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Santacruz West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Santacruz West",
+    "subheading": "Direct homeowner rentals in Santacruz West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Santacruz West",
     "priceRange": "₹75,000 - ₹1,20,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Santacruz West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Santacruz West via REHVO."
+        "question": "How much can I save renting without a agent in Santacruz West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Santacruz West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Santacruz West?",
@@ -1853,8 +1853,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-santacruz-east": {
     "slug": "1-bhk-flats-for-rent-in-santacruz-east",
     "title": "1 BHK Flats for Rent in Santacruz East",
-    "metaTitle": "1 BHK Flats for Rent in Santacruz East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Santacruz East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Santacruz East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Santacruz East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Santacruz East",
     "subheading": "Compact and comfortable 1 BHK homes in Santacruz East with seamless connectivity via CST Road, Near BKC & WEH.",
     "bhkFilter": 1,
@@ -1866,8 +1866,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Santacruz East rents for approximately ₹32,000 - ₹48,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Santacruz East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Santacruz East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Santacruz East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Santacruz East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Santacruz East?",
@@ -1879,7 +1879,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-santacruz-east",
     "title": "2 BHK Flats for Rent in Santacruz East",
     "metaTitle": "2 BHK Flats for Rent in Santacruz East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Santacruz East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Santacruz East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Santacruz East",
     "subheading": "Spacious 2 BHK family and professional apartments in Santacruz East close to CST Road, Near BKC & WEH.",
     "bhkFilter": 2,
@@ -1904,7 +1904,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-santacruz-east",
     "title": "3 BHK Flats for Rent in Santacruz East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Santacruz East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Santacruz East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Santacruz East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Santacruz East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Santacruz East.",
     "bhkFilter": 3,
@@ -1921,19 +1921,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-santacruz-east": {
-    "slug": "zero-brokerage-flats-in-santacruz-east",
-    "title": "Zero Brokerage Flats in Santacruz East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Santacruz East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Santacruz East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Santacruz East",
-    "subheading": "Direct homeowner rentals in Santacruz East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-santacruz-east": {
+    "slug": "zero-commission-flats-in-santacruz-east",
+    "title": "Zero Commission Flats in Santacruz East",
+    "metaTitle": "Zero Commission Flats for Rent in Santacruz East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Santacruz East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Santacruz East",
+    "subheading": "Direct homeowner rentals in Santacruz East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Santacruz East",
     "priceRange": "₹52,000 - ₹80,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Santacruz East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Santacruz East via REHVO."
+        "question": "How much can I save renting without a agent in Santacruz East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Santacruz East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Santacruz East?",
@@ -1944,8 +1944,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-vile-parle-west": {
     "slug": "1-bhk-flats-for-rent-in-vile-parle-west",
     "title": "1 BHK Flats for Rent in Vile Parle West",
-    "metaTitle": "1 BHK Flats for Rent in Vile Parle West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Vile Parle West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Vile Parle West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Vile Parle West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Vile Parle West",
     "subheading": "Compact and comfortable 1 BHK homes in Vile Parle West with seamless connectivity via Western Railway, Near NMIMS.",
     "bhkFilter": 1,
@@ -1957,8 +1957,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Vile Parle West rents for approximately ₹40,000 - ₹62,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Vile Parle West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Vile Parle West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Vile Parle West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Vile Parle West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Vile Parle West?",
@@ -1970,7 +1970,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-vile-parle-west",
     "title": "2 BHK Flats for Rent in Vile Parle West",
     "metaTitle": "2 BHK Flats for Rent in Vile Parle West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Vile Parle West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Vile Parle West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Vile Parle West",
     "subheading": "Spacious 2 BHK family and professional apartments in Vile Parle West close to Western Railway, Near NMIMS.",
     "bhkFilter": 2,
@@ -1995,7 +1995,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-vile-parle-west",
     "title": "3 BHK Flats for Rent in Vile Parle West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Vile Parle West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Vile Parle West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Vile Parle West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Vile Parle West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Vile Parle West.",
     "bhkFilter": 3,
@@ -2012,19 +2012,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-vile-parle-west": {
-    "slug": "zero-brokerage-flats-in-vile-parle-west",
-    "title": "Zero Brokerage Flats in Vile Parle West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Vile Parle West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Vile Parle West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Vile Parle West",
-    "subheading": "Direct homeowner rentals in Vile Parle West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-vile-parle-west": {
+    "slug": "zero-commission-flats-in-vile-parle-west",
+    "title": "Zero Commission Flats in Vile Parle West",
+    "metaTitle": "Zero Commission Flats for Rent in Vile Parle West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Vile Parle West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Vile Parle West",
+    "subheading": "Direct homeowner rentals in Vile Parle West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Vile Parle West",
     "priceRange": "₹68,000 - ₹1,10,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Vile Parle West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Vile Parle West via REHVO."
+        "question": "How much can I save renting without a agent in Vile Parle West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Vile Parle West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Vile Parle West?",
@@ -2035,8 +2035,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-vile-parle-east": {
     "slug": "1-bhk-flats-for-rent-in-vile-parle-east",
     "title": "1 BHK Flats for Rent in Vile Parle East",
-    "metaTitle": "1 BHK Flats for Rent in Vile Parle East, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Vile Parle East, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Vile Parle East, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Vile Parle East, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Vile Parle East",
     "subheading": "Compact and comfortable 1 BHK homes in Vile Parle East with seamless connectivity via Near Airport & Western Railway.",
     "bhkFilter": 1,
@@ -2048,8 +2048,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Vile Parle East rents for approximately ₹35,000 - ₹50,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Vile Parle East?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Vile Parle East are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Vile Parle East?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Vile Parle East are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Vile Parle East?",
@@ -2061,7 +2061,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-vile-parle-east",
     "title": "2 BHK Flats for Rent in Vile Parle East",
     "metaTitle": "2 BHK Flats for Rent in Vile Parle East, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Vile Parle East, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Vile Parle East, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Vile Parle East",
     "subheading": "Spacious 2 BHK family and professional apartments in Vile Parle East close to Near Airport & Western Railway.",
     "bhkFilter": 2,
@@ -2086,7 +2086,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-vile-parle-east",
     "title": "3 BHK Flats for Rent in Vile Parle East",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Vile Parle East, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Vile Parle East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Vile Parle East, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Vile Parle East",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Vile Parle East.",
     "bhkFilter": 3,
@@ -2103,19 +2103,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-vile-parle-east": {
-    "slug": "zero-brokerage-flats-in-vile-parle-east",
-    "title": "Zero Brokerage Flats in Vile Parle East",
-    "metaTitle": "Zero Brokerage Flats for Rent in Vile Parle East, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Vile Parle East, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Vile Parle East",
-    "subheading": "Direct homeowner rentals in Vile Parle East. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-vile-parle-east": {
+    "slug": "zero-commission-flats-in-vile-parle-east",
+    "title": "Zero Commission Flats in Vile Parle East",
+    "metaTitle": "Zero Commission Flats for Rent in Vile Parle East, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Vile Parle East, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Vile Parle East",
+    "subheading": "Direct homeowner rentals in Vile Parle East. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Vile Parle East",
     "priceRange": "₹55,000 - ₹85,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Vile Parle East?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Vile Parle East via REHVO."
+        "question": "How much can I save renting without a agent in Vile Parle East?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Vile Parle East via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Vile Parle East?",
@@ -2126,8 +2126,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-bkc": {
     "slug": "1-bhk-flats-for-rent-in-bkc",
     "title": "1 BHK Flats for Rent in BKC",
-    "metaTitle": "1 BHK Flats for Rent in BKC, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in BKC, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in BKC, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in BKC, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in BKC",
     "subheading": "Compact and comfortable 1 BHK homes in BKC with seamless connectivity via Metro Line 3, BKC Connector.",
     "bhkFilter": 1,
@@ -2139,8 +2139,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in BKC rents for approximately ₹50,000 - ₹75,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in BKC?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in BKC are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in BKC?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in BKC are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in BKC?",
@@ -2152,7 +2152,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-bkc",
     "title": "2 BHK Flats for Rent in BKC",
     "metaTitle": "2 BHK Flats for Rent in BKC, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in BKC, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in BKC, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in BKC",
     "subheading": "Spacious 2 BHK family and professional apartments in BKC close to Metro Line 3, BKC Connector.",
     "bhkFilter": 2,
@@ -2177,7 +2177,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-bkc",
     "title": "3 BHK Flats for Rent in BKC",
     "metaTitle": "3 BHK Luxury Apartments for Rent in BKC, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in BKC, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in BKC, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in BKC",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in BKC.",
     "bhkFilter": 3,
@@ -2194,19 +2194,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-bkc": {
-    "slug": "zero-brokerage-flats-in-bkc",
-    "title": "Zero Brokerage Flats in BKC",
-    "metaTitle": "Zero Brokerage Flats for Rent in BKC, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in BKC, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in BKC",
-    "subheading": "Direct homeowner rentals in BKC. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-bkc": {
+    "slug": "zero-commission-flats-in-bkc",
+    "title": "Zero Commission Flats in BKC",
+    "metaTitle": "Zero Commission Flats for Rent in BKC, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in BKC, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in BKC",
+    "subheading": "Direct homeowner rentals in BKC. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "BKC",
     "priceRange": "₹80,000 - ₹1,40,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in BKC?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in BKC via REHVO."
+        "question": "How much can I save renting without a agent in BKC?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in BKC via REHVO."
       },
       {
         "question": "How are homeowner listings verified in BKC?",
@@ -2217,8 +2217,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-kurla": {
     "slug": "1-bhk-flats-for-rent-in-kurla",
     "title": "1 BHK Flats for Rent in Kurla",
-    "metaTitle": "1 BHK Flats for Rent in Kurla, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Kurla, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Kurla, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Kurla, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Kurla",
     "subheading": "Compact and comfortable 1 BHK homes in Kurla with seamless connectivity via Central & Harbour Railway, SCLR.",
     "bhkFilter": 1,
@@ -2230,8 +2230,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Kurla rents for approximately ₹22,000 - ₹32,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Kurla?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Kurla are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Kurla?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Kurla are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Kurla?",
@@ -2243,7 +2243,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-kurla",
     "title": "2 BHK Flats for Rent in Kurla",
     "metaTitle": "2 BHK Flats for Rent in Kurla, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Kurla, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Kurla, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Kurla",
     "subheading": "Spacious 2 BHK family and professional apartments in Kurla close to Central & Harbour Railway, SCLR.",
     "bhkFilter": 2,
@@ -2268,7 +2268,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-kurla",
     "title": "3 BHK Flats for Rent in Kurla",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Kurla, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Kurla, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Kurla, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Kurla",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Kurla.",
     "bhkFilter": 3,
@@ -2285,19 +2285,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-kurla": {
-    "slug": "zero-brokerage-flats-in-kurla",
-    "title": "Zero Brokerage Flats in Kurla",
-    "metaTitle": "Zero Brokerage Flats for Rent in Kurla, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Kurla, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Kurla",
-    "subheading": "Direct homeowner rentals in Kurla. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-kurla": {
+    "slug": "zero-commission-flats-in-kurla",
+    "title": "Zero Commission Flats in Kurla",
+    "metaTitle": "Zero Commission Flats for Rent in Kurla, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Kurla, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Kurla",
+    "subheading": "Direct homeowner rentals in Kurla. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Kurla",
     "priceRange": "₹35,000 - ₹54,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Kurla?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Kurla via REHVO."
+        "question": "How much can I save renting without a agent in Kurla?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Kurla via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Kurla?",
@@ -2308,8 +2308,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-chembur": {
     "slug": "1-bhk-flats-for-rent-in-chembur",
     "title": "1 BHK Flats for Rent in Chembur",
-    "metaTitle": "1 BHK Flats for Rent in Chembur, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Chembur, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Chembur, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Chembur, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Chembur",
     "subheading": "Compact and comfortable 1 BHK homes in Chembur with seamless connectivity via Eastern Freeway, Monorail.",
     "bhkFilter": 1,
@@ -2321,8 +2321,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Chembur rents for approximately ₹30,000 - ₹45,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Chembur?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Chembur are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Chembur?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Chembur are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Chembur?",
@@ -2334,7 +2334,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-chembur",
     "title": "2 BHK Flats for Rent in Chembur",
     "metaTitle": "2 BHK Flats for Rent in Chembur, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Chembur, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Chembur, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Chembur",
     "subheading": "Spacious 2 BHK family and professional apartments in Chembur close to Eastern Freeway, Monorail.",
     "bhkFilter": 2,
@@ -2359,7 +2359,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-chembur",
     "title": "3 BHK Flats for Rent in Chembur",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Chembur, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Chembur, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Chembur, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Chembur",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Chembur.",
     "bhkFilter": 3,
@@ -2376,19 +2376,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-chembur": {
-    "slug": "zero-brokerage-flats-in-chembur",
-    "title": "Zero Brokerage Flats in Chembur",
-    "metaTitle": "Zero Brokerage Flats for Rent in Chembur, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Chembur, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Chembur",
-    "subheading": "Direct homeowner rentals in Chembur. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-chembur": {
+    "slug": "zero-commission-flats-in-chembur",
+    "title": "Zero Commission Flats in Chembur",
+    "metaTitle": "Zero Commission Flats for Rent in Chembur, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Chembur, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Chembur",
+    "subheading": "Direct homeowner rentals in Chembur. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Chembur",
     "priceRange": "₹48,000 - ₹76,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Chembur?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Chembur via REHVO."
+        "question": "How much can I save renting without a agent in Chembur?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Chembur via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Chembur?",
@@ -2399,8 +2399,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-mulund": {
     "slug": "1-bhk-flats-for-rent-in-mulund",
     "title": "1 BHK Flats for Rent in Mulund",
-    "metaTitle": "1 BHK Flats for Rent in Mulund, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Mulund, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Mulund, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Mulund, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Mulund",
     "subheading": "Compact and comfortable 1 BHK homes in Mulund with seamless connectivity via Central Railway, LBS Marg.",
     "bhkFilter": 1,
@@ -2412,8 +2412,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Mulund rents for approximately ₹22,000 - ₹34,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Mulund?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Mulund are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Mulund?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Mulund are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Mulund?",
@@ -2425,7 +2425,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-mulund",
     "title": "2 BHK Flats for Rent in Mulund",
     "metaTitle": "2 BHK Flats for Rent in Mulund, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Mulund, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Mulund, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Mulund",
     "subheading": "Spacious 2 BHK family and professional apartments in Mulund close to Central Railway, LBS Marg.",
     "bhkFilter": 2,
@@ -2450,7 +2450,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-mulund",
     "title": "3 BHK Flats for Rent in Mulund",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Mulund, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Mulund, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Mulund, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Mulund",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Mulund.",
     "bhkFilter": 3,
@@ -2467,19 +2467,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-mulund": {
-    "slug": "zero-brokerage-flats-in-mulund",
-    "title": "Zero Brokerage Flats in Mulund",
-    "metaTitle": "Zero Brokerage Flats for Rent in Mulund, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Mulund, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Mulund",
-    "subheading": "Direct homeowner rentals in Mulund. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-mulund": {
+    "slug": "zero-commission-flats-in-mulund",
+    "title": "Zero Commission Flats in Mulund",
+    "metaTitle": "Zero Commission Flats for Rent in Mulund, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Mulund, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Mulund",
+    "subheading": "Direct homeowner rentals in Mulund. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Mulund",
     "priceRange": "₹36,000 - ₹56,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Mulund?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Mulund via REHVO."
+        "question": "How much can I save renting without a agent in Mulund?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Mulund via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Mulund?",
@@ -2490,8 +2490,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-thane-west": {
     "slug": "1-bhk-flats-for-rent-in-thane-west",
     "title": "1 BHK Flats for Rent in Thane West",
-    "metaTitle": "1 BHK Flats for Rent in Thane West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Thane West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Thane West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Thane West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Thane West",
     "subheading": "Compact and comfortable 1 BHK homes in Thane West with seamless connectivity via Ghopbunder Road, Central Railway.",
     "bhkFilter": 1,
@@ -2503,8 +2503,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Thane West rents for approximately ₹18,000 - ₹28,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Thane West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Thane West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Thane West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Thane West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Thane West?",
@@ -2516,7 +2516,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-thane-west",
     "title": "2 BHK Flats for Rent in Thane West",
     "metaTitle": "2 BHK Flats for Rent in Thane West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Thane West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Thane West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Thane West",
     "subheading": "Spacious 2 BHK family and professional apartments in Thane West close to Ghopbunder Road, Central Railway.",
     "bhkFilter": 2,
@@ -2541,7 +2541,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-thane-west",
     "title": "3 BHK Flats for Rent in Thane West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Thane West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Thane West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Thane West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Thane West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Thane West.",
     "bhkFilter": 3,
@@ -2558,19 +2558,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-thane-west": {
-    "slug": "zero-brokerage-flats-in-thane-west",
-    "title": "Zero Brokerage Flats in Thane West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Thane West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Thane West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Thane West",
-    "subheading": "Direct homeowner rentals in Thane West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-thane-west": {
+    "slug": "zero-commission-flats-in-thane-west",
+    "title": "Zero Commission Flats in Thane West",
+    "metaTitle": "Zero Commission Flats for Rent in Thane West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Thane West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Thane West",
+    "subheading": "Direct homeowner rentals in Thane West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Thane West",
     "priceRange": "₹28,000 - ₹44,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Thane West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Thane West via REHVO."
+        "question": "How much can I save renting without a agent in Thane West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Thane West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Thane West?",
@@ -2581,8 +2581,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-navi-mumbai": {
     "slug": "1-bhk-flats-for-rent-in-navi-mumbai",
     "title": "1 BHK Flats for Rent in Navi Mumbai",
-    "metaTitle": "1 BHK Flats for Rent in Navi Mumbai, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Navi Mumbai, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Navi Mumbai, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Navi Mumbai, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Navi Mumbai",
     "subheading": "Compact and comfortable 1 BHK homes in Navi Mumbai with seamless connectivity via Navi Mumbai Metro, Harbour Line.",
     "bhkFilter": 1,
@@ -2594,8 +2594,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Navi Mumbai rents for approximately ₹15,000 - ₹25,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Navi Mumbai?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Navi Mumbai are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Navi Mumbai?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Navi Mumbai are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Navi Mumbai?",
@@ -2607,7 +2607,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-navi-mumbai",
     "title": "2 BHK Flats for Rent in Navi Mumbai",
     "metaTitle": "2 BHK Flats for Rent in Navi Mumbai, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Navi Mumbai, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Navi Mumbai, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Navi Mumbai",
     "subheading": "Spacious 2 BHK family and professional apartments in Navi Mumbai close to Navi Mumbai Metro, Harbour Line.",
     "bhkFilter": 2,
@@ -2632,7 +2632,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-navi-mumbai",
     "title": "3 BHK Flats for Rent in Navi Mumbai",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Navi Mumbai, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Navi Mumbai, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Navi Mumbai, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Navi Mumbai",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Navi Mumbai.",
     "bhkFilter": 3,
@@ -2649,19 +2649,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-navi-mumbai": {
-    "slug": "zero-brokerage-flats-in-navi-mumbai",
-    "title": "Zero Brokerage Flats in Navi Mumbai",
-    "metaTitle": "Zero Brokerage Flats for Rent in Navi Mumbai, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Navi Mumbai, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Navi Mumbai",
-    "subheading": "Direct homeowner rentals in Navi Mumbai. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-navi-mumbai": {
+    "slug": "zero-commission-flats-in-navi-mumbai",
+    "title": "Zero Commission Flats in Navi Mumbai",
+    "metaTitle": "Zero Commission Flats for Rent in Navi Mumbai, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Navi Mumbai, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Navi Mumbai",
+    "subheading": "Direct homeowner rentals in Navi Mumbai. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Navi Mumbai",
     "priceRange": "₹25,000 - ₹40,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Navi Mumbai?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Navi Mumbai via REHVO."
+        "question": "How much can I save renting without a agent in Navi Mumbai?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Navi Mumbai via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Navi Mumbai?",
@@ -2672,8 +2672,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-ghatkopar": {
     "slug": "1-bhk-flats-for-rent-in-ghatkopar",
     "title": "1 BHK Flats for Rent in Ghatkopar",
-    "metaTitle": "1 BHK Flats for Rent in Ghatkopar, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Ghatkopar, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Ghatkopar, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Ghatkopar, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Ghatkopar",
     "subheading": "Compact and comfortable 1 BHK homes in Ghatkopar with seamless connectivity via Metro Line 1, Central Railway.",
     "bhkFilter": 1,
@@ -2685,8 +2685,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Ghatkopar rents for approximately ₹28,000 - ₹42,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Ghatkopar?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Ghatkopar are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Ghatkopar?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Ghatkopar are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Ghatkopar?",
@@ -2698,7 +2698,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-ghatkopar",
     "title": "2 BHK Flats for Rent in Ghatkopar",
     "metaTitle": "2 BHK Flats for Rent in Ghatkopar, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Ghatkopar, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Ghatkopar, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Ghatkopar",
     "subheading": "Spacious 2 BHK family and professional apartments in Ghatkopar close to Metro Line 1, Central Railway.",
     "bhkFilter": 2,
@@ -2723,7 +2723,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-ghatkopar",
     "title": "3 BHK Flats for Rent in Ghatkopar",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Ghatkopar, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Ghatkopar, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Ghatkopar, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Ghatkopar",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Ghatkopar.",
     "bhkFilter": 3,
@@ -2740,19 +2740,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-ghatkopar": {
-    "slug": "zero-brokerage-flats-in-ghatkopar",
-    "title": "Zero Brokerage Flats in Ghatkopar",
-    "metaTitle": "Zero Brokerage Flats for Rent in Ghatkopar, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Ghatkopar, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Ghatkopar",
-    "subheading": "Direct homeowner rentals in Ghatkopar. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-ghatkopar": {
+    "slug": "zero-commission-flats-in-ghatkopar",
+    "title": "Zero Commission Flats in Ghatkopar",
+    "metaTitle": "Zero Commission Flats for Rent in Ghatkopar, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Ghatkopar, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Ghatkopar",
+    "subheading": "Direct homeowner rentals in Ghatkopar. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Ghatkopar",
     "priceRange": "₹46,000 - ₹72,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Ghatkopar?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Ghatkopar via REHVO."
+        "question": "How much can I save renting without a agent in Ghatkopar?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Ghatkopar via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Ghatkopar?",
@@ -2763,8 +2763,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-dadar": {
     "slug": "1-bhk-flats-for-rent-in-dadar",
     "title": "1 BHK Flats for Rent in Dadar",
-    "metaTitle": "1 BHK Flats for Rent in Dadar, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Dadar, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Dadar, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Dadar, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Dadar",
     "subheading": "Compact and comfortable 1 BHK homes in Dadar with seamless connectivity via Western & Central Junction.",
     "bhkFilter": 1,
@@ -2776,8 +2776,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Dadar rents for approximately ₹42,000 - ₹65,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Dadar?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Dadar are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Dadar?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Dadar are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Dadar?",
@@ -2789,7 +2789,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-dadar",
     "title": "2 BHK Flats for Rent in Dadar",
     "metaTitle": "2 BHK Flats for Rent in Dadar, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Dadar, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Dadar, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Dadar",
     "subheading": "Spacious 2 BHK family and professional apartments in Dadar close to Western & Central Junction.",
     "bhkFilter": 2,
@@ -2814,7 +2814,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-dadar",
     "title": "3 BHK Flats for Rent in Dadar",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Dadar, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Dadar, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Dadar, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Dadar",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Dadar.",
     "bhkFilter": 3,
@@ -2831,19 +2831,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-dadar": {
-    "slug": "zero-brokerage-flats-in-dadar",
-    "title": "Zero Brokerage Flats in Dadar",
-    "metaTitle": "Zero Brokerage Flats for Rent in Dadar, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Dadar, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Dadar",
-    "subheading": "Direct homeowner rentals in Dadar. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-dadar": {
+    "slug": "zero-commission-flats-in-dadar",
+    "title": "Zero Commission Flats in Dadar",
+    "metaTitle": "Zero Commission Flats for Rent in Dadar, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Dadar, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Dadar",
+    "subheading": "Direct homeowner rentals in Dadar. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Dadar",
     "priceRange": "₹70,000 - ₹1,15,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Dadar?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Dadar via REHVO."
+        "question": "How much can I save renting without a agent in Dadar?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Dadar via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Dadar?",
@@ -2854,8 +2854,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-prabhadevi": {
     "slug": "1-bhk-flats-for-rent-in-prabhadevi",
     "title": "1 BHK Flats for Rent in Prabhadevi",
-    "metaTitle": "1 BHK Flats for Rent in Prabhadevi, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Prabhadevi, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Prabhadevi, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Prabhadevi, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Prabhadevi",
     "subheading": "Compact and comfortable 1 BHK homes in Prabhadevi with seamless connectivity via Western & Central Rail, Worli Link.",
     "bhkFilter": 1,
@@ -2867,8 +2867,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Prabhadevi rents for approximately ₹52,000 - ₹80,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Prabhadevi?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Prabhadevi are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Prabhadevi?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Prabhadevi are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Prabhadevi?",
@@ -2880,7 +2880,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-prabhadevi",
     "title": "2 BHK Flats for Rent in Prabhadevi",
     "metaTitle": "2 BHK Flats for Rent in Prabhadevi, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Prabhadevi, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Prabhadevi, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Prabhadevi",
     "subheading": "Spacious 2 BHK family and professional apartments in Prabhadevi close to Western & Central Rail, Worli Link.",
     "bhkFilter": 2,
@@ -2905,7 +2905,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-prabhadevi",
     "title": "3 BHK Flats for Rent in Prabhadevi",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Prabhadevi, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Prabhadevi, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Prabhadevi, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Prabhadevi",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Prabhadevi.",
     "bhkFilter": 3,
@@ -2922,19 +2922,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-prabhadevi": {
-    "slug": "zero-brokerage-flats-in-prabhadevi",
-    "title": "Zero Brokerage Flats in Prabhadevi",
-    "metaTitle": "Zero Brokerage Flats for Rent in Prabhadevi, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Prabhadevi, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Prabhadevi",
-    "subheading": "Direct homeowner rentals in Prabhadevi. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-prabhadevi": {
+    "slug": "zero-commission-flats-in-prabhadevi",
+    "title": "Zero Commission Flats in Prabhadevi",
+    "metaTitle": "Zero Commission Flats for Rent in Prabhadevi, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Prabhadevi, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Prabhadevi",
+    "subheading": "Direct homeowner rentals in Prabhadevi. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Prabhadevi",
     "priceRange": "₹88,000 - ₹1,45,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Prabhadevi?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Prabhadevi via REHVO."
+        "question": "How much can I save renting without a agent in Prabhadevi?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Prabhadevi via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Prabhadevi?",
@@ -2945,8 +2945,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-khar-west": {
     "slug": "1-bhk-flats-for-rent-in-khar-west",
     "title": "1 BHK Flats for Rent in Khar West",
-    "metaTitle": "1 BHK Flats for Rent in Khar West, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Khar West, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Khar West, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Khar West, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Khar West",
     "subheading": "Compact and comfortable 1 BHK homes in Khar West with seamless connectivity via Linking Road, Western Railway.",
     "bhkFilter": 1,
@@ -2958,8 +2958,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Khar West rents for approximately ₹50,000 - ₹80,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Khar West?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Khar West are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Khar West?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Khar West are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Khar West?",
@@ -2971,7 +2971,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-khar-west",
     "title": "2 BHK Flats for Rent in Khar West",
     "metaTitle": "2 BHK Flats for Rent in Khar West, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Khar West, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Khar West, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Khar West",
     "subheading": "Spacious 2 BHK family and professional apartments in Khar West close to Linking Road, Western Railway.",
     "bhkFilter": 2,
@@ -2996,7 +2996,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-khar-west",
     "title": "3 BHK Flats for Rent in Khar West",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Khar West, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Khar West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Khar West, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Khar West",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Khar West.",
     "bhkFilter": 3,
@@ -3013,19 +3013,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-khar-west": {
-    "slug": "zero-brokerage-flats-in-khar-west",
-    "title": "Zero Brokerage Flats in Khar West",
-    "metaTitle": "Zero Brokerage Flats for Rent in Khar West, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Khar West, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Khar West",
-    "subheading": "Direct homeowner rentals in Khar West. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-khar-west": {
+    "slug": "zero-commission-flats-in-khar-west",
+    "title": "Zero Commission Flats in Khar West",
+    "metaTitle": "Zero Commission Flats for Rent in Khar West, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Khar West, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Khar West",
+    "subheading": "Direct homeowner rentals in Khar West. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Khar West",
     "priceRange": "₹85,000 - ₹1,45,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Khar West?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Khar West via REHVO."
+        "question": "How much can I save renting without a agent in Khar West?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Khar West via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Khar West?",
@@ -3036,8 +3036,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-colaba": {
     "slug": "1-bhk-flats-for-rent-in-colaba",
     "title": "1 BHK Flats for Rent in Colaba",
-    "metaTitle": "1 BHK Flats for Rent in Colaba, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Colaba, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Colaba, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Colaba, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Colaba",
     "subheading": "Compact and comfortable 1 BHK homes in Colaba with seamless connectivity via South Mumbai Heritage, Cuffe Parade.",
     "bhkFilter": 1,
@@ -3049,8 +3049,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Colaba rents for approximately ₹50,000 - ₹82,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Colaba?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Colaba are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Colaba?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Colaba are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Colaba?",
@@ -3062,7 +3062,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-colaba",
     "title": "2 BHK Flats for Rent in Colaba",
     "metaTitle": "2 BHK Flats for Rent in Colaba, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Colaba, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Colaba, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Colaba",
     "subheading": "Spacious 2 BHK family and professional apartments in Colaba close to South Mumbai Heritage, Cuffe Parade.",
     "bhkFilter": 2,
@@ -3087,7 +3087,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-colaba",
     "title": "3 BHK Flats for Rent in Colaba",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Colaba, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Colaba, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Colaba, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Colaba",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Colaba.",
     "bhkFilter": 3,
@@ -3104,19 +3104,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-colaba": {
-    "slug": "zero-brokerage-flats-in-colaba",
-    "title": "Zero Brokerage Flats in Colaba",
-    "metaTitle": "Zero Brokerage Flats for Rent in Colaba, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Colaba, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Colaba",
-    "subheading": "Direct homeowner rentals in Colaba. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-colaba": {
+    "slug": "zero-commission-flats-in-colaba",
+    "title": "Zero Commission Flats in Colaba",
+    "metaTitle": "Zero Commission Flats for Rent in Colaba, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Colaba, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Colaba",
+    "subheading": "Direct homeowner rentals in Colaba. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Colaba",
     "priceRange": "₹85,000 - ₹1,55,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Colaba?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Colaba via REHVO."
+        "question": "How much can I save renting without a agent in Colaba?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Colaba via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Colaba?",
@@ -3127,8 +3127,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
   "1-bhk-flats-for-rent-in-mira-road": {
     "slug": "1-bhk-flats-for-rent-in-mira-road",
     "title": "1 BHK Flats for Rent in Mira Road",
-    "metaTitle": "1 BHK Flats for Rent in Mira Road, Mumbai | Zero Brokerage | REHVO",
-    "metaDescription": "Discover verified 1 BHK apartments for rent in Mira Road, Mumbai. Direct owner contacts, accurate photos, zero brokerage fees, and low deposits.",
+    "metaTitle": "1 BHK Flats for Rent in Mira Road, Mumbai | Zero Commission | REHVO",
+    "metaDescription": "Discover verified 1 BHK apartments for rent in Mira Road, Mumbai. Direct owner contacts, accurate photos, Zero Commission fees, and low deposits.",
     "heading": "1 BHK Apartments for Rent in Mira Road",
     "subheading": "Compact and comfortable 1 BHK homes in Mira Road with seamless connectivity via Western Railway, Metro Line 9 (upcoming).",
     "bhkFilter": 1,
@@ -3140,8 +3140,8 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
         "answer": "A typical 1 BHK apartment in Mira Road rents for approximately ₹14,000 - ₹22,000/mo depending on amenities, furnishings, and building age."
       },
       {
-        "question": "Are there zero brokerage 1 BHK listings in Mira Road?",
-        "answer": "Yes, all 1 BHK flats listed on REHVO in Mira Road are direct from verified homeowners, saving you standard brokerage fees."
+        "question": "Are there Zero Commission 1 BHK listings in Mira Road?",
+        "answer": "Yes, all 1 BHK flats listed on REHVO in Mira Road are direct from verified homeowners, saving you standard commission fees."
       },
       {
         "question": "How is public transit connectivity in Mira Road?",
@@ -3153,7 +3153,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "2-bhk-flats-for-rent-in-mira-road",
     "title": "2 BHK Flats for Rent in Mira Road",
     "metaTitle": "2 BHK Flats for Rent in Mira Road, Mumbai | Verified Direct Owners | REHVO",
-    "metaDescription": "Find verified 2 BHK flats for rent in Mira Road, Mumbai. Zero brokerage, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
+    "metaDescription": "Find verified 2 BHK flats for rent in Mira Road, Mumbai. Zero Commission, Index-II verified titles, modern amenities, and direct landlord chats on REHVO.",
     "heading": "2 BHK Apartments for Rent in Mira Road",
     "subheading": "Spacious 2 BHK family and professional apartments in Mira Road close to Western Railway, Metro Line 9 (upcoming).",
     "bhkFilter": 2,
@@ -3178,7 +3178,7 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
     "slug": "3-bhk-flats-for-rent-in-mira-road",
     "title": "3 BHK Flats for Rent in Mira Road",
     "metaTitle": "3 BHK Luxury Apartments for Rent in Mira Road, Mumbai | REHVO",
-    "metaDescription": "Explore premium 3 BHK apartments for rent in Mira Road, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, zero brokerage.",
+    "metaDescription": "Explore premium 3 BHK apartments for rent in Mira Road, Mumbai. Verified owners, luxury gated high-rises, expansive layouts, Zero Commission.",
     "heading": "Luxury 3 BHK Residences in Mira Road",
     "subheading": "Spacious high-rise living with scenic cityscapes, premium fixtures, and club amenities in Mira Road.",
     "bhkFilter": 3,
@@ -3195,19 +3195,19 @@ export const RENT_LANDING_PAGES: Record<string, SearchLandingProfile> = {
       }
     ]
   },
-  "zero-brokerage-flats-in-mira-road": {
-    "slug": "zero-brokerage-flats-in-mira-road",
-    "title": "Zero Brokerage Flats in Mira Road",
-    "metaTitle": "Zero Brokerage Flats for Rent in Mira Road, Mumbai | Direct Owners | REHVO",
-    "metaDescription": "Rent verified flats in Mira Road, Mumbai with zero brokerage fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
-    "heading": "Zero Brokerage Apartments in Mira Road",
-    "subheading": "Direct homeowner rentals in Mira Road. Save an entire month of broker fees with 100% legal title verification.",
+  "zero-commission-flats-in-mira-road": {
+    "slug": "zero-commission-flats-in-mira-road",
+    "title": "Zero Commission Flats in Mira Road",
+    "metaTitle": "Zero Commission Flats for Rent in Mira Road, Mumbai | Direct Owners | REHVO",
+    "metaDescription": "Rent verified flats in Mira Road, Mumbai with Zero Commission fees. Connect directly with landlords, schedule visits, and move in transparently on REHVO.",
+    "heading": "Zero Commission Apartments in Mira Road",
+    "subheading": "Direct homeowner rentals in Mira Road. Save an entire month of Commission Fees with 100% legal title verification.",
     "localityFilter": "Mira Road",
     "priceRange": "₹22,000 - ₹34,000/mo",
     "faqs": [
       {
-        "question": "How much can I save renting without a broker in Mira Road?",
-        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in broker commissions when renting a flat in Mira Road via REHVO."
+        "question": "How much can I save renting without a agent in Mira Road?",
+        "answer": "Renters typically save between ₹40,000 to ₹1,00,000+ in agent commissions when renting a flat in Mira Road via REHVO."
       },
       {
         "question": "How are homeowner listings verified in Mira Road?",

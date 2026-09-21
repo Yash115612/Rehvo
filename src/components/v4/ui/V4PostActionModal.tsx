@@ -274,7 +274,7 @@ export const V4PostActionModal: React.FC<V4PostActionModalProps> = ({
                     <Check size={11} color="#0F766E" strokeWidth={3} />
                   </View>
                   <Text style={styles.gatePerkText}>
-                    <Text style={{ fontWeight: '800' }}>Direct WhatsApp & Calls</Text> without middleman brokers
+                    <Text style={{ fontWeight: '800' }}>Direct WhatsApp & Calls</Text> without middleman fees
                   </Text>
                 </View>
               </View>

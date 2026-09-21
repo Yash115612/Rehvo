@@ -43,7 +43,7 @@ const TOP_KEYWORDS: KeywordMetric[] = [
     url: 'https://rehvo.in/mumbai/andheri-west',
   },
   {
-    keyword: 'flatmates mumbai zero brokerage',
+    keyword: 'flatmates mumbai Zero Commission',
     position: 2,
     change: '+1',
     volume: '18,500/mo',
@@ -116,7 +116,7 @@ const AUDIT_PAGES = [
   },
   {
     url: '/rent/2-bhk-for-rent-in-mumbai',
-    title: '2 BHK Flats for Rent in Mumbai | Zero Brokerage',
+    title: '2 BHK Flats for Rent in Mumbai | Zero Commission',
     canonical: 'https://rehvo.in/rent/2-bhk-for-rent-in-mumbai',
     status: 'Healthy',
     schemas: ['BreadcrumbList', 'FAQPage', 'ItemList'],

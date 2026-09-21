@@ -263,7 +263,7 @@ export const V4PropertyPreviewScreen: React.FC = () => {
             </View>
             <View style={{ flex: 1, marginLeft: 12 }}>
               <Text style={styles.perkTitle}>Direct Tenant WhatsApp & Calls</Text>
-              <Text style={styles.perkDesc}>No unverified contacts spamming you. Speak directly to verified owners & brokers.</Text>
+              <Text style={styles.perkDesc}>No unverified contacts spamming you. Speak directly to verified owners & landlords.</Text>
             </View>
           </View>
         </View>

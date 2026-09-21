@@ -93,8 +93,8 @@ export async function searchPropertiesAdvanced(
       query = query.eq('furnishing', String(filter.furnishing).toLowerCase().replace(/ /g, '_'));
     }
 
-    if (filter.brokerage_free_only) {
-      query = query.eq('brokerage', 0);
+    if (filter.direct_owner_only) {
+      query = query.not('owner_id', 'is', null);
     }
 
     if (filter.verified_only) {

@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: FlatmatesDynamicPageProps): P
     return constructSeoMetadata({
       title: 'Female Flatmates & Roommates in Mumbai | Verified Girls-Only Flats | REHVO',
       description:
-        'Find verified female flatmates and women-friendly shared apartments in Mumbai. Connect with working professional women and students with verified profiles and zero brokerage.',
+        'Find verified female flatmates and women-friendly shared apartments in Mumbai. Connect with working professional women and students with verified profiles and Zero Commission.',
       canonicalUrl: 'https://rehvo.in/flatmates/female-flatmates-in-mumbai',
     });
   }

@@ -115,7 +115,7 @@ export const RentResultsHeader: React.FC<RentResultsHeaderProps> = ({
             {totalCount.toLocaleString('en-IN')} {totalCount === 1 ? 'home' : 'homes'} available for rent
           </h2>
           <p className="text-xs text-[#64748B] font-medium mt-0.5">
-            Verified listings • Owner & broker contacts across Mumbai
+            Verified listings • Owner & agent contacts across Mumbai
           </p>
         </div>
 

@@ -52,13 +52,11 @@ export const V4OwnerProfileScreen: React.FC = () => {
 
   const [showSwitchModal, setShowSwitchModal] = useState(false);
 
-  const handleRoleSelect = async (mode: 'renter' | 'owner' | 'broker') => {
+  const handleRoleSelect = async (mode: 'renter' | 'owner') => {
     setShowSwitchModal(false);
     await switchRole(mode);
     if (mode === 'renter') {
       router.replace('/(renter)/home' as any);
-    } else if (mode === 'broker') {
-      router.replace('/(broker)/dashboard' as any);
     } else {
       router.replace('/(owner)/dashboard' as any);
     }
@@ -127,7 +125,7 @@ export const V4OwnerProfileScreen: React.FC = () => {
           <View style={{ flex: 1 }}>
             <Text style={styles.switchTitle}>Switch App Experience</Text>
             <Text style={styles.switchSub}>
-              Switch seamlessly to Renter or Broker Pro Mode
+              Switch seamlessly to Renter Mode
             </Text>
           </View>
           <ChevronRight size={18} color="#0F766E" />
@@ -260,7 +258,7 @@ export const V4OwnerProfileScreen: React.FC = () => {
             </View>
 
             <Text style={styles.modalSub}>
-              Switch between Renter, Owner, and Broker experiences without creating another account.
+              Switch between Renter and Owner experiences without creating another account.
             </Text>
 
             <View style={styles.modalOptions}>
@@ -294,23 +292,6 @@ export const V4OwnerProfileScreen: React.FC = () => {
                 </View>
                 <CheckCircle2 size={18} color="#059669" />
               </View>
-
-              {/* Option 3: Broker */}
-              <Pressable
-                style={styles.switchOptionCard}
-                onPress={() => handleRoleSelect('broker')}
-              >
-                <View style={[styles.switchOptionIcon, { backgroundColor: '#EDE9FE' }]}>
-                  <Briefcase size={22} color="#5B21B6" />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.switchOptionTitle}>Broker Pro Experience</Text>
-                  <Text style={styles.switchOptionDesc}>
-                    Agency pipeline, exclusive inventory & client CRM
-                  </Text>
-                </View>
-                <ChevronRight size={18} color="#94A3B8" />
-              </Pressable>
             </View>
           </View>
         </View>

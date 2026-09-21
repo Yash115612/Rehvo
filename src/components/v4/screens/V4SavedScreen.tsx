@@ -151,8 +151,8 @@ export const V4SavedScreen: React.FC<V4SavedScreenProps> = ({ initialTab }) => {
     return savedPropertiesList.length + savedFlatmatesList.length;
   }, [activeTab, savedPropertiesList.length, savedFlatmatesList.length]);
 
-  // Estimated brokerage savings calculation (1 month rent per property)
-  const totalBrokerageSaved = useMemo(() => {
+  // Estimated savings calculation (1 month rent per property)
+  const totalSavings = useMemo(() => {
     const propSavings = savedPropertiesList.reduce((acc, p) => acc + (p.rent || 35000), 0);
     const flatmateSavings = savedFlatmatesList.reduce((acc, fm) => acc + (fm.budget_min || 20000), 0);
     return propSavings + (activeTab === 'Flatmates' || activeTab === 'All Saved' ? flatmateSavings : 0);
@@ -255,7 +255,7 @@ export const V4SavedScreen: React.FC<V4SavedScreenProps> = ({ initialTab }) => {
                   <Text style={styles.savingsTagText}>VERIFIED LISTING BENEFIT</Text>
                 </View>
                 <Text style={styles.savingsAmount}>
-                  ₹{totalBrokerageSaved.toLocaleString('en-IN')} Saved
+                  ₹{totalSavings.toLocaleString('en-IN')} Saved
                 </Text>
                 <Text style={styles.savingsSub}>
                   {activeTab === 'Flatmates'
