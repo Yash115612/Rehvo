@@ -160,6 +160,7 @@ export interface VideoQualityReport {
   blur: number; // 0 - 100
   coverage: number; // 0 - 100
   missing_rooms: string[];
+  warnings?: string[];
   is_acceptable: boolean;
   feedback_message: string;
   resolution?: string;
@@ -216,16 +217,22 @@ export interface PropertyTour3D {
 export interface ProcessingJob {
   id: string;
   property_id: string;
+  propertyId?: string;
   video_file_name: string;
   video_file_size_bytes: number;
+  video_url?: string;
+  videoUrl?: string;
   status: TourStatus;
+  progress: number;
+  progress_percent: number;
   current_step_index: number;
   total_steps: number;
   step_name: string;
-  progress_percent: number;
   estimated_seconds_left: number;
+  estimatedCompletion?: string;
   error_message?: string;
   started_at: string;
+  createdAt?: string;
   completed_at?: string;
 }
 

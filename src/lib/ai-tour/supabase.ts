@@ -581,33 +581,97 @@ export async function saveTourMeasurement(measurement: StoredMeasurement): Promi
 }
 
 /**
+ * Upload video file to Supabase Storage bucket (tour-videos)
+ * Simulates high-speed chunked upload with MB/s speed calculation and remaining time.
+ */
+export async function uploadVideoToStorageBucket(
+  propertyId: string,
+  fileName: string,
+  fileSizeBytes: number,
+  onProgress?: (progress: number, speedMbps: number, remainingSec: number) => void
+): Promise<{ success: boolean; videoUrl?: string; error?: string }> {
+  try {
+    const totalMB = fileSizeBytes / (1024 * 1024);
+    const avgSpeedMBps = 5.2; // 5.2 MB/s on modern 5G / broadband
+    const chunks = 10;
+
+    for (let i = 1; i <= chunks; i++) {
+      await new Promise((r) => setTimeout(r, 220));
+      const currentProgress = Math.round((i / chunks) * 100);
+      const uploadedBytes = Math.round((i / chunks) * fileSizeBytes);
+      const speedVariation = avgSpeedMBps + Math.sin(i) * 0.6;
+      const remainingBytes = fileSizeBytes - uploadedBytes;
+      const remainingSeconds = Math.max(0, Math.round(remainingBytes / (speedVariation * 1024 * 1024)));
+
+      if (onProgress) {
+        onProgress(currentProgress, parseFloat(speedVariation.toFixed(1)), remainingSeconds);
+      }
+    }
+
+    const videoUrl = `https://supabase.rehvo.in/storage/v1/object/public/${TOUR_STORAGE_BUCKETS.VIDEOS}/${propertyId}/${fileName}`;
+
+    return {
+      success: true,
+      videoUrl,
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      error: err?.message || 'Failed to upload video to storage bucket',
+    };
+  }
+}
+
+/**
  * Initiate an AI 3D tour processing job for an uploaded walkthrough video
+ * Registers record in Supabase tour_processing_jobs with:
+ * id, status, progress, createdAt, propertyId, videoUrl, estimatedCompletion
  */
 export async function createTourProcessingJob(
   propertyId: string,
   fileName: string,
-  fileSizeBytes: number
+  fileSizeBytes: number,
+  videoUrl?: string
 ): Promise<ProcessingJob> {
   const jobId = `job-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+  const now = new Date().toISOString();
+  const estimatedCompletion = new Date(Date.now() + 150000).toISOString();
+  const actualVideoUrl = videoUrl || `https://supabase.rehvo.in/storage/v1/object/public/${TOUR_STORAGE_BUCKETS.VIDEOS}/${propertyId}/${fileName}`;
 
   const newJob: ProcessingJob = {
     id: jobId,
     property_id: propertyId,
+    propertyId: propertyId,
     video_file_name: fileName,
     video_file_size_bytes: fileSizeBytes,
+    video_url: actualVideoUrl,
+    videoUrl: actualVideoUrl,
     status: 'Analyzing',
     current_step_index: 1,
     total_steps: 12,
     step_name: 'Extracting High-Fidelity Frames...',
+    progress: 12,
     progress_percent: 12,
     estimated_seconds_left: 150,
-    started_at: new Date().toISOString(),
+    estimatedCompletion,
+    started_at: now,
+    createdAt: now,
   };
 
   activeProcessingJobs.set(jobId, newJob);
 
   try {
-    await supabase.from('tour_processing_jobs').insert(newJob);
+    await supabase.from('tour_processing_jobs').insert({
+      id: newJob.id,
+      status: newJob.status,
+      progress: newJob.progress,
+      createdAt: newJob.createdAt,
+      propertyId: newJob.propertyId,
+      videoUrl: newJob.videoUrl,
+      estimatedCompletion: newJob.estimatedCompletion,
+      video_file_name: newJob.video_file_name,
+      video_file_size_bytes: newJob.video_file_size_bytes,
+    });
   } catch {
     // In-memory fallback
   }
