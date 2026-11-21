@@ -93,7 +93,8 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
   const [forgotLoading, setForgotLoading] = useState(false);
 
   // Validation
-  const isValidEmail = (val: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+  const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  const isValidEmail = (val: string) => Boolean(val && val.trim().length >= 5 && EMAIL_REGEX.test(val.trim()));
   const isValidPhone = (val: string) => val.replace(/\D/g, '').length === 10;
 
   // Helper to route user to correct role ecosystem
@@ -122,7 +123,7 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
 
     setLoading(true);
     try {
-      const result = await authService.signInWithEmail(email, password);
+      const result = await authService.signInWithEmail(email.trim().toLowerCase(), password);
       if (!result.success) {
         setErrorMessage(result.error || 'Invalid email or password.');
       } else {
@@ -257,7 +258,7 @@ export const V4LoginScreen: React.FC<V4LoginScreenProps> = ({
 
     setForgotLoading(true);
     try {
-      const res = await authService.resetPassword(forgotEmail);
+      const res = await authService.resetPassword(forgotEmail.trim().toLowerCase());
       if (res.success) {
         setShowForgotModal(false);
         setForgotEmail('');

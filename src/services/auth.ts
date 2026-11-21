@@ -6,6 +6,7 @@
  */
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import type { AuthError } from '@supabase/supabase-js';
+import { Platform } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as QueryParams from 'expo-auth-session/build/QueryParams';
 import { makeRedirectUri } from 'expo-auth-session';
@@ -27,10 +28,53 @@ export interface AuthResult<T = void> {
 export interface SignUpData {
   name: string;
   email: string;
-  phone: string;
+  phone?: string;
   password: string;
   role?: 'renter' | 'owner' | 'admin';
   city?: string;
+}
+
+/**
+ * Resolves the appropriate authentication redirect URL for email verification,
+ * password reset, and OAuth callbacks based on the runtime platform and environment.
+ *
+ * - Production Web / Verification Links: `https://rehvo.in/auth/callback`
+ * - Production Mobile Deep Link: Native deep link `rehvo://auth/callback`
+ * - Local Development: `http://localhost:3000/auth/callback` or Expo auth session URI
+ */
+export function getAuthRedirectUrl(options?: { preferWeb?: boolean }): string {
+  const isWeb = Platform.OS === 'web';
+
+  if (isWeb) {
+    const globalWindow = (globalThis as any).window;
+    if (typeof globalWindow !== 'undefined' && globalWindow.location?.origin) {
+      const origin = globalWindow.location.origin;
+      if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+        return `${origin}/auth/callback`;
+      }
+    }
+    return 'https://rehvo.in/auth/callback';
+  }
+
+  // Email verification links must use HTTPS because email clients block custom schemes like rehvo://
+  if (options?.preferWeb) {
+    return 'https://rehvo.in/auth/callback';
+  }
+
+  const isDev = typeof __DEV__ !== 'undefined' && __DEV__;
+  if (isDev) {
+    try {
+      const devUri = makeRedirectUri({
+        scheme: 'rehvo',
+        path: 'auth/callback',
+      });
+      if (devUri) return devUri;
+    } catch {
+      // Fallback
+    }
+  }
+
+  return 'https://rehvo.in/auth/callback';
 }
 
 // ---------------------------------------------------------------------------
@@ -160,16 +204,21 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
   }
 
   try {
-    const formattedPhone = data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone.replace(/\D/g, '')}`;
+    const cleanEmail = data.email.trim().toLowerCase();
+    const formattedPhone = data.phone?.trim()
+      ? (data.phone.startsWith('+91') ? data.phone : `+91 ${data.phone.replace(/\D/g, '')}`)
+      : undefined;
     const userRole = (data.role || 'renter').toLowerCase();
+    const redirectUrl = getAuthRedirectUrl({ preferWeb: true });
 
     const { data: resData, error } = await supabase.auth.signUp({
-      email: data.email.trim(),
+      email: cleanEmail,
       password: data.password,
       options: {
+        emailRedirectTo: redirectUrl,
         data: {
           full_name: data.name.trim(),
-          phone: formattedPhone,
+          ...(formattedPhone ? { phone: formattedPhone } : {}),
           role: userRole,
           account_type: userRole,
           city: data.city || 'Mumbai',
@@ -192,9 +241,40 @@ export async function signUpWithEmail(data: SignUpData): Promise<AuthResult<{ us
 
     return {
       success: true,
-      data: { userId: resData.user.id, email: resData.user.email || data.email },
+      data: { userId: resData.user.id, email: resData.user.email || cleanEmail },
       requiresEmailConfirmation: needsConfirmation,
     };
+  } catch (err) {
+    return { success: false, error: getUserFriendlyError(err) };
+  }
+}
+
+/** Resend email verification link for a newly registered user */
+export async function resendVerificationEmail(email: string): Promise<AuthResult> {
+  if (!isSupabaseConfigured()) {
+    return { success: false, error: getUserFriendlyError(null) };
+  }
+
+  const cleanEmail = email.trim().toLowerCase();
+  if (!cleanEmail) {
+    return { success: false, error: 'Please enter a valid email address.' };
+  }
+
+  try {
+    const redirectUrl = getAuthRedirectUrl({ preferWeb: true });
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: cleanEmail,
+      options: {
+        emailRedirectTo: redirectUrl,
+      },
+    });
+
+    if (error) {
+      return { success: false, error: getUserFriendlyError(error) };
+    }
+
+    return { success: true };
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
   }
@@ -207,8 +287,9 @@ export async function signInWithEmail(email: string, password: string): Promise<
   }
 
   try {
+    const cleanEmail = email.trim().toLowerCase();
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: email.trim(),
+      email: cleanEmail,
       password,
     });
 
@@ -222,7 +303,7 @@ export async function signInWithEmail(email: string, password: string): Promise<
 
     return {
       success: true,
-      data: { userId: data.user.id, email: data.user.email || email },
+      data: { userId: data.user.id, email: data.user.email || cleanEmail },
     };
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
@@ -525,7 +606,10 @@ export async function resetPassword(email: string): Promise<AuthResult> {
   }
 
   try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email.trim());
+    const redirectUrl = getAuthRedirectUrl({ preferWeb: true });
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+      redirectTo: redirectUrl,
+    });
     if (error) {
       return { success: false, error: getUserFriendlyError(error) };
     }
@@ -533,6 +617,16 @@ export async function resetPassword(email: string): Promise<AuthResult> {
   } catch (err) {
     return { success: false, error: getUserFriendlyError(err) };
   }
+}
+
+/**
+ * Listen to auth state changes from Supabase Auth.
+ * Returns a subscription object containing unsubscribe().
+ */
+export function onAuthStateChange(
+  callback: (event: string, session: any) => void
+) {
+  return supabase.auth.onAuthStateChange(callback);
 }
 
 /** Get current session from Supabase client (for session restore) */

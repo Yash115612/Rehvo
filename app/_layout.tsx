@@ -130,6 +130,7 @@ export default function RootLayout() {
             }}
           >
             <Stack.Screen name="index" />
+            <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(renter)" options={{ headerShown: false }} />
             <Stack.Screen name="(owner)" options={{ headerShown: false }} />
