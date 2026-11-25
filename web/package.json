@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "next build && (cp -r dist .next || true)",
+    "build": "next build && (rm -rf .next && cp -r dist .next || true)",
     "start": "next start -p 3001",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "vercel-build": "next build && (cp -r dist .next || true)"
+    "vercel-build": "next build && (rm -rf .next && cp -r dist .next || true)"
   },
   "dependencies": {
     "@next/third-parties": "^14.2.21",

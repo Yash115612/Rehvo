@@ -2,134 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-/* REHVO Global Theme Tokens & Emerald Luxury Design System */
-:root {
-  /* Brand Core Neutral Luxury Palette */
-  --rehvo-bg: #F8FAFB;
-  --rehvo-background: #F8FAFB;
-  --rehvo-surface: #FFFFFF;
-  --rehvo-surface-soft: #F1F5F9;
-  --rehvo-surface-muted: #E2E8F0;
-  
-  /* Text & Typography */
-  --rehvo-primary: #031B2A;
-  --rehvo-secondary: #64748B;
-  --rehvo-text: #031B2A;
-  --rehvo-text-secondary: #64748B;
-  --rehvo-text-muted: #94A3B8;
-  --rehvo-inverted: #FFFFFF;
-  --rehvo-dark-navy: #031B2A;
-  
-  /* Borders */
-  --rehvo-border: #E2E8F0;
-  --rehvo-border-focus: #CBD5E1;
-  --rehvo-border-light: #F1F5F9;
-  
-  /* Master REHVO Accent (Emerald Luxury) */
-  --rehvo-accent: #0F766E;
-  --rehvo-accent-hover: #064E3B;
-  --rehvo-accent-soft: #CCFBF1;
-  --rehvo-emerald: #0F766E;
-  --rehvo-emerald-700: #0F766E;
-  --rehvo-emerald-900: #064E3B;
-  --rehvo-emerald-dark: #064E3B;
-  --rehvo-mint: #CCFBF1;
-  --rehvo-gold: #D4AF37;
+@import '../styles/tokens.css';
 
-  /* Category-Specific Secondary Accents (Controlled & Subtle) */
-  --rehvo-commercial: #4263EB;
-  --rehvo-commercial-soft: #EEF2FF;
-  
-  --rehvo-pg: #D69E2E;
-  --rehvo-pg-soft: #FEF9C3;
-  
-  --rehvo-flatmates: #3C8D68;
-  --rehvo-flatmates-soft: #EBF5F0;
-  
-  --rehvo-localities: #4C7A86;
-  --rehvo-localities-soft: #EDF6F8;
-  
-  /* Semantic Status */
-  --rehvo-success: #16A34A;
-  --rehvo-success-soft: #ECFDF5;
+@layer base {
+  html {
+    font-family: var(--rehvo-font-sans);
+    background-color: var(--rehvo-bg);
+    color: var(--rehvo-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    max-width: 100vw;
+    scroll-behavior: smooth;
+  }
 
-  --background: #F8FAFB;
-  --foreground: #031B2A;
-}
+  body {
+    background-color: var(--rehvo-bg);
+    color: var(--rehvo-text-primary);
+    font-family: inherit;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: clip;
+    max-width: 100vw;
+    width: 100%;
+  }
 
-/* Base resets & typography */
-html {
-  font-family: var(--font-inter), var(--font-plus-jakarta), 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #F8FAFB;
-  color: #031B2A;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  max-width: 100vw;
-  scroll-behavior: smooth;
-}
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
 
-body {
-  background-color: #F8FAFB;
-  color: #031B2A;
-  font-family: inherit;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  max-width: 100vw;
-  width: 100%;
-}
+  a,
+  a:visited,
+  a:hover,
+  a:focus,
+  a:active {
+    color: inherit;
+    text-decoration: none;
+  }
 
-img, video {
-  max-width: 100%;
-  height: auto;
-}
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--rehvo-text-primary);
+    font-family: inherit;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 
-/* Explicit link and element resets to completely eliminate browser-default purple/blue links and default margins */
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  p {
+    margin: 0;
+    color: var(--rehvo-text-secondary);
+  }
 
-a:visited {
-  color: inherit;
-  text-decoration: none;
-}
+  button {
+    color: inherit;
+    font-family: inherit;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+  }
 
-a:hover,
-a:focus,
-a:active {
-  color: inherit;
-  text-decoration: none;
-}
+  input, select, textarea {
+    font-family: inherit;
+    color: var(--rehvo-text-primary);
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #031B2A;
-  font-family: inherit;
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
+  :focus-visible {
+    outline: 2px solid var(--rehvo-orange);
+    outline-offset: 2px;
+  }
 
-p {
-  margin: 0;
-  color: #64748B;
-}
-
-button {
-  color: inherit;
-  font-family: inherit;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  margin: 0;
-}
-
-input, select, textarea {
-  font-family: inherit;
-  color: #031B2A;
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
 /* Base Container */
@@ -364,7 +320,6 @@ input, select, textarea {
 .glass-accent,
 .rehvo-glass-coral,
 .rehvo-glass-emerald,
-.rehvo-glass-capsule-coral,
 .rehvo-glass-capsule-emerald {
   background: linear-gradient(180deg, rgba(15, 118, 110, 0.92) 0%, rgba(6, 78, 59, 0.86) 100%);
   backdrop-filter: blur(18px) saturate(150%);
@@ -375,10 +330,19 @@ input, select, textarea {
   transition: all 0.2s ease-out;
 }
 
+.rehvo-glass-capsule-coral {
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.95) 0%, rgba(234, 88, 12, 0.90) 100%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 8px 24px rgba(249, 115, 22, 0.28);
+  color: #FFFFFF;
+  transition: all 0.2s ease-out;
+}
+
 .glass-accent:hover,
 .rehvo-glass-coral:hover,
 .rehvo-glass-emerald:hover,
-.rehvo-glass-capsule-coral:hover,
 .rehvo-glass-capsule-emerald:hover {
   background: linear-gradient(180deg, rgba(15, 118, 110, 0.98) 0%, rgba(4, 55, 41, 0.92) 100%);
   border-color: rgba(255, 255, 255, 0.65);
@@ -386,11 +350,18 @@ input, select, textarea {
   transform: translateY(-1px);
 }
 
+.rehvo-glass-capsule-coral:hover {
+  background: linear-gradient(180deg, rgba(249, 115, 22, 0.98) 0%, rgba(194, 65, 12, 0.95) 100%);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.70), 0 12px 30px rgba(249, 115, 22, 0.38);
+  transform: translateY(-1px);
+}
+
 .glass-accent:active,
 .rehvo-glass-coral:active,
 .rehvo-glass-emerald:active,
-.rehvo-glass-capsule-coral:active,
-.rehvo-glass-capsule-emerald:active {
+.rehvo-glass-capsule-emerald:active,
+.rehvo-glass-capsule-coral:active {
   transform: scale(0.98);
 }
 

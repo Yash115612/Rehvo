@@ -10,18 +10,18 @@ import {
   Sparkles,
   Menu,
   X,
-  Check,
   ArrowRight,
   Home,
   Building2,
   Building,
   Users,
-  LayoutDashboard,
   Smartphone,
   Shield,
   CreditCard,
   ShieldCheck,
-  PlusCircle,
+  User,
+  LogOut,
+  Heart,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth/AuthContext';
 import { useHeroTheme } from '@/components/v10/HeroThemeContext';
@@ -66,26 +66,28 @@ const SERVICES_DROPDOWN_ITEMS: ServiceDropdownItem[] = [
 ];
 
 const NAV_ITEMS = [
-  { label: 'Rent', href: '/search', accentColor: '#0F766E' },
-  { label: 'PG & Hostel', href: '/pg', accentColor: '#D97706' },
+  { label: 'Rent', href: '/search', accentColor: '#001741' },
+  { label: 'PG & Hostel', href: '/pg', accentColor: '#F97316' },
   { label: 'Commercial', href: '/commercial', accentColor: '#2563EB' },
   { label: 'Flatmates', href: '/flatmates', accentColor: '#10B981' },
-  { label: 'Services', href: '/services', accentColor: '#0284C7', isDropdown: true },
-  { label: 'AI Concierge', href: '/ai-concierge', accentColor: '#0F766E', isAi: true },
+  { label: 'Services', href: '/services', accentColor: '#F97316', isDropdown: true },
+  { label: 'AI Concierge', href: '/ai-concierge', accentColor: '#F97316', isAi: true },
 ];
 
 export const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { user, profile, isAuthenticated, signOut } = useAuth();
   const { currentAd } = useHeroTheme();
 
   const [mounted, setMounted] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const servicesRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
 
   const isHomePage = pathname === '/' || !pathname || pathname === '';
 
@@ -109,6 +111,9 @@ export const Navbar: React.FC = () => {
       if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
         setServicesDropdownOpen(false);
       }
+      if (userRef.current && !userRef.current.contains(e.target as Node)) {
+        setUserDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -118,7 +123,21 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
+    setUserDropdownOpen(false);
   }, [pathname]);
+
+  // Handle ESC key to dismiss menus
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileMenuOpen(false);
+        setServicesDropdownOpen(false);
+        setUserDropdownOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -133,6 +152,7 @@ export const Navbar: React.FC = () => {
 
   const isNavActive = (href: string) => {
     if (href === '/') return pathname === '/';
+    if (href === '/search') return pathname === '/search' || pathname.startsWith('/rent');
     return pathname.startsWith(href);
   };
 
@@ -141,22 +161,18 @@ export const Navbar: React.FC = () => {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out ${
           isScrolled
-            ? 'bg-white/95 backdrop-blur-xl shadow-xs border-b border-stone-200/80 py-2.5'
-            : isHomePage
-            ? 'bg-transparent backdrop-blur-none py-2.5 sm:py-3 border-b border-transparent'
-            : 'bg-white/95 backdrop-blur-xl py-2.5 sm:py-3.5 border-b border-stone-200/70 shadow-2xs'
+            ? 'bg-[#001741]/95 backdrop-blur-xl shadow-lg border-b border-white/10 py-2.5'
+            : 'bg-[#001741] py-2.5 sm:py-3.5 border-b border-transparent'
         }`}
       >
         <div className="max-w-[1360px] mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* =====================================================================
-              1. BRAND LOGO LIQUID-GLASS CAPSULE (EXACT REHVO LOGO)
+              1. BRAND LOGO LIQUID-GLASS CAPSULE (EXACT ORIGINAL REHVO LOGO)
              ===================================================================== */}
           <Link
             href="/"
-            className={`pointer-events-auto h-10 sm:h-11 px-3 sm:px-4 rounded-full flex items-center shrink-0 group cursor-pointer transition-all duration-300 ${
-              isScrolled ? 'rehvo-glass-capsule-scrolled' : 'rehvo-glass-capsule'
-            }`}
+            className="pointer-events-auto h-10 sm:h-11 px-3.5 sm:px-4 rounded-full flex items-center shrink-0 group cursor-pointer transition-all duration-300 bg-white shadow-sm border border-white/90 hover:bg-slate-50"
           >
             <Image
               src="/rehvo-logo.png"
@@ -191,24 +207,25 @@ export const Navbar: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setServicesDropdownOpen((prev) => !prev)}
-                      className={`h-10 px-4 rounded-full text-xs flex items-center gap-1.5 whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                      className={`h-10 px-4 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap cursor-pointer transition-all duration-200 shadow-sm ${
                         active || servicesDropdownOpen
-                          ? 'rehvo-glass-capsule-active font-black text-[#031B2A]'
-                          : isScrolled
-                          ? 'rehvo-glass-capsule-scrolled font-bold text-[#64748B] hover:text-[#031B2A]'
-                          : 'rehvo-glass-capsule font-bold text-[#64748B] hover:text-[#031B2A]'
+                          ? 'bg-[#F97316] text-white border border-[#F97316] shadow-md'
+                          : 'bg-white text-[#001741] hover:bg-slate-50 hover:text-[#001741] border border-white/90'
                       }`}
                     >
                       <span>{item.label}</span>
                       <ChevronDown
-                        className={`w-3 h-3 transition-transform duration-200 ${
-                          servicesDropdownOpen ? 'rotate-180 text-[#0F766E]' : 'text-[#64748B]'
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          servicesDropdownOpen || active ? 'rotate-180 text-white' : 'text-[#001741]/70'
                         }`}
                       />
                     </button>
 
                     {servicesDropdownOpen && (
-                      <div className="absolute left-0 top-11 w-80 rounded-[24px] bg-white/95 backdrop-blur-xl border border-[#E2E8F0] shadow-2xl p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                      <div
+                        style={{ zIndex: 100 }}
+                        className="absolute left-0 top-11 w-96 rounded-[24px] bg-white border border-slate-200 shadow-2xl p-3.5 animate-in fade-in slide-in-from-top-2 duration-150"
+                      >
                         <div className="px-3 py-1.5 border-b border-slate-100 flex items-center justify-between">
                           <span className="text-[10px] font-black uppercase tracking-wider text-[#64748B]">
                             REHVO Services
@@ -216,7 +233,7 @@ export const Navbar: React.FC = () => {
                           <Link
                             href="/services"
                             onClick={() => setServicesDropdownOpen(false)}
-                            className="text-[11px] font-bold text-[#0F766E] hover:underline"
+                            className="text-[11px] font-bold text-[#F97316] hover:underline"
                           >
                             View All
                           </Link>
@@ -230,18 +247,18 @@ export const Navbar: React.FC = () => {
                                 key={service.label}
                                 href={service.href}
                                 onClick={() => setServicesDropdownOpen(false)}
-                                className="group flex items-start gap-3 p-2.5 rounded-2xl hover:bg-[#F0FDFA] transition-colors"
+                                className="group flex items-start gap-3 p-2.5 rounded-2xl hover:bg-[#FFF7ED] transition-colors"
                               >
-                                <div className="w-8 h-8 rounded-xl bg-[#CCFBF1] text-[#0F766E] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                <div className="w-8 h-8 rounded-xl bg-[#FFF7ED] text-[#F97316] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                                   <Icon className="w-4 h-4" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center gap-1.5">
-                                    <span className="text-xs font-bold text-[#031B2A] group-hover:text-[#0F766E] transition-colors">
+                                    <span className="text-xs font-bold text-[#001741] group-hover:text-[#F97316] transition-colors">
                                       {service.label}
                                     </span>
                                     {service.tag && (
-                                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded-md bg-orange-50 text-orange-700 border border-orange-200">
                                         {service.tag}
                                       </span>
                                     )}
@@ -264,20 +281,17 @@ export const Navbar: React.FC = () => {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`h-10 px-4 rounded-full text-xs flex items-center gap-1.5 whitespace-nowrap cursor-pointer transition-all duration-200 ${
+                  className={`h-10 px-4 rounded-full text-xs font-bold flex items-center gap-1.5 whitespace-nowrap cursor-pointer transition-all duration-200 shadow-sm ${
                     active
-                      ? 'rehvo-glass-capsule-active font-black'
-                      : isScrolled
-                      ? 'rehvo-glass-capsule-scrolled font-bold text-[#64748B] hover:text-[#031B2A]'
-                      : 'rehvo-glass-capsule font-bold text-[#64748B] hover:text-[#031B2A]'
+                      ? 'bg-[#F97316] text-white border border-[#F97316] shadow-md'
+                      : 'bg-white text-[#001741] hover:bg-slate-50 hover:text-[#001741] border border-white/90'
                   }`}
                 >
-                  {item.isAi && <Sparkles className="w-3.5 h-3.5 text-[#0F766E] animate-pulse" />}
+                  {item.isAi && <Sparkles className={`w-3.5 h-3.5 ${active ? 'text-white' : 'text-[#F97316]'} animate-pulse`} />}
                   <span>{item.label}</span>
                   {active && (
                     <span
-                      className="w-1.5 h-1.5 rounded-full block animate-pulse"
-                      style={{ backgroundColor: item.accentColor }}
+                      className="w-1.5 h-1.5 rounded-full block animate-pulse bg-white"
                     />
                   )}
                 </Link>
@@ -292,22 +306,96 @@ export const Navbar: React.FC = () => {
             {/* Direct List Property Capsule */}
             <Link
               href="/list-property"
-              className={`hidden lg:flex h-10 px-4 rounded-full text-xs font-bold items-center gap-1.5 cursor-pointer transition-all ${
-                isScrolled ? 'rehvo-glass-capsule-scrolled text-[#031B2A]' : 'rehvo-glass-capsule text-[#031B2A] hover:text-[#0F766E]'
-              }`}
+              className="hidden lg:flex h-10 px-4 rounded-full text-xs font-bold items-center gap-1.5 cursor-pointer transition-all bg-white text-[#001741] hover:bg-slate-50 shadow-sm border border-white/90"
             >
-              <Home className="w-3.5 h-3.5 text-[#0F766E]" />
+              <Home className="w-3.5 h-3.5 text-[#F97316]" />
               <span>List Property</span>
             </Link>
+
+            {/* User Profile / Sign In Capsule */}
+            {isAuthenticated ? (
+              <div className="relative" ref={userRef}>
+                <button
+                  type="button"
+                  onClick={() => setUserDropdownOpen((prev) => !prev)}
+                  className="h-10 px-3.5 rounded-full text-xs font-bold text-[#001741] flex items-center gap-1.5 cursor-pointer transition-all bg-white hover:bg-slate-50 shadow-sm border border-white/90"
+                >
+                  <div className="w-5 h-5 rounded-full bg-[#001741] text-white flex items-center justify-center text-[10px] font-bold">
+                    {profile?.full_name?.charAt(0) || user?.email?.charAt(0).toUpperCase() || 'U'}
+                  </div>
+                  <span className="hidden sm:inline max-w-[80px] truncate">
+                    {profile?.full_name?.split(' ')[0] || 'Account'}
+                  </span>
+                  <ChevronDown className="w-3.5 h-3.5 text-[#001741]/70" />
+                </button>
+
+                {userDropdownOpen && (
+                  <div className="absolute right-0 top-12 w-56 rounded-[22px] bg-white border border-slate-200 shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                    <div className="px-3 py-2 border-b border-slate-100">
+                      <p className="text-xs font-black text-[#001741] truncate">
+                        {profile?.full_name || 'User'}
+                      </p>
+                      <p className="text-[10.5px] text-[#64748B] truncate">{user?.email}</p>
+                    </div>
+
+                    <div className="py-1 space-y-0.5 text-xs font-bold text-[#001741]">
+                      <Link
+                        href="/profile"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-[#FFF7ED] transition"
+                      >
+                        <User className="w-3.5 h-3.5 text-slate-400" />
+                        <span>Profile & Account</span>
+                      </Link>
+                      <Link
+                        href="/favorites"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-[#FFF7ED] transition"
+                      >
+                        <Heart className="w-3.5 h-3.5 text-rose-500" />
+                        <span>Saved Properties</span>
+                      </Link>
+                      <Link
+                        href="/safety"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full px-3 py-2 rounded-xl flex items-center gap-2 hover:bg-[#FFF7ED] transition"
+                      >
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
+                        <span>Damage Protection</span>
+                      </Link>
+                    </div>
+
+                    <div className="pt-1 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          signOut();
+                          setUserDropdownOpen(false);
+                        }}
+                        className="w-full px-3 py-2 rounded-xl text-xs font-bold text-[#EF4444] hover:bg-[#FEF2F2] flex items-center gap-2 transition"
+                      >
+                        <LogOut className="w-3.5 h-3.5" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Sign In"
+                className="hidden sm:flex h-10 px-3.5 sm:px-4 rounded-full text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all bg-white text-[#001741] hover:bg-slate-50 shadow-sm border border-white/90"
+              >
+                <User className="w-3.5 h-3.5 text-[#F97316]" />
+                <span>Sign In</span>
+              </Link>
+            )}
 
             {/* App Download Capsule Button */}
             <Link
               href="/download"
-              className={`h-9 sm:h-10 px-3 sm:px-4.5 rounded-full font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap active:scale-95 transition-all duration-200 shrink-0 ${
-                isScrolled || !isHomePage
-                  ? 'rehvo-glass-capsule-emerald text-white shadow-lg shadow-teal-900/20'
-                  : 'bg-[#0F766E]/90 backdrop-blur-md text-white shadow-xl shadow-teal-900/30 border border-white/20'
-              }`}
+              className="h-9 sm:h-10 px-3 sm:px-4.5 rounded-full font-extrabold text-[11px] sm:text-xs flex items-center gap-1.5 group cursor-pointer whitespace-nowrap active:scale-95 transition-all duration-200 shrink-0 bg-[#F97316] hover:bg-[#EA580C] text-white shadow-md shadow-orange-950/40 border border-orange-400/30"
             >
               <Smartphone className="w-3.5 h-3.5" />
               <span>Download App</span>
@@ -316,15 +404,11 @@ export const Navbar: React.FC = () => {
             {/* Mobile Hamburger Toggle (Always crisp, high-contrast, clickable) */}
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Toggle navigation menu"
-              className={`md:hidden h-9.5 w-9.5 rounded-full flex items-center justify-center transition active:scale-95 cursor-pointer shrink-0 ${
-                isScrolled || !isHomePage
-                  ? 'bg-white/95 border border-[#E2E8F0] shadow-xs text-[#031B2A] hover:text-[#0F766E] hover:bg-white'
-                  : 'bg-white/60 backdrop-blur-md border border-white/40 shadow-lg text-[#031B2A] hover:bg-white/80'
-              }`}
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="md:hidden h-9.5 w-9.5 rounded-full flex items-center justify-center transition active:scale-95 cursor-pointer shrink-0 bg-white text-[#001741] hover:bg-slate-50 shadow-sm border border-white/90"
             >
-              <Menu className="w-5 h-5 stroke-[2.2]" />
+              {mobileMenuOpen ? <X className="w-5 h-5 stroke-[2.2]" /> : <Menu className="w-5 h-5 stroke-[2.2]" />}
             </button>
           </div>
 
@@ -335,17 +419,19 @@ export const Navbar: React.FC = () => {
           4. MOBILE SIDE MENU DRAWER (PORTAL-RENDERED AT DOCUMENT.BODY LEVEL)
          ===================================================================== */}
       {mounted && mobileMenuOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] pointer-events-auto">
+        <div className="fixed inset-0 pointer-events-auto" style={{ zIndex: 999999 }}>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-[#031B2A]/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+            className="fixed inset-0 bg-[#001741]/70 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+            style={{ zIndex: 999999 }}
             onClick={() => setMobileMenuOpen(false)}
             aria-hidden="true"
           />
 
-          {/* Side Menu Drawer Panel */}
+          {/* Side Menu Drawer Panel (Solid white, elevated above backdrop & header) */}
           <aside
             aria-label="Mobile Navigation Drawer"
+            style={{ zIndex: 1000000 }}
             className="fixed inset-y-0 right-0 w-full max-w-[340px] xs:max-w-[360px] bg-white shadow-2xl border-l border-slate-200 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto animate-in slide-in-from-right duration-300 h-[100dvh]"
           >
             <div>
@@ -369,7 +455,7 @@ export const Navbar: React.FC = () => {
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
                   aria-label="Close navigation"
-                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#031B2A] flex items-center justify-center transition active:scale-95 cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#001741] flex items-center justify-center transition active:scale-95 cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -382,11 +468,11 @@ export const Navbar: React.FC = () => {
                 </span>
 
                 {[
-                  { label: 'Rent Homes', href: '/search', icon: Home, color: '#0F766E', tag: 'Verified' },
-                  { label: 'PG & Hostel', href: '/pg', icon: Building, color: '#D97706', tag: 'Co-Living' },
+                  { label: 'Rent Homes', href: '/search', icon: Home, color: '#001741', tag: 'Verified' },
+                  { label: 'PG & Hostel', href: '/pg', icon: Building, color: '#F97316', tag: 'Co-Living' },
                   { label: 'Commercial', href: '/commercial', icon: Building2, color: '#2563EB', tag: 'Offices' },
                   { label: 'Flatmates', href: '/flatmates', icon: Users, color: '#10B981', tag: 'VibeMatch' },
-                  { label: 'AI Concierge', href: '/ai-concierge', icon: Sparkles, color: '#0F766E', tag: 'AI Search' },
+                  { label: 'AI Concierge', href: '/ai-concierge', icon: Sparkles, color: '#F97316', tag: 'AI Search' },
                 ].map((item) => {
                   const Icon = item.icon;
                   const active = isNavActive(item.href);
@@ -397,8 +483,8 @@ export const Navbar: React.FC = () => {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`w-full py-2.5 px-3.5 rounded-2xl text-xs font-bold flex items-center justify-between border transition-all ${
                         active
-                          ? 'bg-[#F0FDFA] text-[#0F766E] border-[#0F766E]/40 font-black shadow-2xs'
-                          : 'bg-white text-[#031B2A] hover:bg-slate-50 border-slate-100'
+                          ? 'bg-[#FFF7ED] text-[#F97316] border-[#F97316]/40 font-black shadow-2xs'
+                          : 'bg-white text-[#001741] hover:bg-slate-50 border-slate-100'
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
@@ -432,17 +518,17 @@ export const Navbar: React.FC = () => {
                       key={svc.label}
                       href={svc.href}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#F0FDFA] border border-slate-100 flex flex-col justify-between transition group"
+                      className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#FFF7ED] border border-slate-100 flex flex-col justify-between transition group"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <svc.icon className="w-3.5 h-3.5 text-[#0F766E]" />
+                        <svc.icon className="w-3.5 h-3.5 text-[#F97316]" />
                         {svc.tag && (
-                          <span className="text-[8.5px] font-bold px-1.5 py-0.5 rounded bg-white text-[#0F766E] border border-slate-100">
+                          <span className="text-[8.5px] font-bold px-1.5 py-0.5 rounded bg-white text-[#F97316] border border-slate-100">
                             {svc.tag}
                           </span>
                         )}
                       </div>
-                      <span className="text-[11px] font-bold text-[#031B2A] group-hover:text-[#0F766E]">
+                      <span className="text-[11px] font-bold text-[#001741] group-hover:text-[#F97316]">
                         {svc.label}
                       </span>
                     </Link>
@@ -452,15 +538,15 @@ export const Navbar: React.FC = () => {
 
               {/* Support & Quick Links */}
               <div className="pt-4 flex items-center justify-between text-xs text-[#64748B] px-1 border-t border-slate-100 mt-4">
-                <Link href="/safety" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#0F766E]">
+                <Link href="/safety" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#F97316]">
                   Safety
                 </Link>
                 <span>&bull;</span>
-                <Link href="/help" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#0F766E]">
+                <Link href="/help" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#F97316]">
                   Help Center
                 </Link>
                 <span>&bull;</span>
-                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#0F766E]">
+                <Link href="/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#F97316]">
                   Contact
                 </Link>
               </div>
@@ -471,24 +557,34 @@ export const Navbar: React.FC = () => {
               <Link
                 href="/list-property"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 px-3.5 rounded-2xl bg-gradient-to-r from-[#F0FDFA] to-[#CCFBF1]/50 border border-[#0F766E]/30 flex items-center justify-between group transition"
+                className="w-full py-3 px-3.5 rounded-2xl bg-gradient-to-r from-[#FFF7ED] to-[#FFEDD5]/50 border border-[#F97316]/30 flex items-center justify-between group transition"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-xl bg-[#0F766E] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-7 h-7 rounded-xl bg-[#F97316] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Home className="w-3.5 h-3.5" />
                   </div>
                   <div>
-                    <span className="text-xs font-black text-[#031B2A] block">Own a Property?</span>
-                    <span className="text-[10px] font-semibold text-[#0F766E]">Post for Free &bull; Zero Agent</span>
+                    <span className="text-xs font-black text-[#001741] block">Own a Property?</span>
+                    <span className="text-[10px] font-semibold text-[#F97316]">Post for Free &bull; Zero Agent</span>
                   </div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#0F766E] group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-[#F97316] group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              {/* Sign In / Profile action in drawer */}
+              <Link
+                href={isAuthenticated ? '/profile' : '/login'}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full py-3 rounded-2xl bg-white border border-slate-200 text-[#001741] font-bold text-xs flex items-center justify-center gap-2 shadow-xs hover:bg-slate-50 transition"
+              >
+                <User className="w-4 h-4 text-[#F97316]" />
+                <span>{isAuthenticated ? 'My Profile & Account' : 'Sign In / Register'}</span>
               </Link>
 
               <Link
                 href="/download"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-3 rounded-2xl bg-[#0F766E] hover:bg-[#064E3B] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-teal-900/15 active:scale-95 transition"
+                className="w-full py-3 rounded-2xl bg-[#F97316] hover:bg-[#EA580C] text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-orange-900/15 active:scale-95 transition"
               >
                 <Smartphone className="w-4 h-4" />
                 <span>Download Mobile App</span>
