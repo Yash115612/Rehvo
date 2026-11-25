@@ -52,11 +52,17 @@ function sanitizeEmail(email: string): string {
 function getCanonicalRedirectUrl(): string {
   if (typeof window !== 'undefined') {
     const origin = window.location.origin;
-    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+    if (
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1') ||
+      origin.includes('.vercel.app')
+    ) {
       return `${origin}/auth/callback`;
     }
   }
-  return 'https://rehvo.in/auth/callback';
+  return process.env.NEXT_PUBLIC_SITE_URL
+    ? `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')}/auth/callback`
+    : 'https://rehvo.in/auth/callback';
 }
 
 /**
@@ -71,6 +77,7 @@ function isSessionMatchingLink(sessionEmail: string | undefined | null, linkEmai
 export default function AuthCallbackPage() {
   const [state, setState] = useState<VerificationState>('loading');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isOAuthUser, setIsOAuthUser] = useState(false);
 
   // Resend state for expired link
   const [resendEmail, setResendEmail] = useState('');
@@ -161,12 +168,14 @@ export default function AuthCallbackPage() {
               const role = (u.user_metadata?.role || 'renter').toLowerCase();
               const phone = u.user_metadata?.phone || null;
               const city = u.user_metadata?.city || 'Mumbai';
+              const profilePhoto = u.user_metadata?.avatar_url || u.user_metadata?.picture || null;
 
               const { error: insertError } = await supabase.from('profiles').insert({
                 id: u.id,
                 full_name: fullName,
                 email: u.email,
                 phone,
+                profile_photo: profilePhoto,
                 role,
                 city,
                 onboarding_completed: false,
@@ -255,8 +264,19 @@ export default function AuthCallbackPage() {
           }
 
           await reconcileUserProfile();
+          const { data: userCheck } = await supabase.auth.getUser();
+          const isGoogle = Boolean(
+            userCheck?.user?.app_metadata?.provider === 'google' ||
+            userCheck?.user?.identities?.some((i: any) => i.provider === 'google')
+          );
           if (isMounted) {
+            if (isGoogle) setIsOAuthUser(true);
             setState('success');
+            const nextParam = searchParams.get('next') || searchParams.get('return_to');
+            if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) {
+              window.location.href = nextParam;
+              return;
+            }
           }
           return;
         }
@@ -297,8 +317,19 @@ export default function AuthCallbackPage() {
           }
 
           await reconcileUserProfile();
+          const { data: userCheck } = await supabase.auth.getUser();
+          const isGoogle = Boolean(
+            userCheck?.user?.app_metadata?.provider === 'google' ||
+            userCheck?.user?.identities?.some((i: any) => i.provider === 'google')
+          );
           if (isMounted) {
+            if (isGoogle) setIsOAuthUser(true);
             setState('success');
+            const nextParam = searchParams.get('next') || searchParams.get('return_to');
+            if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) {
+              window.location.href = nextParam;
+              return;
+            }
           }
           return;
         }
@@ -330,8 +361,19 @@ export default function AuthCallbackPage() {
           }
 
           await reconcileUserProfile();
+          const { data: userCheck } = await supabase.auth.getUser();
+          const isGoogle = Boolean(
+            userCheck?.user?.app_metadata?.provider === 'google' ||
+            userCheck?.user?.identities?.some((i: any) => i.provider === 'google')
+          );
           if (isMounted) {
+            if (isGoogle) setIsOAuthUser(true);
             setState('success');
+            const nextParam = searchParams.get('next') || searchParams.get('return_to');
+            if (nextParam && nextParam.startsWith('/') && !nextParam.startsWith('//')) {
+              window.location.href = nextParam;
+              return;
+            }
           }
           return;
         }
@@ -440,39 +482,43 @@ export default function AuthCallbackPage() {
               <CheckCircle className="w-9 h-9" strokeWidth={2.2} />
             </div>
             <h1 className="text-2xl font-extrabold text-[#0B1F3A] mb-2 tracking-tight">
-              Email Verified Successfully
+              {isOAuthUser ? 'Signed In Successfully' : 'Email Verified Successfully'}
             </h1>
             <p className="text-sm text-slate-600 leading-relaxed mb-5 max-w-xs">
-              Your email address has been verified. You can now log into your REHVO account.
+              {isOAuthUser
+                ? 'Welcome to REHVO! You have successfully signed in with your Google account.'
+                : 'Your email address has been verified. You can now log into your REHVO account.'}
             </p>
 
-            {/* Clear, transparent Mobile App guidance (No fake session handoff) */}
+            {/* Clear, transparent Mobile App guidance */}
             <div className="w-full p-4 mb-5 rounded-2xl bg-slate-50 border border-slate-200/80 text-left space-y-1.5">
               <div className="flex items-center gap-2 text-xs font-bold text-[#0B1F3A]">
                 <Smartphone className="w-4 h-4 text-[#F97316]" />
                 <span>Using the REHVO Mobile App?</span>
               </div>
               <p className="text-[12px] text-slate-500 leading-normal">
-                Your email is confirmed. Open the REHVO app and sign in with your email and password to access your account.
+                {isOAuthUser
+                  ? 'Your session is active. You can continue on the web or switch to the REHVO mobile app.'
+                  : 'Your email is confirmed. Open the REHVO app and sign in with your email and password to access your account.'}
               </p>
             </div>
 
             <div className="w-full space-y-3">
-              <a
-                href="rehvo://(auth)/login?verified=true"
-                className="w-full py-3.5 px-6 rounded-xl bg-[#0B1F3A] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-[#071529] transition-colors"
-              >
-                <Smartphone className="w-4 h-4" />
-                <span>Open App & Sign In</span>
-              </a>
-
               <Link
                 href="/profile"
-                className="w-full py-3 px-6 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+                className="w-full py-3.5 px-6 rounded-xl bg-[#0B1F3A] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-[#071529] transition-colors"
               >
                 <span>Continue on Web</span>
-                <ArrowRight className="w-4 h-4 text-slate-400" />
+                <ArrowRight className="w-4 h-4 text-white/80" />
               </Link>
+
+              <a
+                href={isOAuthUser ? 'rehvo://(renter)/home' : 'rehvo://(auth)/login?verified=true'}
+                className="w-full py-3 px-6 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+              >
+                <Smartphone className="w-4 h-4 text-[#F97316]" />
+                <span>Open in REHVO App</span>
+              </a>
             </div>
           </div>
         )}

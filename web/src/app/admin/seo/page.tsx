@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/lib/auth/AuthContext';
 import {
   Search,
   CheckCircle2,
@@ -177,6 +178,13 @@ const PREVIEW_PAGES = [
 ];
 
 export default function AdminSeoPage() {
+  const { user, profile, isLoading: authLoading } = useAuth();
+  const isAdmin = useMemo(() => {
+    if (!user) return false;
+    const r = (profile?.role || '').toLowerCase();
+    return r === 'admin' || (profile as any)?.is_admin === true || user.email?.endsWith('@rehvo.in');
+  }, [user, profile]);
+
   const [overview, setOverview] = useState<SeoOverviewData | null>(null);
   const [topPages, setTopPages] = useState<TopPage[]>([]);
   const [topQueries, setTopQueries] = useState<TopQuery[]>([]);
@@ -343,6 +351,35 @@ export default function AdminSeoPage() {
       start: values[0],
     };
   }, [overview, activeChartTab]);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFB] flex flex-col items-center justify-center p-6 text-center">
+        <RefreshCw className="w-8 h-8 text-[#001741] animate-spin mb-4" />
+        <p className="text-slate-600 font-medium">Verifying Administrator Access...</p>
+      </div>
+    );
+  }
+
+  if (!user || !isAdmin) {
+    return (
+      <div className="min-h-screen bg-[#F8FAFB] text-slate-800 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 rounded-2xl bg-red-50 flex items-center justify-center text-red-600 mb-4 border border-red-200">
+          <ShieldCheck size={32} />
+        </div>
+        <h1 className="text-2xl font-bold text-[#001741] mb-2">Restricted Admin Area</h1>
+        <p className="text-slate-500 max-w-md mb-6 text-sm">
+          Access to REHVO SEO & Core Web Vitals telemetry requires verified administrator credentials.
+        </p>
+        <Link
+          href="/login?redirect=/admin/seo"
+          className="px-6 py-2.5 bg-[#001741] hover:bg-[#0B1F3A] text-white font-semibold rounded-xl transition shadow-sm text-sm"
+        >
+          Sign In as Administrator
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#F8FAFB] py-8 px-4 sm:px-6 lg:px-8 text-slate-800">

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
-import { User, Session } from '@supabase/supabase-js';
+import { User, Session, AuthError } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase/client';
 import { UserProfile } from '@/lib/types';
 import { trackLogin } from '@/lib/analytics';
@@ -19,6 +19,7 @@ interface AuthContextType {
   hasFlatmateProfile: boolean;
   isSaved: (propertyId: string) => boolean;
   toggleSaveProperty: (propertyId: string) => Promise<boolean>;
+  signInWithGoogle: (customRedirect?: string) => Promise<{ data: any; error: AuthError | Error | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
   refreshUserData: () => Promise<void>;
@@ -221,6 +222,47 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const signInWithGoogle = useCallback(
+    async (customRedirect?: string) => {
+      try {
+        let callbackUrl = 'https://rehvo.in/auth/callback';
+        if (typeof window !== 'undefined' && window.location.origin) {
+          const origin = window.location.origin;
+          if (
+            origin.includes('localhost') ||
+            origin.includes('127.0.0.1') ||
+            origin.includes('.vercel.app')
+          ) {
+            callbackUrl = `${origin}/auth/callback`;
+          }
+        } else if (process.env.NEXT_PUBLIC_SITE_URL) {
+          callbackUrl = `${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')}/auth/callback`;
+        }
+
+        if (customRedirect) {
+          const separator = callbackUrl.includes('?') ? '&' : '?';
+          callbackUrl += `${separator}next=${encodeURIComponent(customRedirect)}`;
+        }
+
+        const { data, error } = await supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: callbackUrl,
+            queryParams: {
+              access_type: 'offline',
+              prompt: 'select_account',
+            },
+          },
+        });
+
+        return { data, error };
+      } catch (err: any) {
+        return { data: null, error: err instanceof Error ? err : new Error(String(err)) };
+      }
+    },
+    []
+  );
+
   const signOut = async () => {
     try {
       await supabase.auth.signOut();
@@ -252,6 +294,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         hasFlatmateProfile,
         isSaved,
         toggleSaveProperty,
+        signInWithGoogle,
         signOut,
         refreshProfile,
         refreshUserData,
