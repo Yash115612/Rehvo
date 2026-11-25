@@ -1,0 +1,94 @@
+/* ==========================================================================
+   REHVO V2 — Centralized Design Tokens
+   Authoritative Palette:
+   - Primary Navy:   #001741
+   - Secondary Navy: #0B1F3A
+   - Primary Orange: #F97316
+   - Light Orange:   #FFF7ED
+   - Canvas White:   #FFFFFF
+   ========================================================================== */
+
+:root {
+  /* Brand Colors */
+  --rehvo-navy: #001741;
+  --rehvo-navy-secondary: #0B1F3A;
+  --rehvo-navy-muted: #1E3A5F;
+  --rehvo-orange: #F97316;
+  --rehvo-orange-hover: #EA580C;
+  --rehvo-orange-active: #C2410C;
+  --rehvo-orange-soft: #FFF7ED;
+  --rehvo-orange-border: #FED7AA;
+
+  /* Backgrounds & Surfaces */
+  --rehvo-bg: #FFFFFF;
+  --rehvo-background: #FFFFFF;
+  --rehvo-surface: #FFFFFF;
+  --rehvo-surface-subtle: #F8FAFC;
+  --rehvo-surface-muted: #F1F5F9;
+
+  /* Text Hierarchy */
+  --rehvo-text-primary: #001741;
+  --rehvo-text-body: #334155;
+  --rehvo-text-secondary: #475569;
+  --rehvo-text-muted: #64748B;
+  --rehvo-text-inverted: #FFFFFF;
+
+  /* Borders */
+  --rehvo-border: #E2E8F0;
+  --rehvo-border-subtle: #F1F5F9;
+  --rehvo-border-strong: #CBD5E1;
+
+  /* Semantic Colors */
+  --rehvo-success: #15803D;
+  --rehvo-success-soft: #F0FDF4;
+  --rehvo-success-border: #BBF7D0;
+  --rehvo-warning: #B45309;
+  --rehvo-warning-soft: #FFFBEB;
+  --rehvo-warning-border: #FDE68A;
+  --rehvo-error: #B91C1C;
+  --rehvo-error-soft: #FEF2F2;
+  --rehvo-error-border: #FECACA;
+  --rehvo-info: #0369A1;
+  --rehvo-info-soft: #F0F9FF;
+  --rehvo-info-border: #BAE6FD;
+
+  /* Typography */
+  --rehvo-font-sans: var(--font-plus-jakarta), 'Plus Jakarta Sans', var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Layout & Container */
+  --rehvo-container-max: 1280px;
+  --rehvo-header-height: 72px;
+
+  /* Radius */
+  --rehvo-radius-sm: 0.5rem;
+  --rehvo-radius-md: 0.75rem;
+  --rehvo-radius-lg: 1rem;
+  --rehvo-radius-xl: 1.25rem;
+  --rehvo-radius-pill: 9999px;
+
+  /* Shadows */
+  --rehvo-shadow-xs: 0 1px 2px 0 rgba(0, 23, 65, 0.04);
+  --rehvo-shadow-sm: 0 2px 6px -1px rgba(0, 23, 65, 0.06), 0 1px 2px -1px rgba(0, 23, 65, 0.04);
+  --rehvo-shadow-md: 0 8px 20px -4px rgba(0, 23, 65, 0.08), 0 2px 6px -2px rgba(0, 23, 65, 0.04);
+  --rehvo-shadow-lg: 0 16px 36px -8px rgba(0, 23, 65, 0.12), 0 4px 12px -4px rgba(0, 23, 65, 0.05);
+
+  /* Transitions */
+  --rehvo-transition-fast: 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --rehvo-transition-base: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Legacy Variable Compatibility Aliases (for un-migrated inner routes) */
+  --rehvo-primary: #001741;
+  --rehvo-primary-hover: #0B1F3A;
+  --rehvo-primary-soft: #FFF7ED;
+  --rehvo-primary-border: #FED7AA;
+  --rehvo-secondary: #475569;
+  --rehvo-text: #001741;
+  --rehvo-text-muted-legacy: #64748B;
+  --rehvo-inverted: #FFFFFF;
+  --rehvo-dark-navy: #001741;
+  --rehvo-accent: #F97316;
+  --rehvo-accent-hover: #EA580C;
+  --rehvo-accent-soft: #FFF7ED;
+  --background: #FFFFFF;
+  --foreground: #001741;
+}
