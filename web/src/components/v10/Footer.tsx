@@ -4,453 +4,192 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Instagram,
-  Linkedin,
-  MapPin,
-  Mail,
-  Phone,
-  ArrowRight,
-  Sparkles,
   ShieldCheck,
-  Smartphone,
-  Star,
+  Search,
   Home,
   Building2,
-  Users,
-  Search,
+  FileText,
+  ArrowRight,
+  Shield,
+  CheckCircle2,
 } from 'lucide-react';
+import { Container } from '@/components/ui/Container';
 
-const FOOTER_LINKS = [
+interface FooterLink {
+  label: string;
+  href: string;
+  isExternal?: boolean;
+}
+
+interface FooterColumn {
+  title: string;
+  icon: React.ElementType;
+  links: FooterLink[];
+}
+
+const FOOTER_COLUMNS: FooterColumn[] = [
   {
     title: 'Discover',
     icon: Search,
     links: [
       { label: 'Rent a Home', href: '/search' },
       { label: 'PG & Co-Living', href: '/pg' },
-      { label: 'Commercial Spaces', href: '/commercial' },
       { label: 'Find Flatmates', href: '/flatmates' },
+      { label: 'Commercial Spaces', href: '/commercial' },
+      { label: 'Home Services', href: '/services' },
       { label: 'AI Concierge', href: '/ai-concierge' },
-      { label: 'All Services', href: '/services' },
     ],
   },
   {
-    title: 'Owners',
+    title: 'Property Owners',
     icon: Home,
     links: [
       { label: 'List Property Free', href: '/list-property' },
-      { label: 'Host & Earn', href: '/list-property#earn' },
       { label: 'Society Services', href: '/society-services' },
-      { label: 'Rental Calculator', href: '/list-property#calc' },
-      { label: 'KYC & e-Agreements', href: '/services#kyc' },
-      { label: 'Zero Deposit', href: '/services#zero-deposit' },
+      { label: 'Damage Protection System', href: '/safety' },
+      { label: 'Rental Agreement Guide', href: '/guides' },
+      { label: 'Verified Listing Benefits', href: '/safety' },
     ],
   },
   {
-    title: 'Top Localities',
-    icon: MapPin,
+    title: 'Trust & Protection',
+    icon: Shield,
     links: [
-      { label: 'Bandra West', href: '/mumbai/bandra-west' },
-      { label: 'Andheri West', href: '/mumbai/andheri-west' },
-      { label: 'Powai', href: '/mumbai/powai' },
-      { label: 'Worli', href: '/mumbai/worli' },
-      { label: 'Lower Parel', href: '/mumbai/lower-parel' },
-      { label: 'Juhu', href: '/mumbai/juhu' },
-      { label: 'BKC', href: '/mumbai/bkc' },
-      { label: 'Malad West', href: '/mumbai/malad-west' },
+      { label: 'Verified Handover System', href: '/safety' },
+      { label: 'Pre-Tenancy Condition Baseline', href: '/safety' },
+      { label: 'Deposit Protection Rules', href: '/safety' },
+      { label: 'Zero Brokerage Guarantee', href: '/search' },
+      { label: 'Dispute Mediation Desk', href: '/safety' },
     ],
   },
   {
-    title: 'Company',
+    title: 'Company & Resources',
     icon: Building2,
     links: [
       { label: 'About REHVO', href: '/about' },
-      { label: 'Instagram (@rehvo.in)', href: 'https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA==', isExternal: true },
-      { label: 'Rental Guides', href: '/guides' },
-      { label: 'Editorial Desk', href: '/authors/rehvo-editorial' },
+      { label: 'Rental Guides & Insights', href: '/guides' },
       { label: 'Market Reports', href: '/reports' },
-      { label: 'Stories', href: '/stories' },
-      { label: 'Blog', href: '/blog' },
+      { label: 'Customer Stories', href: '/stories' },
       { label: 'Careers', href: '/careers' },
-      { label: 'Contact Us', href: '/contact' },
-      { label: 'Safety', href: '/safety' },
+      { label: 'Contact Support', href: '/contact' },
       { label: 'Help Center', href: '/help' },
     ],
   },
   {
     title: 'Legal',
-    icon: ShieldCheck,
+    icon: FileText,
     links: [
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
-      { label: 'Refund Policy', href: '/terms#refund' },
-      { label: 'Cookie Policy', href: '/privacy#cookies' },
+      { label: 'Deposit & Settlement Terms', href: '/terms' },
+      { label: 'Evidence Retention Policy', href: '/privacy' },
     ],
   },
 ];
 
-const STATS = [
-  { value: '25,000+', label: 'Verified Homes' },
-  { value: '4.9★', label: 'App Rating' },
-  { value: '1,20,000+', label: 'Happy Renters' },
-  { value: '0%', label: 'Commission Fee' },
+const TRUST_PILLARS = [
+  {
+    title: 'Zero Brokerage',
+    desc: 'Connect directly with property owners and tenants without middleman commissions.',
+  },
+  {
+    title: 'Verified Handover',
+    desc: 'Dual-party photo and video condition baseline recorded at move-in before key exchange.',
+  },
+  {
+    title: 'Damage Protection',
+    desc: 'Pre-existing defects protected from deposit deductions; fair side-by-side move-out comparison.',
+  },
+  {
+    title: 'Digital Transparency',
+    desc: 'Scheduled visits, digital lease agreements, and transparent deposit accounting.',
+  },
 ];
 
-export const Footer: React.FC = () => {
+export function Footer() {
   return (
-    <footer className="bg-[#031B2A] text-white relative overflow-hidden">
-
-      {/* Subtle background glow blobs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0F766E]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-[#064E3B]/20 rounded-full blur-3xl pointer-events-none" />
-
-      {/* ── TOP CTA BAND ─────────────────────────────────────────────── */}
-      <div className="relative border-b border-white/8">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-
-            {/* Left: Big headline */}
-            <div className="text-center lg:text-left space-y-3 max-w-xl">
-              <div className="inline-flex items-center gap-2 bg-[#0F766E]/30 border border-[#0F766E]/50 text-[#2DD4BF] px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider">
-                <Sparkles className="w-3 h-3" />
-                Mumbai's #1 Rental App
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
-                Find Your Perfect<br />
-                <span className="text-[#2DD4BF]">Home in Mumbai</span>
-              </h2>
-              <p className="text-sm text-white/60 font-medium">
-                Verified homes · 0% Commission · Move in within 7 days
-              </p>
-            </div>
-
-            {/* Right: App download + search CTA */}
-            <div className="flex flex-col items-center lg:items-end gap-4 shrink-0">
-              <Link
-                href="/search"
-                className="inline-flex items-center gap-2 h-12 px-7 rounded-full bg-[#0F766E] hover:bg-[#10B981] text-white font-black text-sm transition-all shadow-lg shadow-teal-900/40 active:scale-95"
-              >
-                <Search className="w-4 h-4" />
-                Search Homes
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-
-              {/* App Store Badges */}
-              <div className="flex items-center gap-3">
-                <Link
-                  href="/download"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition group"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-                    <Smartphone className="w-4 h-4 text-[#2DD4BF]" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-[9px] text-white/50 font-semibold uppercase tracking-wider">Download on</div>
-                    <div className="text-xs font-black text-white leading-none">App Store</div>
-                  </div>
-                </Link>
-                <Link
-                  href="/download"
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 transition group"
-                >
-                  <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-                    <Smartphone className="w-4 h-4 text-[#2DD4BF]" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-[9px] text-white/50 font-semibold uppercase tracking-wider">Get it on</div>
-                    <div className="text-xs font-black text-white leading-none">Google Play</div>
-                  </div>
-                </Link>
-              </div>
-
-              {/* Rating badge */}
-              <div className="flex items-center gap-2 text-xs text-white/50 font-semibold">
-                <div className="flex">
-                  {[1,2,3,4,5].map(i => (
-                    <Star key={i} className="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]" />
-                  ))}
+    <footer className="relative bg-rehvo-navy text-white">
+      {/* Top Banner: Differentiator Strip */}
+      <div className="border-b border-white/10 bg-rehvo-navy-secondary">
+        <Container size="wide">
+          <div className="grid grid-cols-1 gap-6 py-10 sm:grid-cols-2 lg:grid-cols-4">
+            {TRUST_PILLARS.map((pillar) => (
+              <div key={pillar.title} className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 shrink-0 text-rehvo-orange" aria-hidden="true" />
+                  <h3 className="text-sm font-bold tracking-tight text-white">{pillar.title}</h3>
                 </div>
-                <span>4.9 on App Store & Play Store · 50k+ reviews</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── STATS BAR ─────────────────────────────────────────────────── */}
-      <div className="relative border-b border-white/8">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-xl sm:text-2xl font-black text-[#2DD4BF]">{stat.value}</div>
-                <div className="text-[11px] text-white/50 font-semibold mt-0.5">{stat.label}</div>
+                <p className="text-xs leading-relaxed text-slate-300">{pillar.desc}</p>
               </div>
             ))}
           </div>
-        </div>
+        </Container>
       </div>
 
-      {/* ── MAIN LINKS GRID ───────────────────────────────────────────── */}
-      <div className="relative">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-
-            {/* Brand Column */}
-            <div className="lg:col-span-3 space-y-6">
-              <Link href="/" className="inline-flex items-center gap-3 group">
-                <Image
-                  src="/rehvo-logo.png"
-                  alt="REHVO"
-                  width={100}
-                  height={32}
-                  style={{ maxHeight: '32px', height: '32px', width: 'auto', filter: 'brightness(0) invert(1)' }}
-                  className="h-8 w-auto object-contain"
-                />
-              </Link>
-
-              <p className="text-sm text-white/55 leading-relaxed">
-                Mumbai's most trusted rental marketplace. Verified homes, Zero Commission, digital agreements — all in one app.
-              </p>
-
-              {/* Contact */}
-              <div className="space-y-2.5 text-xs text-white/50 font-medium">
-                <a href="mailto:support@rehvo.in" className="flex items-center gap-2 hover:text-[#2DD4BF] transition group">
-                  <Mail className="w-3.5 h-3.5 text-[#0F766E] group-hover:text-[#2DD4BF] shrink-0" />
-                  support@rehvo.in
-                </a>
-                <a href="tel:+918888888888" className="flex items-center gap-2 hover:text-[#2DD4BF] transition group">
-                  <Phone className="w-3.5 h-3.5 text-[#0F766E] group-hover:text-[#2DD4BF] shrink-0" />
-                  +91 88888 88888
-                </a>
-                <p className="flex items-start gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-[#0F766E] shrink-0 mt-0.5" />
-                  <span>BKC, Mumbai — 400051<br />Maharashtra, India</span>
-                </p>
-              </div>
-
-              {/* Follow REHVO Section */}
-              <div className="pt-2 space-y-3">
-                <div className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
-                  <span>Follow REHVO</span>
-                  <span className="text-[10px] text-[#F97316] font-extrabold bg-[#F97316]/10 px-2 py-0.5 rounded-full border border-[#F97316]/20">
-                    Official
-                  </span>
-                </div>
-
-                {/* Featured Instagram Box */}
-                <a
-                  href="https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=="
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Follow REHVO on Instagram"
-                  title="Follow REHVO on Instagram"
-                  className="flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-[#F97316]/10 border border-white/10 hover:border-[#F97316]/40 transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:ring-offset-2 focus:ring-offset-[#031B2A]"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#FF543E] via-[#FF0077] to-[#833AB4] flex items-center justify-center text-white shadow-xs group-hover:scale-105 transition-transform shrink-0">
-                      <Instagram className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-black text-white group-hover:text-[#F97316] transition-colors flex items-center gap-1">
-                        <span>Instagram</span>
-                        <span className="text-[9px] text-[#2DD4BF] font-extrabold">● LIVE</span>
-                      </div>
-                      <div className="text-[11px] text-white/50 group-hover:text-white/80 transition-colors font-semibold">
-                        @rehvo.in
-                      </div>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#F97316] group-hover:translate-x-0.5 transition-all shrink-0" />
-                </a>
-
-                {/* Social Icons Row */}
-                <div className="flex items-center gap-2 pt-0.5">
-                  <a
-                    href="https://www.instagram.com/rehvo.in?stkn=MW5jZ2x6b2xwbTJrbA=="
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Follow REHVO on Instagram"
-                    title="Follow REHVO on Instagram"
-                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#F97316] border border-white/10 hover:border-[#F97316] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#F97316]"
-                  >
-                    <Instagram className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/company/rehvo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Follow REHVO on LinkedIn"
-                    title="Follow REHVO on LinkedIn"
-                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="https://twitter.com/rehvoapp"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Follow REHVO on X (Twitter)"
-                    title="Follow REHVO on X (Twitter)"
-                    className="w-9 h-9 rounded-xl bg-white/8 hover:bg-[#0F766E] border border-white/10 hover:border-[#0F766E] flex items-center justify-center text-white transition-all focus:outline-none focus:ring-2 focus:ring-[#0F766E]"
-                  >
-                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Link Columns */}
-            <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 sm:gap-6">
-              {FOOTER_LINKS.map((col) => (
-                <div key={col.title} className="space-y-4">
-                  <h4 className="text-xs font-black text-white uppercase tracking-widest flex items-center gap-1.5">
-                    <col.icon className="w-3 h-3 text-[#0F766E]" />
+      {/* Main Footer Links */}
+      <Container size="wide">
+        <div className="grid grid-cols-2 gap-8 py-12 md:grid-cols-3 lg:grid-cols-5 lg:gap-10">
+          {FOOTER_COLUMNS.map((col) => {
+            const Icon = col.icon;
+            return (
+              <div key={col.title} className="flex flex-col gap-3.5">
+                <div className="flex items-center gap-2 border-b border-white/10 pb-2.5">
+                  <Icon className="h-4 w-4 text-rehvo-orange" aria-hidden="true" />
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-white">
                     {col.title}
                   </h4>
-                  <ul className="space-y-2.5">
-                    {col.links.map((link) => (
-                      <li key={link.label}>
-                        {(link as any).isExternal ? (
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`Visit ${link.label}`}
-                            title={`Visit ${link.label}`}
-                            className="text-[13px] text-white/50 hover:text-[#F97316] font-medium transition-colors duration-150 block leading-snug"
-                          >
-                            {link.label}
-                          </a>
-                        ) : (
-                          <Link
-                            href={link.href}
-                            className="text-[13px] text-white/50 hover:text-[#2DD4BF] font-medium transition-colors duration-150 block leading-snug"
-                          >
-                            {link.label}
-                          </Link>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              ))}
-            </div>
-          </div>
+                <ul className="flex flex-col gap-2.5" role="list">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="text-xs font-medium text-slate-300 transition-colors hover:text-rehvo-orange"
+                        {...(link.isExternal
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {})}
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
-      </div>
 
-      {/* ── SMART SEO INTERNAL LINKING DIRECTORY ─────────────────────────── */}
-      <div className="relative border-t border-white/8 bg-black/20">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-xs text-white/50">
-            {/* Mumbai Localities */}
-            <div className="space-y-2">
-              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
-                Mumbai Rental Localities
-              </h5>
-              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
-                <Link href="/mumbai/andheri-west" className="hover:text-[#2DD4BF] transition">Andheri West</Link> ·
-                <Link href="/mumbai/bandra-west" className="hover:text-[#2DD4BF] transition">Bandra West</Link> ·
-                <Link href="/mumbai/powai" className="hover:text-[#2DD4BF] transition">Powai</Link> ·
-                <Link href="/mumbai/worli" className="hover:text-[#2DD4BF] transition">Worli</Link> ·
-                <Link href="/mumbai/lower-parel" className="hover:text-[#2DD4BF] transition">Lower Parel</Link> ·
-                <Link href="/mumbai/juhu" className="hover:text-[#2DD4BF] transition">Juhu</Link> ·
-                <Link href="/mumbai/bkc" className="hover:text-[#2DD4BF] transition">BKC</Link> ·
-                <Link href="/mumbai/malad-west" className="hover:text-[#2DD4BF] transition">Malad West</Link> ·
-                <Link href="/mumbai/borivali-west" className="hover:text-[#2DD4BF] transition">Borivali West</Link> ·
-                <Link href="/mumbai/goregaon-west" className="hover:text-[#2DD4BF] transition">Goregaon West</Link> ·
-                <Link href="/mumbai/versova" className="hover:text-[#2DD4BF] transition">Versova</Link> ·
-                <Link href="/mumbai/santacruz-west" className="hover:text-[#2DD4BF] transition">Santacruz</Link> ·
-                <Link href="/mumbai/chembur" className="hover:text-[#2DD4BF] transition">Chembur</Link> ·
-                <Link href="/mumbai/dadar" className="hover:text-[#2DD4BF] transition">Dadar</Link> ·
-                <Link href="/mumbai/thane" className="hover:text-[#2DD4BF] transition">Thane</Link> ·
-                <Link href="/mumbai/navi-mumbai" className="hover:text-[#2DD4BF] transition">Navi Mumbai</Link>
-              </div>
-            </div>
-
-            {/* Popular Searches */}
-            <div className="space-y-2">
-              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
-                Popular Rental Searches
-              </h5>
-              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
-                <Link href="/rent/1-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">1 BHK Mumbai</Link> ·
-                <Link href="/rent/2-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">2 BHK Mumbai</Link> ·
-                <Link href="/rent/3-bhk-for-rent-in-mumbai" className="hover:text-[#2DD4BF] transition">3 BHK Mumbai</Link> ·
-                <Link href="/rent/zero-commission-flats-mumbai" className="hover:text-[#2DD4BF] transition">Zero Commission</Link> ·
-                <Link href="/rent/studio-apartments-in-mumbai" className="hover:text-[#2DD4BF] transition">Studio Apartments</Link> ·
-                <Link href="/rent/furnished-flats-for-rent-mumbai" className="hover:text-[#2DD4BF] transition">Furnished Flats</Link> ·
-                <Link href="/rent/bachelor-friendly-flats-mumbai" className="hover:text-[#2DD4BF] transition">Bachelor Homes</Link> ·
-                <Link href="/rent/family-flats-for-rent-mumbai" className="hover:text-[#2DD4BF] transition">Family Highrises</Link> ·
-                <Link href="/rent/flats-near-metro-station-mumbai" className="hover:text-[#2DD4BF] transition">Near Metro</Link>
-              </div>
-            </div>
-
-            {/* Landmark & Student Corridors */}
-            <div className="space-y-2">
-              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
-                Tech & Student Hubs
-              </h5>
-              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
-                <Link href="/rent/flats-near-iit-bombay" className="hover:text-[#2DD4BF] transition">Near IIT Bombay</Link> ·
-                <Link href="/rent/flats-near-nmims" className="hover:text-[#2DD4BF] transition">Near NMIMS Juhu</Link> ·
-                <Link href="/rent/flats-near-bkc" className="hover:text-[#2DD4BF] transition">Near BKC</Link> ·
-                <Link href="/rent/flats-near-mumbai-airport" className="hover:text-[#2DD4BF] transition">Near CSMIA Airport</Link> ·
-                <Link href="/rent/flats-near-tcs-powai" className="hover:text-[#2DD4BF] transition">Near TCS Powai</Link> ·
-                <Link href="/rent/flats-near-mindspace-malad" className="hover:text-[#2DD4BF] transition">Near Mindspace Malad</Link> ·
-                <Link href="/rent/flats-near-jio-world-drive" className="hover:text-[#2DD4BF] transition">Near Jio World Drive</Link>
-              </div>
-            </div>
-
-            {/* Guides & Research */}
-            <div className="space-y-2">
-              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">
-                Legal & Rental Insights
-              </h5>
-              <div className="flex flex-wrap gap-x-2 gap-y-1 text-[11px]">
-                <Link href="/guides" className="hover:text-[#2DD4BF] transition">Tenant Guides</Link> ·
-                <Link href="/authors/rehvo-editorial" className="hover:text-[#2DD4BF] transition">Editorial Desk</Link> ·
-                <Link href="/reports" className="hover:text-[#2DD4BF] transition">Market Reports</Link> ·
-                <Link href="/blog" className="hover:text-[#2DD4BF] transition">Blog Articles</Link> ·
-                <Link href="/stories" className="hover:text-[#2DD4BF] transition">Web Stories</Link> ·
-                <Link href="/society-services" className="hover:text-[#2DD4BF] transition">Society NOCs</Link> ·
-                <Link href="/flatmates" className="hover:text-[#2DD4BF] transition">Find Flatmates</Link> ·
-                <Link href="/pg" className="hover:text-[#2DD4BF] transition">Verified PGs</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── BOTTOM BAR ────────────────────────────────────────────────── */}
-      <div className="relative border-t border-white/8">
-        <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-
-            <p className="text-[11px] text-white/35 font-medium">
-              © 2026 REHVO Technologies Pvt. Ltd. All rights reserved.
+        {/* Bottom Bar: Brand & Legal */}
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 py-8 sm:flex-row">
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-6">
+            <Link href="/" aria-label="REHVO Home">
+              <Image
+                src="/rehvo-logo-white.png"
+                alt="REHVO"
+                width={120}
+                height={34}
+                className="h-7 w-auto object-contain"
+              />
+            </Link>
+            <p className="text-xs text-slate-400 text-center sm:text-left">
+              India&apos;s Zero-Brokerage Rental Marketplace with Verified Handover &amp; Damage Protection.
             </p>
+          </div>
 
-            {/* Trust badges */}
-            <div className="flex items-center gap-3 flex-wrap justify-center">
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white/35 px-2.5 py-1 rounded-full border border-white/10">
-                <ShieldCheck className="w-3 h-3 text-[#0F766E]" />
-                SSL Secured
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold text-white/35 px-2.5 py-1 rounded-full border border-white/10">
-                <Users className="w-3 h-3 text-[#0F766E]" />
-                MahaRERA Compliant
-              </span>
-              <span className="text-[10px] text-white/25 font-medium flex items-center gap-1">
-                Crafted with <span className="text-[#34D399] text-xs">♥</span> in Mumbai
-              </span>
-            </div>
-
+          <div className="flex items-center gap-6 text-xs text-slate-400">
+            <span>&copy; {new Date().getFullYear()} REHVO Technologies Pvt. Ltd.</span>
+            <Link href="/privacy" className="hover:text-white transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-white transition-colors">
+              Terms
+            </Link>
+            <Link href="/contact" className="hover:text-white transition-colors">
+              Support
+            </Link>
           </div>
         </div>
-      </div>
-
+      </Container>
     </footer>
   );
-};
+}

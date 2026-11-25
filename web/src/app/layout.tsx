@@ -28,7 +28,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#0E8F73',
+  themeColor: '#001741',
 };
 
 const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://rehvo.in';
@@ -152,7 +152,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
-      <body className="font-sans min-h-screen flex flex-col bg-[#F8FAFB] text-[#031B2A] selection:bg-[#0F766E] selection:text-white antialiased overflow-x-clip">
+      <body className="font-sans min-h-screen flex flex-col bg-white text-rehvo-navy selection:bg-rehvo-orange selection:text-white antialiased overflow-x-clip">
         {isProduction && gaId && (
           <>
             <GoogleAnalytics gaId={gaId} />
@@ -175,7 +175,7 @@ export default function RootLayout({
         <ServiceWorkerRegister />
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#0E8F73] focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none font-semibold text-sm"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#001741] focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none font-semibold text-sm"
         >
           Skip to main content
         </a>

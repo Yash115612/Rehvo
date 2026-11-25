@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Image, { ImageProps } from 'next/image';
-import { Home, Building2, BedDouble, Users, MapPin, Image as ImageIcon } from 'lucide-react';
+import Image, { type ImageProps } from 'next/image';
+import { FALLBACK_PROPERTY_IMAGE } from '@/lib/seo/types';
+import { cn } from '@/lib/cn';
 
-export interface RehvoImageProps extends Omit<ImageProps, 'src' | 'onError' | 'onLoad'> {
+export interface RehvoImageProps extends Omit<ImageProps, 'src' | 'alt'> {
   src?: string | null;
-  fallbackCategory?: 'property' | 'commercial' | 'room' | 'flatmate' | 'locality' | 'general';
+  alt: string;
+  fallbackSrc?: string;
+  fallbackCategory?: 'property' | 'commercial' | 'room' | 'flatmate' | 'locality' | 'general' | string;
 }
 
 const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
@@ -18,87 +21,54 @@ const CATEGORY_FALLBACK_IMAGES: Record<string, string> = {
   general: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1000&auto=format&fit=crop&q=80',
 };
 
-export const RehvoImage: React.FC<RehvoImageProps> = ({
+export function RehvoImage({
   src,
   alt,
-  className = '',
-  fill,
-  width,
-  height,
-  priority,
-  sizes,
+  fallbackSrc,
   fallbackCategory = 'general',
-  ...rest
-}) => {
-  const [hasError, setHasError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  className,
+  ...props
+}: RehvoImageProps) {
+  const defaultFallback =
+    fallbackSrc ||
+    CATEGORY_FALLBACK_IMAGES[fallbackCategory] ||
+    FALLBACK_PROPERTY_IMAGE;
 
-  // Validate URL scheme
   const isValidUrl =
     typeof src === 'string' &&
     src.trim().length > 0 &&
     (src.startsWith('https://') || src.startsWith('http://') || src.startsWith('/'));
 
-  const activeSrc = !hasError && isValidUrl ? src : CATEGORY_FALLBACK_IMAGES[fallbackCategory] || CATEGORY_FALLBACK_IMAGES.general;
+  const [imgSrc, setImgSrc] = useState<string>(
+    isValidUrl ? (src as string) : defaultFallback
+  );
 
   useEffect(() => {
-    setHasError(false);
-    setIsLoading(true);
-  }, [src]);
-
-  const handleImageError = () => {
-    if (!hasError) {
-      setHasError(true);
-      setIsLoading(false);
+    if (isValidUrl) {
+      setImgSrc(src as string);
+    } else {
+      setImgSrc(defaultFallback);
     }
-  };
+  }, [src, defaultFallback, isValidUrl]);
 
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
-
-  const getCategoryIcon = () => {
-    switch (fallbackCategory) {
-      case 'commercial':
-        return Building2;
-      case 'room':
-        return BedDouble;
-      case 'flatmate':
-        return Users;
-      case 'locality':
-        return MapPin;
-      default:
-        return Home;
-    }
-  };
-
-  const Icon = getCategoryIcon();
+  const isExternal =
+    typeof imgSrc === 'string' &&
+    (imgSrc.startsWith('http://') || imgSrc.startsWith('https://'));
 
   return (
-    <div className={`relative overflow-hidden ${fill ? 'w-full h-full' : ''}`}>
-      {/* Loading Skeleton */}
-      {isLoading && (
-        <div className="absolute inset-0 bg-stone-200/80 animate-pulse z-10 flex items-center justify-center">
-          <div className="w-8 h-8 rounded-full bg-stone-300/60 flex items-center justify-center">
-            <Icon className="w-4 h-4 text-stone-400" />
-          </div>
-        </div>
-      )}
-
-      {/* Actual Image */}
-      <Image
-        src={activeSrc}
-        alt={alt || 'REHVO Property'}
-        fill={fill}
-        width={!fill ? width || 400 : undefined}
-        height={!fill ? height || 300 : undefined}
-        sizes={sizes || (fill ? '100vw' : undefined)}
-        priority={priority}
-        className={`transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'} ${className}`}
-        onError={handleImageError}
-        onLoad={handleImageLoad}
-        {...rest}
-      />
-    </div>
+    <Image
+      {...props}
+      src={imgSrc}
+      alt={alt || 'REHVO Property'}
+      unoptimized={props.unoptimized !== undefined ? props.unoptimized : isExternal}
+      className={cn('object-cover', className)}
+      onError={() => {
+        if (imgSrc !== defaultFallback) {
+          setImgSrc(defaultFallback);
+        }
+      }}
+    />
   );
-};
+}
+
+export default RehvoImage;
