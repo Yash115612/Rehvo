@@ -76,7 +76,7 @@ export async function GET(req: NextRequest) {
                   width: '10px',
                   height: '10px',
                   borderRadius: '10px',
-                  backgroundColor: '#0E8F73',
+                  backgroundColor: '#F97316',
                   display: 'inline-block',
                   marginLeft: '4px',
                 }}

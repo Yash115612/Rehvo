@@ -41,7 +41,7 @@ const AUTHORS_DATA: Record<
     slug: 'rehvo-editorial',
     name: 'REHVO Editorial & Real Estate Intelligence Desk',
     role: 'Market Research, Deed Verification & Tenant Advocacy Team',
-    avatar: '/logo.png',
+    avatar: '/rehvo-logo.png',
     bio: 'The REHVO Editorial Desk is an independent research collective of urban housing analysts, MahaRERA legal advisors, and field verification researchers. Based in Mumbai, the desk publishes quarterly rental yields, neighborhood pricing indexes, and consumer protection guides designed to empower renters with transparent, agent-free transaction data.',
     credentials: [
       '15+ Years Combined Mumbai Real Estate Market Research Experience',

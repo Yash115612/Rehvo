@@ -186,7 +186,7 @@ export function HeroWithBanners() {
   const CurrentIllustration = currentBanner.Illustration;
 
   return (
-    <div className="relative bg-[#F8FAFC]">
+    <div className="relative bg-gradient-to-b from-[#001741] from-50% to-[#F8FAFC] to-50%">
       {/* =====================================================================
           1. CURVED NAVY HERO BANNER STAGE (Controlled height & art-directed 2-sided layout)
          ===================================================================== */}

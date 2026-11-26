@@ -66,7 +66,7 @@ const SERVICES_DROPDOWN_ITEMS: ServiceDropdownItem[] = [
 ];
 
 const NAV_ITEMS = [
-  { label: 'Rent', href: '/search', accentColor: '#001741' },
+  { label: 'Rent', href: '/rent', accentColor: '#001741' },
   { label: 'PG & Hostel', href: '/pg', accentColor: '#F97316' },
   { label: 'Commercial', href: '/commercial', accentColor: '#2563EB' },
   { label: 'Flatmates', href: '/flatmates', accentColor: '#10B981' },
@@ -152,7 +152,8 @@ export const Navbar: React.FC = () => {
 
   const isNavActive = (href: string) => {
     if (href === '/') return pathname === '/';
-    if (href === '/search') return pathname === '/search' || pathname.startsWith('/rent');
+    if (href === '/rent') return pathname.startsWith('/rent') || pathname.startsWith('/explore') || pathname === '/search';
+    if (href === '/search') return pathname === '/search' || pathname.startsWith('/rent') || pathname.startsWith('/explore');
     return pathname.startsWith(href);
   };
 
@@ -162,7 +163,7 @@ export const Navbar: React.FC = () => {
         className={`sticky top-0 z-50 w-full transition-all duration-300 ease-in-out ${
           isScrolled
             ? 'bg-[#001741]/95 backdrop-blur-xl shadow-lg border-b border-white/10 py-2.5'
-            : 'bg-[#001741] py-2.5 sm:py-3.5 border-b border-transparent'
+            : 'bg-[#001741] py-2.5 sm:py-3.5 border-b border-[#001741]'
         }`}
       >
         <div className="max-w-[1360px] mx-auto px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4">

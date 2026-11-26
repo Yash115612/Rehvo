@@ -4,8 +4,8 @@
   "description": "Find verified rental homes, flatmates, PGs, and commercial spaces across India with Zero Commission and AI concierge.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0C0A09",
-  "theme_color": "#0E8F73",
+  "background_color": "#001741",
+  "theme_color": "#001741",
   "orientation": "portrait-primary",
   "icons": [
     {

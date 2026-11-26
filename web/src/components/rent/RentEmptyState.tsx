@@ -1,21 +1,20 @@
 'use client';
 
 import React from 'react';
-import { Home, RefreshCw, MapPin } from 'lucide-react';
+import { SearchX, RotateCcw, MapPin, Sparkles } from 'lucide-react';
 
 interface RentEmptyStateProps {
   onClearFilters: () => void;
-  onSelectLocality?: (locality: string) => void;
+  onSelectLocality: (loc: string) => void;
 }
 
-const POPULAR_AREAS = [
+const POPULAR_LOCALITIES = [
   'Bandra West',
   'Andheri West',
   'Powai',
   'Worli',
+  'BKC',
   'Juhu',
-  'Thane',
-  'Navi Mumbai',
 ];
 
 export const RentEmptyState: React.FC<RentEmptyStateProps> = ({
@@ -23,51 +22,51 @@ export const RentEmptyState: React.FC<RentEmptyStateProps> = ({
   onSelectLocality,
 }) => {
   return (
-    <div className="rehvo-glass-card rounded-[28px] p-8 sm:p-12 text-center max-w-xl mx-auto my-8 shadow-sm border border-white/80">
-      <div className="w-14 h-14 rounded-2xl rehvo-glass-subtle text-[#0F766E] flex items-center justify-center mx-auto mb-4 font-black shadow-2xs">
-        <Home className="w-7 h-7" />
+    <div className="w-full bg-white rounded-3xl border border-slate-200 p-8 sm:p-14 text-center space-y-6 shadow-xs my-6">
+      <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400 mx-auto border border-slate-200">
+        <SearchX size={32} />
       </div>
 
-      <h3 className="font-black text-xl sm:text-2xl text-[#031B2A] tracking-tight">
-        No homes match your exact criteria
-      </h3>
-      <p className="text-xs sm:text-sm text-[#64748B] font-medium mt-1.5 max-w-md mx-auto leading-relaxed">
-        Try broadening your budget range, changing the BHK configuration, or searching across a different Mumbai neighbourhood.
-      </p>
+      <div className="space-y-2 max-w-md mx-auto">
+        <h3 className="text-xl font-extrabold text-[#001741] tracking-tight">
+          No matching properties found
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">
+          We couldn&apos;t find any rental listings matching your exact combination of filters. Try widening your budget or selecting nearby localities.
+        </p>
+      </div>
 
-      {/* Action Buttons */}
-      <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+      {/* Clear Filters CTA */}
+      <div>
         <button
           type="button"
           onClick={onClearFilters}
-          className="inline-flex items-center gap-2 rehvo-glass-coral text-white text-xs font-bold px-6 py-2.5 rounded-full shadow-sm transition active:scale-98 cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#001741] hover:bg-[#0B1F3A] text-white text-xs font-bold transition shadow-sm"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
+          <RotateCcw size={14} />
           <span>Reset All Filters</span>
         </button>
       </div>
 
-      {/* Popular Areas Quick Links */}
-      {onSelectLocality && (
-        <div className="mt-8 pt-6 border-t border-white/60">
-          <p className="text-[11px] font-black uppercase tracking-wider text-[#64748B] mb-3">
-            Or browse top rental hubs
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {POPULAR_AREAS.map((area) => (
-              <button
-                key={area}
-                type="button"
-                onClick={() => onSelectLocality(area)}
-                className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full rehvo-glass-subtle text-[#031B2A] hover:bg-white/70 shadow-2xs border border-white/70 transition cursor-pointer"
-              >
-                <MapPin className="w-3 h-3 text-[#0F766E]" />
-                <span>{area}</span>
-              </button>
-            ))}
-          </div>
+      {/* Suggested Localities */}
+      <div className="pt-4 border-t border-slate-100 max-w-lg mx-auto">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+          Or explore popular Mumbai rental hubs:
+        </span>
+        <div className="flex flex-wrap justify-center gap-2">
+          {POPULAR_LOCALITIES.map((loc) => (
+            <button
+              key={loc}
+              type="button"
+              onClick={() => onSelectLocality(loc)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700 transition"
+            >
+              <MapPin size={12} className="text-[#F97316]" />
+              <span>{loc}</span>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };

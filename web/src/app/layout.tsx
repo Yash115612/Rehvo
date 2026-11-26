@@ -57,7 +57,8 @@ export const metadata: Metadata = {
   applicationName: 'REHVO',
   icons: {
     icon: [
-      { url: '/icon.png', sizes: '32x32' },
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/icon.png', sizes: '1024x1024' },
       { url: '/rehvo-logo.png', sizes: '192x192' },
     ],
     apple: [

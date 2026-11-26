@@ -11,11 +11,13 @@ export interface BreadcrumbItem {
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
   className?: string;
+  variant?: 'light' | 'dark';
 }
 
-export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, className = '', variant = 'light' }: BreadcrumbsProps) {
   const fullItems: BreadcrumbItem[] = [{ name: 'Home', url: '/' }, ...items];
   const schema = generateBreadcrumbSchema(fullItems);
+  const isDark = variant === 'dark';
 
   return (
     <>
@@ -27,27 +29,45 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
 
       <nav
         aria-label="Breadcrumb"
-        className={`flex items-center text-xs font-semibold text-slate-500 overflow-x-auto py-2.5 ${className}`}
+        className={`flex items-center text-xs font-semibold overflow-x-auto py-1.5 ${
+          isDark ? 'text-white/70' : 'text-slate-500'
+        } ${className}`}
       >
         <ol className="flex items-center space-x-1.5 whitespace-nowrap">
           {fullItems.map((item, index) => {
             const isLast = index === fullItems.length - 1;
             return (
               <li key={item.url} className="flex items-center space-x-1.5">
-                {index > 0 && <ChevronRight size={12} className="text-slate-400 shrink-0" />}
+                {index > 0 && (
+                  <ChevronRight
+                    size={12}
+                    className={`shrink-0 ${isDark ? 'text-white/40' : 'text-slate-400'}`}
+                  />
+                )}
                 {isLast ? (
                   <span
                     aria-current="page"
-                    className="text-[#031B2A] font-bold truncate max-w-[200px] sm:max-w-xs"
+                    className={`font-bold truncate max-w-[200px] sm:max-w-xs ${
+                      isDark ? 'text-white' : 'text-[#031B2A]'
+                    }`}
                   >
                     {item.name}
                   </span>
                 ) : (
                   <Link
                     href={item.url}
-                    className="hover:text-[#0E8F73] transition flex items-center gap-1 text-slate-600"
+                    className={`transition flex items-center gap-1 ${
+                      isDark
+                        ? 'text-white/75 hover:text-white'
+                        : 'text-slate-600 hover:text-[#0E8F73]'
+                    }`}
                   >
-                    {index === 0 && <Home size={12} className="shrink-0" />}
+                    {index === 0 && (
+                      <Home
+                        size={12}
+                        className={`shrink-0 ${isDark ? 'text-white/70' : 'text-slate-500'}`}
+                      />
+                    )}
                     <span>{item.name}</span>
                   </Link>
                 )}

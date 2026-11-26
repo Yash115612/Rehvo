@@ -15,8 +15,8 @@ export function generateOrganizationSchema() {
     name: 'REHVO',
     legalName: 'Rehvo Technologies Private Limited',
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`,
-    image: `${BASE_URL}/logo.png`,
+    logo: `${BASE_URL}/rehvo-logo.png`,
+    image: `${BASE_URL}/rehvo-logo.png`,
     description: 'India’s premier verified rental marketplace with AI concierge, direct owner connections, Zero Commission, flatmates, and PGs.',
     address: {
       '@type': 'PostalAddress',
@@ -560,7 +560,7 @@ export function generateLocalityEntitySchema(locality: LocalityProfile, canonica
         '@id': `${canonicalUrl}#service`,
         name: `REHVO Verified Rentals — ${locality.name}`,
         url: canonicalUrl,
-        image: `${BASE_URL}/logo.png`,
+        image: `${BASE_URL}/rehvo-logo.png`,
         telephone: '+91-8208662286',
         priceRange: '₹₹',
         areaServed: {
@@ -711,7 +711,7 @@ export function generateAuthorSchema(author: {
         jobTitle: author.role,
         description: author.bio,
         url: author.url,
-        image: author.image || `${BASE_URL}/logo.png`,
+        image: author.image || `${BASE_URL}/rehvo-logo.png`,
         worksFor: {
           '@type': 'Organization',
           name: 'REHVO',
@@ -731,7 +731,7 @@ export function generateAuthorSchema(author: {
         '@id': `${author.url}#publisher`,
         name: 'REHVO Editorial & Real Estate Intelligence Desk',
         url: BASE_URL,
-        logo: `${BASE_URL}/logo.png`,
+        logo: `${BASE_URL}/rehvo-logo.png`,
         parentOrganization: {
           '@id': `${BASE_URL}/#organization`,
         },
